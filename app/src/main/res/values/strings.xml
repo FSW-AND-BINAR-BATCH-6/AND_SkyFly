@@ -1,0 +1,9 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">SkyFly</string>
+    <string name="text_home">Beranda</string>
+    <string name="text_riwayat">Riwayat</string>
+    <string name="text_notification">Notifikasi</string>
+    <string name="text_profile">Akun</string>
+</resources>

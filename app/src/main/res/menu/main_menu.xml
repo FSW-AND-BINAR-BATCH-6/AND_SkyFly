@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home_tab"
+        android:icon="@drawable/ic_home"
+        android:title="@string/text_home"/>
+    <item
+        android:id="@+id/menu_history_tab"
+        android:icon="@drawable/ic_history"
+        android:title="@string/text_riwayat"/>
+    <item
+        android:id="@+id/menu_notification_tab"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/text_notification"/>
+    <item
+        android:id="@+id/menu_profile_tab"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/text_profile"/>
+
+</menu>
