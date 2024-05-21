@@ -41,6 +41,9 @@ coroutine-test = "1.7.2"
 turbine = "1.0.0"
 core-testing = "2.2.0"
 
+# OTP View
+otp-view = "3.1.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -89,6 +92,8 @@ coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-t
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
 
+# OTP View
+otp-view = { group = "com.github.mukeshsolanki.android-otpview-pinview", name = "otpview", version.ref = "otp-view" }
 
 
 [plugins]

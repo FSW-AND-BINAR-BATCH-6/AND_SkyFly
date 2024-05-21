@@ -6,4 +6,27 @@
     <string name="text_riwayat">Riwayat</string>
     <string name="text_notification">Notifikasi</string>
     <string name="text_profile">Akun</string>
+    <string name="text_email_or_no_tlp_title">Email / No. Telepon</string>
+    <string name="text_input_email_hint">Masukkan email / no. telepon</string>
+    <string name="text_password">Password</string>
+    <string name="text_hint_password">Masukkan password</string>
+    <string name="text_login">Login</string>
+    <string name="text_sub_login">Masuk untuk mengakses lebih banyak fitur.</string>
+    <string name="text_forget_password">Lupa password?\n</string>
+    <string name="tv_not_have_account">Belum punya akun? Daftar</string>
+    <string name="text_full_name">Nama</string>
+    <string name="text_hint_full_name">Nama lengkap\n</string>
+    <string name="text_profile_email">Email</string>
+    <string name="text_hint_email">Masukkan email</string>
+    <string name="text_confirm_password">Konfirmasi Password</string>
+    <string name="text_hint_confirm_password">konfirmasi password\n</string>
+    <string name="text_no_telp">No. Telepon</string>
+    <string name="text_hint_no_tlp">Masukkan no telepon\n</string>
+    <string name="text_register">Daftar</string>
+    <string name="text_sub_register">Daftarkan dirimu dan rasakan kemudahan dalam memesan tiket pesawat.</string>
+    <string name="text_already_have_account">Sudah punya akun? Login</string>
+    <string name="text_input_otp">Masukkan OTP</string>
+    <string name="text_otp">Ketik 6 digit kode yang dikirimkan ke +3874387743788</string>
+    <string name="text_resend_otp">Kirim ulang OTP dalam 60 detik</string>
+    <string name="text_req_new_otp">Minta kode baru via Email</string>
 </resources>
