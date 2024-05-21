@@ -99,29 +99,32 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-//   Local storage
+    //  Local storage
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
-//  Coroutine
+    // Coroutine
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)
 
-//  Dependency injection
+    // Dependency injection
     implementation(libs.koin.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-//  Http Request
+    // Http Request
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp)
 
-//   Unit Testing
+    // Unit Testing
     testImplementation(libs.mockk.agent)
     androidTestImplementation(libs.mockk.android)
     testImplementation(libs.coroutine.test)
     testImplementation(libs.turbine)
     testImplementation(libs.core.testing)
+
+    // otp view
+    implementation(libs.otp.view)
 }
