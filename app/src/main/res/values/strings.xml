@@ -29,4 +29,11 @@
     <string name="text_otp">Ketik 6 digit kode yang dikirimkan ke +3874387743788</string>
     <string name="text_resend_otp">Kirim ulang OTP dalam 60 detik</string>
     <string name="text_req_new_otp">Minta kode baru via Email</string>
+    <string name="text_fullname_cannot_empty">Nama lengkap tidak boleh kosong!</string>
+    <string name="text_email_cannot_empty">Email tidak boleh kosong!</string>
+    <string name="text_invalid_email_format">Masukkan format yang benar!</string>
+    <string name="text_password_cannot_empty">Password tidak boleh kosong!</string>
+    <string name="text_password_should_be_8_character"><![CDATA[Password harus > 8 karakter!]]></string>
+    <string name="text_password_doesnt_match">Password tidak cocok!</string>
+    <string name="text_no_tlp_cannot_empty">Nomor telepon tidak boleh kosong!</string>
 </resources>
