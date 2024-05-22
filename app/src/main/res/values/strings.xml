@@ -36,4 +36,8 @@
     <string name="text_password_should_be_8_character"><![CDATA[Password harus > 8 karakter!]]></string>
     <string name="text_password_doesnt_match">Password tidak cocok!</string>
     <string name="text_no_tlp_cannot_empty">Nomor telepon tidak boleh kosong!</string>
+    <string name="text_reset_password_title">Reset Password</string>
+    <string name="text_email">Email</string>
+    <string name="text_email_hint">Masukkan email</string>
+    <string name="text_submit">Submit</string>
 </resources>
