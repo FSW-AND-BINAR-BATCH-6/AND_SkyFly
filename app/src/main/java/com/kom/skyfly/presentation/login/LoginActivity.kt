@@ -9,6 +9,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityLoginBinding
 import com.kom.skyfly.presentation.register.RegisterActivity
+import com.kom.skyfly.presentation.resetpassword.ResetPassword
 import com.kom.skyfly.utils.highLightWord
 
 class LoginActivity : AppCompatActivity() {
@@ -27,6 +28,9 @@ class LoginActivity : AppCompatActivity() {
         binding.tvNotHaveAccount.highLightWord(getString(R.string.text_register)) {
             navigateToRegister()
         }
+        binding.tvForgetPassword.setOnClickListener {
+            showResetPasswordForm()
+        }
     }
 
     private fun setLoginForm() {
@@ -42,6 +46,11 @@ class LoginActivity : AppCompatActivity() {
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             },
         )
+    }
+
+    private fun showResetPasswordForm() {
+        val resetPassword = ResetPassword()
+        resetPassword.show(supportFragmentManager, resetPassword.tag)
     }
 
     private fun isFormValid(): Boolean {
