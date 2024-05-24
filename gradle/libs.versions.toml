@@ -44,6 +44,9 @@ core-testing = "2.2.0"
 # OTP View
 otp-view = "3.1.0"
 
+# SeatBook View
+seat-view = "1.0.4"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -94,6 +97,9 @@ core-testing = { group = "androidx.arch.core", name = "core-testing", version.re
 
 # OTP View
 otp-view = { group = "com.github.mukeshsolanki.android-otpview-pinview", name = "otpview", version.ref = "otp-view" }
+
+# SeatBook View
+seat-book = { group = "com.github.JahidHasanCO", name = "SeatBookView", version.ref = "seat-view" }
 
 
 [plugins]

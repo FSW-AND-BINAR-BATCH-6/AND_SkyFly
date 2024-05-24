@@ -127,4 +127,7 @@ dependencies {
 
     // otp view
     implementation(libs.otp.view)
+
+    // SeatBook View
+    implementation(libs.seat.book)
 }

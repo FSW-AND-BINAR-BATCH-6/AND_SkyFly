@@ -7,8 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityMainBinding
-import com.kom.skyfly.presentation.flightdetails.FlightDetailsActivity
-import com.kom.skyfly.presentation.login.LoginActivity
+import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatActivity
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -20,6 +19,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setBottomNavbar()
 
+        startActivity(
+            Intent(this, ChooseSeatActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            },
+        )
     }
 
     private fun setBottomNavbar() {

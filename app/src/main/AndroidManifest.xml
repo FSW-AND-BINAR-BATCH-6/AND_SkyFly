@@ -16,8 +16,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.flightdetails.FlightDetailsActivity"
+            android:name=".presentation.checkout.flightdetail.FlightDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".presentation.flightdetailhistory.FlightDetailHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.chooseseat.ChooseSeatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.passengerbiodata.PassengerBiodataActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.ordererbiodata.OrdererBiodataActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".presentation.register.RegisterActivity"
             android:exported="false" />
