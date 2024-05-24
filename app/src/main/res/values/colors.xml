@@ -3,7 +3,7 @@
     <color name="darkGrey">#CD848484</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="md_theme_primary">#6F528A</color>
+    <color name="md_theme_primary">#4B1979</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#F0DBFF</color>
     <color name="md_theme_onPrimaryContainer">#280D42</color>
@@ -78,7 +78,7 @@
     <color name="md_theme_inverseSurface_mediumContrast">#332F35</color>
     <color name="md_theme_inverseOnSurface_mediumContrast">#F6EEF6</color>
     <color name="md_theme_inversePrimary_mediumContrast">#DBB9F9</color>
-    <color name="md_theme_primaryFixed_mediumContrast">#8668A2</color>
+    <color name="md_theme_primaryFixed_mediumContrast">#A06ECE</color>
     <color name="md_theme_onPrimaryFixed_mediumContrast">#FFFFFF</color>
     <color name="md_theme_primaryFixedDim_mediumContrast">#6C5087</color>
     <color name="md_theme_onPrimaryFixedVariant_mediumContrast">#FFFFFF</color>

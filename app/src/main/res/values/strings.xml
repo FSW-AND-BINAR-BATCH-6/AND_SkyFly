@@ -1,5 +1,4 @@
 <resources>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_name">SkyFly</string>
     <string name="text_home">Beranda</string>
@@ -40,6 +39,41 @@
     <string name="text_email">Email</string>
     <string name="text_email_hint">Masukkan email</string>
     <string name="text_submit">Submit</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="text_header">Biodata Pemesan</string>
+    <string name="text_fullname_title">Nama Lengkap</string>
+    <string name="text_family_name">Nama Keluarga</string>
+    <string name="text_family_name_hint">Masukkan nama keluarga</string>
+    <string name="text_have_family_name">Punya nama keluarga?</string>
+    <string name="text_customer_biodata_title">Data Diri Pemesan</string>
+    <string name="text_save">Simpan</string>
+    <string name="text_title">Title</string>
+    <string name="text_date_of_birth">Tanggal Lahir</string>
+    <string name="text_country">Kewarganegaraan</string>
+    <string name="text_country_value">Indonesia</string>
+    <string name="text_ktp_or_passport">KTP/Paspor</string>
+    <string name="text_ktp_or_passport_hint">Masukkan Ktp/paspor</string>
+    <string name="text_valid_until">Berlaku Sampai</string>
+    <string name="text_choose_seat">Lanjut Pilih Kursi</string>
+    <string name="text_passenger_biodata">Penumpang 1 - Adult</string>
+    <string name="text_fullname">Nama Lengkap</string>
+    <string name="text_fullname_hint">Masukkan nama lengkap</string>
+    <string name="text_passenger_biodata_title">Biodata Penumpang</string>
+    <string name="text_seat_title">Ekonomi - 64 Seat Available</string>
+    <string name="text_header_choose_seat">Pilih Kursi (JKT - MLB - Economy)</string>
+
+    <string-array name="titles_array">
+        <item>Mr.</item>
+        <item>Ms.</item>
+        <item>Mrs.</item>
+        <item>Dr.</item>
+        <item>Prof.</item>
+    </string-array>
     <string name="text_title_order_history">Riwayat Pesanan</string>
     <string name="text_filter">Filter</string>
     <string name="text_unpaid">Unpaid</string>
@@ -74,4 +108,9 @@
     <string name="text_title_total">Total</string>
     <string name="text_total_price">IDR 9.850.000</string>
     <string name="text_proceed_to_payment">Lanjutkan Pembayaran</string>
+    <string name="text_destination"><![CDATA[Jakarta -> Melbourne (4h 0m)]]></string>
+    <string name="text_baggage">Bagasi 20kg</string>
+    <string name="text_baggage_cabin_weight">Bagasi Kabin 7kg</string>
+    <string name="text_in_flight_entertainment">In Flight Entertainment</string>
+    <string name="text_header_detail_history">Rincian Penerbangan</string>
 </resources>
