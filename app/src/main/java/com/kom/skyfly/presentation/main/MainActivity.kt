@@ -2,12 +2,18 @@ package com.kom.skyfly.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.kom.skyfly.R
+import com.kom.skyfly.data.source.network.model.login.LoginRequest
+import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import com.kom.skyfly.databinding.ActivityMainBinding
-import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatActivity
+import com.kom.skyfly.presentation.login.LoginActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -18,9 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setBottomNavbar()
-
         startActivity(
-            Intent(this, ChooseSeatActivity::class.java).apply {
+            Intent(this, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             },
         )
@@ -31,6 +36,24 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { controller, destination, argumen ->
             when (destination.id) {
+            }
+        }
+    }
+
+    private fun getDataFromApi() {
+        val apiService = SkyFlyApiService.invoke()
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val loginRequest = LoginRequest("example@gmail.com", "example123")
+                val response = apiService.login(loginRequest)
+                Log.d("Coins", "Response: $response")
+            } catch (e: Exception) {
+                if (e is retrofit2.HttpException) {
+                    val errorBody = e.response()?.errorBody()?.string()
+                    Log.e("Coins Error", "HTTP Error: ${e.code()} - ${e.message()}\nBody: $errorBody", e)
+                } else {
+                    Log.e("Coins Error", "Error: ${e.message}", e)
+                }
             }
         }
     }

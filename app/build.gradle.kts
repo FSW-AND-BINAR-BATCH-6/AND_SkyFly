@@ -47,14 +47,24 @@ android {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                value = "\"https://api-restaurant.binaracademy.org/\"",
+                value = "\"https://backend-skyfly-c1.vercel.app/\"",
+            )
+            buildConfigField(
+                type = "String",
+                name = "API_TOKEN",
+                value = "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1YjBjYTcwLWQ4N2YtNDAwOS04YzVmLWU4N2ZjMjg3NjE4ZCIsInVzZXJuYW1lIjoic2kgYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiY29tcGFueUlkIjoiMzk5NzU2OGQtMWMxZi00ZGE5LTkwYTgtMzUyMGUyN2E0OWJhIiwiaWF0IjoxNzEzMzYwNTcwLCJleHAiOjE3MTMzNjQxNzB9.ayp8KKV8L2Y45Z-RR1wrEqM14XoAitLn20XGaJhgwNA\"",
             )
         }
         create("integration") {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                value = "\"https://api-restaurant.binaracademy.org/\"",
+                value = "\"https://backend-skyfly-c1.vercel.app/\"",
+            )
+            buildConfigField(
+                type = "String",
+                name = "API_TOKEN",
+                value = "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1YjBjYTcwLWQ4N2YtNDAwOS04YzVmLWU4N2ZjMjg3NjE4ZCIsInVzZXJuYW1lIjoic2kgYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiY29tcGFueUlkIjoiMzk5NzU2OGQtMWMxZi00ZGE5LTkwYTgtMzUyMGUyN2E0OWJhIiwiaWF0IjoxNzEzMzYwNTcwLCJleHAiOjE3MTMzNjQxNzB9.ayp8KKV8L2Y45Z-RR1wrEqM14XoAitLn20XGaJhgwNA\"",
             )
         }
     }
@@ -117,6 +127,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp)
+    implementation(libs.http.logging)
 
     // Unit Testing
     testImplementation(libs.mockk.agent)
