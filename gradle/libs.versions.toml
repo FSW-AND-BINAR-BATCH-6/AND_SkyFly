@@ -34,6 +34,7 @@ ktlint = "12.1.0"
 # Http
 retrofit = "2.9.0"
 okhttp = "4.12.0"
+http-logging = "3.8.0"
 
 #unit test
 mockk = "1.13.10"
@@ -84,6 +85,8 @@ coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutine
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+http-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "http-logging" }
+
 
 # Koin
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
@@ -100,6 +103,7 @@ otp-view = { group = "com.github.mukeshsolanki.android-otpview-pinview", name = 
 
 # SeatBook View
 seat-book = { group = "com.github.JahidHasanCO", name = "SeatBookView", version.ref = "seat-view" }
+
 
 
 [plugins]

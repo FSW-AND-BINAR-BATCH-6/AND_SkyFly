@@ -113,4 +113,10 @@
     <string name="text_baggage_cabin_weight">Bagasi Kabin 7kg</string>
     <string name="text_in_flight_entertainment">In Flight Entertainment</string>
     <string name="text_header_detail_history">Rincian Penerbangan</string>
+    <string name="proceed_login">login-procced</string>
+    <string name="password_is_incorrect">Password salah!</string>
+    <string name="text_countdown_otp">Kirim ulang OTP dalam %1$s detik</string>
+    <string name="text_register_success">Register berhasil!</string>
+    <string name="text_success_verify_account">Verifikasi berhasil!</string>
+    <string name="text_resend_otp_title">Kirim Ulang</string>
 </resources>

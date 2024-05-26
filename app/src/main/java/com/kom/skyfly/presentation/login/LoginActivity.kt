@@ -2,20 +2,26 @@ package com.kom.skyfly.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityLoginBinding
+import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatActivity
 import com.kom.skyfly.presentation.register.RegisterActivity
 import com.kom.skyfly.presentation.resetpassword.ResetPassword
 import com.kom.skyfly.utils.highLightWord
+import com.kom.skyfly.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
+    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +37,9 @@ class LoginActivity : AppCompatActivity() {
         binding.tvForgetPassword.setOnClickListener {
             showResetPasswordForm()
         }
+        binding.btnLogin.setOnClickListener {
+            doLogin()
+        }
     }
 
     private fun setLoginForm() {
@@ -38,6 +47,52 @@ class LoginActivity : AppCompatActivity() {
             layoutForm.tilEmail.isVisible = true
             layoutForm.tilPassword.isVisible = true
         }
+    }
+
+    private fun doLogin() {
+        if (isFormValid()) {
+            val email = binding.layoutForm.etEmail.text.toString().trim()
+            val password = binding.layoutForm.etPassword.text.toString().trim()
+
+            proceedLogin(email, password)
+        }
+    }
+
+    private fun proceedLogin(
+        email: String,
+        password: String,
+    ) {
+        loginViewModel.doLogin(email, password).observe(this) { result ->
+            result.proceedWhen(
+                doOnSuccess = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnLogin.isVisible = true
+                    navigateAction()
+                },
+                doOnError = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnLogin.isVisible = true
+                    Log.d("proceedLogin", getString(R.string.proceed_login, it.exception?.message))
+                    Toast.makeText(
+                        this,
+                        getString(R.string.password_is_incorrect),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                },
+                doOnLoading = {
+                    binding.pbLoading.isVisible = true
+                    binding.btnLogin.isVisible = false
+                },
+            )
+        }
+    }
+
+    private fun navigateAction() {
+        startActivity(
+            Intent(this, ChooseSeatActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            },
+        )
     }
 
     private fun navigateToRegister() {

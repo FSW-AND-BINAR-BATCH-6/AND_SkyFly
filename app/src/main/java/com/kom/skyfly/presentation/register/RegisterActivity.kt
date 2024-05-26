@@ -3,6 +3,7 @@ package com.kom.skyfly.presentation.register
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
@@ -11,11 +12,15 @@ import com.kom.skyfly.databinding.ActivityRegisterBinding
 import com.kom.skyfly.presentation.login.LoginActivity
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpFragment
 import com.kom.skyfly.utils.highLightWord
+import com.kom.skyfly.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
     private val binding: ActivityRegisterBinding by lazy {
         ActivityRegisterBinding.inflate(layoutInflater)
     }
+
+    private val registerViewModel: RegisterViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,13 +34,57 @@ class RegisterActivity : AppCompatActivity() {
             navigateToLogin()
         }
         binding.btnRegister.setOnClickListener {
-            openOtpModal()
+            doRegister()
         }
     }
 
-    private fun openOtpModal() {
-        val verifyOtpFragment = VerifyOtpFragment()
+    private fun openOtpModal(token: String?) {
+        val verifyOtpFragment = VerifyOtpFragment.newInstance(token)
         verifyOtpFragment.show(supportFragmentManager, verifyOtpFragment.tag)
+    }
+
+    private fun doRegister() {
+        if (isFormValid()) {
+            val email = binding.layoutForm.etEmail.text.toString().trim()
+            val password = binding.layoutForm.etPassword.text.toString().trim()
+            val fullName = binding.layoutForm.etFullName.text.toString().trim()
+            val phoneNumber = binding.layoutForm.etNoTlp.text.toString().trim()
+            proceedRegister(fullName, email, phoneNumber, password)
+        }
+    }
+
+    private fun proceedRegister(
+        fullName: String,
+        email: String,
+        phoneNumber: String,
+        password: String,
+    ) {
+        registerViewModel.doRegister(fullName, email, phoneNumber, password)
+            .observe(this) { result ->
+                result.proceedWhen(
+                    doOnSuccess = {
+                        binding.pbLoading.isVisible = false
+                        binding.btnRegister.isVisible = true
+                        result.payload?.let {
+                            val token = it.token
+                            openOtpModal(token)
+                        }
+                    },
+                    doOnError = {
+                        binding.pbLoading.isVisible = false
+                        binding.btnRegister.isVisible = true
+                        Toast.makeText(
+                            this,
+                            "Login Failed : ${it.exception?.message.orEmpty()}",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    },
+                    doOnLoading = {
+                        binding.pbLoading.isVisible = true
+                        binding.btnRegister.isVisible = false
+                    },
+                )
+            }
     }
 
     private fun setRegisterForm() {
