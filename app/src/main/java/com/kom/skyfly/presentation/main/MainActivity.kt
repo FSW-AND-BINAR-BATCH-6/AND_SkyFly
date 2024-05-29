@@ -1,6 +1,5 @@
 package com.kom.skyfly.presentation.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +9,6 @@ import com.kom.skyfly.R
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import com.kom.skyfly.databinding.ActivityMainBinding
-import com.kom.skyfly.presentation.checkout.checkoutticket.CheckoutTicketActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,11 +22,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setBottomNavbar()
-        startActivity(
-            Intent(this, CheckoutTicketActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            },
-        )
     }
 
     private fun setBottomNavbar() {
