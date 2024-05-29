@@ -121,4 +121,8 @@
     <string name="text_resend_otp_title">Kirim Ulang</string>
     <string name="text_success_reset_password">Reset password berhasil!</string>
     <string name="text_bottom_sheets_no_loggin">Maaf, Anda harus login terlebih dahulu!</string>
+    <string name="text_notification_type">Promosi</string>
+    <string name="text_notification_content">Dapatkan Potongan 50% Tiket!</string>
+    <string name="text_sub_notification">Syarat dan ketentuan berlaku!</string>
+    <string name="text_notification_Date">20 Maret 2024, 14:40</string>
 </resources>
