@@ -1,7 +1,10 @@
 package com.kom.skyfly.presentation.checkout.flightdetail
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityFlightDetailBinding
 
@@ -13,10 +16,5 @@ class FlightDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setTitleHeader()
-    }
-
-    private fun setTitleHeader() {
-        binding.layoutHeader.tvTitleHeader.text = getString(R.string.text_header_detail_history)
     }
 }

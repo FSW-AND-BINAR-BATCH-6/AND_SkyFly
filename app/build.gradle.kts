@@ -141,4 +141,6 @@ dependencies {
 
     // SeatBook View
     implementation(libs.seat.book)
+
+    implementation("androidx.webkit:webkit:1.8.0")
 }
