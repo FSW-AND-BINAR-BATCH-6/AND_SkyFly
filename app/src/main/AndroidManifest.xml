@@ -20,6 +20,12 @@
             android:name=".presentation.checkout.flightdetail.FlightDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.checkout.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.checkoutticket.CheckoutTicketActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.flightdetailhistory.FlightDetailHistoryActivity"
             android:exported="false" />
         <activity
