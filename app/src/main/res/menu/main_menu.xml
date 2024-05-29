@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_notif"
         android:title="@string/text_notification"/>
     <item
-        android:id="@+id/menu_profile_tab"
+        android:id="@+id/menu_account_tab"
         android:icon="@drawable/ic_profile"
         android:title="@string/text_profile"/>
 

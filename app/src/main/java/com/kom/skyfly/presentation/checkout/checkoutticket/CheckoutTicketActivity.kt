@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityCheckoutTicketBinding
-import com.kom.skyfly.databinding.ActivityFlightDetailBinding
 import com.kom.skyfly.presentation.checkout.payment.PaymentActivity
 
 class CheckoutTicketActivity : AppCompatActivity() {

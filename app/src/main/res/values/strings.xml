@@ -125,4 +125,10 @@
     <string name="text_notification_content">Dapatkan Potongan 50% Tiket!</string>
     <string name="text_sub_notification">Syarat dan ketentuan berlaku!</string>
     <string name="text_notification_Date">20 Maret 2024, 14:40</string>
+    <string name="text_edit_profile">Ubah Profile</string>
+    <string name="text_settings">Pengaturan</string>
+    <string name="text_logout">Keluar</string>
+    <string name="text_version">v1.0.0</string>
+    <string name="text_name">Komang Yuda Saputra</string>
+    <string name="text_user_email">komangyuda@example.com</string>
 </resources>

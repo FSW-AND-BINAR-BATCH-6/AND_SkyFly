@@ -21,8 +21,8 @@
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
     <fragment
-        android:id="@+id/menu_profile_tab"
-        android:name="com.kom.skyfly.presentation.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/menu_account_tab"
+        android:name="com.kom.skyfly.presentation.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" />
 </navigation>

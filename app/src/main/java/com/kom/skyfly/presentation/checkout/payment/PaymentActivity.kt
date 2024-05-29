@@ -24,8 +24,6 @@ class PaymentActivity : AppCompatActivity() {
             openUrlFromWebView(paymentUrl)
         }
         openUrlFromWebView(paymentUrl)
-
-
     }
 
     private fun openUrlFromWebView(url: String?) {
