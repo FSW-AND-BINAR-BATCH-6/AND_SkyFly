@@ -119,4 +119,5 @@
     <string name="text_register_success">Register berhasil!</string>
     <string name="text_success_verify_account">Verifikasi berhasil!</string>
     <string name="text_resend_otp_title">Kirim Ulang</string>
+    <string name="text_success_reset_password">Reset password berhasil!</string>
 </resources>

@@ -11,8 +11,8 @@ import com.google.android.material.textfield.TextInputLayout
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityLoginBinding
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatActivity
+import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordFragment
 import com.kom.skyfly.presentation.register.RegisterActivity
-import com.kom.skyfly.presentation.resetpassword.ResetPassword
 import com.kom.skyfly.utils.highLightWord
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -104,7 +104,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showResetPasswordForm() {
-        val resetPassword = ResetPassword()
+        val resetPassword = ForgetPasswordFragment()
         resetPassword.show(supportFragmentManager, resetPassword.tag)
     }
 

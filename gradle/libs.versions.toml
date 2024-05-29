@@ -48,6 +48,7 @@ otp-view = "3.1.0"
 # SeatBook View
 seat-view = "1.0.4"
 
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
