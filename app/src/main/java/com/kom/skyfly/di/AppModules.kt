@@ -5,6 +5,7 @@ import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
 import com.kom.skyfly.data.repository.auth.AuthRepository
 import com.kom.skyfly.data.repository.auth.AuthRepositoryImpl
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
+import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.login.LoginViewModel
 import com.kom.skyfly.presentation.register.RegisterViewModel
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
@@ -40,6 +41,7 @@ object AppModules {
             viewModelOf(::LoginViewModel)
             viewModelOf(::RegisterViewModel)
             viewModelOf(::VerifyOtpViewModel)
+            viewModelOf(::ForgetPasswordViewModel)
         }
 
     val modules =

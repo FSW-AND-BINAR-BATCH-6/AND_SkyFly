@@ -1,5 +1,7 @@
 package com.kom.skyfly.data.datasource.auth
 
+import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
+import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
@@ -32,6 +34,9 @@ interface AuthDataSource {
         token: String,
         otp: String,
     ): VerifyAccountResponse
+
+    @Throws(exceptionClasses = [Exception::class])
+    suspend fun forgetPassword(email: String): ForgetPasswordResponse
 }
 
 class AuthDataSourceImpl(private val service: SkyFlyApiService) : AuthDataSource {
@@ -67,5 +72,10 @@ class AuthDataSourceImpl(private val service: SkyFlyApiService) : AuthDataSource
         otp: String,
     ): VerifyAccountResponse {
         return service.verifyAccount(token, VerifyAccountRequest(otp))
+    }
+
+    override suspend fun forgetPassword(email: String): ForgetPasswordResponse {
+        val forgetPasswordRequest = ForgetPasswordRequest(email)
+        return service.forgetPassword(forgetPasswordRequest)
     }
 }

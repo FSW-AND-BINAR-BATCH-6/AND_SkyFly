@@ -2,6 +2,8 @@ package com.kom.skyfly.data.source.network.services
 
 import android.util.Log
 import com.kom.skyfly.BuildConfig
+import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
+import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
@@ -39,6 +41,11 @@ interface SkyFlyApiService {
         @Query("token") token: String,
         @Body verifyAccountRequest: VerifyAccountRequest,
     ): VerifyAccountResponse
+
+    @POST("api/v1/auth/forgetPassword")
+    suspend fun forgetPassword(
+        @Body forgetPasswordRequest: ForgetPasswordRequest,
+    ): ForgetPasswordResponse
 
     companion object {
         @JvmStatic
