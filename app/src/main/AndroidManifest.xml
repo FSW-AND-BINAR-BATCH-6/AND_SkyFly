@@ -26,6 +26,9 @@
             android:name=".presentation.account.editprofile.EditProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.history.filterflighthistory.CalendarView"
+            android:exported="false" />
+        <activity
             android:name=".presentation.checkout.flightdetail.FlightDetailActivity"
             android:exported="false" />
         <activity
@@ -35,7 +38,7 @@
             android:name=".presentation.checkout.checkoutticket.CheckoutTicketActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.flightdetailhistory.FlightDetailHistoryActivity"
+            android:name=".presentation.history.flightdetailhistory.FlightDetailHistoryActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.checkout.chooseseat.ChooseSeatActivity"

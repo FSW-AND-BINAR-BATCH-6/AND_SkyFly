@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.databinding.FragmentBottomSheetsDialogBinding
 
-class BottomSheetsDialogFragment : BottomSheetDialogFragment() {
+open class BottomSheetsDialogFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentBottomSheetsDialogBinding
 
     override fun onCreateView(

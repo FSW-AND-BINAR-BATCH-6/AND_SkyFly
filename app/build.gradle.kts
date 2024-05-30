@@ -30,6 +30,8 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -144,4 +146,13 @@ dependencies {
 
     // App intro
     implementation(libs.app.intro)
+    // Calendar View
+    implementation(libs.calendar.view)
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    // Groupie
+    implementation(libs.groupie.view)
+    implementation(libs.groupie.view.binding)
+
+    implementation("androidx.webkit:webkit:1.8.0")
 }
