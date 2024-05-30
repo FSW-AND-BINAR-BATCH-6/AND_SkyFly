@@ -3,6 +3,7 @@ package com.kom.skyfly.data.datasource.auth
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
+import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountRequest
@@ -19,7 +20,7 @@ interface AuthDataSource {
     suspend fun doLogin(
         email: String,
         password: String,
-    ): Boolean
+    ): LoginResponse
 
     @Throws(exceptionClasses = [Exception::class])
     suspend fun doRegister(
@@ -43,13 +44,12 @@ class AuthDataSourceImpl(private val service: SkyFlyApiService) : AuthDataSource
     override suspend fun doLogin(
         email: String,
         password: String,
-    ): Boolean {
+    ): LoginResponse {
         return try {
             val loginRequest = LoginRequest(email, password)
-            val response = service.login(loginRequest)
-            response.token != null
+            service.login(loginRequest)
         } catch (e: Exception) {
-            false
+            throw e
         }
     }
 

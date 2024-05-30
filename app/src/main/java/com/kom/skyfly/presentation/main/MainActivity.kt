@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -9,14 +10,17 @@ import com.kom.skyfly.R
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import com.kom.skyfly.databinding.ActivityMainBinding
+import com.kom.skyfly.presentation.login.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+    private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +33,33 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { controller, destination, argumen ->
             when (destination.id) {
+                R.id.menu_history_tab -> {
+                    if (mainViewModel.getUserToken() == null) {
+                        navigateToLogin()
+                        controller.popBackStack(R.id.menu_home_tab, false)
+                    }
+                }
+
+                R.id.menu_account_tab -> {
+                    if (mainViewModel.getUserToken() == null) {
+                        navigateToLogin()
+                        controller.popBackStack(R.id.menu_home_tab, false)
+                    }
+                }
+
+                R.id.menu_notification_tab -> {
+                    if (mainViewModel.getUserToken() == null) {
+                        navigateToLogin()
+                        controller.popBackStack(R.id.menu_home_tab, false)
+                    }
+                }
             }
         }
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun getDataFromApi() {
@@ -43,7 +72,11 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 if (e is retrofit2.HttpException) {
                     val errorBody = e.response()?.errorBody()?.string()
-                    Log.e("Coins Error", "HTTP Error: ${e.code()} - ${e.message()}\nBody: $errorBody", e)
+                    Log.e(
+                        "Coins Error",
+                        "HTTP Error: ${e.code()} - ${e.message()}\nBody: $errorBody",
+                        e,
+                    )
                 } else {
                     Log.e("Coins Error", "Error: ${e.message}", e)
                 }

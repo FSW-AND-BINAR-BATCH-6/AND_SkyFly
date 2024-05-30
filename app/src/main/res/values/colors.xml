@@ -3,6 +3,7 @@
     <color name="darkGrey">#CD848484</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#73CA5C</color>
+    <color name="black">#000000</color>
 
     <color name="md_theme_primary">#4B1979</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
@@ -16,7 +17,7 @@
     <color name="md_theme_onTertiary">#FFFFFF</color>
     <color name="md_theme_tertiaryContainer">#FFD9DD</color>
     <color name="md_theme_onTertiaryContainer">#321016</color>
-    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_error">#E81616</color>
     <color name="md_theme_onError">#FFFFFF</color>
     <color name="md_theme_errorContainer">#FFDAD6</color>
     <color name="md_theme_onErrorContainer">#410002</color>

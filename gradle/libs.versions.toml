@@ -48,6 +48,9 @@ otp-view = "3.1.0"
 # SeatBook View
 seat-view = "1.0.4"
 
+# App intro
+app-intro = "6.3.1"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -104,6 +107,10 @@ otp-view = { group = "com.github.mukeshsolanki.android-otpview-pinview", name = 
 
 # SeatBook View
 seat-book = { group = "com.github.JahidHasanCO", name = "SeatBookView", version.ref = "seat-view" }
+
+# App intro
+app-intro = { group = "com.github.AppIntro", name = "AppIntro", version.ref = "app-intro" }
+
 
 
 
