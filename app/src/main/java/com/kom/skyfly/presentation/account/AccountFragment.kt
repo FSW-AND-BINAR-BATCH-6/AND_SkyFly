@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.kom.skyfly.databinding.FragmentAccountBinding
 import com.kom.skyfly.presentation.account.editprofile.EditProfileActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
+
+    private val accountViewModel: AccountViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +36,10 @@ class AccountFragment : Fragment() {
     private fun setClickListeners() {
         binding.layoutBtnProfile.tvEditProfile.setOnClickListener {
             doEditProfile()
+        }
+        binding.layoutBtnProfile.tvLogoutProfile.setOnClickListener {
+            accountViewModel.doLogout(null)
+            Toast.makeText(requireContext(), "Anda telah keluar!", Toast.LENGTH_SHORT).show()
         }
     }
 

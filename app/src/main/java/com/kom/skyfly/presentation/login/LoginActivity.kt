@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +11,8 @@ import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityLoginBinding
-import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatActivity
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordFragment
+import com.kom.skyfly.presentation.main.MainActivity
 import com.kom.skyfly.presentation.register.RegisterActivity
 import com.kom.skyfly.utils.highLightWord
 import com.kom.skyfly.utils.proceedWhen
@@ -58,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun proceedLogin(
         email: String,
         password: String,
@@ -67,6 +69,11 @@ class LoginActivity : AppCompatActivity() {
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
                     binding.btnLogin.isVisible = true
+                    it.payload?.let {
+                        val token = it.token
+                        loginViewModel.saveUserToken(token)
+                    }
+
                     navigateAction()
                 },
                 doOnError = {
@@ -89,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateAction() {
         startActivity(
-            Intent(this, ChooseSeatActivity::class.java).apply {
+            Intent(this, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             },
         )

@@ -131,4 +131,12 @@
     <string name="text_version">v1.0.0</string>
     <string name="text_name">Komang Yuda Saputra</string>
     <string name="text_user_email">komangyuda@example.com</string>
+    <string name="text_welcome">Welcome to SkyFly!</string>
+    <string name="text_desc_welcome">Beli tiket dimana saja dan kapan saja!</string>
+    <string name="text_on_boarding_title_first">Temukan Penerbangan Terbaik!</string>
+    <string name="text_on_boarding_sub_title">Jelajahi berbagai pilihan penerbangan dengan harga terbaik dan waktu keberangkatan yang sesuai dengan kebutuhan Anda.</string>
+    <string name="text_on_boarding_second_title">Pesan Tiket Dengan Mudah!</string>
+    <string name="text_on_boarding_second_sub_title">Proses pemesanan yang cepat dan mudah, hanya dengan beberapa ketukan. Temukan dan pesan tiket penerbangan Anda dalam hitungan menit.</string>
+    <string name="text_on_boarding_third_title">Nikmati Perjalanan Anda!</string>
+    <string name="text_on_boarding_thirt_sub_title">Dapatkan notifikasi penerbangan dan detail perjalanan langsung di aplikasi. Siap untuk pengalaman perjalanan yang lebih nyaman dan menyenangkan?</string>
 </resources>
