@@ -39,15 +39,16 @@
 
         <TextView
             android:id="@+id/tv_notification_content"
-            android:layout_width="247dp"
-            android:layout_height="26dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
-            android:fontFamily="@font/font_open_sans_bold"
+            android:fontFamily="@font/font_open_sans_semi_bold"
             android:maxLines="2"
             android:text="@string/text_notification_content"
             android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_notification_icon"
             app:layout_constraintTop_toBottomOf="@id/tv_notification_type" />
 
@@ -57,13 +58,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:text="@string/text_sub_notification"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/iv_notification_icon"
             app:layout_constraintTop_toBottomOf="@id/tv_notification_content" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

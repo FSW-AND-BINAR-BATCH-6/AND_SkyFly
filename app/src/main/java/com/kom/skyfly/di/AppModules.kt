@@ -5,10 +5,14 @@ import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
 import com.kom.skyfly.data.datasource.history.HistoryDataSource
 import com.kom.skyfly.data.datasource.history.HistoryDataSourceImpl
+import com.kom.skyfly.data.datasource.notification.NotificationDataSource
+import com.kom.skyfly.data.datasource.notification.NotificationDataSourceImpl
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSource
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSourceImpl
 import com.kom.skyfly.data.repository.auth.AuthRepository
 import com.kom.skyfly.data.repository.auth.AuthRepositoryImpl
+import com.kom.skyfly.data.repository.notification.NotificationRepository
+import com.kom.skyfly.data.repository.notification.NotificationRepositoryImpl
 import com.kom.skyfly.data.repository.userpref.UserPrefRepository
 import com.kom.skyfly.data.repository.userpref.UserPrefRepositoryImpl
 import com.kom.skyfly.data.source.local.pref.UserPreference
@@ -20,6 +24,7 @@ import com.kom.skyfly.presentation.history.HistoryViewModel
 import com.kom.skyfly.presentation.home.HomeViewModel
 import com.kom.skyfly.presentation.login.LoginViewModel
 import com.kom.skyfly.presentation.main.MainViewModel
+import com.kom.skyfly.presentation.notification.NotificationViewModel
 import com.kom.skyfly.presentation.onboarding.OnBoardingViewModel
 import com.kom.skyfly.presentation.register.RegisterViewModel
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
@@ -43,6 +48,7 @@ object AppModules {
             single<AuthDataSource> { AuthDataSourceImpl(get()) }
             single<UserPrefDataSource> { UserPrefDataSourceImpl(get()) }
             single<HistoryDataSource> { HistoryDataSourceImpl() }
+            single<NotificationDataSource> { NotificationDataSourceImpl() }
         }
 
     private val localModule =
@@ -60,6 +66,7 @@ object AppModules {
         module {
             single<AuthRepository> { AuthRepositoryImpl(get()) }
             single<UserPrefRepository> { UserPrefRepositoryImpl(get()) }
+            single<NotificationRepository> { NotificationRepositoryImpl(get()) }
         }
 
     private val viewModelModule =
@@ -73,6 +80,7 @@ object AppModules {
             viewModelOf(::HomeViewModel)
             viewModelOf(::MainViewModel)
             viewModelOf(::AccountViewModel)
+            viewModelOf(::NotificationViewModel)
         }
 
     val modules =
