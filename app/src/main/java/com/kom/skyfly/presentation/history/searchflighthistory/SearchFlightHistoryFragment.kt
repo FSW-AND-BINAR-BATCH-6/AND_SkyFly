@@ -1,14 +1,16 @@
+package com.kom.skyfly.presentation.history.searchflighthistory
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentSearchFlightHistoryBinding
-import com.kom.skyfly.presentation.bottomsheetsdialog.BottomSheetsDialogFragment
 
-class SearchFlightHistoryFragment : BottomSheetsDialogFragment() {
+class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentSearchFlightHistoryBinding
 
     override fun onCreateView(
@@ -16,7 +18,7 @@ class SearchFlightHistoryFragment : BottomSheetsDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentSearchFlightHistoryBinding.inflate(inflater, container, false)
+        binding = FragmentSearchFlightHistoryBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -40,7 +42,7 @@ class SearchFlightHistoryFragment : BottomSheetsDialogFragment() {
             bottomSheet?.let { sheet ->
                 val behavior = BottomSheetBehavior.from(sheet)
                 behavior.peekHeight = maxHeight
-                behavior.state = BottomSheetBehavior.STATE_COLLAPSED // Atur status bottom sheet jika perlu
+                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
     }

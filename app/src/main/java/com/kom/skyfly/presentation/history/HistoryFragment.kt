@@ -1,6 +1,5 @@
 package com.kom.skyfly.presentation.history
 
-import SearchFlightHistoryFragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kom.skyfly.databinding.FragmentHistoryBinding
 import com.kom.skyfly.presentation.history.filterflighthistory.CalendarView
 import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryActivity
+import com.kom.skyfly.presentation.history.searchflighthistory.SearchFlightHistoryFragment
 import com.kom.skyfly.presentation.history.viewitems.DataItem
 import com.kom.skyfly.presentation.history.viewitems.HeaderItem
 import com.xwray.groupie.GroupieAdapter

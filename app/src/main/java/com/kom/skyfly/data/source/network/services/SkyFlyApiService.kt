@@ -8,6 +8,7 @@ import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
+import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountRequest
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountResponse
 import okhttp3.OkHttpClient
@@ -46,6 +47,11 @@ interface SkyFlyApiService {
     suspend fun forgetPassword(
         @Body forgetPasswordRequest: ForgetPasswordRequest,
     ): ForgetPasswordResponse
+
+    @POST("api/v1/auth/verified/resend-otp")
+    suspend fun resendOtp(
+        @Query("token") token: String,
+    ): ResendOtpResponse
 
     companion object {
         @JvmStatic
