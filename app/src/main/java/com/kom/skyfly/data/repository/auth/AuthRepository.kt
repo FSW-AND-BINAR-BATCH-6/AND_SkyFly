@@ -4,6 +4,7 @@ import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
+import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountResponse
 import com.kom.skyfly.utils.ResultWrapper
 import com.kom.skyfly.utils.proceedFlow
@@ -39,6 +40,9 @@ interface AuthRepository {
 
     @Throws(exceptionClasses = [Exception::class])
     fun forgetPassword(email: String): Flow<ResultWrapper<ForgetPasswordResponse>>
+
+    @Throws(exceptionClasses = [Exception::class])
+    fun resendOtpRequest(token: String): Flow<ResultWrapper<ResendOtpResponse>>
 }
 
 class AuthRepositoryImpl(private val dataSource: AuthDataSource) : AuthRepository {
@@ -72,5 +76,9 @@ class AuthRepositoryImpl(private val dataSource: AuthDataSource) : AuthRepositor
 
     override fun forgetPassword(email: String): Flow<ResultWrapper<ForgetPasswordResponse>> {
         return proceedFlow { dataSource.forgetPassword(email) }
+    }
+
+    override fun resendOtpRequest(token: String): Flow<ResultWrapper<ResendOtpResponse>> {
+        return proceedFlow { dataSource.resendOtpRequest(token) }
     }
 }

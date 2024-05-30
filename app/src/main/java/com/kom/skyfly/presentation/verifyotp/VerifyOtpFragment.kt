@@ -34,6 +34,8 @@ class VerifyOtpFragment : BottomSheetDialogFragment() {
         }
     }
 
+    lateinit var token: String
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,12 +56,16 @@ class VerifyOtpFragment : BottomSheetDialogFragment() {
 
     private fun getOtpViewValue() {
         val otpView = binding.otpView
+        token = arguments?.getString(ARG_TOKEN).toString()
         otpView.setOtpCompletionListener { otp ->
             Log.d("Actual Value", otp)
-            val token = arguments?.getString(ARG_TOKEN)
+
             if (otp.length == otpView.itemCount) {
                 verifyProceed(token, otp)
             }
+        }
+        binding.tvResendOtp.setOnClickListener {
+            requestResendOtp(token)
         }
     }
 
@@ -86,6 +92,31 @@ class VerifyOtpFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private fun requestResendOtp(token: String) {
+        Log.d("VerifyOtpFragment", "Requesting resend OTP for token: $token")
+        verifyOtpViewModel.resendOtpRequest(token).observe(viewLifecycleOwner) { result ->
+            result.proceedWhen(
+                doOnSuccess = {
+                    Log.d("VerifyOtpFragment", "Resend OTP success: ${it.message}")
+                    Toast.makeText(
+                        requireContext(),
+                        "OTP dikirim ke email!",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                    it.payload?.let {
+                        val newToken = it.token
+                        if (newToken != null) {
+                            this@VerifyOtpFragment.token = newToken
+                        }
+                    }
+                },
+                doOnError = {
+                    Log.d("resendOtpError", "requestResendOtp: Error ${it.exception?.message}")
+                },
+            )
+        }
+    }
+
     private fun navigateToLogin() {
         startActivity(
             Intent(requireActivity(), LoginActivity::class.java).apply {
@@ -106,13 +137,6 @@ class VerifyOtpFragment : BottomSheetDialogFragment() {
                 override fun onFinish() {
                     binding.tvResendOtp.isVisible = true
                     binding.tvResendOtpCoundown.isVisible = false
-                    binding.tvResendOtp.setOnClickListener {
-                        Toast.makeText(
-                            requireContext(),
-                            "OTP dikirim ke email anda!",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    }
                 }
             }
         countdownTimer.start()

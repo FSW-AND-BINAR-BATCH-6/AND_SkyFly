@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="700dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_close"
@@ -20,7 +20,6 @@
             android:src="@drawable/ic_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/iv_main_img"
             android:layout_width="wrap_content"
@@ -28,47 +27,33 @@
             android:layout_margin="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/img_not_logged_in"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/text_bottom_sheets_no_loggin"
             android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_main_img"/>
+            app:layout_constraintTop_toBottomOf="@id/iv_main_img"
+            tools:text="@string/text_bottom_sheets_no_loggin" />
 
-        <FrameLayout
-            android:id="@+id/fl_btn_reset"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingVertical="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:background="@drawable/btn_rounded"
+            android:text="@string/text_login"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <Button
-                android:id="@+id/btn_reset"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_rounded"
-                android:text="@string/text_login"
-                android:textSize="16sp" />
-
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/pb_loading"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminate="true"
-                android:visibility="gone" />
-        </FrameLayout>
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_message" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

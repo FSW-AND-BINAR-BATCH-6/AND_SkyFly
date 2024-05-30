@@ -14,4 +14,6 @@ class VerifyOtpViewModel(private val authRepository: AuthRepository) : ViewModel
         token: String,
         otp: String,
     ) = authRepository.doVerifyAccount(token, otp).asLiveData(Dispatchers.IO)
+
+    fun resendOtpRequest(token: String) = authRepository.resendOtpRequest(token).asLiveData(Dispatchers.IO)
 }
