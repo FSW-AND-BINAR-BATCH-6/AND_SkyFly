@@ -1,52 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.history.HistoryFragment"
-    android:background="@drawable/bg_white_gradient">
+    android:background="@drawable/bg_white_gradient"
+    tools:context=".presentation.history.HistoryFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp" >
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
 
         <include
             android:id="@+id/layout_header_order_history"
             layout="@layout/layout_header_order_history"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/tv_history_date"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="Maret 2023"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_header_order_history"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/cl_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_history_date"
-            app:layout_constraintBottom_toBottomOf="@id/tv_history_date"
+            android:layout_marginTop="16dp"
             android:background="@drawable/btn_rounded"
-            android:backgroundTint="@color/white">
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_header_order_history">
 
             <ImageView
                 android:id="@+id/iv_filter"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginVertical="4dp"
                 android:layout_marginHorizontal="8dp"
-                android:src="@drawable/ic_filter"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_marginVertical="4dp"
+                android:src="@drawable/ic_filter" />
 
             <TextView
                 android:id="@+id/tv_filter"
@@ -55,21 +45,22 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:text="@string/text_filter"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/iv_filter"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:textSize="16sp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_page"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:nestedScrollingEnabled="true"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tv_history_date"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:listitem="@layout/item_order_history"/>
+            app:layout_constraintTop_toBottomOf="@id/cl_filter"
+            tools:listitem="@layout/item_order_history" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

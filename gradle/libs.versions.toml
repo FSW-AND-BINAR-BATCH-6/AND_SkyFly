@@ -1,5 +1,6 @@
 [versions]
 agp = "8.4.0"
+desugar_jdk_libs = "2.0.4"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -51,9 +52,15 @@ seat-view = "1.0.4"
 # App intro
 app-intro = "6.3.1"
 
+# Calendar View
+calendar-view = "2.5.1"
+
+# Groupie
+groupie-view = "2.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -111,8 +118,13 @@ seat-book = { group = "com.github.JahidHasanCO", name = "SeatBookView", version.
 # App intro
 app-intro = { group = "com.github.AppIntro", name = "AppIntro", version.ref = "app-intro" }
 
+# Calendar View
+calendar-view = { group = "com.kizitonwose.calendar", name  = "view", version.ref = "calendar-view" }
 
 
+# Groupie
+groupie-view = { group = "com.github.lisawray.groupie", name = "groupie", version.ref = "groupie-view" }
+groupie-view-binding = { group = "com.github.lisawray.groupie", name = "groupie-viewbinding", version.ref = "groupie-view" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

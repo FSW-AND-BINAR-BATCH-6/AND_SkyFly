@@ -56,7 +56,7 @@
                 app:layout_constraintTop_toTopOf="@id/tv_detail_title_booking_code" />
 
             <TextView
-                android:id="@+id/tv_detail_time"
+                android:id="@+id/tv_detail_departure_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -76,19 +76,19 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_detail_time" />
+                app:layout_constraintTop_toTopOf="@id/tv_detail_departure_time" />
 
             <TextView
-                android:id="@+id/tv_detail_date"
+                android:id="@+id/tv_detail_departure_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_date"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_time" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_time" />
 
             <TextView
-                android:id="@+id/tv_detail_airport"
+                android:id="@+id/tv_detail_departure_airport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -96,7 +96,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_date" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_date" />
 
             <TextView
                 android:id="@+id/tv_detail_terminal"
@@ -106,8 +106,8 @@
                 android:text="@string/text_example_terminal"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/tv_detail_airport"
-                app:layout_constraintTop_toTopOf="@id/tv_detail_airport" />
+                app:layout_constraintStart_toEndOf="@id/tv_detail_departure_airport"
+                app:layout_constraintTop_toTopOf="@id/tv_detail_departure_airport" />
 
             <View
                 android:id="@+id/v_line_1"
@@ -116,7 +116,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/grey"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_airport" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_airport" />
 
             <ImageView
                 android:id="@+id/iv_airline"
