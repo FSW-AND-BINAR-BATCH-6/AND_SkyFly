@@ -57,6 +57,7 @@ calendar-view = "2.5.1"
 
 # Groupie
 groupie-view = "2.10.1"
+recyclerview = "1.3.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -125,6 +126,7 @@ calendar-view = { group = "com.kizitonwose.calendar", name  = "view", version.re
 # Groupie
 groupie-view = { group = "com.github.lisawray.groupie", name = "groupie", version.ref = "groupie-view" }
 groupie-view-binding = { group = "com.github.lisawray.groupie", name = "groupie-viewbinding", version.ref = "groupie-view" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
