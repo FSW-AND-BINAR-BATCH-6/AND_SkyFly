@@ -1,17 +1,98 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/titlesContainer"
-        layout="@layout/calendar_day_titles_container"/>
+    <TextView
+        android:id="@+id/tv_text_departure_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_date_daparture"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@id/vertical_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.kizitonwose.calendar.view.CalendarView
-        android:id="@+id/calendarView"
+    <TextView
+        android:id="@+id/tv_departure_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/font_open_sans_semi_bold"
+        android:text="@string/text_date_departure"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_text_departure_title" />
+
+    <View
+        android:id="@+id/vertical_line"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="@id/tv_departure_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_text_departure_title" />
+
+
+    <TextView
+        android:id="@+id/tv_text_back_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_back_title"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vertical_line"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_back_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/font_open_sans_semi_bold"
+        android:text="@string/text_date_departure"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vertical_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_text_departure_title" />
+
+    <TextView
+        android:id="@+id/tv_month_year"
         android:layout_width="match_parent"
-        android:layout_height="750dp"
-        app:cv_dayViewResource="@layout/layout_day_calendar"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/font_open_sans_semi_bold"
+        android:text="@string/text_month"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_departure_date" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_month_year">
+
+        <include
+            android:id="@+id/titlesContainer"
+            layout="@layout/calendar_day_titles_container" />
+
+        <com.kizitonwose.calendar.view.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            app:cv_dayViewResource="@layout/layout_day_calendar" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

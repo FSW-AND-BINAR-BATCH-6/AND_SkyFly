@@ -10,7 +10,10 @@ import androidx.core.view.children
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.kizitonwose.calendar.core.*
+import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendar.core.CalendarMonth
+import com.kizitonwose.calendar.core.DayPosition
+import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.ViewContainer
@@ -20,20 +23,19 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
-import java.util.*
+import java.util.Locale
 
 class CalendarView : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentCalendarViewBinding
 
-    private var departureDate: LocalDate? = null
-    private var returnDate: LocalDate? = null
-    private var selectingReturnDate = false
+    private var startDate: LocalDate? = null
+    private var endDate: LocalDate? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentCalendarViewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -50,7 +52,6 @@ class CalendarView : BottomSheetDialogFragment() {
             )
         setBottomSheetMaxHeight(maxPeekHeight)
 
-        // Set up the titles using the daysOfWeek list
         val daysOfWeek = DayOfWeek.values()
         val titlesContainer = view.findViewById<ViewGroup>(R.id.titlesContainer)
         titlesContainer.children
@@ -73,21 +74,37 @@ class CalendarView : BottomSheetDialogFragment() {
                     val textView = container.textView
                     textView.text = data.date.dayOfMonth.toString()
 
-                    if (data.position == DayPosition.MonthDate) {
-                        // Show the month dates. Remember that views are reused!
-                        textView.visibility = View.VISIBLE
-                        if ((selectingReturnDate && data.date >= departureDate) || (!selectingReturnDate && data.date == departureDate)) {
-                            // If this is the selected departure or return date, show a round background and change the text color.
-                            textView.setTextColor(Color.WHITE)
-                            textView.setBackgroundResource(R.drawable.selection_background)
-                        } else {
-                            // If this is NOT the selected departure or return date, remove the background and reset the text color.
-                            textView.setTextColor(Color.BLACK)
-                            textView.background = null
+                    when (data.position) {
+                        DayPosition.MonthDate -> {
+                            textView.visibility = View.VISIBLE
+                            when {
+                                startDate == data.date -> {
+                                    textView.setTextColor(Color.WHITE)
+                                    textView.setBackgroundResource(R.drawable.selection_background)
+                                    binding.tvDepartureDate.text = data.date.toString()
+                                }
+
+                                endDate == data.date -> {
+                                    textView.setTextColor(Color.WHITE)
+                                    textView.setBackgroundResource(R.drawable.selection_background)
+                                    binding.tvBackDate.text = data.date.toString()
+                                }
+
+                                startDate != null && endDate != null && (data.date > startDate && data.date < endDate) -> {
+                                    textView.setTextColor(Color.WHITE)
+                                    textView.setBackgroundResource(R.drawable.range_background)
+                                }
+
+                                else -> {
+                                    textView.setTextColor(Color.BLACK)
+                                    textView.background = null
+                                }
+                            }
                         }
-                    } else {
-                        // Hide in and out dates
-                        textView.visibility = View.INVISIBLE
+
+                        else -> {
+                            textView.visibility = View.INVISIBLE
+                        }
                     }
 
                     textView.alpha = if (data.position == DayPosition.MonthDate) 1f else 0.3f
@@ -116,17 +133,33 @@ class CalendarView : BottomSheetDialogFragment() {
             }
 
         val currentMonth = YearMonth.now()
-        val startMonth = currentMonth.minusMonths(100) // Adjust as needed
-        val endMonth = currentMonth.plusMonths(100) // Adjust as needed
-        val firstDayOfWeek = firstDayOfWeekFromLocale() // Available from the library
+        val startMonth = currentMonth.minusMonths(100)
+        val endMonth = currentMonth.plusMonths(100)
+        val firstDayOfWeek = firstDayOfWeekFromLocale()
         binding.calendarView.setup(startMonth, endMonth, firstDayOfWeek)
         binding.calendarView.scrollToMonth(currentMonth)
+
+        binding.calendarView.monthScrollListener = {
+            updateMonthYearText(it.yearMonth)
+        }
+
+        updateMonthYearText(currentMonth)
+    }
+
+    private fun updateMonthYearText(yearMonth: YearMonth) {
+        val monthYearText =
+            yearMonth.month.getDisplayName(
+                TextStyle.FULL,
+                Locale.getDefault(),
+            ) + " " + yearMonth.year
+        binding.root.findViewById<TextView>(R.id.tv_month_year).text = monthYearText
     }
 
     private fun setBottomSheetMaxHeight(maxHeight: Int) {
         dialog?.setOnShowListener {
             val bottomSheetDialog = it as? BottomSheetDialog
-            val bottomSheet = bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            val bottomSheet =
+                bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.let { sheet ->
                 val behavior = BottomSheetBehavior.from(sheet)
                 behavior.peekHeight = maxHeight
@@ -141,26 +174,16 @@ class CalendarView : BottomSheetDialogFragment() {
 
         init {
             view.setOnClickListener {
-                // Check the day position as we do not want to select in or out dates.
                 if (day.position == DayPosition.MonthDate) {
-                    if (departureDate == null || !selectingReturnDate) {
-                        // If departure date is not set or we're not selecting return date, set clicked date as departure date.
-                        departureDate = day.date
-                        selectingReturnDate = true
-                    } else if (returnDate == null) {
-                        // If return date is not set, set clicked date as return date.
-                        returnDate = day.date
-                        selectingReturnDate = false
+                    if (startDate == null || endDate != null) {
+                        startDate = day.date
+                        endDate = null
+                    } else if (day.date < startDate) {
+                        startDate = day.date
                     } else {
-                        // If both departure and return dates are already set, reset them and set clicked date as departure date.
-                        departureDate = day.date
-                        returnDate = null
-                        selectingReturnDate = true
+                        endDate = day.date
                     }
-                    // Update the calendar view to reflect the changes.
-                    binding.calendarView.notifyDateChanged(day.date)
-                    departureDate?.let { binding.calendarView.notifyDateChanged(it) }
-                    returnDate?.let { binding.calendarView.notifyDateChanged(it) }
+                    binding.calendarView.notifyCalendarChanged()
                 }
             }
         }

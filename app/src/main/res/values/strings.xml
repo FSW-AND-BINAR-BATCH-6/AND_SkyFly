@@ -141,4 +141,8 @@
     <string name="text_on_boarding_thirt_sub_title">Dapatkan notifikasi penerbangan dan detail perjalanan langsung di aplikasi. Siap untuk pengalaman perjalanan yang lebih nyaman dan menyenangkan?</string>
     <string name="text_recent_search">Pencarian Terkini</string>
     <string name="text_delete">Hapus</string>
+    <string name="text_month">September - 2023</string>
+    <string name="text_date_daparture">Tanggal Berangkat</string>
+    <string name="text_date_departure">Selasa, 14 Mei 2024</string>
+    <string name="text_back_title">Tanggal Pulang</string>
 </resources>
