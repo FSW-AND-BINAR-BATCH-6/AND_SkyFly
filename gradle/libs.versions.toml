@@ -54,6 +54,7 @@ app-intro = "6.3.1"
 
 # Calendar View
 calendar-view = "2.5.1"
+core-library-desugaring = "2.0.4"
 
 # Groupie
 groupie-view = "2.10.1"
@@ -122,6 +123,8 @@ app-intro = { group = "com.github.AppIntro", name = "AppIntro", version.ref = "a
 # Calendar View
 calendar-view = { group = "com.kizitonwose.calendar", name  = "view", version.ref = "calendar-view" }
 
+# Core Library Desugaring
+core-library-desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref="core-library-desugaring"}
 
 # Groupie
 groupie-view = { group = "com.github.lisawray.groupie", name = "groupie", version.ref = "groupie-view" }

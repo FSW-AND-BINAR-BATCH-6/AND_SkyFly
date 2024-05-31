@@ -147,9 +147,12 @@ dependencies {
 
     // App intro
     implementation(libs.app.intro)
+
     // Calendar View
     implementation(libs.calendar.view)
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    // Core Library Desugaring
+    coreLibraryDesugaring(libs.core.library.desugaring)
 
     // Groupie
     implementation(libs.groupie.view)
