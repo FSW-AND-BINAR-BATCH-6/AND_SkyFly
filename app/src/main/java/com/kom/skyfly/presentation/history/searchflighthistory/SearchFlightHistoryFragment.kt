@@ -27,6 +27,7 @@ class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setOnClickListener()
 
         val maxPeekHeight =
             resources.getDimensionPixelSize(
@@ -44,6 +45,12 @@ class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
                 behavior.peekHeight = maxHeight
                 behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
+        }
+    }
+
+    private fun setOnClickListener() {
+        binding.layoutSearchBar.ivCloseSearch.setOnClickListener {
+            dismiss()
         }
     }
 }

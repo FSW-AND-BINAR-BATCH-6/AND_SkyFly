@@ -22,6 +22,7 @@ import com.kom.skyfly.databinding.FragmentCalendarViewBinding
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -30,6 +31,8 @@ class CalendarView : BottomSheetDialogFragment() {
 
     private var startDate: LocalDate? = null
     private var endDate: LocalDate? = null
+
+    private val dateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale("id", "ID"))
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +48,7 @@ class CalendarView : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setOnClickListener()
 
         val maxPeekHeight =
             resources.getDimensionPixelSize(
@@ -81,13 +85,13 @@ class CalendarView : BottomSheetDialogFragment() {
                                 startDate == data.date -> {
                                     textView.setTextColor(Color.WHITE)
                                     textView.setBackgroundResource(R.drawable.selection_background)
-                                    binding.tvDepartureDate.text = data.date.toString()
+                                    binding.tvDepartureDate.text = data.date.format(dateFormatter)
                                 }
 
                                 endDate == data.date -> {
                                     textView.setTextColor(Color.WHITE)
                                     textView.setBackgroundResource(R.drawable.selection_background)
-                                    binding.tvBackDate.text = data.date.toString()
+                                    binding.tvBackDate.text = data.date.format(dateFormatter)
                                 }
 
                                 startDate != null && endDate != null && (data.date > startDate && data.date < endDate) -> {
@@ -144,6 +148,28 @@ class CalendarView : BottomSheetDialogFragment() {
         }
 
         updateMonthYearText(currentMonth)
+
+        binding.ivPreviousMonth.setOnClickListener {
+            binding.calendarView.smoothScrollToMonth(
+                binding.calendarView.findFirstVisibleMonth()?.yearMonth?.minusMonths(1) ?: YearMonth.now().minusMonths(1),
+            )
+        }
+
+        binding.ivNextMonth.setOnClickListener {
+            binding.calendarView.smoothScrollToMonth(
+                binding.calendarView.findFirstVisibleMonth()?.yearMonth?.plusMonths(1) ?: YearMonth.now().plusMonths(1),
+            )
+        }
+
+        /*val btnSave = view.findViewById<Button>(R.id.btn_save)
+        Log.d("MyApp", "setBackgroundResource is called")
+        btnSave.setBackgroundResource(R.drawable.btn_rounded)*/
+    }
+
+    private fun setOnClickListener() {
+        binding.ivCloseCalendar.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun updateMonthYearText(yearMonth: YearMonth) {
