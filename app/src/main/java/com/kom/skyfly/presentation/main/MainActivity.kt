@@ -3,6 +3,7 @@ package com.kom.skyfly.presentation.main
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.kom.skyfly.R
@@ -21,6 +22,16 @@ class MainActivity : AppCompatActivity() {
     }
     private val mainViewModel: MainViewModel by viewModel()
 
+    private val userToken = MutableLiveData<String?>()
+
+    fun setUserToken(token: String?) {
+        userToken.value = token
+    }
+
+    fun getUserToken(): String? {
+        return userToken.value
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -32,24 +43,10 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { controller, destination, _ ->
             when (destination.id) {
-                R.id.menu_history_tab -> {
-                    if (mainViewModel.getUserToken() == null) {
-                        openNotLoggedInModal()
+                R.id.menu_history_tab, R.id.menu_account_tab, R.id.menu_notification_tab -> {
+                    if (mainViewModel.getUserToken().isNullOrEmpty()) {
                         controller.popBackStack(R.id.menu_home_tab, false)
-                    }
-                }
-
-                R.id.menu_account_tab -> {
-                    if (mainViewModel.getUserToken() == null) {
                         openNotLoggedInModal()
-                        controller.popBackStack(R.id.menu_home_tab, false)
-                    }
-                }
-
-                R.id.menu_notification_tab -> {
-                    if (mainViewModel.getUserToken() == null) {
-                        openNotLoggedInModal()
-                        controller.popBackStack(R.id.menu_home_tab, false)
                     }
                 }
             }
@@ -57,8 +54,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openNotLoggedInModal() {
-        val bottomSheetFragment = BottomSheetsDialogFragment()
-        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+        if (!supportFragmentManager.isStateSaved) {
+            val bottomSheetFragment = BottomSheetsDialogFragment()
+            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+        }
     }
 
     private fun getDataFromApi() {

@@ -34,6 +34,8 @@ class BottomSheetsDialogFragment : BottomSheetDialogFragment() {
     private fun setClickListeners() {
         binding.btnLogin.setOnClickListener {
             navigateToLogin()
+            listener?.onClose()
+            dismiss()
         }
         binding.ivClose.setOnClickListener {
             listener?.onClose()

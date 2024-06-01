@@ -69,8 +69,8 @@ class LoginActivity : AppCompatActivity() {
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
                     binding.btnLogin.isVisible = true
-                    it.payload?.let {
-                        val token = it.token
+                    it.payload?.let { payload ->
+                        val token = payload.token
                         loginViewModel.saveUserToken(token)
                     }
 
