@@ -21,7 +21,7 @@
         android:layout_marginHorizontal="16dp"
         android:padding="8dp"
         android:text="@string/text_edit_profile"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_edit_icon"
         app:layout_constraintStart_toEndOf="@id/iv_edit_icon"
         app:layout_constraintTop_toTopOf="@id/iv_edit_icon" />
@@ -41,7 +41,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_settings"
+        android:src="@drawable/ic_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/v_edit_profile" />
 
@@ -51,8 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:padding="8dp"
-        android:text="@string/text_settings"
-        android:textSize="20sp"
+        android:text="@string/text_change_password"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_settings_icon"
         app:layout_constraintStart_toEndOf="@id/iv_settings_icon"
         app:layout_constraintTop_toTopOf="@id/iv_settings_icon" />
@@ -83,7 +83,7 @@
         android:layout_marginHorizontal="16dp"
         android:padding="8dp"
         android:text="@string/text_logout"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_logout_icon"
         app:layout_constraintStart_toEndOf="@id/iv_logout_icon"
         app:layout_constraintTop_toTopOf="@id/iv_logout_icon" />
