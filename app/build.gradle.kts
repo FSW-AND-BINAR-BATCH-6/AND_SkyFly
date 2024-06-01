@@ -158,5 +158,6 @@ dependencies {
     implementation(libs.groupie.view)
     implementation(libs.groupie.view.binding)
 
-    implementation("androidx.webkit:webkit:1.8.0")
+    // Shimmer
+    implementation(libs.shimmer.android)
 }

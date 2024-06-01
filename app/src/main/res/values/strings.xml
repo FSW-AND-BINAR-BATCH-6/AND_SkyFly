@@ -146,4 +146,22 @@
     <string name="text_date_departure">Selasa, 14 Mei 2024</string>
     <string name="text_back_title">Tanggal Pulang</string>
     <string name="text_input_flight_number">Masukkan Nomor Penerbangan</string>
+    <string name="text_email_value">komangyudasaputra@gmail.com</string>
+    <string name="text_username_profile">Komang Yuda Saputra</string>
+    <string name="text_phone_number_value">0987866467334</string>
+    <string name="text_profiles">Data Diri</string>
+    <string name="text_phone_number">Nomor Telepon</string>
+    <string name="text_change_password">Ganti Password</string>
+    <string name="text_edit_profiles">Ubah Data Profile</string>
+    <string name="text_name_hint">Masukkan Nama</string>
+    <string name="text_phone_number_hint">Masukkan nomor telepon</string>
+    <string name="text_from">From</string>
+    <string name="text_start_from_value">Jakarta (JKTA)</string>
+    <string name="text_to">To</string>
+    <string name="text_departure_return">Pulang - Pergi?</string>
+    <string name="text_departure_date_value">3 Maret 2024</string>
+    <string name="text_return_date_value">5 Maret 2024</string>
+    <string name="text_return_title">Kembali</string>
+    <string name="text_passenger_title">Penumpang</string>
+    <string name="text_seat_class_title">Kelas Kursi</string>
 </resources>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.kom.skyfly.data.model.notification.Notification
 import com.kom.skyfly.databinding.FragmentNotificationBinding
@@ -44,7 +45,17 @@ class NotificationFragment : Fragment() {
         notificationViewModel.getAllNotification().observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
                 doOnSuccess = {
+                    binding.shmProgressNotification.isVisible = false
+                    binding.rvNotification.isVisible = true
                     it.payload?.let { data -> bindNotificationList(data) }
+                },
+                doOnLoading = {
+                    binding.rvNotification.isVisible = false
+                    binding.shmProgressNotification.isVisible = true
+                },
+                doOnError = {
+                    Toast.makeText(requireContext(), "observe data error", Toast.LENGTH_SHORT)
+                        .show()
                 },
             )
         }
