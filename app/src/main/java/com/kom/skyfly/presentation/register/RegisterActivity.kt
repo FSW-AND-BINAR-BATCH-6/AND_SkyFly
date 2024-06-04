@@ -2,6 +2,8 @@ package com.kom.skyfly.presentation.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setupEmailValidation()
         setRegisterForm()
         setClickListeners()
     }
@@ -38,8 +41,11 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun openOtpModal(token: String?) {
-        val verifyOtpFragment = VerifyOtpFragment.newInstance(token)
+    private fun openOtpModal(
+        token: String?,
+        email: String?,
+    ) {
+        val verifyOtpFragment = VerifyOtpFragment.newInstance(token, email)
         verifyOtpFragment.show(supportFragmentManager, verifyOtpFragment.tag)
     }
 
@@ -67,7 +73,7 @@ class RegisterActivity : AppCompatActivity() {
                         binding.btnRegister.isVisible = true
                         result.payload?.let {
                             val token = it.token
-                            openOtpModal(token)
+                            openOtpModal(token, email)
                         }
                     },
                     doOnError = {
@@ -105,11 +111,11 @@ class RegisterActivity : AppCompatActivity() {
         val confirmPassword = binding.layoutForm.etConfirmPassword.text.toString().trim()
 
         return fullNameValidation(fullName) &&
-            emailValidation(email) &&
-            phoneNumberValidation(phoneNumber) &&
-            passwordValidation(password, binding.layoutForm.tilPassword) &&
-            passwordValidation(confirmPassword, binding.layoutForm.tilConfirmPassword) &&
-            passwordAndConfirmPasswordValidation(password, confirmPassword)
+                emailValidation(email) &&
+                phoneNumberValidation(phoneNumber) &&
+                passwordValidation(password, binding.layoutForm.tilPassword) &&
+                passwordValidation(confirmPassword, binding.layoutForm.tilConfirmPassword) &&
+                passwordAndConfirmPasswordValidation(password, confirmPassword)
     }
 
     private fun fullNameValidation(fullName: String): Boolean {
@@ -137,14 +143,17 @@ class RegisterActivity : AppCompatActivity() {
     private fun emailValidation(email: String): Boolean {
         return if (email.isEmpty()) {
             binding.layoutForm.tilEmail.isErrorEnabled = true
+            binding.layoutForm.tilEmail.endIconMode = TextInputLayout.END_ICON_NONE
             binding.layoutForm.tilEmail.error = getString(R.string.text_email_cannot_empty)
             false
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.layoutForm.tilEmail.isErrorEnabled = true
+            binding.layoutForm.tilEmail.endIconMode = TextInputLayout.END_ICON_NONE
             binding.layoutForm.tilEmail.error = getString(R.string.text_invalid_email_format)
             false
         } else {
             binding.layoutForm.tilEmail.isErrorEnabled = false
+            binding.layoutForm.tilEmail.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
             true
         }
     }
@@ -183,6 +192,32 @@ class RegisterActivity : AppCompatActivity() {
                 getString(R.string.text_password_doesnt_match)
             false
         }
+    }
+
+    private fun setupEmailValidation() {
+        binding.layoutForm.etEmail.addTextChangedListener(
+            object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    emailValidation(s.toString())
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int,
+                ) {
+                }
+            },
+        )
     }
 
     private fun navigateToLogin() {

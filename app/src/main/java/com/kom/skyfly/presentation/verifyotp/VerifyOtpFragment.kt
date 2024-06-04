@@ -19,22 +19,25 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class VerifyOtpFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentVerifyOtpBinding
-
     private val verifyOtpViewModel: VerifyOtpViewModel by viewModel()
+    private lateinit var token: String
 
     companion object {
         private const val ARG_TOKEN = "arg_token"
+        private const val ARG_EMAIL = "arg_email"
 
-        fun newInstance(token: String?): VerifyOtpFragment {
+        fun newInstance(
+            token: String?,
+            email: String?,
+        ): VerifyOtpFragment {
             val fragment = VerifyOtpFragment()
             val args = Bundle()
             args.putString(ARG_TOKEN, token)
+            args.putString(ARG_EMAIL, email)
             fragment.arguments = args
             return fragment
         }
     }
-
-    lateinit var token: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +55,8 @@ class VerifyOtpFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         startCountdownTimer()
         getOtpViewValue()
+        val email = arguments?.getString(ARG_EMAIL).toString()
+        binding.tvEmailValue.text = email
     }
 
     private fun getOtpViewValue() {

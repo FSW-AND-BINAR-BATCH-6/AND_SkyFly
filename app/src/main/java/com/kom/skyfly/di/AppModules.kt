@@ -7,12 +7,16 @@ import com.kom.skyfly.data.datasource.history.HistoryDataSource
 import com.kom.skyfly.data.datasource.history.HistoryDataSourceImpl
 import com.kom.skyfly.data.datasource.notification.NotificationDataSource
 import com.kom.skyfly.data.datasource.notification.NotificationDataSourceImpl
+import com.kom.skyfly.data.datasource.profiles.ProfileDataSource
+import com.kom.skyfly.data.datasource.profiles.ProfileDataSourceImpl
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSource
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSourceImpl
 import com.kom.skyfly.data.repository.auth.AuthRepository
 import com.kom.skyfly.data.repository.auth.AuthRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
 import com.kom.skyfly.data.repository.notification.NotificationRepositoryImpl
+import com.kom.skyfly.data.repository.profiles.ProfileRepository
+import com.kom.skyfly.data.repository.profiles.ProfileRepositoryImpl
 import com.kom.skyfly.data.repository.userpref.UserPrefRepository
 import com.kom.skyfly.data.repository.userpref.UserPrefRepositoryImpl
 import com.kom.skyfly.data.source.local.pref.UserPreference
@@ -31,6 +35,7 @@ import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
 import com.kom.skyfly.utils.SharedPreferenceUtils
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.scope.get
 import org.koin.dsl.module
 
 /**
@@ -49,6 +54,7 @@ object AppModules {
             single<UserPrefDataSource> { UserPrefDataSourceImpl(get()) }
             single<HistoryDataSource> { HistoryDataSourceImpl() }
             single<NotificationDataSource> { NotificationDataSourceImpl() }
+            single<ProfileDataSource> { ProfileDataSourceImpl() }
         }
 
     private val localModule =
@@ -67,6 +73,7 @@ object AppModules {
             single<AuthRepository> { AuthRepositoryImpl(get()) }
             single<UserPrefRepository> { UserPrefRepositoryImpl(get()) }
             single<NotificationRepository> { NotificationRepositoryImpl(get()) }
+            single<ProfileRepository> { ProfileRepositoryImpl(get()) }
         }
 
     private val viewModelModule =

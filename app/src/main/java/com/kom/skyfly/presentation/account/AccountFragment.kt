@@ -1,21 +1,28 @@
 package com.kom.skyfly.presentation.account
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentAccountBinding
 import com.kom.skyfly.presentation.account.editprofile.BottomSheetsEditProfile
+import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
 
     private val accountViewModel: AccountViewModel by viewModel()
+
+    private var email: String? = null
+    private var fullName: String? = null
+    private var phoneNumber: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,16 +39,77 @@ class AccountFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
+        getProfileData()
+    }
+
+    private fun confirmReqChangePassword() {
+        val dialog =
+            AlertDialog.Builder(requireContext())
+                .setMessage(getString(R.string.text_message_confirm_change_password))
+                .setPositiveButton(
+                    getString(R.string.text_yes),
+                ) { dialog, id ->
+                    email?.let { reqChangePassword(it) }
+                }
+                .setNegativeButton(
+                    getString(R.string.text_no),
+                ) { dialog, id ->
+                }.create()
+        dialog.show()
+    }
+
+    private fun reqChangePassword(email: String) {
+        accountViewModel.forgetPassword(email).observe(viewLifecycleOwner) { result ->
+            result.proceedWhen(
+                doOnSuccess = {
+                    Toast.makeText(
+                        requireContext(),
+                        "Permintaan dikirim ke email anda!",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                },
+                doOnError = {
+                    Log.d("req-changePassword", "reqChangePassword: ${it.exception?.message}")
+                },
+            )
+        }
     }
 
     private fun setClickListeners() {
         binding.layoutBtnProfile.tvEditProfile.setOnClickListener {
-            doEditProfile()
+            fullName?.let { fullName ->
+                phoneNumber?.let { phoneNumber ->
+                    doEditProfile(fullName, phoneNumber)
+                }
+            }
         }
         binding.layoutBtnProfile.tvLogoutProfile.setOnClickListener {
             accountViewModel.doLogout(null)
             Toast.makeText(requireContext(), "Anda telah keluar!", Toast.LENGTH_SHORT).show()
             navigateToHome()
+        }
+        binding.layoutBtnProfile.tvChangePassword.setOnClickListener {
+            confirmReqChangePassword()
+        }
+    }
+
+    private fun getProfileData() {
+        accountViewModel.getProfile().observe(viewLifecycleOwner) { result ->
+            result.proceedWhen(
+                doOnSuccess = {
+                    it.payload.let { data ->
+                        email = data?.email
+                        fullName = data?.fullName
+                        phoneNumber = data?.phoneNumber
+                        binding.layoutProfileUser.etEmail.setText(data?.email)
+                        binding.layoutProfileUser.etFullName.setText(data?.fullName)
+                        binding.layoutProfileUser.etPhoneNumber.setText(data?.phoneNumber)
+                    }
+                },
+                doOnError = {
+                    Log.d("get-profile", "getProfileData: ${it.exception?.message}")
+                },
+            )
         }
     }
 
@@ -49,8 +117,11 @@ class AccountFragment : Fragment() {
         findNavController().navigate(R.id.menu_home_tab)
     }
 
-    private fun doEditProfile() {
-        val bottomSheetFragment = BottomSheetsEditProfile()
+    private fun doEditProfile(
+        fullName: String,
+        phoneNumber: String,
+    ) {
+        val bottomSheetFragment = BottomSheetsEditProfile.newInstance(fullName, phoneNumber)
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 }

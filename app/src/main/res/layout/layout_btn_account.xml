@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@id/v_edit_profile" />
 
     <TextView
-        android:id="@+id/tv_settings_profile"
+        android:id="@+id/tv_change_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -65,7 +65,7 @@
         android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_settings_profile" />
+        app:layout_constraintTop_toBottomOf="@id/tv_change_password" />
 
     <ImageView
         android:id="@+id/iv_logout_icon"
