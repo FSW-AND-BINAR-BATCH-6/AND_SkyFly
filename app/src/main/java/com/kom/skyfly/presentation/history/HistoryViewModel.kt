@@ -1,13 +1,12 @@
 package com.kom.skyfly.presentation.history
 
 import androidx.lifecycle.ViewModel
-import com.kom.skyfly.data.datasource.history.HistoryDataSource
-import com.kom.skyfly.data.datasource.history.HistoryDataSourceImpl
+import androidx.lifecycle.asLiveData
+import com.kom.skyfly.data.repository.history.HistoryRepository
+import kotlinx.coroutines.Dispatchers
 
-class HistoryViewModel : ViewModel() {
-    private val dataSource: HistoryDataSource by lazy {
-        HistoryDataSourceImpl()
-    }
-
-    fun getHistoryData() = dataSource.getHistoryData()
+class HistoryViewModel(
+    private val historyRepository: HistoryRepository,
+) : ViewModel() {
+    fun getHistoryData() = historyRepository.getHistoryData().asLiveData(Dispatchers.IO)
 }

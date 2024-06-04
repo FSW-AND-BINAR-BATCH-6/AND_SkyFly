@@ -146,6 +146,8 @@
     <string name="text_date_departure">Selasa, 14 Mei 2024</string>
     <string name="text_back_title">Tanggal Pulang</string>
     <string name="text_input_flight_number">Masukkan Nomor Penerbangan</string>
+    <string name="text_history_data_empty">Oops! Riwayat Pesanan Kosong</string>
+    <string name="text_havent_made_a_booking">Anda Belum Melakukan Pemesanan</string>
     <string name="text_email_value">komangyudasaputra@gmail.com</string>
     <string name="text_username_profile">Komang Yuda Saputra</string>
     <string name="text_phone_number_value">0987866467334</string>

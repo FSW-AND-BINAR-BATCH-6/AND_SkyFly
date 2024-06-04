@@ -160,10 +160,6 @@ class CalendarView : BottomSheetDialogFragment() {
                 binding.calendarView.findFirstVisibleMonth()?.yearMonth?.plusMonths(1) ?: YearMonth.now().plusMonths(1),
             )
         }
-
-        /*val btnSave = view.findViewById<Button>(R.id.btn_save)
-        Log.d("MyApp", "setBackgroundResource is called")
-        btnSave.setBackgroundResource(R.drawable.btn_rounded)*/
     }
 
     private fun setOnClickListener() {
