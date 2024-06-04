@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_otp_send_to_number"
+                android:id="@+id/tv_otp_send_to_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -45,6 +45,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_input_otp_title" />
+
+            <TextView
+                android:id="@+id/tv_email_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_open_sans_semi_bold"
+                android:text="@string/text_email_value"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_otp_send_to_email" />
 
 
             <com.mukeshsolanki.OtpView
@@ -65,7 +77,7 @@
                 app:OtpState_filled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_otp_send_to_number" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_email_value" />
 
             <TextView
                 android:id="@+id/tv_resend_otp_coundown"

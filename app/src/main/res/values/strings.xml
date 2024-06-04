@@ -5,8 +5,8 @@
     <string name="text_riwayat">Riwayat</string>
     <string name="text_notification">Notifikasi</string>
     <string name="text_profile">Akun</string>
-    <string name="text_email_or_no_tlp_title">Email / No. Telepon</string>
-    <string name="text_input_email_hint">Masukkan email / no. telepon</string>
+    <string name="text_email_title">Email</string>
+    <string name="text_input_email_hint">Masukkan email</string>
     <string name="text_password">Password</string>
     <string name="text_hint_password">Masukkan password</string>
     <string name="text_login">Login</string>
@@ -25,7 +25,7 @@
     <string name="text_sub_register">Daftarkan dirimu dan rasakan kemudahan dalam memesan tiket pesawat.</string>
     <string name="text_already_have_account">Sudah punya akun? Login</string>
     <string name="text_input_otp">Masukkan OTP</string>
-    <string name="text_otp">Ketik 6 digit kode yang dikirimkan ke +3874387743788</string>
+    <string name="text_otp">Ketik 6 digit kode yang dikirimkan ke </string>
     <string name="text_resend_otp">Kirim ulang OTP dalam 60 detik</string>
     <string name="text_req_new_otp">Minta kode baru via Email</string>
     <string name="text_fullname_cannot_empty">Nama lengkap tidak boleh kosong!</string>
@@ -159,9 +159,15 @@
     <string name="text_start_from_value">Jakarta (JKTA)</string>
     <string name="text_to">To</string>
     <string name="text_departure_return">Pulang - Pergi?</string>
-    <string name="text_departure_date_value">3 Maret 2024</string>
-    <string name="text_return_date_value">5 Maret 2024</string>
+    <string name="text_departure_date_value">Pilih Tanggal</string>
+    <string name="text_return_date_value">Pilih Tanggal</string>
     <string name="text_return_title">Kembali</string>
     <string name="text_passenger_title">Penumpang</string>
     <string name="text_seat_class_title">Kelas Kursi</string>
+    <string name="text_favorite_destination">Destinasi Favorit</string>
+    <string name="text_greetings">Hei, Mau ke mana?</string>
+    <string name="text_search_flight">Cari Penerbangan</string>
+    <string name="text_message_confirm_change_password">Yakin ingin mengganti password ?</string>
+    <string name="text_yes">Ya</string>
+    <string name="text_no">Tidak</string>
 </resources>

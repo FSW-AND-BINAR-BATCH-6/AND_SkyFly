@@ -19,7 +19,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_profile_img"
             android:layout_width="110dp"
@@ -56,6 +55,7 @@
                 android:id="@+id/et_full_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:singleLine="true"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>

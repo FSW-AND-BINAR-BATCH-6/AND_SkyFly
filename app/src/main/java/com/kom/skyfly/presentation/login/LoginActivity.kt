@@ -3,6 +3,8 @@ package com.kom.skyfly.presentation.login
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
@@ -28,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setLoginForm()
+        setupEmailValidation()
         setClickListeners()
     }
 
@@ -128,16 +131,45 @@ class LoginActivity : AppCompatActivity() {
     private fun emailValidation(email: String): Boolean {
         return if (email.isEmpty()) {
             binding.layoutForm.tilEmail.isErrorEnabled = true
+            binding.layoutForm.tilEmail.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
             binding.layoutForm.tilEmail.error = getString(R.string.text_email_cannot_empty)
             false
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.layoutForm.tilEmail.isErrorEnabled = true
+            binding.layoutForm.tilEmail.endIconMode = TextInputLayout.END_ICON_NONE
             binding.layoutForm.tilEmail.error = getString(R.string.text_invalid_email_format)
             false
         } else {
             binding.layoutForm.tilEmail.isErrorEnabled = false
+            binding.layoutForm.tilEmail.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
             true
         }
+    }
+
+    private fun setupEmailValidation() {
+        binding.layoutForm.etEmail.addTextChangedListener(
+            object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    emailValidation(s.toString())
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int,
+                ) {
+                }
+            },
+        )
     }
 
     private fun passwordValidation(
