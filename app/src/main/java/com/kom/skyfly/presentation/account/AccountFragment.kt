@@ -13,6 +13,7 @@ import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentAccountBinding
 import com.kom.skyfly.presentation.account.editprofile.BottomSheetsEditProfile
 import com.kom.skyfly.utils.proceedWhen
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AccountFragment : Fragment() {
@@ -62,10 +63,11 @@ class AccountFragment : Fragment() {
         accountViewModel.forgetPassword(email).observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(
+                    Toasty.success(
                         requireContext(),
-                        "Permintaan dikirim ke email anda!",
+                        getString(R.string.text_req_change_password),
                         Toast.LENGTH_SHORT,
+                        true,
                     ).show()
                 },
                 doOnError = {
@@ -85,7 +87,7 @@ class AccountFragment : Fragment() {
         }
         binding.layoutBtnProfile.tvLogoutProfile.setOnClickListener {
             accountViewModel.doLogout(null)
-            Toast.makeText(requireContext(), "Anda telah keluar!", Toast.LENGTH_SHORT).show()
+            Toasty.normal(requireContext(), "Success!", Toast.LENGTH_SHORT).show()
             navigateToHome()
         }
         binding.layoutBtnProfile.tvChangePassword.setOnClickListener {

@@ -60,7 +60,7 @@
     <string name="text_ktp_or_passport_hint">Masukkan Ktp/paspor</string>
     <string name="text_valid_until">Berlaku Sampai</string>
     <string name="text_choose_seat">Lanjut Pilih Kursi</string>
-    <string name="text_passenger_biodata">Penumpang 1 - Adult</string>
+    <string name="text_passenger_biodata">Penumpang 1 - </string>
     <string name="text_fullname">Nama Lengkap</string>
     <string name="text_fullname_hint">Masukkan nama lengkap</string>
     <string name="text_passenger_biodata_title">Biodata Penumpang</string>
@@ -114,7 +114,7 @@
     <string name="text_in_flight_entertainment">In Flight Entertainment</string>
     <string name="text_header_detail_history">Rincian Penerbangan</string>
     <string name="proceed_login">login-procced</string>
-    <string name="password_is_incorrect">Password salah!</string>
+    <string name="email_or_password_is_incorrect">Email atau Password salah!</string>
     <string name="text_countdown_otp">Kirim ulang OTP dalam %1$s detik</string>
     <string name="text_register_success">Register berhasil!</string>
     <string name="text_success_verify_account">Verifikasi berhasil!</string>
@@ -172,4 +172,10 @@
     <string name="text_message_confirm_change_password">Yakin ingin mengganti password ?</string>
     <string name="text_yes">Ya</string>
     <string name="text_no">Tidak</string>
+    <string name="text_passenger_type">Adult</string>
+    <string name="text_empty_data">Data Masih Kosong!</string>
+    <string name="no_internet_connection">Tidak ada internet!</string>
+    <string name="error_when_getting_the_data_please_try_again_later">Error!</string>
+    <string name="text_req_change_password">Permintaan dikirim ke email anda!</string>
+    <string name="text_register_failed">Register Gagal ! : %1$s</string>
 </resources>

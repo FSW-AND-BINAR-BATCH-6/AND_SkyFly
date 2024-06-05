@@ -9,7 +9,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.kom.skyfly.data.model.notification.Notification
 import com.kom.skyfly.databinding.FragmentNotificationBinding
+import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.notification.adapter.NotificationAdapter
+import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,16 +48,24 @@ class NotificationFragment : Fragment() {
             result.proceedWhen(
                 doOnSuccess = {
                     binding.shmProgressNotification.isVisible = false
+                    binding.csvNotification.setState(ContentState.SUCCESS)
                     binding.rvNotification.isVisible = true
                     it.payload?.let { data -> bindNotificationList(data) }
                 },
                 doOnLoading = {
-                    binding.rvNotification.isVisible = false
                     binding.shmProgressNotification.isVisible = true
                 },
+                doOnEmpty = {
+                    binding.csvNotification.setState(ContentState.EMPTY)
+                    binding.shmProgressNotification.isVisible = false
+                },
                 doOnError = {
-                    Toast.makeText(requireContext(), "observe data error", Toast.LENGTH_SHORT)
-                        .show()
+                    if (it.exception is NoInternetException) {
+                        binding.csvNotification.setState(ContentState.ERROR_NETWORK)
+                    } else {
+                        binding.csvNotification.setState(ContentState.ERROR_GENERAL)
+                    }
+                    binding.shmProgressNotification.isVisible = false
                 },
             )
         }

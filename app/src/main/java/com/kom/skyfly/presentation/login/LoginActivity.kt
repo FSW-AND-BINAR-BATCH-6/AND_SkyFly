@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +17,7 @@ import com.kom.skyfly.presentation.main.MainActivity
 import com.kom.skyfly.presentation.register.RegisterActivity
 import com.kom.skyfly.utils.highLightWord
 import com.kom.skyfly.utils.proceedWhen
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -82,11 +82,11 @@ class LoginActivity : AppCompatActivity() {
                 doOnError = {
                     binding.pbLoading.isVisible = false
                     binding.btnLogin.isVisible = true
-                    Log.d("proceedLogin", getString(R.string.proceed_login, it.exception?.message))
-                    Toast.makeText(
+                    Toasty.error(
                         this,
-                        getString(R.string.password_is_incorrect),
+                        getString(R.string.email_or_password_is_incorrect),
                         Toast.LENGTH_SHORT,
+                        true,
                     ).show()
                 },
                 doOnLoading = {

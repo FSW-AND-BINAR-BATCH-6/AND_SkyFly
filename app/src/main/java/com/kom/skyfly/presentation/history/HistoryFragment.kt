@@ -55,13 +55,13 @@ class HistoryFragment : Fragment() {
             result.proceedWhen(
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = true
+//                    binding.layoutState.pbLoading.isVisible = true
                     binding.layoutState.tvError.isVisible = false
                     binding.rvPage.isVisible = false
                 },
                 doOnSuccess = {
                     binding.layoutState.root.isVisible = false
-                    binding.layoutState.pbLoading.isVisible = false
+//                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false
                     binding.rvPage.isVisible = true
 
@@ -101,7 +101,7 @@ class HistoryFragment : Fragment() {
                 },
                 doOnEmpty = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
+//                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.ivError.isVisible = true
                     binding.layoutState.tvTitleError.isVisible = true
                     binding.layoutState.tvTitleError.text = getString(R.string.text_history_data_empty)

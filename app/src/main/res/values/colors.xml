@@ -1,6 +1,6 @@
 <resources>
-    <color name="grey">#C8C8C8</color>
-    <color name="darkGrey">#CD848484</color>
+    <color name="grey">#D8D8D8</color>
+    <color name="darkGrey">#ACACAC</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#73CA5C</color>
     <color name="red">#BA1A1A</color>
