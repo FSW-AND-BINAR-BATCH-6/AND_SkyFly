@@ -15,6 +15,7 @@ import com.kom.skyfly.presentation.login.LoginActivity
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpFragment
 import com.kom.skyfly.utils.highLightWord
 import com.kom.skyfly.utils.proceedWhen
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
@@ -79,10 +80,14 @@ class RegisterActivity : AppCompatActivity() {
                     doOnError = {
                         binding.pbLoading.isVisible = false
                         binding.btnRegister.isVisible = true
-                        Toast.makeText(
+                        Toasty.error(
                             this,
-                            "Login Failed : ${it.exception?.message.orEmpty()}",
+                            getString(
+                                R.string.text_register_failed,
+                                it.exception?.message.orEmpty(),
+                            ),
                             Toast.LENGTH_SHORT,
+                            true,
                         ).show()
                     },
                     doOnLoading = {

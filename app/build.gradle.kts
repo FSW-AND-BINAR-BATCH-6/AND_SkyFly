@@ -160,4 +160,7 @@ dependencies {
 
     // Shimmer
     implementation(libs.shimmer.android)
+
+    // Toasty
+    implementation(libs.toasty)
 }
