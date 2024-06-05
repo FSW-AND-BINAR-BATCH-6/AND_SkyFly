@@ -55,6 +55,7 @@ object AppModules {
             single<UserPrefDataSource> { UserPrefDataSourceImpl(get()) }
             single<HistoryDataSource> { HistoryDataSourceImpl() }
             single<NotificationDataSource> { NotificationDataSourceImpl() }
+            single<ProfileDataSource> { ProfileDataSourceImpl() }
         }
 
     private val localModule =
@@ -73,6 +74,8 @@ object AppModules {
             single<AuthRepository> { AuthRepositoryImpl(get()) }
             single<UserPrefRepository> { UserPrefRepositoryImpl(get()) }
             single<NotificationRepository> { NotificationRepositoryImpl(get()) }
+            single<HistoryRepository> { HistoryRepositoryImpl(get()) }
+            single<ProfileRepository> { ProfileRepositoryImpl(get()) }
         }
 
     private val viewModelModule =
