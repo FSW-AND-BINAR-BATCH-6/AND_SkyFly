@@ -13,6 +13,8 @@ import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSource
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSourceImpl
 import com.kom.skyfly.data.repository.auth.AuthRepository
 import com.kom.skyfly.data.repository.auth.AuthRepositoryImpl
+import com.kom.skyfly.data.repository.history.HistoryRepository
+import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
 import com.kom.skyfly.data.repository.notification.NotificationRepositoryImpl
 import com.kom.skyfly.data.repository.profiles.ProfileRepository
@@ -35,7 +37,6 @@ import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
 import com.kom.skyfly.utils.SharedPreferenceUtils
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
-import org.koin.core.scope.get
 import org.koin.dsl.module
 
 /**
@@ -73,6 +74,7 @@ object AppModules {
             single<AuthRepository> { AuthRepositoryImpl(get()) }
             single<UserPrefRepository> { UserPrefRepositoryImpl(get()) }
             single<NotificationRepository> { NotificationRepositoryImpl(get()) }
+            single<HistoryRepository> { HistoryRepositoryImpl(get()) }
             single<ProfileRepository> { ProfileRepositoryImpl(get()) }
         }
 
@@ -88,6 +90,7 @@ object AppModules {
             viewModelOf(::MainViewModel)
             viewModelOf(::AccountViewModel)
             viewModelOf(::NotificationViewModel)
+            viewModelOf(::HistoryViewModel)
         }
 
     val modules =

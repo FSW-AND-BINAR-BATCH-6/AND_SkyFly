@@ -137,13 +137,15 @@
         app:layout_constraintTop_toBottomOf="@id/ll_calendar_view"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_rounded"
             android:text="@string/text_save"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textAllCaps="false"/>
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/pb_loading"

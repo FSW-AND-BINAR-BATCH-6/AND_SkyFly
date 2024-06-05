@@ -111,11 +111,11 @@ class RegisterActivity : AppCompatActivity() {
         val confirmPassword = binding.layoutForm.etConfirmPassword.text.toString().trim()
 
         return fullNameValidation(fullName) &&
-                emailValidation(email) &&
-                phoneNumberValidation(phoneNumber) &&
-                passwordValidation(password, binding.layoutForm.tilPassword) &&
-                passwordValidation(confirmPassword, binding.layoutForm.tilConfirmPassword) &&
-                passwordAndConfirmPasswordValidation(password, confirmPassword)
+            emailValidation(email) &&
+            phoneNumberValidation(phoneNumber) &&
+            passwordValidation(password, binding.layoutForm.tilPassword) &&
+            passwordValidation(confirmPassword, binding.layoutForm.tilConfirmPassword) &&
+            passwordAndConfirmPasswordValidation(password, confirmPassword)
     }
 
     private fun fullNameValidation(fullName: String): Boolean {
