@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_white_gradient"
     tools:context=".presentation.history.HistoryFragment">
 
-
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello From History Fragment" />
+        android:layout_margin="16dp">
+
+        <include
+            android:id="@+id/layout_header_order_history"
+            layout="@layout/layout_header_order_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/cl_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_rounded"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_header_order_history">
+
+            <ImageView
+                android:id="@+id/iv_filter"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="4dp"
+                android:src="@drawable/ic_filter" />
+
+            <TextView
+                android:id="@+id/tv_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="@string/text_filter"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_page"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_filter"
+            tools:listitem="@layout/item_order_history" />
+
+        <include
+            android:id="@+id/layout_state"
+            layout="@layout/layout_content_state"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp"
+            android:visibility="gone"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

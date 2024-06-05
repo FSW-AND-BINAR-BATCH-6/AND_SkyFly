@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,7 +18,47 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.onboarding.OnBoardingActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.main.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.account.editprofile.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.history.filterflighthistory.CalendarView"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.flightdetail.FlightDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.checkoutticket.CheckoutTicketActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.history.flightdetailhistory.FlightDetailHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.chooseseat.ChooseSeatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.passengerbiodata.PassengerBiodataActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.checkout.ordererbiodata.OrdererBiodataActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".presentation.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.splashscreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

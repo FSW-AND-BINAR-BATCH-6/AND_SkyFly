@@ -30,6 +30,8 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -47,14 +49,24 @@ android {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                value = "\"https://api-restaurant.binaracademy.org/\"",
+                value = "\"https://backend-skyfly-c1.vercel.app/\"",
+            )
+            buildConfigField(
+                type = "String",
+                name = "API_TOKEN",
+                value = "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1YjBjYTcwLWQ4N2YtNDAwOS04YzVmLWU4N2ZjMjg3NjE4ZCIsInVzZXJuYW1lIjoic2kgYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiY29tcGFueUlkIjoiMzk5NzU2OGQtMWMxZi00ZGE5LTkwYTgtMzUyMGUyN2E0OWJhIiwiaWF0IjoxNzEzMzYwNTcwLCJleHAiOjE3MTMzNjQxNzB9.ayp8KKV8L2Y45Z-RR1wrEqM14XoAitLn20XGaJhgwNA\"",
             )
         }
         create("integration") {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                value = "\"https://api-restaurant.binaracademy.org/\"",
+                value = "\"https://backend-skyfly-c1.vercel.app/\"",
+            )
+            buildConfigField(
+                type = "String",
+                name = "API_TOKEN",
+                value = "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1YjBjYTcwLWQ4N2YtNDAwOS04YzVmLWU4N2ZjMjg3NjE4ZCIsInVzZXJuYW1lIjoic2kgYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiY29tcGFueUlkIjoiMzk5NzU2OGQtMWMxZi00ZGE5LTkwYTgtMzUyMGUyN2E0OWJhIiwiaWF0IjoxNzEzMzYwNTcwLCJleHAiOjE3MTMzNjQxNzB9.ayp8KKV8L2Y45Z-RR1wrEqM14XoAitLn20XGaJhgwNA\"",
             )
         }
     }
@@ -84,6 +96,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -99,29 +112,55 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-//   Local storage
+    //  Local storage
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
-//  Coroutine
+    // Coroutine
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)
 
-//  Dependency injection
+    // Dependency injection
     implementation(libs.koin.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-//  Http Request
+    // Http Request
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp)
+    implementation(libs.http.logging)
 
-//   Unit Testing
+    // Unit Testing
     testImplementation(libs.mockk.agent)
     androidTestImplementation(libs.mockk.android)
     testImplementation(libs.coroutine.test)
     testImplementation(libs.turbine)
     testImplementation(libs.core.testing)
+
+    // otp view
+    implementation(libs.otp.view)
+
+    // SeatBook View
+    implementation(libs.seat.book)
+
+    // App intro
+    implementation(libs.app.intro)
+
+    // Calendar View
+    implementation(libs.calendar.view)
+
+    // Core Library Desugaring
+    coreLibraryDesugaring(libs.core.library.desugaring)
+
+    // Groupie
+    implementation(libs.groupie.view)
+    implementation(libs.groupie.view.binding)
+
+    // Shimmer
+    implementation(libs.shimmer.android)
+
+    // Toasty
+    implementation(libs.toasty)
 }

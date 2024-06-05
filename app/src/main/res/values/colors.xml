@@ -1,5 +1,13 @@
 <resources>
-    <color name="md_theme_primary">#6F528A</color>
+    <color name="grey">#D8D8D8</color>
+    <color name="darkGrey">#ACACAC</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="green">#73CA5C</color>
+    <color name="red">#BA1A1A</color>
+
+    <color name="black">#000000</color>
+
+    <color name="md_theme_primary">#4B1979</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#F0DBFF</color>
     <color name="md_theme_onPrimaryContainer">#280D42</color>
@@ -11,7 +19,7 @@
     <color name="md_theme_onTertiary">#FFFFFF</color>
     <color name="md_theme_tertiaryContainer">#FFD9DD</color>
     <color name="md_theme_onTertiaryContainer">#321016</color>
-    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_error">#E81616</color>
     <color name="md_theme_onError">#FFFFFF</color>
     <color name="md_theme_errorContainer">#FFDAD6</color>
     <color name="md_theme_onErrorContainer">#410002</color>
@@ -74,7 +82,7 @@
     <color name="md_theme_inverseSurface_mediumContrast">#332F35</color>
     <color name="md_theme_inverseOnSurface_mediumContrast">#F6EEF6</color>
     <color name="md_theme_inversePrimary_mediumContrast">#DBB9F9</color>
-    <color name="md_theme_primaryFixed_mediumContrast">#8668A2</color>
+    <color name="md_theme_primaryFixed_mediumContrast">#A06ECE</color>
     <color name="md_theme_onPrimaryFixed_mediumContrast">#FFFFFF</color>
     <color name="md_theme_primaryFixedDim_mediumContrast">#6C5087</color>
     <color name="md_theme_onPrimaryFixedVariant_mediumContrast">#FFFFFF</color>
