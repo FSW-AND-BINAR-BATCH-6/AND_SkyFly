@@ -15,6 +15,8 @@ interface UserPreference {
     fun saveUserToken(token: String?)
 
     fun getUserToken(): String?
+
+    fun clearAll()
 }
 
 class UserPreferenceImpl(private val pref: SharedPreferences) : UserPreference {
@@ -30,6 +32,10 @@ class UserPreferenceImpl(private val pref: SharedPreferences) : UserPreference {
 
     override fun getUserToken(): String? {
         return pref.getString(KEY_TOKEN, null)
+    }
+
+    override fun clearAll() {
+        pref.edit().clear()
     }
 
     companion object {

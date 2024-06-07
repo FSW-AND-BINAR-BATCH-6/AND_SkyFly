@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            tools:text="@string/text_delete"
+            android:text="@string/text_delete"
             android:textSize="16sp"
             android:textColor="@color/red"
             app:layout_constraintTop_toTopOf="@id/tv_title_recent_searches"
@@ -49,14 +49,20 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_page"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title_recent_searches"
             tools:listitem="@layout/item_flight_number" />
+
+        <com.kom.skyfly.presentation.common.views.ContentStateView
+            android:id="@+id/csv_search_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
