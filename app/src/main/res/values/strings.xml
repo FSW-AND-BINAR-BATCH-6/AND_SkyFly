@@ -178,4 +178,6 @@
     <string name="error_when_getting_the_data_please_try_again_later">Error!</string>
     <string name="text_req_change_password">Permintaan dikirim ke email anda!</string>
     <string name="text_register_failed">Register Gagal ! : %1$s</string>
+    <string name="text_flight_number">SBJGJ345</string>
+    <string name="text_empty_search_history">Tidak Ada History Pencarian!</string>
 </resources>

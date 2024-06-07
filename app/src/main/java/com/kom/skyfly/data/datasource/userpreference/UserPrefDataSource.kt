@@ -14,6 +14,8 @@ interface UserPrefDataSource {
     fun saveUserToken(token: String?)
 
     fun getUserToken(): String?
+
+    fun clearAll()
 }
 
 class UserPrefDataSourceImpl(private val userPreference: UserPreference) : UserPrefDataSource {
@@ -31,5 +33,9 @@ class UserPrefDataSourceImpl(private val userPreference: UserPreference) : UserP
 
     override fun getUserToken(): String? {
         return userPreference.getUserToken()
+    }
+
+    override fun clearAll() {
+        userPreference.clearAll()
     }
 }
