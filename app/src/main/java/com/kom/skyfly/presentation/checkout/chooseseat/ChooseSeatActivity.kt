@@ -135,7 +135,7 @@ class ChooseSeatActivity : AppCompatActivity() {
     private fun generateTitle(seatData: List<FlightSeat>): List<String> {
         val titleList = mutableListOf<String>()
         titleList.add("/")
-        var count = 1
+        var count = 0
 
         for (seat in seatData) {
             seat.seatNumber?.let { titleList.add(it) }

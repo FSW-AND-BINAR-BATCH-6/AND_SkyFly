@@ -40,6 +40,7 @@ import com.kom.skyfly.data.source.local.pref.UserPreference
 import com.kom.skyfly.data.source.local.pref.UserPreferenceImpl
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import com.kom.skyfly.presentation.account.AccountViewModel
+import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatViewModel
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.history.HistoryViewModel
 import com.kom.skyfly.presentation.history.searchflighthistory.SearchFlightHistoryViewModel
@@ -49,6 +50,7 @@ import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.presentation.notification.NotificationViewModel
 import com.kom.skyfly.presentation.onboarding.OnBoardingViewModel
 import com.kom.skyfly.presentation.register.RegisterViewModel
+import com.kom.skyfly.presentation.search.SearchViewModel
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
 import com.kom.skyfly.utils.SharedPreferenceUtils
 import org.koin.android.ext.koin.androidContext
@@ -62,7 +64,7 @@ Github : https://github.com/YudaSaputraa
 object AppModules {
     private val networkModule =
         module {
-            single<SkyFlyApiService> { SkyFlyApiService.invoke() }
+            single<SkyFlyApiService> { SkyFlyApiService.invoke(get()) }
         }
 
     private val datasource =

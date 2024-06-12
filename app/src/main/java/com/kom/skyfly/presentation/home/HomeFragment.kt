@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    companion object{
+    companion object {
         const val EXTRAS_DESTINATION = "EXTRAS_DESTINATION"
     }
 }

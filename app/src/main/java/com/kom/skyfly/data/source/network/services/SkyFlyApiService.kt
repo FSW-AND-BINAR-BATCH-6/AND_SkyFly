@@ -2,8 +2,11 @@ package com.kom.skyfly.data.source.network.services
 
 import android.util.Log
 import com.kom.skyfly.BuildConfig
+import com.kom.skyfly.data.source.local.pref.UserPreference
+import com.kom.skyfly.data.source.network.model.flightseat.FlightSeatResponse
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
+import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
@@ -69,7 +72,7 @@ interface SkyFlyApiService {
     @GET("api/v1/flightSeats/flight/{id}")
     suspend fun getAllFlightSeat(
         @Path("id") id: String,
-        @Query("limit") limit: Int? = 20,
+        @Query("limit") limit: Int? = 10,
     ): FlightSeatResponse
 
     companion object {
