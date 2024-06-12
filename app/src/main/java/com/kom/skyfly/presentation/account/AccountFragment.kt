@@ -25,6 +25,7 @@ class AccountFragment : Fragment() {
     private var email: String? = null
     private var fullName: String? = null
     private var phoneNumber: String? = null
+    private var id: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,7 +83,9 @@ class AccountFragment : Fragment() {
         binding.layoutBtnProfile.tvEditProfile.setOnClickListener {
             fullName?.let { fullName ->
                 phoneNumber?.let { phoneNumber ->
-                    doEditProfile(fullName, phoneNumber)
+                    id?.let { id ->
+                        doEditProfile(id, fullName, phoneNumber)
+                    }
                 }
             }
         }
@@ -102,6 +105,7 @@ class AccountFragment : Fragment() {
             result.proceedWhen(
                 doOnSuccess = {
                     it.payload.let { data ->
+                        id = data?.userId
                         email = data?.email
                         fullName = data?.fullName
                         phoneNumber = data?.phoneNumber
@@ -122,10 +126,11 @@ class AccountFragment : Fragment() {
     }
 
     private fun doEditProfile(
+        id: String,
         fullName: String,
         phoneNumber: String,
     ) {
-        val bottomSheetFragment = BottomSheetsEditProfile.newInstance(fullName, phoneNumber)
+        val bottomSheetFragment = BottomSheetsEditProfile.newInstance(id, fullName, phoneNumber)
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 }

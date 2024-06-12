@@ -1,21 +1,35 @@
 package com.kom.skyfly.data.datasource.profiles
 
-import com.kom.skyfly.data.model.profiles.Profiles
+import com.kom.skyfly.data.source.network.model.userprofile.UserProfileResponse
+import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileRequest
+import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileResponse
+import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 
 /**
 Written by Komang Yuda Saputra
 Github : https://github.com/YudaSaputraa
  **/
 interface ProfileDataSource {
-    fun getProfilesData(): Profiles
+    suspend fun getUserProfile(): UserProfileResponse
+
+    suspend fun updateUserProfile(
+        id: String,
+        name: String,
+        phoneNumber: String,
+    ): UpdateProfileResponse
 }
 
-class ProfileDataSourceImpl() : ProfileDataSource {
-    override fun getProfilesData(): Profiles {
-        return Profiles(
-            email = "komangyudasaputra06@gmail.com",
-            fullName = "Komang Yuda Saputra",
-            phoneNumber = "0988766677467",
-        )
+class ProfileDataSourceImpl(private val service: SkyFlyApiService) : ProfileDataSource {
+    override suspend fun getUserProfile(): UserProfileResponse {
+        return service.getUserProfile()
+    }
+
+    override suspend fun updateUserProfile(
+        id: String,
+        name: String,
+        phoneNumber: String,
+    ): UpdateProfileResponse {
+        val updateProfileRequest = UpdateProfileRequest(name, phoneNumber)
+        return service.updateUserProfile(id, updateProfileRequest)
     }
 }
