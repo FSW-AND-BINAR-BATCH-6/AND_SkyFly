@@ -6,6 +6,8 @@ import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
 import com.kom.skyfly.data.datasource.history.HistoryDataSource
 import com.kom.skyfly.data.datasource.history.HistoryDataSourceImpl
+import com.kom.skyfly.data.datasource.home.HomeDataSource
+import com.kom.skyfly.data.datasource.home.HomeDataSourceImpl
 import com.kom.skyfly.data.datasource.notification.NotificationDataSource
 import com.kom.skyfly.data.datasource.notification.NotificationDataSourceImpl
 import com.kom.skyfly.data.datasource.profiles.ProfileDataSource
@@ -18,6 +20,8 @@ import com.kom.skyfly.data.repository.auth.AuthRepository
 import com.kom.skyfly.data.repository.auth.AuthRepositoryImpl
 import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
+import com.kom.skyfly.data.repository.home.AirportRepository
+import com.kom.skyfly.data.repository.home.AirportRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
 import com.kom.skyfly.data.repository.notification.NotificationRepositoryImpl
 import com.kom.skyfly.data.repository.profiles.ProfileRepository
@@ -41,6 +45,7 @@ import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.presentation.notification.NotificationViewModel
 import com.kom.skyfly.presentation.onboarding.OnBoardingViewModel
 import com.kom.skyfly.presentation.register.RegisterViewModel
+import com.kom.skyfly.presentation.search.SearchViewModel
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
 import com.kom.skyfly.utils.SharedPreferenceUtils
 import org.koin.android.ext.koin.androidContext
@@ -65,6 +70,7 @@ object AppModules {
             single<NotificationDataSource> { NotificationDataSourceImpl() }
             single<ProfileDataSource> { ProfileDataSourceImpl() }
             single<SearchHistoryDataSource> { SearchHistoryDataSourceImpl(get()) }
+            single<HomeDataSource> { HomeDataSourceImpl(get()) }
         }
 
     private val localModule =
@@ -88,6 +94,7 @@ object AppModules {
             single<HistoryRepository> { HistoryRepositoryImpl(get()) }
             single<ProfileRepository> { ProfileRepositoryImpl(get()) }
             single<SearchHistoryRepository> { SearchHistoryRepositoryImpl(get()) }
+            single<AirportRepository> { AirportRepositoryImpl(get()) }
         }
 
     private val viewModelModule =
@@ -105,6 +112,7 @@ object AppModules {
             viewModelOf(::HistoryViewModel)
             viewModelOf(::SearchFlightHistoryViewModel)
             viewModelOf(::BaseViewModel)
+            viewModelOf(::SearchViewModel)
         }
 
     val modules =

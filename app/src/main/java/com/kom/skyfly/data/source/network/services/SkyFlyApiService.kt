@@ -4,6 +4,7 @@ import android.util.Log
 import com.kom.skyfly.BuildConfig
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
+import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
@@ -17,6 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
@@ -52,6 +54,17 @@ interface SkyFlyApiService {
     suspend fun resendOtp(
         @Query("token") token: String,
     ): ResendOtpResponse
+
+    @GET("api/v1/flights/")
+    suspend fun getAllFlights(
+        @Query("search") search: String? = null,
+    )
+
+    @GET("api/v1/airports/")
+    suspend fun getAllAirports(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+    ): AirportResponse
 
     companion object {
         @JvmStatic
