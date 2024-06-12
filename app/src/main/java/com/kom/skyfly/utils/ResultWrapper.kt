@@ -84,7 +84,7 @@ fun <T> proceedFlow(block: suspend () -> T): Flow<ResultWrapper<T>> {
         )
     }.catch { e ->
         if (e is NoInternetException) {
-            emit(ResultWrapper.Error(exception = e))
+            emit(ResultWrapper.Error(Exception(e)))
         } else {
             emit(ResultWrapper.Error(exception = Exception(e)))
         }

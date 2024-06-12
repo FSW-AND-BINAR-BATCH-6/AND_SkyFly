@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.databinding.FragmentAccountBinding
 import com.kom.skyfly.presentation.account.editprofile.BottomSheetsEditProfile
 import com.kom.skyfly.utils.proceedWhen
@@ -87,6 +88,7 @@ class AccountFragment : Fragment() {
         }
         binding.layoutBtnProfile.tvLogoutProfile.setOnClickListener {
             accountViewModel.doLogout(null)
+            (activity as BaseActivity).handleUnAuthorize()
             Toasty.normal(requireContext(), "Success!", Toast.LENGTH_SHORT).show()
             navigateToHome()
         }

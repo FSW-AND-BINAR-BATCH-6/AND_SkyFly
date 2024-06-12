@@ -8,14 +8,17 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityRegisterBinding
 import com.kom.skyfly.presentation.login.LoginActivity
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpFragment
 import com.kom.skyfly.utils.highLightWord
+import com.kom.skyfly.utils.performNetworkOperation
 import com.kom.skyfly.utils.proceedWhen
 import es.dmoral.toasty.Toasty
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
@@ -56,7 +59,12 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.layoutForm.etPassword.text.toString().trim()
             val fullName = binding.layoutForm.etFullName.text.toString().trim()
             val phoneNumber = binding.layoutForm.etNoTlp.text.toString().trim()
-            proceedRegister(fullName, email, phoneNumber, password)
+
+            lifecycleScope.launch {
+                performNetworkOperation(this@RegisterActivity) {
+                    proceedRegister(fullName, email, phoneNumber, password)
+                }
+            }
         }
     }
 

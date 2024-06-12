@@ -4,7 +4,6 @@ import android.util.Log
 import com.kom.skyfly.BuildConfig
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
-import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
@@ -21,6 +20,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
@@ -66,9 +66,15 @@ interface SkyFlyApiService {
         @Query("limit") limit: Int,
     ): AirportResponse
 
+    @GET("api/v1/flightSeats/flight/{id}")
+    suspend fun getAllFlightSeat(
+        @Path("id") id: String,
+        @Query("limit") limit: Int? = 20,
+    ): FlightSeatResponse
+
     companion object {
         @JvmStatic
-        operator fun invoke(): SkyFlyApiService {
+        operator fun invoke(userPreference: UserPreference): SkyFlyApiService {
             val logging =
                 HttpLoggingInterceptor { message -> Log.d("Http-Logging", "log: $message") }
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -79,10 +85,11 @@ interface SkyFlyApiService {
                     .readTimeout(120, TimeUnit.SECONDS)
                     .addInterceptor { chain ->
                         val original: Request = chain.request()
+                        val token = userPreference.getUserToken()
                         val requestBuilder: Request.Builder =
                             original.newBuilder()
                                 .addHeader("accept", "application/json")
-                                .addHeader("Authorization", "Bearer ${BuildConfig.API_TOKEN}")
+                                .addHeader("Authorization", "Bearer $token")
                         val request: Request = requestBuilder.build()
                         chain.proceed(request)
                     }
