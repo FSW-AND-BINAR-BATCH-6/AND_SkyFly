@@ -193,4 +193,5 @@
     <string name="text_tanggal_pulang">Tanggal Pulang</string>
     <string name="text_flight_number">SBJGJ345</string>
     <string name="text_empty_search_history">Tidak Ada History Pencarian!</string>
+    <string name="text_loading">Loading ..</string>
 </resources>

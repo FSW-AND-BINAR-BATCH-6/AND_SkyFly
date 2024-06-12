@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.kom.skyfly.R
-import com.kom.skyfly.data.model.flightseat.FlightSeat
 import com.kom.skyfly.databinding.ActivityChooseSeatBinding
+import com.kom.skyfly.presentation.common.views.ContentState
+import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.proceedWhen
 import dev.jahidhasanco.seatbookview.SeatBookView
 import dev.jahidhasanco.seatbookview.SeatClickListener
@@ -24,42 +26,79 @@ class ChooseSeatActivity : AppCompatActivity() {
 //            "/AAA_AAA" +
 //                    "/ARR_A"
 //            )
-    private var title = listOf<String>()
+    private var titles = listOf<String>()
 
     private lateinit var seatBookView: SeatBookView
     private var seatTotal: Int = 0
+    private val seatType: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setTitleHeader()
         val flightId = "clx7whu6u001qt1jz9x8ig4ca"
+        getAllFlightSeatData(flightId)
+        getFlightSeatData(flightId)
+    }
 
-        chooseSeatViewModel.getAllFlightSeat(flightId).observe(this) {
-            it.proceedWhen(
-                doOnSuccess = { result ->
-                    val seatData = result.payload
-                    seatData?.let { seatList ->
-                        seats = mapSeats(seatList)
-                        title = generateTitle(seatList)
-                        seatTotal = seatData.size
-                        Log.d("ChooseSeatActivity", "Seats: $seats")
-                        Log.d("ChooseSeatActivity", "Title: $title")
+    private fun getFlightSeatData(flightId: String) {
+        chooseSeatViewModel.getFlightSeat(flightId).observe(this) { result ->
+            result.proceedWhen(
+                doOnSuccess = { resultWrapper ->
+                    val payload = resultWrapper.payload
 
-                        for (seat in seatList) {
-                            val seatNumber = seat.seatNumber
-                            val status = seat.status
-                            val type = seat.type
-                            Log.d(
-                                "SeatInfo",
-                                "Seat Number: $seatNumber, Status: $status, Type: $type",
-                            )
-                        }
+                    if (payload != null) {
+                        val (status, title) = payload
+                        seats = status
+                        titles = title
+                        seatTotal = title.size
+                        setSeatView()
+                    } else {
+                        Log.e("ChooseSeatActivity", "Error: Payload is null")
                     }
-                    setSeatView()
+                    binding.shmProgressSeatView.isVisible = false
+                    binding.csvSeatView.setState(ContentState.SUCCESS)
+                },
+                doOnEmpty = {
+                    binding.shmProgressSeatView.isVisible = false
+                    binding.csvSeatView.setState(ContentState.EMPTY, "Seat kosong!")
                 },
                 doOnError = { error ->
+                    binding.shmProgressSeatView.isVisible = false
+                    if (error.exception is NoInternetException) {
+                        binding.csvSeatView.setState(ContentState.ERROR_NETWORK)
+                    } else {
+                        binding.csvSeatView.setState(ContentState.ERROR_GENERAL)
+                    }
                     Log.e("ChooseSeatActivity", "Error: ${error.exception?.message}")
+                },
+                doOnLoading = {
+                    binding.shmProgressSeatView.isVisible = true
+                },
+            )
+        }
+    }
+
+    private fun getAllFlightSeatData(flightId: String) {
+        chooseSeatViewModel.getAllFlightSeat(flightId).observe(this) { result ->
+            result.proceedWhen(
+                doOnSuccess = { resultWrapper ->
+                    val payload = resultWrapper.payload
+                    Log.d("SeatDatas", "getAllFlightSeatData: $payload")
+                    payload.let {
+                        val totalItems = it?.totalItems
+                        seatTotal = totalItems ?: 0
+                        binding.tvSeatTitle.text = "EKONOMI - $seatTotal Kursi"
+                    }
+                },
+                doOnLoading = {
+                    binding.tvSeatTitle.text = "Loading..."
+                },
+                doOnEmpty = {
+                    binding.tvSeatTitle.text = "SeatView Kosong"
+                },
+                doOnError = {
+                    binding.tvSeatTitle.text = "Error"
                 },
             )
         }
@@ -69,7 +108,7 @@ class ChooseSeatActivity : AppCompatActivity() {
         seatBookView = binding.layoutSeat
         seatBookView.setSeatsLayoutString(seats)
             .isCustomTitle(true)
-            .setCustomTitle(title)
+            .setCustomTitle(titles)
             .setSeatLayoutPadding(2)
             .setSeatSizeBySeatsColumnAndLayoutWidth(7, -1)
 
@@ -98,73 +137,6 @@ class ChooseSeatActivity : AppCompatActivity() {
         binding.layoutHeader.tvTitleHeader.text = getString(R.string.text_header_choose_seat)
     }
 
-    private fun mapSeats(seatData: List<FlightSeat>): String {
-        val rows = mutableListOf<String>()
-        var rowBuilder = StringBuilder("/")
-
-        for ((index, seatStatus) in seatData.withIndex()) {
-            rowBuilder.append(mapSeatStatus(seatStatus.status))
-
-            if ((index + 1) % 3 == 0) {
-                rowBuilder.append("_")
-            }
-            if ((index + 1) % 6 == 0) {
-                rowBuilder.setLength(rowBuilder.length - 1)
-                rows.add(rowBuilder.toString())
-                rowBuilder = StringBuilder("/")
-            }
-        }
-
-        if (rowBuilder.length > 1) {
-            rowBuilder.setLength(rowBuilder.length - 1)
-            rows.add(rowBuilder.toString())
-        }
-
-        return rows.joinToString(separator = "+")
-    }
-
-    private fun mapSeatStatus(seat: String?): Char {
-        return when (seat) {
-            "AVAILABLE" -> 'A'
-            "OCCUPIED" -> 'U'
-            "BOOKED" -> 'R'
-            else -> ' '
-        }
-    }
-
-    private fun generateTitle(seatData: List<FlightSeat>): List<String> {
-        val titleList = mutableListOf<String>()
-        titleList.add("/")
-        var count = 0
-
-        for (seat in seatData) {
-            seat.seatNumber?.let { titleList.add(it) }
-            count++
-
-            if (count % 3 == 0 && count % 6 != 0) {
-                titleList.add(" ")
-                count = 3
-            }
-
-            if (count % 6 == 0) {
-                titleList.add("/")
-            }
-        }
-
-        return titleList
-    }
-
-    private fun isSeatAndTitleSizeValid(
-        seats: String,
-        title: List<String>,
-    ): Boolean {
-        val seatRows = seats.split("+")
-        val expectedTitleSize = seatRows.size
-
-        Log.d("ChooseSeatActivity", "Seat rows size: ${seatRows.size}")
-        Log.d("ChooseSeatActivity", "Expected title size: $expectedTitleSize")
-        Log.d("ChooseSeatActivity", "Actual title size: ${title.size}")
-
-        return title.size == expectedTitleSize
+    private fun setTitleSeatView(seatTotal: String) {
     }
 }

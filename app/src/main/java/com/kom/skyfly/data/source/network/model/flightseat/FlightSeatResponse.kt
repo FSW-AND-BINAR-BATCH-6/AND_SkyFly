@@ -5,14 +5,12 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class FlightSeatResponse(
-    @SerializedName("data")
-    val data: List<Data>?,
+    @SerializedName("totalItems")
+    val totalItems: Int?,
     @SerializedName("message")
     val message: String?,
     @SerializedName("status")
     val status: Boolean?,
-    @SerializedName("totalItems")
-    val totalItems: Int?,
-//    @SerializedName("pagination")
-//    val pagination: List<Pagination>?,
+    @SerializedName("data")
+    val data: List<Data>?,
 )

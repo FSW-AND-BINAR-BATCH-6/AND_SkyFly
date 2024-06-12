@@ -11,4 +11,6 @@ Github : https://github.com/YudaSaputraa
  **/
 class ChooseSeatViewModel(private val flightSeatRepository: FlightSeatRepository) : ViewModel() {
     fun getAllFlightSeat(idFlight: String) = flightSeatRepository.getAllFlightSeat(idFlight).asLiveData(Dispatchers.IO)
+
+    fun getFlightSeat(idFlight: String) = flightSeatRepository.getFlightSeat(idFlight).asLiveData(Dispatchers.IO)
 }
