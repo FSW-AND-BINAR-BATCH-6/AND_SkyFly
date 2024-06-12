@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="16dp"
+    app:cardCornerRadius="16dp"
+    tools:context=".presentation.passenger.PassengerFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_close_passenger_page"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_remove"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/v_recent_search"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginVertical="8dp"
+            android:background="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_close_passenger_page" />
+
+        <ImageView
+            android:id="@+id/iv_adult_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_adult"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_recent_search" />
+
+        <TextView
+            android:id="@+id/tv_dewasa_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/text_dewasa"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iv_adult_icon"
+            app:layout_constraintTop_toTopOf="@id/iv_adult_icon" />
+
+        <TextView
+            android:id="@+id/tv_age_desc_adult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_12_tahun_keatas"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_dewasa_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_dewasa_title" />
+
+        <ImageView
+            android:id="@+id/iv_minus_btn_adult"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_minus"
+            app:layout_constraintEnd_toStartOf="@id/et_counter_adult"
+            app:layout_constraintTop_toTopOf="@id/iv_adult_icon" />
+
+        <ImageView
+            android:id="@+id/iv_btn_plus_adult"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintEnd_toEndOf="@id/iv_close_passenger_page"
+            app:layout_constraintTop_toTopOf="@id/iv_adult_icon" />
+
+        <EditText
+            android:id="@+id/et_counter_adult"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="4dp"
+            android:inputType="number"
+            app:layout_constraintEnd_toStartOf="@id/iv_btn_plus_adult"
+            app:layout_constraintTop_toTopOf="@id/iv_adult_icon" />
+
+        <View
+            android:id="@+id/v_adult"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginVertical="8dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="@id/iv_btn_plus_adult"
+            app:layout_constraintStart_toStartOf="@id/iv_adult_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_age_desc_adult" />
+
+        <ImageView
+            android:id="@+id/iv_child_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_child"
+            app:layout_constraintStart_toStartOf="@id/iv_adult_icon"
+            app:layout_constraintTop_toBottomOf="@id/v_adult" />
+
+        <TextView
+            android:id="@+id/tv_anak_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_anak"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_dewasa_title"
+            app:layout_constraintTop_toBottomOf="@id/v_adult"
+            app:layout_constraintTop_toTopOf="@id/iv_child_icon" />
+
+        <TextView
+            android:id="@+id/tv_age_desc_child"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_2_11_tahun"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_age_desc_adult"
+            app:layout_constraintTop_toBottomOf="@id/tv_anak_title" />
+
+        <ImageView
+            android:id="@+id/iv_btn_plus_child"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintEnd_toEndOf="@id/iv_close_passenger_page"
+            app:layout_constraintTop_toTopOf="@id/iv_child_icon" />
+
+        <EditText
+            android:id="@+id/et_counter_child"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="4dp"
+            android:inputType="number"
+            app:layout_constraintEnd_toStartOf="@id/iv_btn_plus_child"
+            app:layout_constraintTop_toTopOf="@id/iv_child_icon" />
+
+        <ImageView
+            android:id="@+id/iv_minus_btn_child"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_minus"
+            app:layout_constraintEnd_toStartOf="@id/et_counter_child"
+            app:layout_constraintTop_toTopOf="@id/iv_child_icon" />
+
+        <View
+            android:id="@+id/v_child"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginVertical="8dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="@id/iv_btn_plus_adult"
+            app:layout_constraintStart_toStartOf="@id/iv_adult_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_age_desc_child" />
+
+        <ImageView
+            android:id="@+id/iv_baby_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_baby"
+            app:layout_constraintStart_toStartOf="@id/iv_adult_icon"
+            app:layout_constraintTop_toBottomOf="@id/v_child" />
+
+        <TextView
+            android:id="@+id/tv_bayi_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_bayi"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_dewasa_title"
+            app:layout_constraintTop_toBottomOf="@id/v_child"
+            app:layout_constraintTop_toTopOf="@id/iv_baby_icon" />
+
+        <TextView
+            android:id="@+id/tv_age_desc_baby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_dibawah_2_tahun"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_age_desc_adult"
+            app:layout_constraintTop_toBottomOf="@id/tv_bayi_title" />
+
+        <ImageView
+            android:id="@+id/iv_btn_plus_baby"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintEnd_toEndOf="@id/iv_close_passenger_page"
+            app:layout_constraintTop_toTopOf="@id/iv_baby_icon" />
+
+        <EditText
+            android:id="@+id/et_counter_baby"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="4dp"
+            android:inputType="number"
+            app:layout_constraintEnd_toStartOf="@id/iv_btn_plus_child"
+            app:layout_constraintTop_toTopOf="@id/iv_baby_icon" />
+
+        <ImageView
+            android:id="@+id/iv_minus_btn_baby"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_minus"
+            app:layout_constraintEnd_toStartOf="@id/et_counter_child"
+            app:layout_constraintTop_toTopOf="@id/iv_baby_icon" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/text_simpan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

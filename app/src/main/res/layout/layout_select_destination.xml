@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Departures Icon -->
         <ImageView
             android:id="@+id/iv_departures"
             android:layout_width="25dp"
@@ -20,6 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- From Label -->
         <TextView
             android:id="@+id/tv_from"
             android:layout_width="80dp"
@@ -31,18 +33,26 @@
             app:layout_constraintStart_toEndOf="@id/iv_departures"
             app:layout_constraintTop_toTopOf="@id/iv_departures" />
 
-        <TextView
-            android:id="@+id/tv_start_from"
-            android:layout_width="wrap_content"
+        <!-- From Field -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ti_start_from"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
-            android:text="@string/text_start_from_value"
-            android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/iv_departures"
             app:layout_constraintStart_toEndOf="@id/tv_from"
-            app:layout_constraintTop_toTopOf="@id/iv_departures" />
+            app:layout_constraintTop_toTopOf="@id/iv_departures"
+            app:boxBackgroundMode="none">
 
+            <TextView
+                android:id="@+id/tv_start_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Divider Line -->
         <View
             android:id="@+id/v_select_destination"
             android:layout_width="0dp"
@@ -54,6 +64,7 @@
             app:layout_constraintStart_toStartOf="@id/tv_from"
             app:layout_constraintTop_toBottomOf="@id/iv_departures" />
 
+        <!-- Swap Icon -->
         <ImageView
             android:id="@+id/iv_swap"
             android:layout_width="25dp"
@@ -65,7 +76,7 @@
             app:layout_constraintStart_toEndOf="@id/v_select_destination"
             app:layout_constraintTop_toTopOf="@id/v_select_destination" />
 
-
+        <!-- Arrivals Icon -->
         <ImageView
             android:id="@+id/iv_destination"
             android:layout_width="25dp"
@@ -77,30 +88,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/v_select_destination" />
 
+        <!-- To Label -->
         <TextView
             android:id="@+id/tv_to"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:text="@string/text_to"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_destination"
             app:layout_constraintStart_toEndOf="@id/iv_destination"
             app:layout_constraintTop_toTopOf="@id/iv_destination" />
 
-        <TextView
-            android:id="@+id/tv_end_destination"
-            android:layout_width="wrap_content"
+        <!-- To Field -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginVertical="8dp"
-            android:text="@string/text_start_from_value"
-            android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/iv_destination"
             app:layout_constraintStart_toEndOf="@id/tv_to"
-            app:layout_constraintTop_toTopOf="@id/iv_destination" />
+            app:layout_constraintTop_toTopOf="@id/iv_destination"
+            app:boxBackgroundMode="none">
 
+            <AutoCompleteTextView
+                android:id="@+id/tv_end_destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

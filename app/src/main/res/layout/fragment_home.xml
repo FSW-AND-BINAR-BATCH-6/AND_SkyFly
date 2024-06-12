@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="@string/text_greetings"
+            android:text="@string/text_hai_mau_ke_mana"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -158,15 +158,13 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:hint="2 Penumpang"
-                    app:layout_constraintStart_toStartOf="@id/tv_passenger_title"
+                    app:layout_constraintStart_toStartOf="@id/te_departure"
                     app:layout_constraintTop_toBottomOf="@id/tv_passenger_title" />
 
                 <ImageView
                     android:id="@+id/iv_seat"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="8dp"
-
                     android:src="@drawable/ic_seat"
                     app:layout_constraintStart_toStartOf="@id/iv_return"
                     app:layout_constraintTop_toTopOf="@id/iv_passenger" />
@@ -187,7 +185,7 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:hint="Ekonomi"
-                    app:layout_constraintStart_toStartOf="@id/tv_seat_title"
+                    app:layout_constraintStart_toStartOf="@id/te_return"
                     app:layout_constraintTop_toTopOf="@id/te_passengers" />
 
                 <Button
@@ -197,7 +195,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/btn_rounded"
-                    android:text="@string/text_search_flight"
+                    android:text="@string/text_cari_penerbangan"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/te_passengers" />
@@ -207,7 +205,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@string/text_favorite_destination"
+                    android:text="Destinasi Favorit"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@id/rv_category"
@@ -217,7 +215,6 @@
                     android:id="@+id/rv_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:orientation="vertical"
