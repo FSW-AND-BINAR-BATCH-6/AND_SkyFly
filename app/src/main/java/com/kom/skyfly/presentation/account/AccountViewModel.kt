@@ -20,7 +20,13 @@ class AccountViewModel(
         userPrefRepository
             .saveUserToken(token)
 
-    fun getProfile() = profileRepository.getProfile().asLiveData(Dispatchers.IO)
+    fun getProfile() =
+        profileRepository
+            .getProfile()
+            .asLiveData(Dispatchers.IO)
 
-    fun forgetPassword(email: String) = authRepository.forgetPassword(email).asLiveData(Dispatchers.IO)
+    fun forgetPassword(email: String) =
+        authRepository
+            .forgetPassword(email)
+            .asLiveData(Dispatchers.IO)
 }

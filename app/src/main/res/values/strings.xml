@@ -194,4 +194,6 @@
     <string name="text_flight_number">SBJGJ345</string>
     <string name="text_empty_search_history">Tidak Ada History Pencarian!</string>
     <string name="text_loading">Loading ..</string>
+    <string name="text_oke">Oke</string>
+    <string name="text_confirm_update_profile">Yakin ingin update data?</string>
 </resources>

@@ -12,6 +12,9 @@ import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
+import com.kom.skyfly.data.source.network.model.userprofile.UserProfileResponse
+import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileRequest
+import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileResponse
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountRequest
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountResponse
 import okhttp3.OkHttpClient
@@ -74,6 +77,15 @@ interface SkyFlyApiService {
         @Path("id") id: String,
         @Query("limit") limit: Int? = 100,
     ): FlightSeatResponse
+
+    @GET("api/v1/auth/me")
+    suspend fun getUserProfile(): UserProfileResponse
+
+    @PUT("api/v1/users/{id}")
+    suspend fun updateUserProfile(
+        @Path("id") id: String,
+        @Body updateProfileRequest: UpdateProfileRequest,
+    ): UpdateProfileResponse
 
     companion object {
         @JvmStatic

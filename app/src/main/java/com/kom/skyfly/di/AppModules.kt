@@ -41,6 +41,7 @@ import com.kom.skyfly.data.source.local.pref.UserPreference
 import com.kom.skyfly.data.source.local.pref.UserPreferenceImpl
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import com.kom.skyfly.presentation.account.AccountViewModel
+import com.kom.skyfly.presentation.account.editprofile.BottomSheetsEditProfileViewModel
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatViewModel
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.history.HistoryViewModel
@@ -76,7 +77,7 @@ object AppModules {
             single<UserPrefDataSource> { UserPrefDataSourceImpl(get()) }
             single<HistoryDataSource> { HistoryDataSourceImpl() }
             single<NotificationDataSource> { NotificationDataSourceImpl() }
-            single<ProfileDataSource> { ProfileDataSourceImpl() }
+            single<ProfileDataSource> { ProfileDataSourceImpl(get()) }
             single<SearchHistoryDataSource> { SearchHistoryDataSourceImpl(get()) }
             single<HomeDataSource> { HomeDataSourceImpl(get()) }
             single<FlightSeatDataSource> { FlightSeatDataSourceImpl(get()) }
@@ -130,6 +131,7 @@ object AppModules {
                     historyRepository = get(),
                 )
             }
+            viewModelOf(::BottomSheetsEditProfileViewModel)
         }
 
     val modules =
