@@ -72,7 +72,7 @@ interface SkyFlyApiService {
     @GET("api/v1/flightSeats/flight/{id}")
     suspend fun getAllFlightSeat(
         @Path("id") id: String,
-        @Query("limit") limit: Int? = 10,
+        @Query("limit") limit: Int? = 100,
     ): FlightSeatResponse
 
     companion object {
