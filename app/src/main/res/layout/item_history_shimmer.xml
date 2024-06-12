@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:paddingBottom="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/grey"
+    android:id="@+id/item_order_history">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:background="@color/darkGrey"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_departure_location"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="32dp"
+            android:background="@color/darkGrey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_status" />
+
+        <TextView
+            android:id="@+id/tv_departure_date"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:background="@color/darkGrey"
+            app:layout_constraintStart_toStartOf="@id/tv_departure_location"
+            app:layout_constraintTop_toBottomOf="@id/tv_departure_location" />
+
+        <TextView
+            android:id="@+id/tv_flight_duration"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:background="@color/darkGrey"
+            app:layout_constraintBottom_toBottomOf="@id/tv_departure_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_departure_location" />
+
+          <TextView
+            android:id="@+id/tv_destination"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:background="@color/darkGrey"
+            app:layout_constraintStart_toEndOf="@id/tv_flight_duration"
+            app:layout_constraintTop_toTopOf="@id/tv_departure_location" />
+
+        <TextView
+            android:id="@+id/tv_arrival_date"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:background="@color/darkGrey"
+            app:layout_constraintStart_toStartOf="@id/tv_destination"
+            app:layout_constraintTop_toBottomOf="@id/tv_destination" />
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/darkGrey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_departure_date" />
+
+        <TextView
+            android:id="@+id/tv_title_booking_code"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/darkGrey"
+            app:layout_constraintStart_toStartOf="@id/v_line"
+            app:layout_constraintTop_toBottomOf="@id/v_line"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_title_class"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@color/darkGrey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title_booking_code"/>
+
+        <TextView
+            android:id="@+id/tv_history_total"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="4dp"
+            android:background="@color/darkGrey"
+            app:layout_constraintStart_toStartOf="@id/tv_arrival_date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title_booking_code"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

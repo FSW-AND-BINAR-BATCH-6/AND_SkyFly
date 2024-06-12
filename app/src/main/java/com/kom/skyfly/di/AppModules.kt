@@ -1,6 +1,7 @@
 package com.kom.skyfly.di
 
 import android.content.SharedPreferences
+import android.os.Bundle
 import com.kom.skyfly.core.BaseViewModel
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
@@ -43,6 +44,7 @@ import com.kom.skyfly.presentation.account.AccountViewModel
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatViewModel
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.history.HistoryViewModel
+import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryViewModel
 import com.kom.skyfly.presentation.history.searchflighthistory.SearchFlightHistoryViewModel
 import com.kom.skyfly.presentation.home.HomeViewModel
 import com.kom.skyfly.presentation.login.LoginViewModel
@@ -54,6 +56,7 @@ import com.kom.skyfly.presentation.search.SearchViewModel
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
 import com.kom.skyfly.utils.SharedPreferenceUtils
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -121,6 +124,12 @@ object AppModules {
             viewModelOf(::BaseViewModel)
             viewModelOf(::SearchViewModel)
             viewModelOf(::ChooseSeatViewModel)
+            viewModel { (extras: Bundle?) ->
+                FlightDetailHistoryViewModel(
+                    extras = extras,
+                    historyRepository = get(),
+                )
+            }
         }
 
     val modules =
