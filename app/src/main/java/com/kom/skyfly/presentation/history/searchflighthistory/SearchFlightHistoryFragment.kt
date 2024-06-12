@@ -13,9 +13,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.R
+import com.kom.skyfly.data.model.searchhistory.SearchHistory
 import com.kom.skyfly.databinding.FragmentSearchFlightHistoryBinding
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.history.searchflighthistory.adapter.SearchHistoryListAdapter
+import com.kom.skyfly.presentation.history.searchflighthistory.adapter.SearchHistoryListener
 import com.kom.skyfly.utils.hideKeyboard
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,7 +28,17 @@ class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
     private val searchFlightHistoryViewModel: SearchFlightHistoryViewModel by viewModel()
 
     private val adapter: SearchHistoryListAdapter by lazy {
-        SearchHistoryListAdapter {}
+        SearchHistoryListAdapter(
+            itemClick = { searchHistory ->
+                // Handle item click here if needed
+            },
+            searchHistoryListener =
+                object : SearchHistoryListener {
+                    override fun onDeleteItemClicked(searchHistory: SearchHistory) {
+                        searchFlightHistoryViewModel.deleteSearchHistory(searchHistory)
+                    }
+                },
+        )
     }
 
     override fun onCreateView(

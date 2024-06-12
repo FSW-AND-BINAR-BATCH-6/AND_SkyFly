@@ -9,6 +9,7 @@
         android:id="@+id/tv_flight_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,8 +18,8 @@
 
     <ImageView
         android:id="@+id/iv_close_list"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="18dp"
+        android:layout_height="12dp"
         android:src="@drawable/ic_close"
         app:layout_constraintBottom_toBottomOf="@id/tv_flight_number"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +28,7 @@
     <View
         android:id="@+id/v_line"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:background="@color/grey"

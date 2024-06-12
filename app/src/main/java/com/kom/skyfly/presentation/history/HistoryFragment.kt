@@ -1,6 +1,5 @@
 package com.kom.skyfly.presentation.history
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kom.skyfly.R
+import com.kom.skyfly.data.model.history.Data
 import com.kom.skyfly.databinding.FragmentHistoryBinding
 import com.kom.skyfly.presentation.history.filterflighthistory.CalendarView
 import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryActivity
@@ -55,44 +55,38 @@ class HistoryFragment : Fragment() {
             result.proceedWhen(
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
-//                    binding.layoutState.pbLoading.isVisible = true
+                    binding.shimmerHistory.isVisible = true
                     binding.layoutState.tvError.isVisible = false
                     binding.rvPage.isVisible = false
                 },
-                doOnSuccess = {
+                doOnSuccess = { data ->
                     binding.layoutState.root.isVisible = false
-//                    binding.layoutState.pbLoading.isVisible = false
+                    binding.shimmerHistory.isVisible = false
                     binding.layoutState.tvError.isVisible = false
                     binding.rvPage.isVisible = true
 
-                    it.payload?.let { sectionedDates ->
-                        val sections =
-                            sectionedDates.map { sectionedDate ->
-                                Section().apply {
-                                    setHeader(
-                                        HeaderItem(sectionedDate.date) { date ->
-                                            Toast.makeText(
-                                                requireContext(),
-                                                "Header Clicked : $date",
-                                                Toast.LENGTH_SHORT,
-                                            ).show()
-                                        },
-                                    )
-                                    val dataItems =
-                                        sectionedDate.data.map { data ->
-                                            DataItem(data) { clickedData ->
-                                                navigateToFlightDetail(clickedData.id)
-                                                Toast.makeText(
-                                                    requireContext(),
-                                                    clickedData.id,
-                                                    Toast.LENGTH_SHORT,
-                                                ).show()
-                                            }
+                    data.payload?.forEach { sectionedDate ->
+                        val section =
+                            Section().apply {
+                                setHeader(
+                                    HeaderItem(sectionedDate.date) { date ->
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Header Clicked : $date",
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
+                                    },
+                                )
+
+                                val dataItems =
+                                    sectionedDate.data.map { data ->
+                                        DataItem(data) { clickedData ->
+                                            navigateToDetail(clickedData)
                                         }
-                                    addAll(dataItems)
-                                }
+                                    }
+                                addAll(dataItems)
                             }
-                        adapter.update(sections)
+                        adapter.add(section)
                     }
                 },
                 doOnError = { error ->
@@ -101,7 +95,7 @@ class HistoryFragment : Fragment() {
                 },
                 doOnEmpty = {
                     binding.layoutState.root.isVisible = true
-//                    binding.layoutState.pbLoading.isVisible = false
+                    binding.shimmerHistory.isVisible = false
                     binding.layoutState.ivError.isVisible = true
                     binding.layoutState.tvTitleError.isVisible = true
                     binding.layoutState.tvTitleError.text = getString(R.string.text_history_data_empty)
@@ -133,9 +127,7 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    private fun navigateToFlightDetail(flightId: String) {
-        val intent = Intent(requireContext(), FlightDetailHistoryActivity::class.java)
-        intent.putExtra("flight_id", flightId)
-        startActivity(intent)
+    private fun navigateToDetail(item: Data) {
+        FlightDetailHistoryActivity.startActivity(requireContext(), item)
     }
 }

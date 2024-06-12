@@ -12,15 +12,27 @@ import com.kom.skyfly.databinding.ItemFlightNumberBinding
 Written by Komang Yuda Saputra
 Github : https://github.com/YudaSaputraa
  **/
-class SearchHistoryListAdapter(private val itemClick: (SearchHistory) -> Unit) :
-    RecyclerView.Adapter<SearchHistoryListAdapter.SearchHistoryViewHolder>() {
+class SearchHistoryListAdapter(
+    private val itemClick: (
+        SearchHistory,
+    ) -> Unit,
+    private val searchHistoryListener: SearchHistoryListener? = null,
+) : RecyclerView.Adapter<SearchHistoryListAdapter.SearchHistoryViewHolder>() {
     class SearchHistoryViewHolder(
         private val binding: ItemFlightNumberBinding,
         val itemClick: (SearchHistory) -> Unit,
+        private val searchHistoryListener: SearchHistoryListener?,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindView(item: SearchHistory) {
             binding.tvFlightNumber.text = item.searchHistory
             itemView.setOnClickListener { itemClick(item) }
+            setClickListeners(item)
+        }
+
+        private fun setClickListeners(item: SearchHistory) {
+            with(binding) {
+                ivCloseList.setOnClickListener { searchHistoryListener?.onDeleteItemClicked(item) }
+            }
         }
     }
 
@@ -54,7 +66,7 @@ class SearchHistoryListAdapter(private val itemClick: (SearchHistory) -> Unit) :
     ): SearchHistoryViewHolder {
         val binding =
             ItemFlightNumberBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return SearchHistoryViewHolder(binding, itemClick)
+        return SearchHistoryViewHolder(binding, itemClick, searchHistoryListener)
     }
 
     override fun onBindViewHolder(
@@ -65,4 +77,8 @@ class SearchHistoryListAdapter(private val itemClick: (SearchHistory) -> Unit) :
     }
 
     override fun getItemCount(): Int = dataDiffer.currentList.size
+}
+
+interface SearchHistoryListener {
+    fun onDeleteItemClicked(searchHistory: SearchHistory)
 }
