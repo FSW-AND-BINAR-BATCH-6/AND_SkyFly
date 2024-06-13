@@ -1,4 +1,4 @@
-package com.kom.skyfly.presentation.home.viewitems
+package com.kom.skyfly.presentation.home.search.viewitems
 
 import android.view.View
 import com.kom.skyfly.R
