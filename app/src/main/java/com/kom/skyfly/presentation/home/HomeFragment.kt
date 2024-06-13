@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.kom.skyfly.databinding.FragmentHomeBinding
 import com.kom.skyfly.presentation.home.calendar.HomeCalendarFragment
-import com.kom.skyfly.presentation.search.SearchFragment
+import com.kom.skyfly.presentation.home.search.SearchFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -29,11 +29,24 @@ class HomeFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.setOnBoardingShow(true)
+        observeDataDestination()
         setOnClickListener()
     }
 
+    private fun observeDataDestination() {
+        homeViewModel.destination.observe(viewLifecycleOwner) { destination ->
+            destination?.let {
+                binding.layoutSelectDestination.tvStartFrom.text = it.city
+            }
+        }
+    }
+
     private fun setOnClickListener() {
-        binding.layoutSelectDestination.tiStartFrom.setOnClickListener {
+        binding.layoutSelectDestination.tvStartFrom.setOnClickListener {
+            val searchDeparture = SearchFragment()
+            searchDeparture.show(parentFragmentManager, searchDeparture.tag)
+        }
+        binding.layoutSelectDestination.tiEndDestination.setOnClickListener {
             val searchDeparture = SearchFragment()
             searchDeparture.show(parentFragmentManager, searchDeparture.tag)
         }

@@ -9,8 +9,8 @@ data class AirportData(
     val name: String,
     @SerializedName("code")
     val code: String,
-    @SerializedName("Country")
+    @SerializedName("country")
     val country: String,
-    @SerializedName("City")
+    @SerializedName("city")
     val city: String,
 )

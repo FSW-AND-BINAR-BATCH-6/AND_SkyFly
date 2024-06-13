@@ -47,12 +47,12 @@ import com.kom.skyfly.presentation.history.HistoryViewModel
 import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryViewModel
 import com.kom.skyfly.presentation.history.searchflighthistory.SearchFlightHistoryViewModel
 import com.kom.skyfly.presentation.home.HomeViewModel
+import com.kom.skyfly.presentation.home.search.SearchViewModel
 import com.kom.skyfly.presentation.login.LoginViewModel
 import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.presentation.notification.NotificationViewModel
 import com.kom.skyfly.presentation.onboarding.OnBoardingViewModel
 import com.kom.skyfly.presentation.register.RegisterViewModel
-import com.kom.skyfly.presentation.search.SearchViewModel
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
 import com.kom.skyfly.utils.SharedPreferenceUtils
 import org.koin.android.ext.koin.androidContext
