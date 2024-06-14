@@ -1,4 +1,4 @@
-package com.kom.skyfly.presentation.search
+package com.kom.skyfly.presentation.home.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,15 +11,18 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentSearchBinding
-import com.kom.skyfly.presentation.home.viewitems.Items
+import com.kom.skyfly.presentation.home.search.viewitems.Items
+import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.utils.proceedWhen
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentSearchBinding
     private val searchViewModel: SearchViewModel by viewModel()
+    private val mainViewModel: MainViewModel by activityViewModel()
     private val adapter: GroupieAdapter by lazy {
         GroupieAdapter()
     }
@@ -63,8 +66,9 @@ class SearchFragment : BottomSheetDialogFragment() {
                                 Section().apply {
                                     val data =
                                         sectionedSearch.map { data ->
-                                            Items(data) {
-                                                navigateToHome()
+                                            Items(data) { item ->
+                                                mainViewModel.setDestination(item)
+                                                dismiss()
                                             }
                                         }
                                     addAll(data)
@@ -75,10 +79,6 @@ class SearchFragment : BottomSheetDialogFragment() {
                 },
             )
         }
-    }
-
-    private fun navigateToHome() {
-        TODO("Not yet implemented")
     }
 
     private fun setupBinding() {

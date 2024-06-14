@@ -1,4 +1,4 @@
-package com.kom.skyfly.presentation.search
+package com.kom.skyfly.presentation.home.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

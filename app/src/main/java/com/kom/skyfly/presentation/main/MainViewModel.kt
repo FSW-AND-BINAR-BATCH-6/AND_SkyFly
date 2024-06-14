@@ -1,6 +1,9 @@
 package com.kom.skyfly.presentation.main
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kom.skyfly.data.model.home.search.Airport
 import com.kom.skyfly.data.repository.userpref.UserPrefRepository
 
 /**
@@ -11,4 +14,91 @@ class MainViewModel(
     private val userPrefRepository: UserPrefRepository,
 ) : ViewModel() {
     fun getUserToken() = userPrefRepository.getUserToken()
+
+    // Set Destination
+    var isStartDestination: Boolean? = null
+    private val _sourceDestination = MutableLiveData<Airport?>()
+    val sourceDestination: LiveData<Airport?> get() = _sourceDestination
+
+    fun setDestination(value: Airport?) {
+        _sourceDestination.value = value
+    }
+
+    // Set start time
+    private val _startTime = MutableLiveData<String?>()
+    val startTime: LiveData<String?> get() = _startTime
+
+    fun setStartTime(value: String?) {
+        _startTime.value = value
+    }
+
+    // Set return time
+    private val _returnTime = MutableLiveData<String?>()
+    val returnTime: LiveData<String?> get() = _returnTime
+
+    fun setReturnTime(value: String?) {
+        _returnTime.value = value
+    }
+
+    // Set passenger total
+    val passengerAdultCountLiveData =
+        MutableLiveData(0).apply {
+            postValue(0)
+        }
+    val passengerBabyCountLiveData =
+        MutableLiveData(0).apply {
+            postValue(0)
+        }
+    val passengerChildCountLiveData =
+        MutableLiveData(0).apply {
+            postValue(0)
+        }
+    val passengerCountLiveData =
+        MutableLiveData(0).apply {
+            postValue(0)
+        }
+
+    fun addTotal() {
+        val totalCount =
+            (passengerAdultCountLiveData.value ?: 0) +
+                (passengerChildCountLiveData.value ?: 0) +
+                (passengerBabyCountLiveData.value ?: 0)
+        passengerCountLiveData.postValue(totalCount)
+    }
+
+    fun addAdult() {
+        val adultCount = (passengerAdultCountLiveData.value ?: 0) + 1
+        passengerAdultCountLiveData.postValue(adultCount)
+    }
+
+    fun addChild() {
+        val childCount = (passengerChildCountLiveData.value ?: 0) + 1
+        passengerChildCountLiveData.postValue(childCount)
+    }
+
+    fun addBaby() {
+        val babyCount = (passengerBabyCountLiveData.value ?: 0) + 1
+        passengerBabyCountLiveData.postValue(babyCount)
+    }
+
+    fun minusAdult() {
+        if ((passengerAdultCountLiveData.value ?: 0) > 0) {
+            val count = (passengerAdultCountLiveData.value ?: 0) - 1
+            passengerAdultCountLiveData.postValue(count)
+        }
+    }
+
+    fun minusChild() {
+        if ((passengerChildCountLiveData.value ?: 0) > 0) {
+            val count = (passengerChildCountLiveData.value ?: 0) - 1
+            passengerChildCountLiveData.postValue(count)
+        }
+    }
+
+    fun minusBaby() {
+        if ((passengerBabyCountLiveData.value ?: 0) > 0) {
+            val count = (passengerBabyCountLiveData.value ?: 0) - 1
+            passengerBabyCountLiveData.postValue(count)
+        }
+    }
 }

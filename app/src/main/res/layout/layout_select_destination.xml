@@ -42,6 +42,7 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_departures"
             app:layout_constraintStart_toEndOf="@id/tv_from"
             app:layout_constraintTop_toTopOf="@id/iv_departures"
+            app:layout_constraintEnd_toEndOf="@id/v_select_destination"
             app:boxBackgroundMode="none">
 
             <TextView
@@ -49,7 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Divider Line -->
@@ -102,6 +104,7 @@
 
         <!-- To Field -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ti_end_destination"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -109,9 +112,10 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_destination"
             app:layout_constraintStart_toEndOf="@id/tv_to"
             app:layout_constraintTop_toTopOf="@id/iv_destination"
+            app:layout_constraintEnd_toEndOf="@id/v_select_destination"
             app:boxBackgroundMode="none">
 
-            <AutoCompleteTextView
+            <TextView
                 android:id="@+id/tv_end_destination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

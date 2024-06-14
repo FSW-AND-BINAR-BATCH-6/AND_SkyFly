@@ -1,4 +1,4 @@
-package com.kom.skyfly.presentation.search_result
+package com.kom.skyfly.presentation.home.search_result
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
