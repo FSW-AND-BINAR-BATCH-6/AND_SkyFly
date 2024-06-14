@@ -58,6 +58,11 @@ class HomeFragment : Fragment() {
                 binding.tvReturn.text = it
             }
         }
+        sharedViewModel.passengerCountLiveData.observe(viewLifecycleOwner) { totalPassenger ->
+            totalPassenger?.let {
+                binding.tvPassengers.text = it.toString()
+            }
+        }
     }
 
     private fun setOnClickListener() {

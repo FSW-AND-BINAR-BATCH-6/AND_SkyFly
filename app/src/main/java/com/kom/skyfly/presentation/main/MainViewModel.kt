@@ -39,4 +39,66 @@ class MainViewModel(
     fun setReturnTime(value: String?) {
         _returnTime.value = value
     }
+
+    // Set passenger total
+    val passengerAdultCountLiveData =
+        MutableLiveData(0).apply {
+            postValue(0)
+        }
+    val passengerBabyCountLiveData =
+        MutableLiveData(0).apply {
+            postValue(0)
+        }
+    val passengerChildCountLiveData =
+        MutableLiveData(0).apply {
+            postValue(0)
+        }
+    val passengerCountLiveData =
+        MutableLiveData(0).apply {
+            postValue(0)
+        }
+
+    fun addTotal() {
+        val totalCount =
+            (passengerAdultCountLiveData.value ?: 0) +
+                (passengerChildCountLiveData.value ?: 0) +
+                (passengerBabyCountLiveData.value ?: 0)
+        passengerCountLiveData.postValue(totalCount)
+    }
+
+    fun addAdult() {
+        val adultCount = (passengerAdultCountLiveData.value ?: 0) + 1
+        passengerAdultCountLiveData.postValue(adultCount)
+    }
+
+    fun addChild() {
+        val childCount = (passengerChildCountLiveData.value ?: 0) + 1
+        passengerChildCountLiveData.postValue(childCount)
+    }
+
+    fun addBaby() {
+        val babyCount = (passengerBabyCountLiveData.value ?: 0) + 1
+        passengerBabyCountLiveData.postValue(babyCount)
+    }
+
+    fun minusAdult() {
+        if ((passengerAdultCountLiveData.value ?: 0) > 0) {
+            val count = (passengerAdultCountLiveData.value ?: 0) - 1
+            passengerAdultCountLiveData.postValue(count)
+        }
+    }
+
+    fun minusChild() {
+        if ((passengerChildCountLiveData.value ?: 0) > 0) {
+            val count = (passengerChildCountLiveData.value ?: 0) - 1
+            passengerChildCountLiveData.postValue(count)
+        }
+    }
+
+    fun minusBaby() {
+        if ((passengerBabyCountLiveData.value ?: 0) > 0) {
+            val count = (passengerBabyCountLiveData.value ?: 0) - 1
+            passengerBabyCountLiveData.postValue(count)
+        }
+    }
 }

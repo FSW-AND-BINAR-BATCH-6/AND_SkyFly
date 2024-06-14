@@ -21,7 +21,7 @@
             android:name=".presentation.detail_home.DetailHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.search_result.SearchResultActivity"
+            android:name=".presentation.home.search_result.SearchResultActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
