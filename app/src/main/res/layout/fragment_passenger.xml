@@ -65,7 +65,7 @@
             android:layout_height="25dp"
             android:layout_marginEnd="4dp"
             android:src="@drawable/ic_minus"
-            app:layout_constraintEnd_toStartOf="@id/et_counter_adult"
+            app:layout_constraintEnd_toStartOf="@id/tv_counter_adult"
             app:layout_constraintTop_toTopOf="@id/iv_adult_icon" />
 
         <ImageView
@@ -76,14 +76,23 @@
             app:layout_constraintEnd_toEndOf="@id/iv_close_passenger_page"
             app:layout_constraintTop_toTopOf="@id/iv_adult_icon" />
 
-        <EditText
-            android:id="@+id/et_counter_adult"
+        <TextView
+            android:id="@+id/tv_counter_adult"
             android:layout_width="45dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
-            android:inputType="number"
             app:layout_constraintEnd_toStartOf="@id/iv_btn_plus_adult"
-            app:layout_constraintTop_toTopOf="@id/iv_adult_icon" />
+            app:layout_constraintTop_toTopOf="@id/iv_adult_icon"
+            tools:text="0"
+            android:textAlignment="center"/>
+        <View
+            android:id="@+id/v_tv_counter_adult"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/tv_counter_adult"
+            app:layout_constraintStart_toStartOf="@id/tv_counter_adult"
+            app:layout_constraintTop_toBottomOf="@id/tv_counter_adult" />
 
         <View
             android:id="@+id/v_adult"
@@ -131,22 +140,30 @@
             app:layout_constraintEnd_toEndOf="@id/iv_close_passenger_page"
             app:layout_constraintTop_toTopOf="@id/iv_child_icon" />
 
-        <EditText
-            android:id="@+id/et_counter_child"
+        <TextView
+            android:id="@+id/tv_counter_child"
             android:layout_width="45dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
-            android:inputType="number"
             app:layout_constraintEnd_toStartOf="@id/iv_btn_plus_child"
-            app:layout_constraintTop_toTopOf="@id/iv_child_icon" />
-
+            app:layout_constraintTop_toTopOf="@id/iv_child_icon"
+            android:textAlignment="center"
+            tools:text="0"/>
+        <View
+            android:id="@+id/v_tv_counter_child"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/tv_counter_child"
+            app:layout_constraintStart_toStartOf="@id/tv_counter_child"
+            app:layout_constraintTop_toBottomOf="@id/tv_counter_child" />
         <ImageView
             android:id="@+id/iv_minus_btn_child"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="4dp"
             android:src="@drawable/ic_minus"
-            app:layout_constraintEnd_toStartOf="@id/et_counter_child"
+            app:layout_constraintEnd_toStartOf="@id/tv_counter_child"
             app:layout_constraintTop_toTopOf="@id/iv_child_icon" />
 
         <View
@@ -195,14 +212,23 @@
             app:layout_constraintEnd_toEndOf="@id/iv_close_passenger_page"
             app:layout_constraintTop_toTopOf="@id/iv_baby_icon" />
 
-        <EditText
-            android:id="@+id/et_counter_baby"
+        <TextView
+            android:id="@+id/tv_counter_baby"
             android:layout_width="45dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
-            android:inputType="number"
             app:layout_constraintEnd_toStartOf="@id/iv_btn_plus_child"
-            app:layout_constraintTop_toTopOf="@id/iv_baby_icon" />
+            app:layout_constraintTop_toTopOf="@id/iv_baby_icon"
+            android:textAlignment="center"
+            tools:text="0"/>
+        <View
+            android:id="@+id/v_tv_counter_baby"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/tv_counter_baby"
+            app:layout_constraintStart_toStartOf="@id/tv_counter_baby"
+            app:layout_constraintTop_toBottomOf="@id/tv_counter_baby" />
 
         <ImageView
             android:id="@+id/iv_minus_btn_baby"
@@ -210,10 +236,11 @@
             android:layout_height="25dp"
             android:layout_marginEnd="4dp"
             android:src="@drawable/ic_minus"
-            app:layout_constraintEnd_toStartOf="@id/et_counter_child"
+            app:layout_constraintEnd_toStartOf="@id/tv_counter_child"
             app:layout_constraintTop_toTopOf="@id/iv_baby_icon" />
 
         <Button
+            android:id="@+id/btn_save_total_passenger"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

@@ -1,4 +1,4 @@
-package com.kom.skyfly.presentation.search_result
+package com.kom.skyfly.presentation.home.search_result
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.kom.skyfly.R
 
 class SearchResultActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
