@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -12,17 +11,18 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentSearchBinding
-import com.kom.skyfly.presentation.home.HomeViewModel
 import com.kom.skyfly.presentation.home.search.viewitems.Items
+import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.utils.proceedWhen
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentSearchBinding
     private val searchViewModel: SearchViewModel by viewModel()
-    private val homeViewModel: HomeViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val mainViewModel: MainViewModel by activityViewModel()
     private val adapter: GroupieAdapter by lazy {
         GroupieAdapter()
     }
@@ -67,7 +67,7 @@ class SearchFragment : BottomSheetDialogFragment() {
                                     val data =
                                         sectionedSearch.map { data ->
                                             Items(data) { item ->
-                                                homeViewModel.setDestination(item)
+                                                mainViewModel.setDestination(item)
                                                 dismiss()
                                             }
                                         }

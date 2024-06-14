@@ -161,8 +161,8 @@
     <string name="text_start_from_value">Jakarta (JKTA)</string>
     <string name="text_to">To</string>
     <string name="text_departure_return">Pulang - Pergi?</string>
-    <string name="text_departure_date_value">3 Maret 2024</string>
-    <string name="text_return_date_value">5 Maret 2024</string>
+    <string name="text_departure_date_value">Selasa, 3 Maret 2024</string>
+    <string name="text_return_date_value">Kamis, 5 Maret 2024</string>
     <string name="text_return_title">Kembali</string>
     <string name="text_passenger_title">Penumpang</string>
     <string name="text_seat_class_title">Kelas Kursi</string>

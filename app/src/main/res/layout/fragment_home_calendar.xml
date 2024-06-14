@@ -6,7 +6,7 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/iv_close_calendar"
+        android:id="@+id/iv_home_close_calendar"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="16dp"
@@ -24,7 +24,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@id/vertical_line"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_close_calendar"/>
+        app:layout_constraintTop_toBottomOf="@id/iv_home_close_calendar"/>
 
     <TextView
         android:id="@+id/tv_departure_date"

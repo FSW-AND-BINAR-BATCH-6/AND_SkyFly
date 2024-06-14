@@ -19,6 +19,8 @@ import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.ViewContainer
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentHomeCalendarBinding
+import com.kom.skyfly.presentation.main.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
@@ -32,6 +34,7 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
     private var endDate: LocalDate? = null
 
     private val dateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale("id", "ID"))
+    private val mainViewModel: MainViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,12 +89,14 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
                                     textView.setTextColor(Color.WHITE)
                                     textView.setBackgroundResource(R.drawable.selection_background)
                                     binding.tvDepartureDate.text = data.date.format(dateFormatter)
+                                    mainViewModel.setStartTime(data.date.format(dateFormatter))
                                 }
 
                                 endDate == data.date -> {
                                     textView.setTextColor(Color.WHITE)
                                     textView.setBackgroundResource(R.drawable.selection_background)
                                     binding.tvBackDate.text = data.date.format(dateFormatter)
+                                    mainViewModel.setReturnTime(data.date.format(dateFormatter))
                                 }
 
                                 startDate != null && endDate != null && (data.date > startDate && data.date < endDate) -> {
@@ -184,7 +189,10 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
     }
 
     private fun setOnClickListener() {
-        binding.ivCloseCalendar.setOnClickListener {
+        binding.ivHomeCloseCalendar.setOnClickListener {
+            dismiss()
+        }
+        binding.btnSave.setOnClickListener {
             dismiss()
         }
     }
