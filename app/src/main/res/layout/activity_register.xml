@@ -79,7 +79,12 @@
                 android:indeterminate="true"
                 android:visibility="gone" />
         </FrameLayout>
-
+        <com.kom.skyfly.presentation.common.views.ContentStateView
+            android:id="@+id/csv_register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/tv_not_have_account"
             android:layout_width="match_parent"
@@ -92,5 +97,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fl_btn_register" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </ScrollView>

@@ -2,11 +2,13 @@ package com.kom.skyfly.presentation.common.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.LayoutContentStateBinding
+import es.dmoral.toasty.Toasty
 
 /**
 Written by Komang Yuda Saputra
@@ -70,6 +72,20 @@ class ContentStateView
                     listener?.onContentShow(false)
                 }
 
+                ContentState.ERROR_NETWORK_GENERAL -> {
+                    binding.root.isVisible = true
+                    binding.ivError.isVisible = false
+                    binding.tvError.isVisible = false
+                    message?.let {
+                        Toasty.error(context, it, Toast.LENGTH_SHORT).show()
+                    } ?: run {
+                        Toasty.error(context, R.string.no_internet_connection, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                    listener?.onContentShow(false)
+                }
+
                 ContentState.ERROR_GENERAL -> {
                     binding.root.isVisible = true
                     binding.ivError.isVisible = true
@@ -94,5 +110,6 @@ enum class ContentState {
     SUCCESS,
     EMPTY,
     ERROR_NETWORK,
+    ERROR_NETWORK_GENERAL,
     ERROR_GENERAL,
 }

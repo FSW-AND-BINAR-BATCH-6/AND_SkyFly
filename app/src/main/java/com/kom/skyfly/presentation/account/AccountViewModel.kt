@@ -29,4 +29,6 @@ class AccountViewModel(
         authRepository
             .forgetPassword(email)
             .asLiveData(Dispatchers.IO)
+
+    fun isUserLoggedIn() = authRepository.isUserLoggedIn().asLiveData(Dispatchers.IO)
 }

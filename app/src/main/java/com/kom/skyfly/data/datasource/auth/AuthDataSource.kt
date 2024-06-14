@@ -7,6 +7,7 @@ import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
+import com.kom.skyfly.data.source.network.model.userprofile.UserProfileResponse
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountRequest
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountResponse
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
@@ -42,6 +43,8 @@ interface AuthDataSource {
 
     @Throws(exceptionClasses = [Exception::class])
     suspend fun resendOtpRequest(token: String): ResendOtpResponse
+
+    suspend fun isUserLoggedIn(): UserProfileResponse
 }
 
 class AuthDataSourceImpl(private val service: SkyFlyApiService) : AuthDataSource {
@@ -85,5 +88,9 @@ class AuthDataSourceImpl(private val service: SkyFlyApiService) : AuthDataSource
 
     override suspend fun resendOtpRequest(token: String): ResendOtpResponse {
         return service.resendOtp(token)
+    }
+
+    override suspend fun isUserLoggedIn(): UserProfileResponse {
+        return service.getUserProfile()
     }
 }

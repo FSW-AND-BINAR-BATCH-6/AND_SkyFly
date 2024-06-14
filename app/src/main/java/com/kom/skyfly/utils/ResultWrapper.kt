@@ -5,10 +5,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import java.io.IOException
-import java.lang.Exception
 
-class NoInternetException(message: String = "No internet connection available") :
-    IOException(message)
+class NoInternetException() : IOException()
 
 sealed class ResultWrapper<T>(
     val payload: T? = null,
@@ -83,12 +81,17 @@ fun <T> proceedFlow(block: suspend () -> T): Flow<ResultWrapper<T>> {
             },
         )
     }.catch { e ->
-        if (e is NoInternetException) {
-            emit(ResultWrapper.Error(Exception(e)))
-        } else {
-            emit(ResultWrapper.Error(exception = Exception(e)))
-        }
+        emit(ResultWrapper.Error(exception = e.parseException()))
     }.onStart {
         emit(ResultWrapper.Loading())
+    }
+}
+
+fun Throwable?.parseException(): Exception {
+    when (this) {
+        is IOException -> {
+            return NoInternetException()
+        }
+        else -> return Exception(this)
     }
 }

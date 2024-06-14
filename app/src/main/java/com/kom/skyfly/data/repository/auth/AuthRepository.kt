@@ -1,6 +1,8 @@
 package com.kom.skyfly.data.repository.auth
 
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
+import com.kom.skyfly.data.mapper.toUserIsLoggedIn
+import com.kom.skyfly.data.model.auth.Auth
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
@@ -43,6 +45,8 @@ interface AuthRepository {
 
     @Throws(exceptionClasses = [Exception::class])
     fun resendOtpRequest(token: String): Flow<ResultWrapper<ResendOtpResponse>>
+
+    fun isUserLoggedIn(): Flow<ResultWrapper<Auth>>
 }
 
 class AuthRepositoryImpl(private val dataSource: AuthDataSource) : AuthRepository {
@@ -80,5 +84,9 @@ class AuthRepositoryImpl(private val dataSource: AuthDataSource) : AuthRepositor
 
     override fun resendOtpRequest(token: String): Flow<ResultWrapper<ResendOtpResponse>> {
         return proceedFlow { dataSource.resendOtpRequest(token) }
+    }
+
+    override fun isUserLoggedIn(): Flow<ResultWrapper<Auth>> {
+        return proceedFlow { dataSource.isUserLoggedIn().toUserIsLoggedIn() }
     }
 }

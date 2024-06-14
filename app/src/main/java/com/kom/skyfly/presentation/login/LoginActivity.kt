@@ -9,19 +9,17 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityLoginBinding
+import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordFragment
 import com.kom.skyfly.presentation.main.MainActivity
 import com.kom.skyfly.presentation.register.RegisterActivity
 import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.highLightWord
-import com.kom.skyfly.utils.performNetworkOperation
 import com.kom.skyfly.utils.proceedWhen
 import es.dmoral.toasty.Toasty
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -62,11 +60,7 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.layoutForm.etEmail.text.toString().trim()
             val password = binding.layoutForm.etPassword.text.toString().trim()
 
-            lifecycleScope.launch {
-                performNetworkOperation(this@LoginActivity) {
-                    proceedLogin(email, password)
-                }
-            }
+            proceedLogin(email, password)
         }
     }
 
@@ -89,24 +83,15 @@ class LoginActivity : AppCompatActivity() {
                 },
                 doOnError = {
                     binding.pbLoading.isVisible = false
-                    when (it.exception) {
-                        is NoInternetException -> {
-                            Toasty.error(
-                                this@LoginActivity,
-                                "No Internet Connection",
-                                Toast.LENGTH_SHORT,
-                            )
-                                .show()
-                        }
-
-                        else -> {
-                            Toasty.error(
-                                this@LoginActivity,
-                                getString(R.string.email_or_password_is_incorrect),
-                                Toast.LENGTH_SHORT,
-                                true,
-                            ).show()
-                        }
+                    if (it.exception is NoInternetException) {
+                        binding.csvLogin.setState(ContentState.ERROR_NETWORK_GENERAL, "Tidak ada internet!")
+                    } else {
+                        Toasty.error(
+                            this@LoginActivity,
+                            getString(R.string.email_or_password_is_incorrect),
+                            Toast.LENGTH_SHORT,
+                            true,
+                        ).show()
                     }
                     binding.btnLogin.isVisible = true
                 },

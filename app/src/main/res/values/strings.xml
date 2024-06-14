@@ -173,7 +173,7 @@
     <string name="text_12_tahun_keatas">(12 tahun keatas)</string>
     <string name="text_dewasa">Dewasa</string>
     <string name="text_simpan">Simpan</string>
-    <string name="text_hai_mau_ke_mana">Hai, mau ke mana</string>
+    <string name="text_hai_mau_ke_mana">Hai, Mau Kemana?</string>
     <string name="text_cari_penerbangan">Cari Penerbangan</string>
     <string name="text_passenger_type">Adult</string>
     <string name="text_empty_data">Data Masih Kosong!</string>
@@ -196,4 +196,6 @@
     <string name="text_loading">Loading ..</string>
     <string name="text_oke">Oke</string>
     <string name="text_confirm_update_profile">Yakin ingin update data?</string>
+    <string name="text_notification_titles">Dapatkan Diskon 50% Setiap Hari Senin!</string>
+    <string name="text_notification_content_detail">Nikmati diskon 50% untuk semua pembelian setiap hari Senin. Jangan lewatkan kesempatan ini untuk berbelanja lebih hemat! Promo ini berlaku untuk semua produk tanpa minimum pembelian. Pastikan Anda memanfaatkan penawaran ini untuk mendapatkan lebih banyak dengan harga lebih murah. Selamat berbelanja dan hemat lebih banyak!</string>
 </resources>
