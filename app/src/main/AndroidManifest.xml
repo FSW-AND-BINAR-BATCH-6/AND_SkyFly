@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.notificationdetail.NotificationDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.detail_home.DetailHomeActivity"
             android:exported="false" />
         <activity

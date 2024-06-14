@@ -13,6 +13,8 @@ import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.databinding.FragmentAccountBinding
 import com.kom.skyfly.presentation.account.editprofile.BottomSheetsEditProfile
+import com.kom.skyfly.presentation.common.views.ContentState
+import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.proceedWhen
 import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,7 +44,7 @@ class AccountFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
-        getProfileData()
+        observeLoginStatus()
     }
 
     private fun confirmReqChangePassword() {
@@ -100,6 +102,27 @@ class AccountFragment : Fragment() {
         }
     }
 
+    private fun observeLoginStatus() {
+        accountViewModel.isUserLoggedIn().observe(viewLifecycleOwner) { result ->
+            result.proceedWhen(
+                doOnSuccess = { isLoggedIn ->
+                    isLoggedIn.let {
+                        val isUserLoggedIn = it.payload?.status.toBoolean()
+                        if (!isUserLoggedIn) {
+                            (activity as BaseActivity).handleUnAuthorize()
+                            Toasty.error(requireContext(), "Session expired. Please log in again.", Toast.LENGTH_SHORT, true).show()
+                        } else {
+                            getProfileData()
+                        }
+                    }
+                },
+                doOnError = {
+                    Log.d("login-status", "Error checking login status: ${it.exception?.message}")
+                },
+            )
+        }
+    }
+
     private fun getProfileData() {
         accountViewModel.getProfile().observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
@@ -115,7 +138,18 @@ class AccountFragment : Fragment() {
                     }
                 },
                 doOnError = {
-                    Log.d("get-profile", "getProfileData: ${it.exception?.message}")
+                    if (it.exception is NoInternetException) {
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            "Tidak ada internet!",
+                        )
+                    }
+                    val errorMessage = it.exception?.message
+                    if (errorMessage != null && errorMessage.contains("jwt expired")) {
+                        (activity as BaseActivity).handleUnAuthorize()
+                    } else {
+                        Log.d("get-profile", "getProfileData: ${it.exception?.message}")
+                    }
                 },
             )
         }

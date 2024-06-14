@@ -93,7 +93,6 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
                     getString(R.string.text_oke),
                 ) { dialog, id ->
                     doUpdateProfile()
-
                 }
                 .create()
         dialog.show()

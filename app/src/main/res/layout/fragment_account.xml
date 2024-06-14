@@ -43,10 +43,18 @@
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
             android:text="@string/text_version"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_btn_profile" />
+
+        <com.kom.skyfly.presentation.common.views.ContentStateView
+            android:id="@+id/csv_profile"
+            android:layout_width="match_parent"
+            tools:visibility="gone"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

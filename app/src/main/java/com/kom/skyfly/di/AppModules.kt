@@ -5,6 +5,8 @@ import android.os.Bundle
 import com.kom.skyfly.core.BaseViewModel
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
+import com.kom.skyfly.data.datasource.destinationfavorite.DestinationFavoriteDataSource
+import com.kom.skyfly.data.datasource.destinationfavorite.DestinationFavoriteDataSourceImpl
 import com.kom.skyfly.data.datasource.flightseat.FlightSeatDataSource
 import com.kom.skyfly.data.datasource.flightseat.FlightSeatDataSourceImpl
 import com.kom.skyfly.data.datasource.history.HistoryDataSource
@@ -21,6 +23,8 @@ import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSource
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSourceImpl
 import com.kom.skyfly.data.repository.auth.AuthRepository
 import com.kom.skyfly.data.repository.auth.AuthRepositoryImpl
+import com.kom.skyfly.data.repository.destinationfavorite.DestinationFavoriteRepository
+import com.kom.skyfly.data.repository.destinationfavorite.DestinationFavoriteRepositoryImpl
 import com.kom.skyfly.data.repository.flightseat.FlightSeatRepository
 import com.kom.skyfly.data.repository.flightseat.FlightSeatRepositoryImpl
 import com.kom.skyfly.data.repository.history.HistoryRepository
@@ -81,6 +85,7 @@ object AppModules {
             single<SearchHistoryDataSource> { SearchHistoryDataSourceImpl(get()) }
             single<HomeDataSource> { HomeDataSourceImpl(get()) }
             single<FlightSeatDataSource> { FlightSeatDataSourceImpl(get()) }
+            single<DestinationFavoriteDataSource> { DestinationFavoriteDataSourceImpl() }
         }
 
     private val localModule =
@@ -106,6 +111,7 @@ object AppModules {
             single<SearchHistoryRepository> { SearchHistoryRepositoryImpl(get()) }
             single<AirportRepository> { AirportRepositoryImpl(get()) }
             single<FlightSeatRepository> { FlightSeatRepositoryImpl(get()) }
+            single<DestinationFavoriteRepository> { DestinationFavoriteRepositoryImpl(get()) }
         }
 
     private val viewModelModule =
