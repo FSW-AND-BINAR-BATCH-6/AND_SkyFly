@@ -4,12 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.kom.skyfly.data.model.destinationfavorite.DestinationFavorite
 import com.kom.skyfly.databinding.FragmentHomeBinding
+import com.kom.skyfly.presentation.common.views.ContentState
+import com.kom.skyfly.presentation.home.adapter.DestinationFavoriteAdapter
 import com.kom.skyfly.presentation.home.calendar.HomeCalendarFragment
 import com.kom.skyfly.presentation.home.passenger.PassengerFragment
 import com.kom.skyfly.presentation.home.search.SearchFragment
 import com.kom.skyfly.presentation.main.MainViewModel
+import com.kom.skyfly.utils.NoInternetException
+import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,6 +24,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModel()
     private val sharedViewModel: MainViewModel by activityViewModel()
+    private val destinationAdapter: DestinationFavoriteAdapter by lazy { DestinationFavoriteAdapter {} }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +43,8 @@ class HomeFragment : Fragment() {
         homeViewModel.setOnBoardingShow(true)
         observeDataDestination()
         setOnClickListener()
+        setupDestinationFavorite()
+        getDestinationFavoriteData()
     }
 
     private fun observeDataDestination() {
@@ -87,6 +96,47 @@ class HomeFragment : Fragment() {
         binding.tvPassengers.setOnClickListener {
             val passengerBottomSheet = PassengerFragment()
             passengerBottomSheet.show(parentFragmentManager, passengerBottomSheet.tag)
+        }
+    }
+
+    private fun getDestinationFavoriteData() {
+        homeViewModel.getAllDestinationFavorite().observe(viewLifecycleOwner) { result ->
+            result.proceedWhen(
+                doOnSuccess = {
+                    binding.rvCategory.isVisible = true
+                    binding.shmProgressDestinationFav.isVisible = false
+                    binding.csvHome.setState(ContentState.SUCCESS)
+                    it.payload?.let {
+                        bindDestinationFavoriteList(it)
+                    }
+                },
+                doOnLoading = {
+                    binding.rvCategory.isVisible = false
+                    binding.shmProgressDestinationFav.isVisible = true
+                },
+                doOnEmpty = {
+                    binding.csvHome.setState(ContentState.EMPTY)
+                    binding.shmProgressDestinationFav.isVisible = false
+                },
+                doOnError = {
+                    if (it.exception is NoInternetException) {
+                        binding.csvHome.setState(ContentState.ERROR_NETWORK)
+                    } else {
+                        binding.csvHome.setState(ContentState.ERROR_GENERAL)
+                    }
+                    binding.shmProgressDestinationFav.isVisible = false
+                },
+            )
+        }
+    }
+
+    private fun bindDestinationFavoriteList(data: List<DestinationFavorite>) {
+        destinationAdapter.submitData(data)
+    }
+
+    private fun setupDestinationFavorite() {
+        binding.rvCategory.apply {
+            adapter = destinationAdapter
         }
     }
 
