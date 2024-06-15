@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_purple_gradient"
     tools:context=".presentation.home.HomeFragment">
     <com.kom.skyfly.presentation.common.views.ContentStateView
         android:id="@+id/csv_home"
@@ -24,7 +25,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/bg_purple_gradient"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/text_hai_mau_ke_mana"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,8 @@
                 android:id="@+id/cv_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginVertical="16dp"
+                android:layout_marginHorizontal="8dp"
                 app:cardCornerRadius="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_greeting">
@@ -107,13 +108,13 @@
 
                     <TextView
                         android:id="@+id/tv_departure"
-                        android:layout_width="0dp"
+                        android:layout_width="130dp"
                         android:layout_height="wrap_content"
-                        android:hint="@string/text_departure_date_value"
+                        android:text="@string/text_departure_date_value"
                         android:ellipsize="end"
+                        android:textColor="@color/md_theme_primary"
                         android:maxLines="2"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="@id/tv_departure_title"
                         app:layout_constraintStart_toStartOf="@id/tv_departure_title"
                         app:layout_constraintTop_toBottomOf="@id/tv_departure_title" />
                     <View
@@ -129,10 +130,11 @@
                         android:id="@+id/iv_return"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="32dp"
                         android:src="@drawable/ic_calendar"
                         app:layout_constraintBottom_toBottomOf="@id/iv_departure"
-                        app:layout_constraintStart_toEndOf="@id/tv_departure_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_text_pulang_pergi"
                         app:layout_constraintTop_toTopOf="@id/iv_departure" />
 
@@ -148,15 +150,15 @@
 
                     <TextView
                         android:id="@+id/tv_return"
-                        android:layout_width="0dp"
+                        android:layout_width="130dp"
                         android:layout_height="wrap_content"
-                        android:hint="@string/text_return_date_value"
+                        android:text="@string/text_return_date_value"
+                        android:textColor="@color/md_theme_primary"
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="@id/tv_return_title"
-                        app:layout_constraintTop_toBottomOf="@id/tv_return_title"
-                        app:layout_constraintEnd_toStartOf="@id/btn_switch_destination"/>
+                        app:layout_constraintTop_toBottomOf="@id/tv_return_title" />
                     <View
                         android:id="@+id/v_select_return_time"
                         android:layout_width="0dp"
@@ -189,10 +191,10 @@
 
                     <TextView
                         android:id="@+id/tv_passengers"
-                        android:layout_width="0dp"
+                        android:layout_width="130dp"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="@id/v_select_departure_time"
-                        tools:hint="2 Penumpang"
+                        tools:text="@string/text_add_passenger"
+                        android:textColor="@color/md_theme_primary"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textSize="16sp"
@@ -226,13 +228,13 @@
 
                     <TextView
                         android:id="@+id/tv_seats"
-                        android:layout_width="0dp"
+                        android:layout_width="130dp"
                         android:layout_height="wrap_content"
-                        android:hint="Ekonomi"
+                        android:text="@string/text_seat_class"
+                        android:textColor="@color/md_theme_primary"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="@id/tv_seat_title"
                         app:layout_constraintTop_toTopOf="@id/tv_passengers"
-                        app:layout_constraintEnd_toEndOf="@id/v_select_return_time"
                         app:layout_constraintTop_toBottomOf="@id/tv_seat_title"
                         android:ellipsize="end"
                         android:maxLines="1"/>

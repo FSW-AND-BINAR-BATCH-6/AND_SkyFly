@@ -161,8 +161,8 @@
     <string name="text_start_from_value">Jakarta (JKTA)</string>
     <string name="text_to">To</string>
     <string name="text_departure_return">Round Trip?</string>
-    <string name="text_departure_date_value">March 3, 2024</string>
-    <string name="text_return_date_value">March 5, 2024</string>
+    <string name="text_departure_date_value">Select date</string>
+    <string name="text_return_date_value">Select date</string>
     <string name="text_return_title">Return</string>
     <string name="text_passenger_title">Passenger</string>
     <string name="text_seat_class_title">Seat Class</string>
@@ -205,4 +205,6 @@
     <string name="text_confirm_password_hint">Confirm password</string>
     <string name="text_change_password_successfully">Change password successfully!</string>
     <string name="text_confirm_change_password">Are you sure you want to change password?</string>
+    <string name="text_add_passenger">Add passenger</string>
+    <string name="text_seat_class">Select Seat class</string>
 </resources>
