@@ -15,6 +15,7 @@ import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentVerifyOtpBinding
 import com.kom.skyfly.presentation.login.LoginActivity
 import com.kom.skyfly.utils.proceedWhen
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class VerifyOtpFragment : BottomSheetDialogFragment() {
@@ -90,7 +91,13 @@ class VerifyOtpFragment : BottomSheetDialogFragment() {
                         navigateToLogin()
                     },
                     doOnError = {
+                        Toasty.error(requireContext(), "Invalid token!", Toast.LENGTH_SHORT).show()
+                        binding.pbOtp.isVisible = false
                         Log.d("Verify-Error", "verifyProceed: ${it.exception?.message}")
+                    },
+                    doOnLoading = {
+                        binding.tvReqNewOtp.isVisible = false
+                        binding.pbOtp.isVisible = true
                     },
                 )
             }

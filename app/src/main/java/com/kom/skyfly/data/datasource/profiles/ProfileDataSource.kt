@@ -13,9 +13,10 @@ interface ProfileDataSource {
     suspend fun getUserProfile(): UserProfileResponse
 
     suspend fun updateUserProfile(
-        id: String,
-        name: String,
-        phoneNumber: String,
+        name: String?,
+        phoneNumber: String?,
+        password: String?,
+        confirmPassword: String?,
     ): UpdateProfileResponse
 }
 
@@ -25,11 +26,12 @@ class ProfileDataSourceImpl(private val service: SkyFlyApiService) : ProfileData
     }
 
     override suspend fun updateUserProfile(
-        id: String,
-        name: String,
-        phoneNumber: String,
+        name: String?,
+        phoneNumber: String?,
+        password: String?,
+        confirmPassword: String?,
     ): UpdateProfileResponse {
-        val updateProfileRequest = UpdateProfileRequest(name, phoneNumber)
-        return service.updateUserProfile(id, updateProfileRequest)
+        val updateProfileRequest = UpdateProfileRequest(name, phoneNumber, password, confirmPassword)
+        return service.updateUserProfile(updateProfileRequest)
     }
 }

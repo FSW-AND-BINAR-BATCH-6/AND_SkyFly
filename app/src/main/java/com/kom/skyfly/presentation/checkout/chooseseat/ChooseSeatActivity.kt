@@ -21,11 +21,6 @@ class ChooseSeatActivity : AppCompatActivity() {
     private val chooseSeatViewModel: ChooseSeatViewModel by viewModel()
 
     private var seats: String = ""
-
-    //    private var seats = (
-//            "/AAA_AAA" +
-//                    "/ARR_A"
-//            )
     private var titles = listOf<String>()
 
     private lateinit var seatBookView: SeatBookView
@@ -36,7 +31,7 @@ class ChooseSeatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setTitleHeader()
-        val flightId = "clx7whu6u001qt1jz9x8ig4ca"
+        val flightId = "clxelwz45001nhwic6jpydgb8"
         getAllFlightSeatData(flightId)
         getFlightSeatData(flightId)
     }
@@ -135,8 +130,5 @@ class ChooseSeatActivity : AppCompatActivity() {
 
     private fun setTitleHeader() {
         binding.layoutHeader.tvTitleHeader.text = getString(R.string.text_header_choose_seat)
-    }
-
-    private fun setTitleSeatView(seatTotal: String) {
     }
 }

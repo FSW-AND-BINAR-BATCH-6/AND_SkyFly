@@ -24,6 +24,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -75,15 +76,14 @@ interface SkyFlyApiService {
     @GET("api/v1/flightSeats/flight/{id}")
     suspend fun getAllFlightSeat(
         @Path("id") id: String,
-        @Query("limit") limit: Int? = 100,
+        @Query("limit") limit: Int? = 5000,
     ): FlightSeatResponse
 
     @GET("api/v1/auth/me")
     suspend fun getUserProfile(): UserProfileResponse
 
-    @PUT("api/v1/users/{id}")
+    @PATCH("api/v1/auth/me")
     suspend fun updateUserProfile(
-        @Path("id") id: String,
         @Body updateProfileRequest: UpdateProfileRequest,
     ): UpdateProfileResponse
 

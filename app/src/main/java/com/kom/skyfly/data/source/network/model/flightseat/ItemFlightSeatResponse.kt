@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class Data(
+data class ItemFlightSeatResponse(
     @SerializedName("flightId")
     val flightId: String?,
     @SerializedName("id")

@@ -9,4 +9,6 @@ Github : https://github.com/YudaSaputraa
 data class UpdateProfileRequest(
     @SerializedName("name") val name: String?,
     @SerializedName("phoneNumber") val phoneNumber: String?,
+    @SerializedName("password") val password: String?,
+    @SerializedName("confirmPassword") val confirmPassword: String?,
 )
