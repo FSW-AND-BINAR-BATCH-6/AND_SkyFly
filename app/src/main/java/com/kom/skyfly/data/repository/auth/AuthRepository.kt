@@ -10,9 +10,7 @@ import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountResponse
 import com.kom.skyfly.utils.ResultWrapper
 import com.kom.skyfly.utils.proceedFlow
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 
 /**
@@ -63,11 +61,8 @@ class AuthRepositoryImpl(private val dataSource: AuthDataSource) : AuthRepositor
         phoneNumber: String,
         password: String,
     ): Flow<ResultWrapper<RegisterResponse>> {
-        return flow {
-            emit(ResultWrapper.Loading())
-            delay(2000)
-            val registerResponse = dataSource.doRegister(fullName, email, phoneNumber, password)
-            emit(ResultWrapper.Success(registerResponse))
+        return proceedFlow {
+            dataSource.doRegister(fullName, email, phoneNumber, password)
         }
     }
 

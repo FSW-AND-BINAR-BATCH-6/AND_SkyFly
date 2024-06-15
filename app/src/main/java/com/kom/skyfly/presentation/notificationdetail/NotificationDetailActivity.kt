@@ -46,14 +46,14 @@ class NotificationDetailActivity : AppCompatActivity() {
         binding.tvNotificationTypes.text = notification.type
 
         when (notification.type) {
-            "Promosi" -> {
+            "Promotion" -> {
                 binding.ivNotificationType.setImageResource(R.drawable.ic_promotion)
             }
-            "Peringatan" -> {
+            "Warning" -> {
                 binding.ivNotificationType.setImageResource(R.drawable.ic_warning)
             }
 
-            "Pembaruan" -> {
+            "Update" -> {
                 binding.ivNotificationType.setImageResource(R.drawable.ic_update)
             }
             else -> {

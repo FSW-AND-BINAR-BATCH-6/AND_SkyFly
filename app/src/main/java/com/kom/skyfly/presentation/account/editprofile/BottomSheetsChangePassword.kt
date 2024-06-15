@@ -8,45 +8,23 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.textfield.TextInputLayout
 import com.kom.skyfly.R
-import com.kom.skyfly.databinding.FragmentBottomSheetsEditProfileBinding
+import com.kom.skyfly.databinding.FragmentBottomSheetsChangePasswordBinding
 import com.kom.skyfly.utils.proceedWhen
 import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BottomSheetsEditProfile : BottomSheetDialogFragment() {
-    private lateinit var binding: FragmentBottomSheetsEditProfileBinding
-
+class BottomSheetsChangePassword : BottomSheetDialogFragment() {
+    private lateinit var binding: FragmentBottomSheetsChangePasswordBinding
     private val sharedViewModelEditProfile: SharedViewModelEditProfile by viewModel()
-
-    companion object {
-        private const val ARG_FULL_NAME = "arg_full_name"
-        private const val ARG_PHONE_NUMBER = "arg_phone_number"
-        private const val ARG_USER_ID = "arg_user_id"
-
-        fun newInstance(
-            id: String?,
-            fullName: String?,
-            phoneNumber: String?,
-        ): BottomSheetsEditProfile {
-            val fragment = BottomSheetsEditProfile()
-            val args = Bundle()
-            args.putString(ARG_FULL_NAME, fullName)
-            args.putString(ARG_PHONE_NUMBER, phoneNumber)
-            args.putString(ARG_USER_ID, id)
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
-    var id: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentBottomSheetsEditProfileBinding.inflate(layoutInflater, container, false)
+        binding = FragmentBottomSheetsChangePasswordBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -55,16 +33,10 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setEditTextData()
-        setClickListeners()
-        id = arguments?.getString(ARG_USER_ID)
-        val fullName = arguments?.getString(ARG_FULL_NAME)
-        val phoneNumber = arguments?.getString(ARG_PHONE_NUMBER)
-        binding.etFullName.setText(fullName)
-        binding.etPhoneNumber.setText(phoneNumber)
+        setOnClickListeners()
     }
 
-    private fun setClickListeners() {
+    private fun setOnClickListeners() {
         binding.btnSubmit.setOnClickListener {
             if (isFormValid()) {
                 confirmUpdateProfile()
@@ -72,16 +44,19 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
         }
     }
 
-    private fun doEditProfile() {
+    private fun doChangePassword() {
         if (isFormValid()) {
-            val phoneNumber = binding.etPhoneNumber.text.toString().trim()
-            proceedEditProfile(phoneNumber)
+            val newPassword = binding.etNewPassword.text.toString().trim()
+            val confirmNewPassword = binding.etConfirmPassword.text.toString().trim()
+            proceedChangePassword(newPassword, confirmNewPassword)
         }
     }
 
-    private fun proceedEditProfile(phoneNumber: String) {
-        val name = binding.etFullName.text.toString().trim()
-        sharedViewModelEditProfile.updateProfile(name, phoneNumber, null, null)
+    private fun proceedChangePassword(
+        newPassword: String,
+        confirmNewPassword: String,
+    ) {
+        sharedViewModelEditProfile.updateProfile(null, null, newPassword, confirmNewPassword)
             .observe(viewLifecycleOwner) { result ->
                 result.proceedWhen(
                     doOnSuccess = {
@@ -89,7 +64,7 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
                         binding.pbLoading.isVisible = false
                         Toasty.success(
                             requireContext(),
-                            getString(R.string.text_data_updated_successfully),
+                            getString(R.string.text_change_password_successfully),
                             Toast.LENGTH_SHORT,
                         ).show()
                         dismiss()
@@ -111,17 +86,14 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
             }
     }
 
-    private fun setEditTextData() {
-    }
-
     private fun confirmUpdateProfile() {
         val dialog =
             AlertDialog.Builder(requireContext())
-                .setMessage(getString(R.string.text_confirm_update_profile))
+                .setMessage(getString(R.string.text_confirm_change_password))
                 .setPositiveButton(
                     getString(R.string.text_yes),
                 ) { dialog, id ->
-                    doEditProfile()
+                    doChangePassword()
                 }
                 .setNegativeButton(
                     getString(R.string.text_no),
@@ -131,23 +103,47 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
         dialog.show()
     }
 
-    private fun phoneNumberValidation(phoneNumber: String): Boolean {
-        return if (phoneNumber.isEmpty()) {
-            binding.tilPhoneNumber.isErrorEnabled = true
-            binding.tilPhoneNumber.error = getString(R.string.text_no_tlp_cannot_empty)
+    private fun passwordValidation(
+        confirmPassword: String,
+        textInputLayout: TextInputLayout,
+    ): Boolean {
+        return if (confirmPassword.isEmpty()) {
+            textInputLayout.isErrorEnabled = true
+            textInputLayout.error = getString(R.string.text_password_cannot_empty)
             false
-        } else if (phoneNumber.length < 11 || phoneNumber.length > 13) {
-            binding.tilPhoneNumber.isErrorEnabled = true
-            binding.tilPhoneNumber.error = "Phone number must be >11 and <13 digits"
+        } else if (confirmPassword.length < 8) {
+            textInputLayout.isErrorEnabled = true
+            textInputLayout.error = getString(R.string.text_password_should_be_8_character)
             false
         } else {
-            binding.tilPhoneNumber.isErrorEnabled = false
+            textInputLayout.isErrorEnabled = false
             true
         }
     }
 
+    private fun passwordAndConfirmPasswordValidation(
+        password: String,
+        confirmPassword: String,
+    ): Boolean {
+        return if (password == confirmPassword) {
+            binding.tilNewPassword.isErrorEnabled = false
+            binding.tilConfirmPassword.isErrorEnabled = false
+            true
+        } else {
+            binding.tilNewPassword.isErrorEnabled = true
+            binding.tilNewPassword.error = getString(R.string.text_password_doesnt_match)
+            binding.tilConfirmPassword.isErrorEnabled = true
+            binding.tilConfirmPassword.error =
+                getString(R.string.text_password_doesnt_match)
+            false
+        }
+    }
+
     private fun isFormValid(): Boolean {
-        val phoneNumber = binding.etPhoneNumber.text.toString().trim()
-        return phoneNumberValidation(phoneNumber)
+        val newPassword = binding.etNewPassword.text.toString().trim()
+        val confirmPassword = binding.etConfirmPassword.text.toString().trim()
+        return passwordValidation(newPassword, binding.tilNewPassword) &&
+            passwordValidation(confirmPassword, binding.tilConfirmPassword) &&
+            passwordAndConfirmPasswordValidation(newPassword, confirmPassword)
     }
 }

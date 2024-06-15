@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.register
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -58,15 +59,11 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.layoutForm.etPassword.text.toString().trim()
             val fullName = binding.layoutForm.etFullName.text.toString().trim()
             val phoneNumber = binding.layoutForm.etNoTlp.text.toString().trim()
-
-//            lifecycleScope.launch {
-//                performNetworkOperation(this@RegisterActivity) {
             proceedRegister(fullName, email, phoneNumber, password)
-//                }
-//            }
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun proceedRegister(
         fullName: String,
         email: String,

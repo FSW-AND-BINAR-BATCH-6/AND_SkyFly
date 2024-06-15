@@ -1,14 +1,14 @@
 package com.kom.skyfly.data.mapper
 
 import com.kom.skyfly.data.model.flightseat.FlightSeat
-import com.kom.skyfly.data.source.network.model.flightseat.Data
+import com.kom.skyfly.data.source.network.model.flightseat.ItemFlightSeatResponse
 
 /**
 Written by Komang Yuda Saputra
 Github : https://github.com/YudaSaputraa
  **/
 
-fun Data?.toFlightSeat() =
+fun ItemFlightSeatResponse?.toFlightSeat() =
     FlightSeat(
         flightId = this?.flightId.orEmpty(),
         flightSeatId = this?.id.orEmpty(),
@@ -17,4 +17,4 @@ fun Data?.toFlightSeat() =
         type = this?.type.orEmpty(),
     )
 
-fun Collection<Data>?.toFlightSeats() = this?.map { it.toFlightSeat() } ?: listOf()
+fun Collection<ItemFlightSeatResponse>?.toFlightSeats() = this?.map { it.toFlightSeat() } ?: listOf()

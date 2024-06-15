@@ -12,5 +12,5 @@ data class FlightSeatResponse(
     @SerializedName("status")
     val status: Boolean?,
     @SerializedName("data")
-    val data: List<Data>?,
+    val data: List<ItemFlightSeatResponse>?,
 )

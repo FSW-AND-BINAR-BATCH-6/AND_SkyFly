@@ -45,7 +45,7 @@ import com.kom.skyfly.data.source.local.pref.UserPreference
 import com.kom.skyfly.data.source.local.pref.UserPreferenceImpl
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import com.kom.skyfly.presentation.account.AccountViewModel
-import com.kom.skyfly.presentation.account.editprofile.BottomSheetsEditProfileViewModel
+import com.kom.skyfly.presentation.account.editprofile.SharedViewModelEditProfile
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatViewModel
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.history.HistoryViewModel
@@ -137,7 +137,7 @@ object AppModules {
                     historyRepository = get(),
                 )
             }
-            viewModelOf(::BottomSheetsEditProfileViewModel)
+            viewModelOf(::SharedViewModelEditProfile)
         }
 
     val modules =

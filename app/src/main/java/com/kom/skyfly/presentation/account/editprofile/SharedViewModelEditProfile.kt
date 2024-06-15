@@ -9,13 +9,14 @@ import kotlinx.coroutines.Dispatchers
 Written by Komang Yuda Saputra
 Github : https://github.com/YudaSaputraa
  **/
-class BottomSheetsEditProfileViewModel(private val profileRepository: ProfileRepository) :
+class SharedViewModelEditProfile(private val profileRepository: ProfileRepository) :
     ViewModel() {
     fun updateProfile(
-        id: String,
-        name: String,
-        phoneNumber: String,
+        name: String?,
+        phoneNumber: String?,
+        password: String?,
+        confirmPassword: String?,
     ) = profileRepository
-        .updateProfile(id, name, phoneNumber)
+        .updateProfile(name, phoneNumber, password, confirmPassword)
         .asLiveData(Dispatchers.IO)
 }

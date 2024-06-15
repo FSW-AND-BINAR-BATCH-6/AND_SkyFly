@@ -44,15 +44,17 @@ class FlightSeatRepositoryImpl(private val datasource: FlightSeatDataSource) :
 
             val status = chunkedData.map { it.first }.joinToString("/", prefix = "/")
             val title = chunkedData.map { it.second }.flatten()
+            println(status)
+            println(title)
             Pair(status, title)
         }
     }
 
     private fun mapSeatStatus(seat: String?): Char {
         return when (seat) {
-            "AVAILABLE" -> 'A'
-            "OCCUPIED" -> 'U'
-            "BOOKED" -> 'R'
+            "available" -> 'A'
+            "occupied" -> 'U'
+            "booked" -> 'R'
             else -> ' '
         }
     }

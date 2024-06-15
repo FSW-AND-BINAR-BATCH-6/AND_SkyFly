@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.databinding.FragmentAccountBinding
+import com.kom.skyfly.presentation.account.editprofile.BottomSheetsChangePassword
 import com.kom.skyfly.presentation.account.editprofile.BottomSheetsEditProfile
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.utils.NoInternetException
@@ -98,7 +99,11 @@ class AccountFragment : Fragment() {
             navigateToHome()
         }
         binding.layoutBtnProfile.tvChangePassword.setOnClickListener {
-            confirmReqChangePassword()
+            doChangePassword()
+        }
+
+        binding.srfProfile.setOnRefreshListener {
+            getProfileData()
         }
     }
 
@@ -106,17 +111,15 @@ class AccountFragment : Fragment() {
         accountViewModel.isUserLoggedIn().observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
                 doOnSuccess = { isLoggedIn ->
-                    isLoggedIn.let {
-                        val isUserLoggedIn = it.payload?.status.toBoolean()
-                        if (!isUserLoggedIn) {
-                            (activity as BaseActivity).handleUnAuthorize()
-                            Toasty.error(requireContext(), "Session expired. Please log in again.", Toast.LENGTH_SHORT, true).show()
-                        } else {
-                            getProfileData()
-                        }
-                    }
+                    getProfileData()
                 },
                 doOnError = {
+                    val isUserLoggedIn = it.payload?.status.toBoolean()
+                    if (!isUserLoggedIn) {
+                        (activity as BaseActivity).handleUnAuthorize()
+                        Toasty.error(requireContext(), "Session expired. Please log in again.", Toast.LENGTH_SHORT, true).show()
+                    } else {
+                    }
                     Log.d("login-status", "Error checking login status: ${it.exception?.message}")
                 },
             )
@@ -135,9 +138,11 @@ class AccountFragment : Fragment() {
                         binding.layoutProfileUser.etEmail.setText(data?.email)
                         binding.layoutProfileUser.etFullName.setText(data?.fullName)
                         binding.layoutProfileUser.etPhoneNumber.setText(data?.phoneNumber)
+                        binding.srfProfile.isRefreshing = false
                     }
                 },
                 doOnError = {
+                    binding.srfProfile.isRefreshing = false
                     if (it.exception is NoInternetException) {
                         binding.csvProfile.setState(
                             ContentState.ERROR_NETWORK_GENERAL,
@@ -165,6 +170,11 @@ class AccountFragment : Fragment() {
         phoneNumber: String,
     ) {
         val bottomSheetFragment = BottomSheetsEditProfile.newInstance(id, fullName, phoneNumber)
+        bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+    }
+
+    private fun doChangePassword() {
+        val bottomSheetFragment = BottomSheetsChangePassword()
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 }
