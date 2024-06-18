@@ -73,7 +73,6 @@ interface SkyFlyApiService {
         @Query("departureAirport") departureAirport: String,
         @Query("arrivalAirport") arrivalAirport: String,
         @Query("departureDate") departureDate: String,
-        @Query("arrivalDate") arrivalDate: String? = null
     )
 
     @GET("api/v1/airports/")

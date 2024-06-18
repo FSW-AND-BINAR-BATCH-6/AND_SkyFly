@@ -16,7 +16,7 @@ data class FlightResponse(
     @SerializedName("pagination")
     val pagination: Pagination,
     @SerializedName("priceRanges")
-    val priceRange: PriceRange,
+    val priceRange:
     @SerializedName("data")
-    val data: List<FlightData>,
+    val data: List<AirportData>,
 )
