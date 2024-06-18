@@ -11,9 +11,10 @@ interface HomeDataSource {
 
     suspend fun getAllFlight(
         search: String? = null,
-        page: Int,
+        page: Int? = 1,
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
-    ): FlightResponse
+        arrivalDate: String? = null
+    ) : FlightResponse
 }

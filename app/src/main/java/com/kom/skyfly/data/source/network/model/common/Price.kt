@@ -6,5 +6,5 @@ data class Price(
     @SerializedName("minPrice")
     val minPrice: String,
     @SerializedName("maxPrice")
-    val maxPrice: String,
+    val maxPrice: String
 )

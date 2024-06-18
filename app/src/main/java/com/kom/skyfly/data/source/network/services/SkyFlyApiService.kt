@@ -1,23 +1,17 @@
 package com.kom.skyfly.data.source.network.services
 
 import android.util.Log
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kom.skyfly.BuildConfig
 import com.kom.skyfly.data.source.local.pref.UserPreference
 import com.kom.skyfly.data.source.network.model.flightseat.FlightSeatResponse
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
-import com.kom.skyfly.data.source.network.model.home.flight.FlightResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
-import com.kom.skyfly.data.source.network.model.notification.NotificationResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
-import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
-import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
-import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
 import com.kom.skyfly.data.source.network.model.userprofile.UserProfileResponse
 import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileRequest
 import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileResponse
@@ -75,6 +69,7 @@ interface SkyFlyApiService {
         @Query("departureAirport") departureAirport: String,
         @Query("arrivalAirport") arrivalAirport: String,
         @Query("departureDate") departureDate: String,
+        @Query("arrivalDate") arrivalDate: String? = null
     ): FlightResponse
 
     @GET("api/v1/airports/")

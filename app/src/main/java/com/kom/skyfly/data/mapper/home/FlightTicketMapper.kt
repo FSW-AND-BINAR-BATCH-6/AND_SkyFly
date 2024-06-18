@@ -14,7 +14,7 @@ fun FlightData?.toFlightTicket() =
         duration = this?.duration.orEmpty(),
         price = this?.price ?: 0,
         seatClass = "Economy",
-        airplaneName = this?.plane?.name.orEmpty(),
-    )
+        airplaneName = this?.plane?.name.orEmpty()
 
+    )
 fun Collection<FlightData>?.toFlightTickets() = this?.map { it.toFlightTicket() } ?: listOf()

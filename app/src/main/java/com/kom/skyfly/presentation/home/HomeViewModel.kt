@@ -27,4 +27,6 @@ class HomeViewModel(
         destinationFavoriteRepository.getAllDestinationFavorite().asLiveData(
             Dispatchers.IO,
         )
+
+
 }

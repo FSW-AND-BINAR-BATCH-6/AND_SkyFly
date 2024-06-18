@@ -33,6 +33,8 @@ import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
 import com.kom.skyfly.data.repository.home.airport.AirportRepository
 import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
+import com.kom.skyfly.data.repository.home.airport.AirportRepository
+import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
