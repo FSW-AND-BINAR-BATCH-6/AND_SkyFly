@@ -2,7 +2,6 @@ package com.kom.skyfly.data.source.network.model.home.flight
 
 import com.google.gson.annotations.SerializedName
 import com.kom.skyfly.data.source.network.model.common.Airport
-import java.util.ArrayList
 
 data class FlightData(
     @SerializedName("id")
@@ -18,7 +17,7 @@ data class FlightData(
     @SerializedName("code")
     val code: String,
     @SerializedName("departureAirport")
-    val departureAirport : Airport,
+    val departureAirport: Airport,
     @SerializedName("transit")
     val transit: Transit,
     @SerializedName("arrivalDate")
@@ -40,5 +39,5 @@ data class FlightData(
     @SerializedName("seatClasses")
     val seatClasses: List<String>,
     @SerializedName("prices")
-    val originalPrices: OriginalPrices
-    )
+    val originalPrices: OriginalPrices,
+)

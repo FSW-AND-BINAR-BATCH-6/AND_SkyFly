@@ -6,11 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface FlightTicketRepository {
     fun getAllTicket(
-        search : String? = null,
-        page: Int? = 1,
+        search: String? = null,
+        page: Int,
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
-        arrivalDate: String
     ): Flow<ResultWrapper<List<FlightTicket>>>
 }

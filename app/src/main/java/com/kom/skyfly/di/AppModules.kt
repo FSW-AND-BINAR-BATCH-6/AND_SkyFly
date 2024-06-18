@@ -39,6 +39,8 @@ import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
 import com.kom.skyfly.data.repository.home.airport.AirportRepository
 import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
+import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
+import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
 import com.kom.skyfly.data.repository.notification.NotificationRepositoryImpl
 import com.kom.skyfly.data.repository.profiles.ProfileRepository
@@ -128,6 +130,7 @@ object AppModules {
             single<AirportRepository> { AirportRepositoryImpl(get()) }
             single<FlightSeatRepository> { FlightSeatRepositoryImpl(get()) }
             single<DestinationFavoriteRepository> { DestinationFavoriteRepositoryImpl(get()) }
+            single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
             single<TransactionRepository> { TransactionRepositoryImpl(get()) }
             single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
         }
@@ -141,6 +144,7 @@ object AppModules {
             viewModelOf(::HistoryViewModel)
             viewModelOf(::OnBoardingViewModel)
             viewModelOf(::HomeViewModel)
+            viewModelOf(::SearchResultViewModel)
             viewModelOf(::MainViewModel)
             viewModelOf(::AccountViewModel)
             viewModelOf(::NotificationViewModel)
