@@ -70,6 +70,10 @@ interface SkyFlyApiService {
     @GET("api/v1/flights/")
     suspend fun getAllFlights(
         @Query("search") search: String? = null,
+        @Query("page") page: Int,
+        @Query("departureAirport") departureAirport: String,
+        @Query("arrivalAirport") arrivalAirport: String,
+        @Query("departureDate") departureDate: String,
     )
 
     @GET("api/v1/airports/")
