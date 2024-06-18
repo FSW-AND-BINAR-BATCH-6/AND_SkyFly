@@ -6,7 +6,7 @@
     <string name="text_notification">Notifications</string>
     <string name="text_profile">Profile</string>
     <string name="text_email_or_no_tlp_title">Email / Phone Number</string>
-    <string name="text_input_email_hint">Enter email / phone number</string>
+    <string name="text_input_email_hint">Enter email</string>
     <string name="text_password">Password</string>
     <string name="text_hint_password">Enter password</string>
     <string name="text_login">Login</string>
@@ -55,7 +55,7 @@
     <string name="text_title">Title</string>
     <string name="text_date_of_birth">Date of Birth</string>
     <string name="text_country">Nationality</string>
-    <string name="text_country_value">Indonesia</string>
+    <string name="text_country_value">Enter nationality</string>
     <string name="text_ktp_or_passport">ID/Passport</string>
     <string name="text_ktp_or_passport_hint">Enter ID/Passport</string>
     <string name="text_valid_until">Valid Until</string>
@@ -78,7 +78,7 @@
     <string name="text_filter">Filter</string>
     <string name="text_unpaid">Unpaid</string>
     <string name="text_city">Yogyakarta</string>
-    <string name="text_date">March 5, 2023</string>
+    <string name="text_date">Enter date or birth</string>
     <string name="text_time">19:10</string>
     <string name="text_flight_duration">4h 0m</string>
     <string name="text_title_booking_code">Booking Code:</string>
@@ -119,7 +119,7 @@
     <string name="text_register_success">Registration successful!</string>
     <string name="text_success_verify_account">Verification successful!</string>
     <string name="text_resend_otp_title">Resend</string>
-    <string name="text_success_reset_password">Password reset successful!</string>
+    <string name="text_success_reset_password">Password reset successfully!</string>
     <string name="text_bottom_sheets_no_loggin">Sorry, you must log in first!</string>
     <string name="text_notification_type">Promotion</string>
     <string name="text_notification_content">Get 50% Ticket Discount!</string>
@@ -175,7 +175,7 @@
     <string name="text_simpan">Save</string>
     <string name="text_hai_mau_ke_mana">Hi, Where are you going?</string>
     <string name="text_cari_penerbangan">Search Flights</string>
-    <string name="text_passenger_type">Adult</string>
+    <string name="text_passenger_type">Passenger 1 - Adult</string>
     <string name="text_empty_data">Data is still empty!</string>
     <string name="no_internet_connection">No internet connection!</string>
     <string name="error_when_getting_the_data_please_try_again_later">Error!</string>
@@ -207,4 +207,7 @@
     <string name="text_confirm_change_password">Are you sure you want to change password?</string>
     <string name="text_add_passenger">Add passenger</string>
     <string name="text_seat_class">Select Seat class</string>
+    <string name="text_no_tlp_must_start_with_62">Phone number must start with \"62\"</string>
+    <string name="text_request_change_password_has_been_sent_to_your_email">Reset password link has been sent, please check your email.</string>
+    <string name="text_passport_expiry_date">Passport expiry date</string>
 </resources>

@@ -50,7 +50,6 @@ class PassengerAdapter(
         private val binding: ItemFormPassengerBiodataBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            // Set spinner options
             ArrayAdapter.createFromResource(
                 itemView.context,
                 R.array.titles_array,
@@ -60,10 +59,17 @@ class PassengerAdapter(
                 binding.spinnerTitle.adapter = adapter
             }
 
-            // Set switch listener
             binding.scHaveFamilyName.setOnCheckedChangeListener { _, isChecked ->
                 binding.tvFamilyName.isVisible = isChecked
                 binding.tilFamilyName.isVisible = isChecked
+            }
+            binding.etDate.setOnClickListener {
+                val position = adapterPosition
+                showDatePickerDialog(binding.etDate)
+            }
+            binding.etValidUntil.setOnClickListener {
+                val position = adapterPosition
+                showDatePickerDialog(binding.etValidUntil)
             }
 
             binding.ivCalendar.setOnClickListener {
@@ -97,17 +103,18 @@ class PassengerAdapter(
 
         fun bindView(passengerNumber: Int) {
             itemView.apply {
+                val passengerIndex = passengerNumber + 1
                 when {
                     passengerNumber < adultsCount -> {
-                        binding.tvPassengerType.text = "Dewasa"
+                        binding.tvPassengerType.text = "Passenger $passengerIndex - Adult"
                     }
 
                     passengerNumber < adultsCount + childrenCount -> {
-                        binding.tvPassengerType.text = "Anak-Anak"
+                        binding.tvPassengerType.text = "Passenger $passengerIndex - Children"
                     }
 
                     else -> {
-                        binding.tvPassengerType.text = "Bayi"
+                        binding.tvPassengerType.text = "Passenger $passengerIndex - Baby"
                     }
                 }
                 binding.etFullName.setOnFocusChangeListener { _, hasFocus ->
@@ -124,17 +131,31 @@ class PassengerAdapter(
         }
     }
 
+    fun saveAllPassengerData() {
+        for (i in 0 until itemCount) {
+            savePassengerData(i)
+        }
+    }
+
     private fun savePassengerData(position: Int) {
         val itemView = recyclerView.findViewHolderForAdapterPosition(position)?.itemView
         val spinnerTitle = itemView?.findViewById<Spinner>(R.id.spinner_title)
         val etFullName = itemView?.findViewById<EditText>(R.id.et_full_name)
+        val etFamilyName = itemView?.findViewById<EditText>(R.id.et_family_name)
         val etDateOfBirth = itemView?.findViewById<EditText>(R.id.et_date)
-        if (spinnerTitle != null && etFullName != null && etDateOfBirth != null) {
+        val nationality = itemView?.findViewById<EditText>(R.id.et_country)
+        val idOrPassport = itemView?.findViewById<EditText>(R.id.et_passport)
+        val etValidUntil = itemView?.findViewById<EditText>(R.id.et_valid_until)
+        if (spinnerTitle != null && etFullName != null && etDateOfBirth != null && nationality != null && idOrPassport != null && etValidUntil != null) {
             val passengerData =
                 PassengerData(
                     spinnerTitle.selectedItem.toString(),
                     etFullName.text.toString(),
+                    etFamilyName?.text.toString(),
                     etDateOfBirth.text.toString(),
+                    nationality.text.toString(),
+                    idOrPassport.text.toString(),
+                    etValidUntil.text.toString(),
                 )
             if (position < passengerDataList.size) {
                 passengerDataList[position] = passengerData
@@ -145,6 +166,7 @@ class PassengerAdapter(
     }
 
     fun getPassengerDataList(): List<PassengerData> {
+        saveAllPassengerData()
         return passengerDataList
     }
 }

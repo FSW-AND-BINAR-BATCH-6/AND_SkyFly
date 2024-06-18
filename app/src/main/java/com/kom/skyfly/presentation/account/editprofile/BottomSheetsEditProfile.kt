@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.textfield.TextInputLayout
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentBottomSheetsEditProfileBinding
 import com.kom.skyfly.utils.proceedWhen
@@ -139,6 +140,11 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
         } else if (phoneNumber.length < 11 || phoneNumber.length > 13) {
             binding.tilPhoneNumber.isErrorEnabled = true
             binding.tilPhoneNumber.error = "Phone number must be >11 and <13 digits"
+            false
+        } else if (!phoneNumber.startsWith("62")) {
+            binding.tilPhoneNumber.isErrorEnabled = true
+            binding.tilPhoneNumber.endIconMode = TextInputLayout.END_ICON_NONE
+            binding.tilPhoneNumber.error = getString(R.string.text_no_tlp_must_start_with_62)
             false
         } else {
             binding.tilPhoneNumber.isErrorEnabled = false

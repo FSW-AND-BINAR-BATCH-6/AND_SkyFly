@@ -82,18 +82,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:endIconCheckable="true"
+        app:endIconDrawable="@drawable/ic_checklist"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/green"
         tools:visibility="visible">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/et_no_tlp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_hint_no_tlp"
-            android:inputType="textEmailAddress"
-            app:endIconCheckable="true"
-            app:endIconDrawable="@drawable/ic_checklist"
-            app:endIconMode="clear_text"
-            app:endIconTint="@color/green" />
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,6 +118,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_hint_password"
