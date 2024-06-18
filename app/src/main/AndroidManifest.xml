@@ -21,7 +21,7 @@
             android:name=".presentation.notificationdetail.NotificationDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.detail_home.DetailHomeActivity"
+            android:name=".presentation.home.detail_home.DetailHomeActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.home.search_result.SearchResultActivity"

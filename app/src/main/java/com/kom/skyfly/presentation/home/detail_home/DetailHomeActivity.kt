@@ -1,4 +1,4 @@
-package com.kom.skyfly.presentation.detail_home
+package com.kom.skyfly.presentation.home.detail_home
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
