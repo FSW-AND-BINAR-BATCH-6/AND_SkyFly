@@ -9,19 +9,25 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class FlightTicketRepositoryImpl(
-    private val dataSource: HomeDataSource
+    private val dataSource: HomeDataSource,
 ) : FlightTicketRepository {
     override fun getAllTicket(
         search: String?,
-        page: Int?,
+        page: Int,
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
-        arrivalDate: String
     ): Flow<ResultWrapper<List<FlightTicket>>> {
         return flow {
             emit(ResultWrapper.Loading())
-            val result = dataSource.getAllFlight(search = search, page = page, departureAirport = departureAirport, arrivalAirport = arrivalAirport, departureDate = departureDate, arrivalDate = arrivalDate).data.toFlightTickets()
+            val result =
+                dataSource.getAllFlight(
+                    search = search,
+                    page = page,
+                    departureAirport = departureAirport,
+                    arrivalAirport = arrivalAirport,
+                    departureDate = departureDate,
+                ).data.toFlightTickets()
             delay(500)
             emit(ResultWrapper.Success(result))
         }
