@@ -97,6 +97,8 @@ class HomeFragment : Fragment() {
             val passengerBottomSheet = PassengerFragment()
             passengerBottomSheet.show(parentFragmentManager, passengerBottomSheet.tag)
         }
+        binding.btnSearchFlight.setOnClickListener {
+        }
     }
 
     private fun getDestinationFavoriteData() {
