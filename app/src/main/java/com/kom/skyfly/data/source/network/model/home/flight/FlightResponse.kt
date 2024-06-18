@@ -2,6 +2,7 @@ package com.kom.skyfly.data.source.network.model.home.flight
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import com.kom.skyfly.data.source.network.model.home.airport.AirportData
 import com.kom.skyfly.data.source.network.model.home.airport.Pagination
 
 @Keep
@@ -15,7 +16,7 @@ data class FlightResponse(
     @SerializedName("pagination")
     val pagination: Pagination,
     @SerializedName("priceRanges")
-    val priceRange: PriceRange,
+    val priceRange:
     @SerializedName("data")
-    val data: List<FlightData>,
+    val data: List<AirportData>,
 )
