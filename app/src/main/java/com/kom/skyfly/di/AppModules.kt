@@ -29,8 +29,8 @@ import com.kom.skyfly.data.repository.flightseat.FlightSeatRepository
 import com.kom.skyfly.data.repository.flightseat.FlightSeatRepositoryImpl
 import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
-import com.kom.skyfly.data.repository.home.AirportRepository
-import com.kom.skyfly.data.repository.home.AirportRepositoryImpl
+import com.kom.skyfly.data.repository.home.airport.AirportRepository
+import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
 import com.kom.skyfly.data.repository.notification.NotificationRepositoryImpl
 import com.kom.skyfly.data.repository.profiles.ProfileRepository
