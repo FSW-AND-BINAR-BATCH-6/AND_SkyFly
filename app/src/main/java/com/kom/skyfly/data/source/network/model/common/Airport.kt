@@ -12,5 +12,5 @@ data class Airport(
     @SerializedName("country")
     val country: String,
     @SerializedName("city")
-    val city: String
+    val city: String,
 )

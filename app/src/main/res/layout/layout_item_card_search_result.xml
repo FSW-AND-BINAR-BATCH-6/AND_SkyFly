@@ -41,6 +41,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_time_departure_search_result" />
 
         <TextView
+            android:id="@+id/tv_flight_duration_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/grey"
@@ -50,6 +51,7 @@
             tools:text="4h 0m" />
 
         <TextView
+            android:id="@+id/tv_transit_option_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/grey"
@@ -58,6 +60,7 @@
             app:layout_constraintTop_toBottomOf="@id/iv_arrow_search_result"
             app:layout_constraintTop_toTopOf="@id/tv_target_departure_search_result"
             tools:text="Direct" />
+
         <TextView
             android:id="@+id/tv_time_arrival_search_result"
             android:layout_width="wrap_content"
@@ -82,13 +85,14 @@
             android:id="@+id/tv_price_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="IDR 4.950.000"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/md_theme_primary"
             android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_time_arrival_search_result"
-            android:textStyle="bold"
-            android:layout_marginEnd="16dp"
-            android:textColor="@color/md_theme_primary"/>
+            tools:text="IDR 4.950.000" />
+
         <View
             android:id="@+id/v_ticket_airline"
             android:layout_width="0dp"
@@ -98,40 +102,43 @@
             app:layout_constraintEnd_toEndOf="@id/tv_price_search_result"
             app:layout_constraintStart_toStartOf="@id/tv_time_departure_search_result"
             app:layout_constraintTop_toBottomOf="@id/tv_target_arrival_search_result" />
+
         <ImageView
             android:id="@+id/iv_ic_airline_search_result"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/img_airline"
-            app:layout_constraintTop_toTopOf="@id/tv_airline_search_result"
             app:layout_constraintBottom_toBottomOf="@id/iv_ic_departure_bag"
-            app:layout_constraintStart_toStartOf="@id/tv_time_departure_search_result"/>
+            app:layout_constraintStart_toStartOf="@id/tv_time_departure_search_result"
+            app:layout_constraintTop_toTopOf="@id/tv_airline_search_result" />
+
         <TextView
             android:id="@+id/tv_airline_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/v_ticket_airline"
-            tools:text="Jet Air - Economy"
-            app:layout_constraintStart_toEndOf="@id/iv_ic_airline_search_result"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@id/iv_ic_airline_search_result"
+            app:layout_constraintTop_toBottomOf="@id/v_ticket_airline"
+            tools:text="Jet Air - Economy" />
+
         <ImageView
             android:id="@+id/iv_ic_departure_bag"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/ic_departure_bag"
-            app:layout_constraintTop_toBottomOf="@id/tv_airline_search_result"
-            app:layout_constraintStart_toStartOf="@id/tv_airline_search_result"/>
+            app:layout_constraintStart_toStartOf="@id/tv_airline_search_result"
+            app:layout_constraintTop_toBottomOf="@id/tv_airline_search_result" />
+
         <ImageView
+            android:id="@+id/iv_ic_expand_search_result"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/iv_ic_expand_search_result"
-            app:layout_constraintTop_toBottomOf="@id/v_ticket_airline"
             android:src="@drawable/ic_expand"
-            app:layout_constraintEnd_toEndOf="@id/tv_price_search_result"
-            app:layout_constraintTop_toTopOf="@id/tv_airline_search_result"
             app:layout_constraintBottom_toBottomOf="@id/iv_ic_departure_bag"
-            />
+            app:layout_constraintEnd_toEndOf="@id/tv_price_search_result"
+            app:layout_constraintTop_toBottomOf="@id/v_ticket_airline"
+            app:layout_constraintTop_toTopOf="@id/tv_airline_search_result" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

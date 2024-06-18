@@ -8,5 +8,5 @@ data class OriginalPrices(
     @SerializedName("ECONOMY")
     val economyClassPrice: Int,
     @SerializedName("BUSINESS")
-    val businessClassPrice: Int
+    val businessClassPrice: Int,
 )

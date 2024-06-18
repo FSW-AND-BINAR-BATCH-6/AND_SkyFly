@@ -9,5 +9,5 @@ data class PriceRange(
     @SerializedName("ECONOMY")
     val economyClass: Price,
     @SerializedName("BUSINESS")
-    val businessClass: Price
+    val businessClass: Price,
 )
