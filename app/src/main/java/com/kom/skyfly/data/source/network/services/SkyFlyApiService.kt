@@ -8,6 +8,7 @@ import com.kom.skyfly.data.source.network.model.flightseat.FlightSeatResponse
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
+import com.kom.skyfly.data.source.network.model.home.flight.FlightResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.notification.NotificationResponse
@@ -74,8 +75,7 @@ interface SkyFlyApiService {
         @Query("departureAirport") departureAirport: String,
         @Query("arrivalAirport") arrivalAirport: String,
         @Query("departureDate") departureDate: String,
-        @Query("arrivalDate") arrivalDate: String? = null
-    )
+    ): FlightResponse
 
     @GET("api/v1/airports/")
     suspend fun getAllAirports(

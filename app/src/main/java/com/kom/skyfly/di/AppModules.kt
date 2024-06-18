@@ -2,7 +2,6 @@ package com.kom.skyfly.di
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kom.skyfly.core.BaseViewModel
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
@@ -34,6 +33,8 @@ import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
 import com.kom.skyfly.data.repository.home.airport.AirportRepository
 import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
+import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
+import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
 import com.kom.skyfly.data.repository.notification.NotificationRepositoryImpl
 import com.kom.skyfly.data.repository.profiles.ProfileRepository
@@ -62,6 +63,7 @@ import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHisto
 import com.kom.skyfly.presentation.history.searchflighthistory.SearchFlightHistoryViewModel
 import com.kom.skyfly.presentation.home.HomeViewModel
 import com.kom.skyfly.presentation.home.search.SearchViewModel
+import com.kom.skyfly.presentation.home.search_result.SearchResultViewModel
 import com.kom.skyfly.presentation.login.LoginViewModel
 import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.presentation.notification.NotificationViewModel
@@ -81,8 +83,7 @@ Github : https://github.com/YudaSaputraa
 object AppModules {
     private val networkModule =
         module {
-            single<ChuckerInterceptor> { ChuckerInterceptor(androidContext()) }
-            single<SkyFlyApiService> { SkyFlyApiService.invoke(get(), get()) }
+            single<SkyFlyApiService> { SkyFlyApiService.invoke(get()) }
         }
 
     private val datasource =
@@ -124,6 +125,7 @@ object AppModules {
             single<FlightSeatRepository> { FlightSeatRepositoryImpl(get()) }
             single<DestinationFavoriteRepository> { DestinationFavoriteRepositoryImpl(get()) }
             single<TransactionRepository> { TransactionRepositoryImpl(get()) }
+            single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
         }
 
     private val viewModelModule =

@@ -3,7 +3,6 @@ package com.kom.skyfly.data.model.home.flight
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-
 @Parcelize
 data class FlightTicket(
     val id: String,
@@ -17,6 +16,4 @@ data class FlightTicket(
     val seatClass: String,
     val airplaneName: String,
 //    val airplaneImg: String
-
-
 ) : Parcelable

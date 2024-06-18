@@ -6,17 +6,20 @@ import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
 import kotlinx.coroutines.Dispatchers
 
 class SearchResultViewModel(
+//    private val extras: Bundle?,
     private val flightRepository: FlightTicketRepository,
-) : ViewModel(){
+) : ViewModel() {
     fun getAllFlightTicket(
-        search: String?,
-        page: Int?,
+        search: String? = null,
+        page: Int,
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
-        arrivalDate: String
-    ) =
-        flightRepository.getAllTicket(
-            search = search, page = page, departureAirport = departureAirport, arrivalAirport = arrivalAirport, departureDate = departureDate, arrivalDate = arrivalDate
-        ).asLiveData(Dispatchers.IO)
+    ) = flightRepository.getAllTicket(
+        search = search,
+        page = page,
+        departureAirport = departureAirport,
+        arrivalAirport = arrivalAirport,
+        departureDate = departureDate,
+    ).asLiveData(Dispatchers.IO)
 }
