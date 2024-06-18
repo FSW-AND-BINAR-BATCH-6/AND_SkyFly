@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupEmailValidation()
         setRegisterForm()
+        setupPhoneNumberValidation()
         setClickListeners()
     }
 
@@ -116,13 +118,14 @@ class RegisterActivity : AppCompatActivity() {
             tilNoTlp.isVisible = true
             tilPassword.isVisible = true
             tilConfirmPassword.isVisible = true
+            etNoTlp.setText("62")
         }
     }
 
     private fun isFormValid(): Boolean {
         val fullName = binding.layoutForm.etFullName.text.toString().trim()
         val email = binding.layoutForm.etEmail.text.toString().trim()
-        val phoneNumber = binding.layoutForm.etNoTlp.toString().trim()
+        val phoneNumber = binding.layoutForm.etNoTlp.text.toString().trim()
         val password = binding.layoutForm.etPassword.text.toString().trim()
         val confirmPassword = binding.layoutForm.etConfirmPassword.text.toString().trim()
 
@@ -146,12 +149,25 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun phoneNumberValidation(phoneNumber: String): Boolean {
+        Log.d("PhoneValidation", "Phone number entered: '$phoneNumber'")
+
         return if (phoneNumber.isEmpty()) {
             binding.layoutForm.tilNoTlp.isErrorEnabled = true
+            binding.layoutForm.tilNoTlp.endIconMode = TextInputLayout.END_ICON_NONE
             binding.layoutForm.tilNoTlp.error = getString(R.string.text_no_tlp_cannot_empty)
+            false
+        } else if (!phoneNumber.startsWith("62")) {
+            binding.layoutForm.tilNoTlp.isErrorEnabled = true
+            binding.layoutForm.tilNoTlp.endIconMode = TextInputLayout.END_ICON_NONE
+            binding.layoutForm.tilNoTlp.error = getString(R.string.text_no_tlp_must_start_with_62)
+            false
+        } else if (phoneNumber.length < 11 || phoneNumber.length > 13) {
+            binding.layoutForm.tilNoTlp.isErrorEnabled = true
+            binding.layoutForm.tilNoTlp.error = "Phone number must be >11 and <13 digits"
             false
         } else {
             binding.layoutForm.tilNoTlp.isErrorEnabled = false
+            binding.layoutForm.tilNoTlp.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
             true
         }
     }
@@ -215,6 +231,32 @@ class RegisterActivity : AppCompatActivity() {
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     emailValidation(s.toString())
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int,
+                ) {
+                }
+            },
+        )
+    }
+
+    private fun setupPhoneNumberValidation() {
+        binding.layoutForm.etNoTlp.addTextChangedListener(
+            object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    phoneNumberValidation(s.toString())
                 }
 
                 override fun beforeTextChanged(

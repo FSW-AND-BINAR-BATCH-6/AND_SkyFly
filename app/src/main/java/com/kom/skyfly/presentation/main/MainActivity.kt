@@ -9,7 +9,7 @@ import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.databinding.ActivityMainBinding
 import com.kom.skyfly.presentation.bottomsheetsdialog.BottomSheetsDialogFragment
-import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatActivity
+import com.kom.skyfly.presentation.checkout.passengerbiodata.PassengerBiodataActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity() {
@@ -32,6 +32,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setBottomNavbar()
+//        navigate()
     }
 
     private fun setBottomNavbar() {
@@ -58,7 +59,7 @@ class MainActivity : BaseActivity() {
 
     private fun navigate() {
         startActivity(
-            Intent(this, ChooseSeatActivity::class.java).apply {
+            Intent(this, PassengerBiodataActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             },
         )

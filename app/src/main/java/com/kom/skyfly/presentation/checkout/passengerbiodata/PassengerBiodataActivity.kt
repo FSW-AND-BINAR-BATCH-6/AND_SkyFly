@@ -4,16 +4,21 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
+import com.kom.skyfly.data.model.passenger.PassengerData
 import com.kom.skyfly.databinding.ActivityPassengerBiodataBinding
-import com.kom.skyfly.presentation.checkout.passengerbiodata.adapter.PassengerAdapter
+import com.kom.skyfly.presentation.checkout.passengerbiodata.adapter.PassengerItem
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import java.util.Calendar
 
-class PassengerBiodataActivity : AppCompatActivity() {
+class PassengerBiodataActivity : BaseActivity() {
     private lateinit var binding: ActivityPassengerBiodataBinding
-    private lateinit var passengerAdapter: PassengerAdapter
+    private val passengerDataList = mutableListOf<PassengerData>()
+
+    private val groupAdapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,15 +33,27 @@ class PassengerBiodataActivity : AppCompatActivity() {
     private fun setUpRecyclerView() {
         val adult = 1
         val children = 1
-        val baby = 0
+        val baby = 1
+
         binding.rvPassengerForm.layoutManager = LinearLayoutManager(this)
-        passengerAdapter =
-            PassengerAdapter(
-                binding.rvPassengerForm,
-                adult, children, baby,
-            ) { position ->
-            }
-        binding.rvPassengerForm.adapter = passengerAdapter
+        binding.rvPassengerForm.adapter = groupAdapter
+
+        for (i in 0 until (adult + children + baby)) {
+            val passengerType =
+                when {
+                    i < adult -> "Passenger ${i + 1} - Adult"
+                    i < adult + children -> "Passenger ${i + 1} - Children"
+                    else -> "Passenger ${i + 1} - Baby"
+                }
+            groupAdapter.add(
+                PassengerItem(
+                    passengerType,
+                    i,
+                    this::showDatePickerDialog,
+                    this::showDatePickerDialog,
+                ),
+            )
+        }
     }
 
     private fun setTitleHeader() {
@@ -64,7 +81,12 @@ class PassengerBiodataActivity : AppCompatActivity() {
 
     private fun handleNextButtonClick() {
         binding.btnSave.setOnClickListener {
-            val passengerDataList = passengerAdapter.getPassengerDataList()
+            passengerDataList.clear()
+            for (i in 0 until groupAdapter.itemCount) {
+                val passengerItem = groupAdapter.getItem(i) as PassengerItem
+                passengerDataList.add(passengerItem.getPassengerData())
+            }
+
             for (passengerData in passengerDataList) {
                 Log.d("PassengerData", passengerData.toString())
             }

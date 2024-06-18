@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentResetPasswordBinding
 import com.kom.skyfly.utils.proceedWhen
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ForgetPasswordFragment : BottomSheetDialogFragment() {
@@ -53,14 +54,23 @@ class ForgetPasswordFragment : BottomSheetDialogFragment() {
         forgetPasswordViewModel.forgetPassword(email).observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(
+                    binding.btnReset.isVisible = true
+                    binding.pbLoading.isVisible = false
+                    Toasty.success(
                         requireContext(),
-                        getString(R.string.text_success_reset_password),
+                        getString(R.string.text_request_change_password_has_been_sent_to_your_email),
                         Toast.LENGTH_SHORT,
                     ).show()
+                    dismiss()
                 },
                 doOnError = {
+                    binding.btnReset.isVisible = true
+                    binding.pbLoading.isVisible = false
                     Log.d("Reset-Error", "proceedReqForgetPassword: ${it.exception?.message} ")
+                },
+                doOnLoading = {
+                    binding.btnReset.isVisible = false
+                    binding.pbLoading.isVisible = true
                 },
             )
         }

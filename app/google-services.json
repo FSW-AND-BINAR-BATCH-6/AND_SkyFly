@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "467492334057",
+    "project_id": "skyfly-df2fd",
+    "storage_bucket": "skyfly-df2fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467492334057:android:5a63380cb0b7c175c10378",
+        "android_client_info": {
+          "package_name": "com.kom.skyfly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmCdhpggefMfPo-OcUGYteqvgKFh5ZXvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
