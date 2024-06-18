@@ -1,4 +1,4 @@
-package com.kom.skyfly.data.repository.home
+package com.kom.skyfly.data.repository.home.airport
 
 import com.kom.skyfly.data.datasource.home.HomeDataSource
 import com.kom.skyfly.data.mapper.home.toAirports
