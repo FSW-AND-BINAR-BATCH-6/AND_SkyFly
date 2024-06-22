@@ -1,14 +1,17 @@
 package com.kom.skyfly.data.model.notification
 
-import java.util.UUID
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 /**
 Written by Komang Yuda Saputra
 Github : https://github.com/YudaSaputraa
  **/
+@Parcelize
 data class Notification(
-    val id: String? = UUID.randomUUID().toString(),
+    val date: String?,
+    val id: String?,
+    val notificationsContent: String?,
+    val notificationsTitle: String?,
     val type: String?,
-    val notification: String,
-    val date: String,
-)
+) : Parcelable

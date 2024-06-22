@@ -10,8 +10,10 @@ Github : https://github.com/YudaSaputraa
  **/
 @Parcelize
 data class Profiles(
-    val id: String = UUID.randomUUID().toString(),
-    val email: String,
-    val fullName: String,
-    val phoneNumber: String,
+    val id: String? = UUID.randomUUID().toString(),
+    val userId: String?,
+    val familyName: String?,
+    val email: String?,
+    val fullName: String?,
+    val phoneNumber: String?,
 ) : Parcelable

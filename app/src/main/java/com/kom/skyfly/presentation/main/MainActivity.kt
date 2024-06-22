@@ -1,22 +1,18 @@
 package com.kom.skyfly.presentation.main
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.kom.skyfly.R
-import com.kom.skyfly.data.source.network.model.login.LoginRequest
-import com.kom.skyfly.data.source.network.services.SkyFlyApiService
+import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.databinding.ActivityMainBinding
 import com.kom.skyfly.presentation.bottomsheetsdialog.BottomSheetsDialogFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -36,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setBottomNavbar()
+//        navigate()
     }
 
     private fun setBottomNavbar() {
@@ -60,25 +57,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDataFromApi() {
-        val apiService = SkyFlyApiService.invoke()
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val loginRequest = LoginRequest("example@gmail.com", "example123")
-                val response = apiService.login(loginRequest)
-                Log.d("Coins", "Response: $response")
-            } catch (e: Exception) {
-                if (e is retrofit2.HttpException) {
-                    val errorBody = e.response()?.errorBody()?.string()
-                    Log.e(
-                        "Coins Error",
-                        "HTTP Error: ${e.code()} - ${e.message()}\nBody: $errorBody",
-                        e,
-                    )
-                } else {
-                    Log.e("Coins Error", "Error: ${e.message}", e)
-                }
-            }
-        }
+    private fun navigate() {
+        startActivity(
+            Intent(this, BookersBiodataActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            },
+        )
     }
 }

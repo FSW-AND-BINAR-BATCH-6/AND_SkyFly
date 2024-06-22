@@ -1,6 +1,8 @@
 package com.kom.skyfly.data.repository.auth
 
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
+import com.kom.skyfly.data.mapper.toUserIsLoggedIn
+import com.kom.skyfly.data.model.auth.Auth
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
@@ -8,9 +10,7 @@ import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountResponse
 import com.kom.skyfly.utils.ResultWrapper
 import com.kom.skyfly.utils.proceedFlow
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 
 /**
@@ -43,6 +43,8 @@ interface AuthRepository {
 
     @Throws(exceptionClasses = [Exception::class])
     fun resendOtpRequest(token: String): Flow<ResultWrapper<ResendOtpResponse>>
+
+    fun isUserLoggedIn(): Flow<ResultWrapper<Auth>>
 }
 
 class AuthRepositoryImpl(private val dataSource: AuthDataSource) : AuthRepository {
@@ -59,11 +61,8 @@ class AuthRepositoryImpl(private val dataSource: AuthDataSource) : AuthRepositor
         phoneNumber: String,
         password: String,
     ): Flow<ResultWrapper<RegisterResponse>> {
-        return flow {
-            emit(ResultWrapper.Loading())
-            delay(2000)
-            val registerResponse = dataSource.doRegister(fullName, email, phoneNumber, password)
-            emit(ResultWrapper.Success(registerResponse))
+        return proceedFlow {
+            dataSource.doRegister(fullName, email, phoneNumber, password)
         }
     }
 
@@ -80,5 +79,9 @@ class AuthRepositoryImpl(private val dataSource: AuthDataSource) : AuthRepositor
 
     override fun resendOtpRequest(token: String): Flow<ResultWrapper<ResendOtpResponse>> {
         return proceedFlow { dataSource.resendOtpRequest(token) }
+    }
+
+    override fun isUserLoggedIn(): Flow<ResultWrapper<Auth>> {
+        return proceedFlow { dataSource.isUserLoggedIn().toUserIsLoggedIn() }
     }
 }

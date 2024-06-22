@@ -10,8 +10,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.databinding.FragmentAccountBinding
+import com.kom.skyfly.presentation.account.editprofile.BottomSheetsChangePassword
 import com.kom.skyfly.presentation.account.editprofile.BottomSheetsEditProfile
+import com.kom.skyfly.presentation.common.views.ContentState
+import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.proceedWhen
 import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,6 +28,7 @@ class AccountFragment : Fragment() {
     private var email: String? = null
     private var fullName: String? = null
     private var phoneNumber: String? = null
+    private var id: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +45,7 @@ class AccountFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
-        getProfileData()
+        observeLoginStatus()
     }
 
     private fun confirmReqChangePassword() {
@@ -81,17 +86,43 @@ class AccountFragment : Fragment() {
         binding.layoutBtnProfile.tvEditProfile.setOnClickListener {
             fullName?.let { fullName ->
                 phoneNumber?.let { phoneNumber ->
-                    doEditProfile(fullName, phoneNumber)
+                    id?.let { id ->
+                        doEditProfile(id, fullName, phoneNumber)
+                    }
                 }
             }
         }
         binding.layoutBtnProfile.tvLogoutProfile.setOnClickListener {
             accountViewModel.doLogout(null)
+            (activity as BaseActivity).handleUnAuthorize()
             Toasty.normal(requireContext(), "Success!", Toast.LENGTH_SHORT).show()
             navigateToHome()
         }
         binding.layoutBtnProfile.tvChangePassword.setOnClickListener {
-            confirmReqChangePassword()
+            doChangePassword()
+        }
+
+        binding.srfProfile.setOnRefreshListener {
+            getProfileData()
+        }
+    }
+
+    private fun observeLoginStatus() {
+        accountViewModel.isUserLoggedIn().observe(viewLifecycleOwner) { result ->
+            result.proceedWhen(
+                doOnSuccess = { isLoggedIn ->
+                    getProfileData()
+                },
+                doOnError = {
+                    val isUserLoggedIn = it.payload?.status.toBoolean()
+                    if (!isUserLoggedIn) {
+                        (activity as BaseActivity).handleUnAuthorize()
+                        Toasty.error(requireContext(), "Session expired. Please log in again.", Toast.LENGTH_SHORT, true).show()
+                    } else {
+                    }
+                    Log.d("login-status", "Error checking login status: ${it.exception?.message}")
+                },
+            )
         }
     }
 
@@ -100,16 +131,30 @@ class AccountFragment : Fragment() {
             result.proceedWhen(
                 doOnSuccess = {
                     it.payload.let { data ->
+                        id = data?.userId
                         email = data?.email
                         fullName = data?.fullName
                         phoneNumber = data?.phoneNumber
                         binding.layoutProfileUser.etEmail.setText(data?.email)
                         binding.layoutProfileUser.etFullName.setText(data?.fullName)
                         binding.layoutProfileUser.etPhoneNumber.setText(data?.phoneNumber)
+                        binding.srfProfile.isRefreshing = false
                     }
                 },
                 doOnError = {
-                    Log.d("get-profile", "getProfileData: ${it.exception?.message}")
+                    binding.srfProfile.isRefreshing = false
+                    if (it.exception is NoInternetException) {
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            "Tidak ada internet!",
+                        )
+                    }
+                    val errorMessage = it.exception?.message
+                    if (errorMessage != null && errorMessage.contains("jwt expired")) {
+                        (activity as BaseActivity).handleUnAuthorize()
+                    } else {
+                        Log.d("get-profile", "getProfileData: ${it.exception?.message}")
+                    }
                 },
             )
         }
@@ -120,10 +165,16 @@ class AccountFragment : Fragment() {
     }
 
     private fun doEditProfile(
+        id: String,
         fullName: String,
         phoneNumber: String,
     ) {
-        val bottomSheetFragment = BottomSheetsEditProfile.newInstance(fullName, phoneNumber)
+        val bottomSheetFragment = BottomSheetsEditProfile.newInstance(id, fullName, phoneNumber)
+        bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+    }
+
+    private fun doChangePassword() {
+        val bottomSheetFragment = BottomSheetsChangePassword()
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     app:cardCornerRadius="16dp"
     app:cardElevation="0dp"
     tools:context=".presentation.bottomsheetsdialog.BottomSheetsDialogFragment">
@@ -23,12 +23,12 @@
 
         <ImageView
             android:id="@+id/iv_main_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="380dp"
+            android:layout_height="300dp"
             android:layout_margin="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_not_logged_in"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/img_must_loggin"
+            app:layout_constraintBottom_toTopOf="@id/btn_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,9 +37,9 @@
             android:id="@+id/tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="32dp"
+            android:layout_marginVertical="64dp"
             android:text="@string/text_bottom_sheets_no_loggin"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:fontFamily="@font/font_open_sans_semi_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -4,11 +4,26 @@ plugins {
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
+    alias(libs.plugins.google.firebase.firebase.perf)
 }
 
 android {
     namespace = "com.kom.skyfly"
     compileSdk = 34
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+        exclude("META-INF/LICENSE")
+        exclude("META-INF/LICENSE.txt")
+        exclude("META-INF/license.txt")
+        exclude("META-INF/NOTICE")
+        exclude("META-INF/NOTICE.txt")
+        exclude("META-INF/notice.txt")
+        exclude("META-INF/ASL2.0")
+        exclude("META-INF/*.kotlin_module")
+        resources.excludes.add("META-INF/*")
+    }
 
     defaultConfig {
         applicationId = "com.kom.skyfly"
@@ -97,6 +112,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.perf)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -115,6 +132,7 @@ dependencies {
     //  Local storage
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
+
     // Coroutine
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)
@@ -163,4 +181,10 @@ dependencies {
 
     // Toasty
     implementation(libs.toasty)
+
+    // Swipe Refresh Layout
+    implementation(libs.swipe.refresh.layout)
+
+    debugImplementation(libs.library)
+    releaseImplementation(libs.library.no.op)
 }

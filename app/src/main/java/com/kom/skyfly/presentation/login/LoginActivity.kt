@@ -12,9 +12,11 @@ import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityLoginBinding
+import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordFragment
 import com.kom.skyfly.presentation.main.MainActivity
 import com.kom.skyfly.presentation.register.RegisterActivity
+import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.highLightWord
 import com.kom.skyfly.utils.proceedWhen
 import es.dmoral.toasty.Toasty
@@ -81,13 +83,17 @@ class LoginActivity : AppCompatActivity() {
                 },
                 doOnError = {
                     binding.pbLoading.isVisible = false
+                    if (it.exception is NoInternetException) {
+                        binding.csvLogin.setState(ContentState.ERROR_NETWORK_GENERAL, "Tidak ada internet!")
+                    } else {
+                        Toasty.error(
+                            this@LoginActivity,
+                            getString(R.string.email_or_password_is_incorrect),
+                            Toast.LENGTH_SHORT,
+                            true,
+                        ).show()
+                    }
                     binding.btnLogin.isVisible = true
-                    Toasty.error(
-                        this,
-                        getString(R.string.email_or_password_is_incorrect),
-                        Toast.LENGTH_SHORT,
-                        true,
-                    ).show()
                 },
                 doOnLoading = {
                     binding.pbLoading.isVisible = true

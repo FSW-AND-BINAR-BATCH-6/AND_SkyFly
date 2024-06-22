@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".presentation.account.editprofile.BottomSheetsEditProfile">
 
+    <com.kom.skyfly.presentation.common.views.ContentStateView
+        android:id="@+id/csv_update_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_edit_profile"
@@ -79,6 +86,10 @@
                 android:id="@+id/til_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:endIconCheckable="true"
+                app:endIconDrawable="@drawable/ic_checklist"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/green"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_phone_number_title"

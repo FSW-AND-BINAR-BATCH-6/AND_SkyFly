@@ -1,14 +1,24 @@
 package com.kom.skyfly.data.source.network.services
 
 import android.util.Log
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kom.skyfly.BuildConfig
+import com.kom.skyfly.data.source.local.pref.UserPreference
+import com.kom.skyfly.data.source.network.model.flightseat.FlightSeatResponse
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
+import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
+import com.kom.skyfly.data.source.network.model.notification.NotificationResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
+import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
+import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
+import com.kom.skyfly.data.source.network.model.userprofile.UserProfileResponse
+import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileRequest
+import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileResponse
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountRequest
 import com.kom.skyfly.data.source.network.model.verifyaccount.VerifyAccountResponse
 import okhttp3.OkHttpClient
@@ -17,8 +27,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
@@ -53,9 +66,51 @@ interface SkyFlyApiService {
         @Query("token") token: String,
     ): ResendOtpResponse
 
+    @GET("api/v1/flights/")
+    suspend fun getAllFlights(
+        @Query("search") search: String? = null,
+    )
+
+    @GET("api/v1/airports/")
+    suspend fun getAllAirports(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+    ): AirportResponse
+
+    @GET("api/v1/flightSeats/flight/{id}")
+    suspend fun getAllFlightSeat(
+        @Path("id") id: String,
+        @Query("limit") limit: Int? = 5000,
+    ): FlightSeatResponse
+
+    @GET("api/v1/auth/me")
+    suspend fun getUserProfile(): UserProfileResponse
+
+    @PATCH("api/v1/auth/me")
+    suspend fun updateUserProfile(
+        @Body updateProfileRequest: UpdateProfileRequest,
+    ): UpdateProfileResponse
+
+    @POST("api/v1/transactions/payment")
+    suspend fun createTransaction(
+        @Query("flightId") flightId: String,
+        @Query("adult") adult: Int,
+        @Query("child") child: Int,
+        @Query("baby") baby: Int,
+        @Body transactionRequest: TransactionRequest,
+    ): TransactionResponse
+
+    @GET("api/v1/notifications")
+    suspend fun getAllNotification(
+        @Query("limit") limit: Int? = 5000,
+    ): NotificationResponse
+
     companion object {
         @JvmStatic
-        operator fun invoke(): SkyFlyApiService {
+        operator fun invoke(
+            userPreference: UserPreference,
+            chuckerInterceptor: ChuckerInterceptor,
+        ): SkyFlyApiService {
             val logging =
                 HttpLoggingInterceptor { message -> Log.d("Http-Logging", "log: $message") }
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -66,14 +121,17 @@ interface SkyFlyApiService {
                     .readTimeout(120, TimeUnit.SECONDS)
                     .addInterceptor { chain ->
                         val original: Request = chain.request()
+                        val token = userPreference.getUserToken()
+//                        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUxOTM5OGQ4LTI3YTUtNDRkMi1iMzYxLTVjNDI2NjU0YjBiOCIsIm5hbWUiOiJrb21hbmd5dWRhIiwiZW1haWwiOiJ5dWRhc2FwdXRyYTA4MkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjYyODc0Njc0NjQ3ODciLCJpYXQiOjE3MTgwMzQzMzksImV4cCI6MTcxODEyMDczOX0.r_vTbQwhr3NMZdGzfGyveF6rE-E1LOCC0BGv45dhNAw"
                         val requestBuilder: Request.Builder =
                             original.newBuilder()
                                 .addHeader("accept", "application/json")
-                                .addHeader("Authorization", "Bearer ${BuildConfig.API_TOKEN}")
+                                .addHeader("Authorization", "Bearer $token")
                         val request: Request = requestBuilder.build()
                         chain.proceed(request)
                     }
                     .addInterceptor(logging)
+                    .addInterceptor(chuckerInterceptor)
                     .build()
 
             val retrofit =

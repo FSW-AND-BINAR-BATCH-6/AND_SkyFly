@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.kom.skyfly.presentation.checkout.ordererbiodata.FirstFragment"
+        android:name="com.kom.skyfly.presentation.checkout.bookersbiodata.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.kom.skyfly.presentation.checkout.ordererbiodata.SecondFragment"
+        android:name="com.kom.skyfly.presentation.checkout.bookersbiodata.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
