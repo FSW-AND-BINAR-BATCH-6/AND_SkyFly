@@ -15,4 +15,6 @@ data class ItemFlightSeatResponse(
     val status: String?,
     @SerializedName("type")
     val type: String?,
+    @SerializedName("price")
+    val price: Int?,
 )

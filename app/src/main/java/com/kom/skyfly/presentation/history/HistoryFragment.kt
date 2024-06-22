@@ -77,7 +77,6 @@ class HistoryFragment : Fragment() {
                                         ).show()
                                     },
                                 )
-
                                 val dataItems =
                                     sectionedDate.data.map { data ->
                                         DataItem(data) { clickedData ->

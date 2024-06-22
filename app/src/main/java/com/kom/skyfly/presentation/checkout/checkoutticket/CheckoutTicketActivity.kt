@@ -12,16 +12,19 @@ class CheckoutTicketActivity : AppCompatActivity() {
         ActivityCheckoutTicketBinding.inflate(layoutInflater)
     }
 
+    private var paymentUrlTicket: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        paymentUrlTicket = intent.getStringExtra("EXTRAS_PAYMENT_URL")
         setTitleHeader()
         setClickListeners()
     }
 
     private fun setClickListeners() {
         binding.btnProceedToPayment.setOnClickListener {
-            val paymentUrl = "https://www.youtube.com/" // Ganti dengan URL pembayaran yang sebenarnya
+            val paymentUrl = paymentUrlTicket // Ganti dengan URL pembayaran yang sebenarnya
             val intent = Intent(this, PaymentActivity::class.java)
             intent.putExtra("payment_url", paymentUrl)
             startActivity(intent)

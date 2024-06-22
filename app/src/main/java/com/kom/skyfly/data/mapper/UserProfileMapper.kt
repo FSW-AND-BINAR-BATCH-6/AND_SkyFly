@@ -11,6 +11,7 @@ fun UserProfileResponse?.toUserProfile() =
     Profiles(
         email = this?.data?.auth?.email.orEmpty(),
         fullName = this?.data?.name.orEmpty(),
+        familyName = this?.data?.familyName.orEmpty(),
         phoneNumber = this?.data?.phoneNumber,
         userId = this?.data?.id,
     )

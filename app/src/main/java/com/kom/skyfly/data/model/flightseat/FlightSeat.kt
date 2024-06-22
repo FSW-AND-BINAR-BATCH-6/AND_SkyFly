@@ -16,4 +16,5 @@ data class FlightSeat(
     val seatNumber: String?,
     val status: String?,
     val type: String?,
+    val price: Int?,
 ) : Parcelable

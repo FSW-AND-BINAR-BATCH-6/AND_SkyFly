@@ -1,6 +1,7 @@
 package com.kom.skyfly.data.repository.notification
 
 import com.kom.skyfly.data.datasource.notification.NotificationDataSource
+import com.kom.skyfly.data.mapper.toNotifications
 import com.kom.skyfly.data.model.notification.Notification
 import com.kom.skyfly.utils.ResultWrapper
 import kotlinx.coroutines.delay
@@ -20,8 +21,8 @@ class NotificationRepositoryImpl(private val notificationDataSource: Notificatio
     override fun getAllNotification(): Flow<ResultWrapper<List<Notification>>> {
         return flow {
             emit(ResultWrapper.Loading())
-            delay(2000)
-            val result = notificationDataSource.getAllNotification()
+            delay(1000)
+            val result = notificationDataSource.getAllNotification().data.toNotifications()
             emit(ResultWrapper.Success(result))
         }
     }

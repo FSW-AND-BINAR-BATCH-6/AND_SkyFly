@@ -13,6 +13,8 @@ data class Data(
     val name: String?,
     @SerializedName("phoneNumber")
     val phoneNumber: String?,
+    @SerializedName("familyName")
+    val familyName: String?,
     @SerializedName("role")
     val role: String?,
 )

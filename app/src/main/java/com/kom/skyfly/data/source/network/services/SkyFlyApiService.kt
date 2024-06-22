@@ -1,6 +1,7 @@
 package com.kom.skyfly.data.source.network.services
 
 import android.util.Log
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kom.skyfly.BuildConfig
 import com.kom.skyfly.data.source.local.pref.UserPreference
 import com.kom.skyfly.data.source.network.model.flightseat.FlightSeatResponse
@@ -9,9 +10,12 @@ import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRes
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
+import com.kom.skyfly.data.source.network.model.notification.NotificationResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
+import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
+import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
 import com.kom.skyfly.data.source.network.model.userprofile.UserProfileResponse
 import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileRequest
 import com.kom.skyfly.data.source.network.model.userprofile.updateprofile.UpdateProfileResponse
@@ -87,9 +91,26 @@ interface SkyFlyApiService {
         @Body updateProfileRequest: UpdateProfileRequest,
     ): UpdateProfileResponse
 
+    @POST("api/v1/transactions/payment")
+    suspend fun createTransaction(
+        @Query("flightId") flightId: String,
+        @Query("adult") adult: Int,
+        @Query("child") child: Int,
+        @Query("baby") baby: Int,
+        @Body transactionRequest: TransactionRequest,
+    ): TransactionResponse
+
+    @GET("api/v1/notifications")
+    suspend fun getAllNotification(
+        @Query("limit") limit: Int? = 5000,
+    ): NotificationResponse
+
     companion object {
         @JvmStatic
-        operator fun invoke(userPreference: UserPreference): SkyFlyApiService {
+        operator fun invoke(
+            userPreference: UserPreference,
+            chuckerInterceptor: ChuckerInterceptor,
+        ): SkyFlyApiService {
             val logging =
                 HttpLoggingInterceptor { message -> Log.d("Http-Logging", "log: $message") }
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -110,6 +131,7 @@ interface SkyFlyApiService {
                         chain.proceed(request)
                     }
                     .addInterceptor(logging)
+                    .addInterceptor(chuckerInterceptor)
                     .build()
 
             val retrofit =

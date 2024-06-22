@@ -12,6 +12,7 @@ Github : https://github.com/YudaSaputraa
 data class Profiles(
     val id: String? = UUID.randomUUID().toString(),
     val userId: String?,
+    val familyName: String?,
     val email: String?,
     val fullName: String?,
     val phoneNumber: String?,

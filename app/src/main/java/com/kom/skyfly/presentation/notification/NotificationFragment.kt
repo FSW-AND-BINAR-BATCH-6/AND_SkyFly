@@ -42,27 +42,39 @@ class NotificationFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setActionListeners()
         setupNotificationList()
         getNotificationData()
+    }
+
+    private fun setActionListeners() {
+        binding.srlNotification.setOnRefreshListener {
+            getNotificationData()
+        }
     }
 
     private fun getNotificationData() {
         notificationViewModel.getAllNotification().observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
                 doOnSuccess = {
+                    binding.srlNotification.isRefreshing = false
                     binding.shmProgressNotification.isVisible = false
                     binding.csvNotification.setState(ContentState.SUCCESS)
                     binding.rvNotification.isVisible = true
                     it.payload?.let { data -> bindNotificationList(data) }
                 },
                 doOnLoading = {
+                    binding.srlNotification.isRefreshing = false
+                    binding.rvNotification.isVisible = false
                     binding.shmProgressNotification.isVisible = true
                 },
                 doOnEmpty = {
+                    binding.srlNotification.isRefreshing = false
                     binding.csvNotification.setState(ContentState.EMPTY)
                     binding.shmProgressNotification.isVisible = false
                 },
                 doOnError = {
+                    binding.srlNotification.isRefreshing = false
                     if (it.exception is NoInternetException) {
                         binding.csvNotification.setState(ContentState.ERROR_NETWORK)
                     } else {
