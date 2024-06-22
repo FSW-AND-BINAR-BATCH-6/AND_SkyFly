@@ -7,4 +7,8 @@ data class PlaneData(
     val name: String,
     @SerializedName("code")
     val code: String,
+    @SerializedName("image")
+    val image: String,
+    @SerializedName("terminal")
+    val terminal: String,
 )

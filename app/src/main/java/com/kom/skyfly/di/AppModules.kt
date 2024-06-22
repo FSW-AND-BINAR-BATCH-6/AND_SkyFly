@@ -60,6 +60,7 @@ import com.kom.skyfly.presentation.history.HistoryViewModel
 import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryViewModel
 import com.kom.skyfly.presentation.history.searchflighthistory.SearchFlightHistoryViewModel
 import com.kom.skyfly.presentation.home.HomeViewModel
+import com.kom.skyfly.presentation.home.detail_home.DetailHomeViewModel
 import com.kom.skyfly.presentation.home.search.SearchViewModel
 import com.kom.skyfly.presentation.home.search_result.SearchResultViewModel
 import com.kom.skyfly.presentation.login.LoginViewModel
@@ -141,6 +142,7 @@ object AppModules {
             viewModelOf(::AccountViewModel)
             viewModelOf(::NotificationViewModel)
             viewModelOf(::HistoryViewModel)
+            viewModelOf(::DetailHomeViewModel)
             viewModelOf(::SearchFlightHistoryViewModel)
             viewModelOf(::BaseViewModel)
             viewModelOf(::SearchViewModel)

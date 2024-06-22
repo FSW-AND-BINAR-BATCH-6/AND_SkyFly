@@ -1,7 +1,9 @@
-package com.kom.skyfly.data.source.network.model.home.flight
+package com.kom.skyfly.data.source.network.model.common
 
 import com.google.gson.annotations.SerializedName
-import com.kom.skyfly.data.source.network.model.common.Airport
+import com.kom.skyfly.data.source.network.model.home.flight.PlaneData
+import com.kom.skyfly.data.source.network.model.home.flight.SeatClassData
+import com.kom.skyfly.data.source.network.model.home.flight.Transit
 
 data class FlightData(
     @SerializedName("id")
@@ -29,15 +31,13 @@ data class FlightData(
     @SerializedName("capacity")
     val capacity: Int,
     @SerializedName("discount")
-    val discount: Int,
+    val discount: Int?,
     @SerializedName("price")
     val price: Int,
     @SerializedName("facilities")
-    val facilities: String,
+    val facilities: String?,
     @SerializedName("duration")
     val duration: String,
-    @SerializedName("seatClasses")
-    val seatClasses: List<String>,
-    @SerializedName("prices")
-    val originalPrices: OriginalPrices,
+    @SerializedName("classInfo")
+    val seatClass: SeatClassData,
 )

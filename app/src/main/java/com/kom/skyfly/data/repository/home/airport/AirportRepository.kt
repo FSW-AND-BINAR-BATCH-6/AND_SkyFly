@@ -5,8 +5,5 @@ import com.kom.skyfly.utils.ResultWrapper
 import kotlinx.coroutines.flow.Flow
 
 interface AirportRepository {
-    fun getAllAirportData(
-        page: Int,
-        limit: Int,
-    ): Flow<ResultWrapper<List<Airport>>>
+    fun getAllAirportData(): Flow<ResultWrapper<List<Airport>>>
 }

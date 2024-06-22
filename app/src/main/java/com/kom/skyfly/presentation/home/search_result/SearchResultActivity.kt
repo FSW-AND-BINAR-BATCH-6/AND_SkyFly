@@ -1,9 +1,12 @@
 package com.kom.skyfly.presentation.home.search_result
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kom.skyfly.databinding.ActivitySearchResultBinding
+import com.kom.skyfly.presentation.home.detail_home.DetailHomeActivity
 import com.kom.skyfly.presentation.home.search_result.view_items.Items
 import com.kom.skyfly.utils.proceedWhen
 import com.xwray.groupie.GroupieAdapter
@@ -40,9 +43,11 @@ class SearchResultActivity : AppCompatActivity() {
             arrivalAirport = arrivalAirport!!,
             departureAirport = departureAirport!!,
             departureDate = departureTime!!,
+            seatClass = "ECONOMY",
         ).observe(this) { response ->
             response.proceedWhen(
                 doOnSuccess = {
+                    Log.d("SearchResultActivity", "Data fetched successfully")
                     it.payload?.let { sectionedSearch ->
                         val sections =
                             sectionedSearch.map {
@@ -50,6 +55,12 @@ class SearchResultActivity : AppCompatActivity() {
                                     val data =
                                         sectionedSearch.map { data ->
                                             Items(data) { item ->
+                                                val intent =
+                                                    Intent(this@SearchResultActivity, DetailHomeActivity::class.java).apply {
+                                                        putExtra("EXTRA_FLIGHT_ID", item.id)
+                                                        putExtra("EXTRA_FLIGHT_SEATCLASS", item.seatClass)
+                                                    }
+                                                startActivity(intent)
                                             }
                                         }
                                     addAll(data)
@@ -58,12 +69,18 @@ class SearchResultActivity : AppCompatActivity() {
                         adapter.update(sections)
                     }
                 },
+                doOnError = {
+                    Log.e("SearchResultActivity", "Error fetching data: ${it.message}")
+                },
+                doOnLoading = {
+                    Log.d("SearchResultActivity", "Loading data")
+                },
             )
         }
     }
 
     private fun setupBinding() {
-        binding.rvDateSearchResult.apply {
+        binding.rvItemTicketsSearchResult.apply {
             layoutManager = LinearLayoutManager(this@SearchResultActivity)
             adapter = this@SearchResultActivity.adapter
         }

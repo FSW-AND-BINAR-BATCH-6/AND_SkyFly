@@ -15,11 +15,13 @@ class SearchResultViewModel(
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
+        seatClass: String,
     ) = flightRepository.getAllTicket(
         search = search,
         page = page,
         departureAirport = departureAirport,
         arrivalAirport = arrivalAirport,
         departureDate = departureDate,
+        seatClass = seatClass,
     ).asLiveData(Dispatchers.IO)
 }
