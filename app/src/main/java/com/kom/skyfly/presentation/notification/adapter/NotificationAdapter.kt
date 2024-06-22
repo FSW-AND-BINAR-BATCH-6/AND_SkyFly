@@ -63,7 +63,7 @@ class NotificationAdapter(private val itemClick: (Notification) -> Unit) :
         fun bindView(item: Notification) {
             with(item) {
                 binding.tvNotificationType.text = item.type
-                binding.tvNotificationContent.text = item.notificationTitle
+                binding.tvNotificationContent.text = item.notificationsTitle
                 binding.tvNotificationDate.text = item.date
                 itemView.setOnClickListener { itemClick(this) }
             }

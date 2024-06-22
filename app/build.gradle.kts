@@ -184,4 +184,7 @@ dependencies {
 
     // Swipe Refresh Layout
     implementation(libs.swipe.refresh.layout)
+
+    debugImplementation(libs.library)
+    releaseImplementation(libs.library.no.op)
 }

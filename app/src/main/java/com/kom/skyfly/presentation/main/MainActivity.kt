@@ -9,7 +9,7 @@ import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.databinding.ActivityMainBinding
 import com.kom.skyfly.presentation.bottomsheetsdialog.BottomSheetsDialogFragment
-import com.kom.skyfly.presentation.checkout.passengerbiodata.PassengerBiodataActivity
+import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity() {
@@ -59,7 +59,7 @@ class MainActivity : BaseActivity() {
 
     private fun navigate() {
         startActivity(
-            Intent(this, PassengerBiodataActivity::class.java).apply {
+            Intent(this, BookersBiodataActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             },
         )

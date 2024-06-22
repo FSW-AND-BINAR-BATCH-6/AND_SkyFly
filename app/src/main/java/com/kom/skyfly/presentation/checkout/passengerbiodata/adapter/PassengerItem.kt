@@ -15,6 +15,7 @@ Github : https://github.com/YudaSaputraa
  **/
 class PassengerItem(
     private val passengerType: String,
+    private val passengerTypeLabel: String,
     private val position: Int,
     private val onDateClick: (EditText) -> Unit,
     private val onValidUntilClick: (EditText) -> Unit,
@@ -63,10 +64,14 @@ class PassengerItem(
                 title = spinnerTitle.selectedItem.toString(),
                 fullName = etFullName.text.toString(),
                 familyName = if (scHaveFamilyName.isChecked) etFamilyName.text.toString() else null,
-                dateOfBirth = etDate.text.toString(),
-                nationality = etCountry.text.toString(),
-                idOrPassport = etPassport.text.toString(),
-                idOrPassportValidUntil = etValidUntil.text.toString(),
+                dob = etDate.text.toString(),
+                citizenship = etCountry.text.toString(),
+                passport = etPassport.text.toString(),
+                validityPeriod = etValidUntil.text.toString(),
+                price = null,
+                quantity = 1,
+                type = passengerTypeLabel,
+                seatId = null,
             )
         }
     }

@@ -40,8 +40,8 @@ class NotificationDetailActivity : AppCompatActivity() {
     }
 
     private fun displayNotificationDetails(notification: Notification) {
-        binding.tvNotificationTitles.text = notification.notificationTitle
-        binding.tvNotificationContent.text = notification.notificationContent
+        binding.tvNotificationTitles.text = notification.notificationsTitle
+        binding.tvNotificationContent.text = notification.notificationsContent
         binding.tvNotificationTimes.text = notification.date
         binding.tvNotificationTypes.text = notification.type
 

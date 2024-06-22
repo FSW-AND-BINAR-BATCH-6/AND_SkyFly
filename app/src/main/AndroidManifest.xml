@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -57,7 +57,7 @@
             android:name=".presentation.checkout.passengerbiodata.PassengerBiodataActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.checkout.ordererbiodata.OrdererBiodataActivity"
+            android:name=".presentation.checkout.bookersbiodata.BookersBiodataActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
         <activity

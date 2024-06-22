@@ -15,6 +15,7 @@ fun ItemFlightSeatResponse?.toFlightSeat() =
         seatNumber = this?.seatNumber.orEmpty(),
         status = this?.status.orEmpty(),
         type = this?.type.orEmpty(),
+        price = this?.price ?: 0,
     )
 
 fun Collection<ItemFlightSeatResponse>?.toFlightSeats() = this?.map { it.toFlightSeat() } ?: listOf()

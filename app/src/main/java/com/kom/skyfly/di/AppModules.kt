@@ -2,6 +2,7 @@ package com.kom.skyfly.di
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kom.skyfly.core.BaseViewModel
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
@@ -19,6 +20,8 @@ import com.kom.skyfly.data.datasource.profiles.ProfileDataSource
 import com.kom.skyfly.data.datasource.profiles.ProfileDataSourceImpl
 import com.kom.skyfly.data.datasource.searchhistory.SearchHistoryDataSource
 import com.kom.skyfly.data.datasource.searchhistory.SearchHistoryDataSourceImpl
+import com.kom.skyfly.data.datasource.transaction.TransactionDataSource
+import com.kom.skyfly.data.datasource.transaction.TransactionDataSourceImpl
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSource
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSourceImpl
 import com.kom.skyfly.data.repository.auth.AuthRepository
@@ -37,6 +40,8 @@ import com.kom.skyfly.data.repository.profiles.ProfileRepository
 import com.kom.skyfly.data.repository.profiles.ProfileRepositoryImpl
 import com.kom.skyfly.data.repository.searchhistory.SearchHistoryRepository
 import com.kom.skyfly.data.repository.searchhistory.SearchHistoryRepositoryImpl
+import com.kom.skyfly.data.repository.transaction.TransactionRepository
+import com.kom.skyfly.data.repository.transaction.TransactionRepositoryImpl
 import com.kom.skyfly.data.repository.userpref.UserPrefRepository
 import com.kom.skyfly.data.repository.userpref.UserPrefRepositoryImpl
 import com.kom.skyfly.data.source.local.database.AppDatabase
@@ -46,7 +51,9 @@ import com.kom.skyfly.data.source.local.pref.UserPreferenceImpl
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import com.kom.skyfly.presentation.account.AccountViewModel
 import com.kom.skyfly.presentation.account.editprofile.SharedViewModelEditProfile
+import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataViewModel
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatViewModel
+import com.kom.skyfly.presentation.checkout.passengerbiodata.PassengerBiodataViewModel
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.history.HistoryViewModel
 import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryViewModel
@@ -72,7 +79,8 @@ Github : https://github.com/YudaSaputraa
 object AppModules {
     private val networkModule =
         module {
-            single<SkyFlyApiService> { SkyFlyApiService.invoke(get()) }
+            single<ChuckerInterceptor> { ChuckerInterceptor(androidContext()) }
+            single<SkyFlyApiService> { SkyFlyApiService.invoke(get(), get()) }
         }
 
     private val datasource =
@@ -80,12 +88,13 @@ object AppModules {
             single<AuthDataSource> { AuthDataSourceImpl(get()) }
             single<UserPrefDataSource> { UserPrefDataSourceImpl(get()) }
             single<HistoryDataSource> { HistoryDataSourceImpl() }
-            single<NotificationDataSource> { NotificationDataSourceImpl() }
+            single<NotificationDataSource> { NotificationDataSourceImpl(get()) }
             single<ProfileDataSource> { ProfileDataSourceImpl(get()) }
             single<SearchHistoryDataSource> { SearchHistoryDataSourceImpl(get()) }
             single<HomeDataSource> { HomeDataSourceImpl(get()) }
             single<FlightSeatDataSource> { FlightSeatDataSourceImpl(get()) }
             single<DestinationFavoriteDataSource> { DestinationFavoriteDataSourceImpl() }
+            single<TransactionDataSource> { TransactionDataSourceImpl(get()) }
         }
 
     private val localModule =
@@ -112,6 +121,7 @@ object AppModules {
             single<AirportRepository> { AirportRepositoryImpl(get()) }
             single<FlightSeatRepository> { FlightSeatRepositoryImpl(get()) }
             single<DestinationFavoriteRepository> { DestinationFavoriteRepositoryImpl(get()) }
+            single<TransactionRepository> { TransactionRepositoryImpl(get()) }
         }
 
     private val viewModelModule =
@@ -138,6 +148,8 @@ object AppModules {
                 )
             }
             viewModelOf(::SharedViewModelEditProfile)
+            viewModelOf(::BookersBiodataViewModel)
+            viewModelOf(::PassengerBiodataViewModel)
         }
 
     val modules =
