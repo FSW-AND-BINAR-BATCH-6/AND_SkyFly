@@ -8,6 +8,7 @@ import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordReq
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
 import com.kom.skyfly.data.source.network.model.home.flight.FlightResponse
+import com.kom.skyfly.data.source.network.model.home.flight_detail.FlightDetailResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
@@ -70,13 +71,19 @@ interface SkyFlyApiService {
         @Query("departureAirport") departureAirport: String,
         @Query("arrivalAirport") arrivalAirport: String,
         @Query("departureDate") departureDate: String,
-        @Query("arrivalDate") arrivalDate: String? = null
+        @Query("arrivalDate") arrivalDate: String? = null,
+        @Query("seatClass") seatClass: String,
     ): FlightResponse
+
+    @GET("api/v1/flights/{id}")
+    suspend fun getDetailFlightById(
+        @Path("id") id: String,
+        @Query("seatClass") seatClass: String,
+    ): FlightDetailResponse
 
     @GET("api/v1/airports/")
     suspend fun getAllAirports(
-        @Query("page") page: Int,
-        @Query("limit") limit: Int,
+        @Query("showall") showAll: Boolean = true,
     ): AirportResponse
 
     @GET("api/v1/flightSeats/flight/{id}")

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.kom.skyfly.R
 import com.kom.skyfly.data.model.destinationfavorite.DestinationFavorite
 import com.kom.skyfly.databinding.FragmentHomeBinding
 import com.kom.skyfly.presentation.common.views.ContentState
@@ -31,6 +32,8 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModel()
     private val sharedViewModel: MainViewModel by activityViewModel()
     private val destinationAdapter: DestinationFavoriteAdapter by lazy { DestinationFavoriteAdapter {} }
+    private var source: String = ""
+    private var dest: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +50,7 @@ class HomeFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.setOnBoardingShow(true)
+        setRoundTrip()
         observeDataDestination()
         setOnClickListener()
         setupDestinationFavorite()
@@ -58,8 +62,10 @@ class HomeFragment : Fragment() {
             destination?.let {
                 if (sharedViewModel.isStartDestination!!) {
                     binding.layoutSelectDestination.tvStartFrom.text = it.city
+                    source = binding.layoutSelectDestination.tvStartFrom.text.toString()
                 } else {
                     binding.layoutSelectDestination.tvEndDestination.text = it.city
+                    dest = binding.layoutSelectDestination.tvEndDestination.text.toString()
                 }
             }
         }
@@ -116,8 +122,10 @@ class HomeFragment : Fragment() {
             calendarDeparture.show(parentFragmentManager, calendarDeparture.tag)
         }
         binding.tvReturn.setOnClickListener {
-            val calendarDeparture = HomeCalendarFragment()
-            calendarDeparture.show(parentFragmentManager, calendarDeparture.tag)
+            if (binding.tvReturn.isEnabled) {
+                val calendarDeparture = HomeCalendarFragment()
+                calendarDeparture.show(parentFragmentManager, calendarDeparture.tag)
+            }
         }
         binding.tvPassengers.setOnClickListener {
             val passengerBottomSheet = PassengerFragment()
@@ -135,6 +143,13 @@ class HomeFragment : Fragment() {
                     putExtra("EXTRA_DEPARTURE_TIME", departureTime)
                 }
             startActivity(intent)
+        }
+        binding.layoutSelectDestination.ivSwap.setOnClickListener {
+            binding.layoutSelectDestination.tvStartFrom.text = dest
+            binding.layoutSelectDestination.tvEndDestination.text = source
+            val temp = source
+            source = dest
+            dest = temp
         }
     }
 
@@ -166,6 +181,20 @@ class HomeFragment : Fragment() {
                     binding.shmProgressDestinationFav.isVisible = false
                 },
             )
+        }
+    }
+
+    private fun setRoundTrip() {
+        binding.btnSwitchRoundtrip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.tvReturn.isEnabled = true
+                binding.tvReturn.text = "Select Dates"
+                binding.tvReturn.setTextColor(getResources().getColor(R.color.md_theme_primary))
+            } else {
+                binding.tvReturn.isEnabled = false
+                binding.tvReturn.text = "-"
+                binding.tvReturn.setTextColor(getResources().getColor(R.color.darkGrey))
+            }
         }
     }
 

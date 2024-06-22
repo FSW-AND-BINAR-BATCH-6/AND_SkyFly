@@ -9,7 +9,7 @@ import com.xwray.groupie.viewbinding.BindableItem
 
 class Items(
     private val data: FlightTicket,
-    private val onitemClick: (item: FlightTicket) -> Unit,
+    private val onItemClick: (item: FlightTicket) -> Unit,
 ) : BindableItem<LayoutItemCardSearchResultBinding>() {
     @SuppressLint("SetTextI18n")
     override fun bind(
@@ -26,7 +26,7 @@ class Items(
             tvPriceSearchResult.text = data.price.toString()
             tvAirlineSearchResult.text = "${data.airplaneName} - ${data.seatClass}"
             viewBinding.root.setOnClickListener {
-                onitemClick(data)
+                onItemClick(data)
             }
         }
     }
