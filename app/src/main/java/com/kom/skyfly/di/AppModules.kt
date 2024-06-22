@@ -124,6 +124,7 @@ object AppModules {
             single<DestinationFavoriteRepository> { DestinationFavoriteRepositoryImpl(get()) }
             single<TransactionRepository> { TransactionRepositoryImpl(get()) }
             single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
+            single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
         }
 
     private val viewModelModule =
@@ -135,6 +136,7 @@ object AppModules {
             viewModelOf(::HistoryViewModel)
             viewModelOf(::OnBoardingViewModel)
             viewModelOf(::HomeViewModel)
+            viewModelOf(::SearchResultViewModel)
             viewModelOf(::MainViewModel)
             viewModelOf(::AccountViewModel)
             viewModelOf(::NotificationViewModel)
