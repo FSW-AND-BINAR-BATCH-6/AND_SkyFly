@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.checkout.payment
 
+import BottomSheetsIssueTicket
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
@@ -14,31 +15,31 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.kom.skyfly.databinding.ActivityPaymentBinding
-import com.kom.skyfly.presentation.login.LoginActivity
-import com.kom.skyfly.presentation.main.MainActivity
-import com.kom.skyfly.presentation.register.RegisterActivity
 
 class PaymentActivity : AppCompatActivity() {
     var btnCloseSnap: AppCompatButton? = null
     private val binding: ActivityPaymentBinding by lazy {
         ActivityPaymentBinding.inflate(layoutInflater)
     }
+    private var transactionId: String? = null
+    private var adult: Int = 0
+    private var children: Int = 0
+    private var baby: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         btnCloseSnap = binding.btnClose
         btnCloseSnap!!.setOnClickListener(
             View.OnClickListener { view: View? ->
-                val intent =
-                    Intent(
-                        this,
-                        MainActivity::class.java,
-                    )
-                startActivity(intent)
+                transactionId?.let { openIssueTicketBottomSheets(it, adult, children, baby) }
             },
         )
         setContentView(binding.root)
         val paymentUrl = intent.getStringExtra("payment_url")
+        transactionId = intent.getStringExtra("EXTRAS_TRANSACTION_ID")
+        adult = intent.getIntExtra("EXTRAS_ADULT", 0)
+        children = intent.getIntExtra("EXTRAS_CHILD", 0)
+        baby = intent.getIntExtra("EXTRAS_BABY", 0)
         if (!paymentUrl.isNullOrEmpty()) {
             openUrlFromWebView(paymentUrl)
         }
@@ -112,19 +113,16 @@ class PaymentActivity : AppCompatActivity() {
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY)
     }
 
-    private fun handlePaymentSuccess() {
-        // Handle payment success, e.g., show a success message or navigate to another activity
-        Log.d("PaymentActivity", "Payment was successful")
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun handlePaymentCancel() {
-        // Handle payment cancellation, e.g., show a cancellation message or navigate to another activity
-        Log.d("PaymentActivity", "Payment was canceled")
-        val intent = Intent(this, RegisterActivity::class.java)
-        startActivity(intent)
-        finish()
+    private fun openIssueTicketBottomSheets(
+        transactionId: String,
+        adult: Int,
+        child: Int,
+        baby: Int,
+    ) {
+        if (!supportFragmentManager.isStateSaved) {
+            val bottomSheetFragment =
+                BottomSheetsIssueTicket.newInstance(transactionId, adult, child, baby)
+            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+        }
     }
 }

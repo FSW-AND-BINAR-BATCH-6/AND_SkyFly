@@ -6,13 +6,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv_destination"
+        android:id="@+id/tv_trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="8dp"
         android:paddingVertical="4dp"
         android:text="@string/text_destination"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_destination">
+        app:layout_constraintTop_toBottomOf="@id/tv_trip">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -41,7 +41,8 @@
                 android:text="@string/text_time"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_detail_title_departure"
@@ -59,7 +60,7 @@
                 android:id="@+id/tv_detail_departure_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_date"
+                android:text="@string/text_date_departure"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_time" />
@@ -263,7 +264,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_total_by_age_group"
+                android:id="@+id/tv_total_by_age_group_adult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -273,13 +274,51 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_title_price_details" />
 
             <TextView
-                android:id="@+id/tv_total_price_by_age_group"
+                android:id="@+id/tv_total_by_age_group_child"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_2_children"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_adult" />
+
+            <TextView
+                android:id="@+id/tv_total_by_age_group_baby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_2_baby"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_child" />
+
+            <TextView
+                android:id="@+id/tv_total_price_by_age_group_adult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_total_price_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group" />
+                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_adult" />
+
+            <TextView
+                android:id="@+id/tv_total_price_by_age_group_child"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_total_price_by_age_group"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_child" />
+
+            <TextView
+                android:id="@+id/tv_total_price_by_age_group_baby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_total_price_by_age_group"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_baby" />
 
             <TextView
                 android:id="@+id/tv_title_tax"
@@ -289,7 +328,7 @@
                 android:text="@string/text_title_tax"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group" />
+                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_baby" />
 
             <TextView
                 android:id="@+id/tv_tax"

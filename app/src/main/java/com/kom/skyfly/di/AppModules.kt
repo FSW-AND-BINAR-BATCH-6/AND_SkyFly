@@ -52,7 +52,9 @@ import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import com.kom.skyfly.presentation.account.AccountViewModel
 import com.kom.skyfly.presentation.account.editprofile.SharedViewModelEditProfile
 import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataViewModel
+import com.kom.skyfly.presentation.checkout.checkoutticket.CheckoutTicketViewModel
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatViewModel
+import com.kom.skyfly.presentation.checkout.flightdetail.FlightDetailViewModel
 import com.kom.skyfly.presentation.checkout.passengerbiodata.PassengerBiodataViewModel
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.history.HistoryViewModel
@@ -150,6 +152,8 @@ object AppModules {
             viewModelOf(::SharedViewModelEditProfile)
             viewModelOf(::BookersBiodataViewModel)
             viewModelOf(::PassengerBiodataViewModel)
+            viewModelOf(::CheckoutTicketViewModel)
+            viewModelOf(::FlightDetailViewModel)
         }
 
     val modules =

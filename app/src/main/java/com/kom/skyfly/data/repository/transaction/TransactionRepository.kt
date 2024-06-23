@@ -1,6 +1,8 @@
 package com.kom.skyfly.data.repository.transaction
 
 import com.kom.skyfly.data.datasource.transaction.TransactionDataSource
+import com.kom.skyfly.data.mapper.toTransactionDetailResponse
+import com.kom.skyfly.data.model.transaction.detail.TransactionDetailResponses
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
 import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
 import com.kom.skyfly.utils.ResultWrapper
@@ -19,6 +21,8 @@ interface TransactionRepository {
         baby: Int,
         transactionRequest: TransactionRequest,
     ): Flow<ResultWrapper<TransactionResponse>>
+
+    fun getTransactionById(id: String): Flow<ResultWrapper<TransactionDetailResponses>>
 }
 
 class TransactionRepositoryImpl(private val datasource: TransactionDataSource) :
@@ -38,6 +42,12 @@ class TransactionRepositoryImpl(private val datasource: TransactionDataSource) :
                 baby,
                 transactionRequest,
             )
+        }
+    }
+
+    override fun getTransactionById(id: String): Flow<ResultWrapper<TransactionDetailResponses>> {
+        return proceedFlow {
+            datasource.getTransactionById(id).toTransactionDetailResponse()
         }
     }
 }

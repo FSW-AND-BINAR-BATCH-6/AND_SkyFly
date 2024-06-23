@@ -1,5 +1,6 @@
 package com.kom.skyfly.data.datasource.transaction
 
+import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
 import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
@@ -16,7 +17,8 @@ interface TransactionDataSource {
         baby: Int,
         transactionRequest: TransactionRequest,
     ): TransactionResponse
-//    suspend fun getTransactionData(transactionId: String): TransactionResponse
+
+    suspend fun getTransactionById(id: String): TransactionDetailResponse
 }
 
 class TransactionDataSourceImpl(private val service: SkyFlyApiService) : TransactionDataSource {
@@ -30,7 +32,7 @@ class TransactionDataSourceImpl(private val service: SkyFlyApiService) : Transac
         return service.createTransaction(flightId, adult, child, baby, transactionRequest)
     }
 
-//    override suspend fun getTransactionData(transactionId: String): TransactionResponse {
-//        return service.getTransactionData(transactionId)
-//    }
+    override suspend fun getTransactionById(id: String): TransactionDetailResponse {
+        return service.getTransactionById(id)
+    }
 }
