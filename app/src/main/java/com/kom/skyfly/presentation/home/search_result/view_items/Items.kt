@@ -8,8 +8,8 @@ import com.kom.skyfly.databinding.LayoutItemCardSearchResultBinding
 import com.xwray.groupie.viewbinding.BindableItem
 
 class Items(
-    private val data: FlightTicket,
-    private val onItemClick: (item: FlightTicket) -> Unit,
+    private val data: FlightTicket?,
+    private val onItemClick: (item: FlightTicket?) -> Unit,
 ) : BindableItem<LayoutItemCardSearchResultBinding>() {
     @SuppressLint("SetTextI18n")
     override fun bind(
@@ -17,14 +17,14 @@ class Items(
         position: Int,
     ) {
         with(viewBinding) {
-            tvTimeDepartureSearchResult.text = data.departureTime
-            tvTimeArrivalSearchResult.text = data.arrivalTime
-            tvTargetDepartureSearchResult.text = data.departureCountryCode
-            tvTargetArrivalSearchResult.text = data.arrivalCountryCode
-            tvFlightDurationSearchResult.text = data.duration
+            tvTimeDepartureSearchResult.text = data?.departureTime
+            tvTimeArrivalSearchResult.text = data?.arrivalTime
+            tvTargetDepartureSearchResult.text = data?.departureCountryCode
+            tvTargetArrivalSearchResult.text = data?.arrivalCountryCode
+            tvFlightDurationSearchResult.text = data?.duration
             tvTransitOptionSearchResult.text = "Direct"
-            tvPriceSearchResult.text = data.price.toString()
-            tvAirlineSearchResult.text = "${data.airplaneName} - ${data.seatClass}"
+            tvPriceSearchResult.text = data?.price.toString()
+            tvAirlineSearchResult.text = "${data?.airplaneName} - ${data?.seatClass}"
             viewBinding.root.setOnClickListener {
                 onItemClick(data)
             }

@@ -16,6 +16,7 @@ import com.kom.skyfly.data.source.network.model.notification.NotificationRespons
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
+import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
 import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
 import com.kom.skyfly.data.source.network.model.userprofile.UserProfileResponse

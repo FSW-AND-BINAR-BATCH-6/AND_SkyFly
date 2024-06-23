@@ -19,7 +19,7 @@ class FlightTicketRepositoryImpl(
         arrivalAirport: String,
         departureDate: String,
         seatClass: String,
-    ): Flow<ResultWrapper<List<FlightTicket>>> {
+    ): Flow<ResultWrapper<List<FlightTicket?>>> {
         return proceedFlow {
             dataSource.getAllFlight(
                 page = page,

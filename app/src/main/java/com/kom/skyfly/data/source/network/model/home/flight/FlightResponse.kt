@@ -18,5 +18,5 @@ data class FlightResponse(
     @SerializedName("priceRanges")
     val priceRange: PriceRange,
     @SerializedName("data")
-    val data: List<FlightData>,
+    val data: List<FlightData?>,
 )

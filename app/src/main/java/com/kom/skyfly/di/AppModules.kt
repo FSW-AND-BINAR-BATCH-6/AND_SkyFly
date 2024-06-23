@@ -2,6 +2,7 @@ package com.kom.skyfly.di
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kom.skyfly.core.BaseViewModel
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
@@ -31,16 +32,6 @@ import com.kom.skyfly.data.repository.flightseat.FlightSeatRepository
 import com.kom.skyfly.data.repository.flightseat.FlightSeatRepositoryImpl
 import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
-import com.kom.skyfly.data.repository.home.airport.AirportRepository
-import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
-import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
-import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
-import com.kom.skyfly.data.repository.home.airport.AirportRepository
-import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
-import com.kom.skyfly.data.repository.home.airport.AirportRepository
-import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
-import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
-import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
 import com.kom.skyfly.data.repository.home.airport.AirportRepository
 import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository

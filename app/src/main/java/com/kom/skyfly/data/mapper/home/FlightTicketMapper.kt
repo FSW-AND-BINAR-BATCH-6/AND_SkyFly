@@ -54,6 +54,6 @@ fun FlightDetailData?.toFlightDetailTicket() =
         code = this?.code.orEmpty(),
     )
 
-fun Collection<FlightData>?.toFlightTickets() = this?.map { it.toFlightTicket() } ?: listOf()
+fun Collection<FlightData?>?.toFlightTickets() = this?.map { it.toFlightTicket() } ?: listOf()
 
 fun Collection<FlightDetailData>?.toFlightDetailTickets() = this?.map { it.toFlightDetailTicket() } ?: listOf()

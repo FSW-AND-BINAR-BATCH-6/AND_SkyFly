@@ -13,7 +13,7 @@ interface FlightTicketRepository {
         arrivalAirport: String,
         departureDate: String,
         seatClass: String,
-    ): Flow<ResultWrapper<List<FlightTicket>>>
+    ): Flow<ResultWrapper<List<FlightTicket?>>>
 
     fun getDetailTicket(
         id: String,
