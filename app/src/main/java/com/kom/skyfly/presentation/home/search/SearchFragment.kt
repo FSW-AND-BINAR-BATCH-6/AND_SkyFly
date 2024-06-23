@@ -15,7 +15,6 @@ import com.kom.skyfly.presentation.home.search.viewitems.Items
 import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.utils.proceedWhen
 import com.xwray.groupie.GroupieAdapter
-import com.xwray.groupie.Section
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -57,24 +56,21 @@ class SearchFragment : BottomSheetDialogFragment() {
     }
 
     private fun getAirportData() {
-        searchViewModel.getAllAirports(1, 20).observe(viewLifecycleOwner) {
-            it.proceedWhen(
-                doOnSuccess = {
-                    it.payload?.let { sectionedSearch ->
-                        val sections =
-                            sectionedSearch.map {
-                                Section().apply {
-                                    val data =
-                                        sectionedSearch.map { data ->
-                                            Items(data) { item ->
-                                                mainViewModel.setDestination(item)
-                                                dismiss()
-                                            }
-                                        }
-                                    addAll(data)
+        searchViewModel.getAllAirports().observe(viewLifecycleOwner) { response ->
+            response.proceedWhen(
+                doOnSuccess = { result ->
+                    result.payload?.let { sectionedSearch ->
+                        // Clear the adapter to avoid duplicates
+                        adapter.clear()
+                        val items =
+                            sectionedSearch.map { data ->
+                                Items(data) { item ->
+                                    mainViewModel.setDestination(item)
+                                    dismiss()
                                 }
                             }
-                        adapter.update(sections)
+
+                        adapter.addAll(items)
                     }
                 },
             )

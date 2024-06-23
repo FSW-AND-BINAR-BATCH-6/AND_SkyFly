@@ -210,6 +210,10 @@
     <string name="text_no_tlp_must_start_with_62">Phone number must start with \"62\"</string>
     <string name="text_request_change_password_has_been_sent_to_your_email">Reset password link has been sent, please check your email.</string>
     <string name="text_passport_expiry_date">Passport expiry date</string>
+    <string name="text_pilihan_penerbangan">Pilihan Penerbangan</string>
+    <string name="text_keberangkatan">Keberangkatan</string>
+    <string name="text_informasi">Informasi</string>
+    <string name="text_strip">-</string>
     <string name="text_2_children">2 Children</string>
     <string name="text_2_baby">2 Baby</string>
     <string name="text_issue_ticket">Issue Ticket</string>

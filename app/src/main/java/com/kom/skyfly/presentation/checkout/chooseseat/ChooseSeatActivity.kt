@@ -68,7 +68,7 @@ class ChooseSeatActivity : AppCompatActivity() {
             Log.d("PassengerData", "Passenger $index: $passenger")
         }
         setTitleHeader()
-        flightId = "clxkt98yw000ojnep8mamwfnz"
+        flightId = "clxrh0w6m000zokfpvb5sobt8"
         getAllFlightSeatData(flightId!!)
         getFlightSeatData(flightId!!)
         getFlightPrice(flightId!!)

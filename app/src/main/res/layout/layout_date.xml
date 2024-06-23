@@ -4,25 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linear_calendar"
     android:layout_width="110dp"
-    android:layout_height="95dp"
-    android:layout_margin="5dp"
-    android:background="@drawable/rectangle_outline"
+    android:layout_height="70dp"
+    android:layout_marginEnd="8dp"
+    android:background="@drawable/rounded_borderline"
+    android:backgroundTint="@color/md_theme_primaryContainer_mediumContrast"
     android:gravity="center"
-    android:orientation="vertical"
-    android:padding="15dp">
-
-    <TextView
-        android:id="@+id/tv_calendar_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Rabu"
-        android:textSize="14sp" />
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_calendar_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        tools:text="Rabu"
+        android:textSize="14sp"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/tv_calendar_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         tools:text="02/03/2003"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.kom.skyfly.data.source.local.database.dao.SearchHistoryDao
+import com.kom.skyfly.data.source.local.database.entity.SearchDestinationHistoryEntity
 import com.kom.skyfly.data.source.local.database.entity.SearchHistoryEntity
 
 /**
@@ -12,8 +13,8 @@ Written by Komang Yuda Saputra
 Github : https://github.com/YudaSaputraa
  **/
 @Database(
-    entities = [SearchHistoryEntity::class],
-    version = 1,
+    entities = [SearchHistoryEntity::class, SearchDestinationHistoryEntity::class],
+    version = 2,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
