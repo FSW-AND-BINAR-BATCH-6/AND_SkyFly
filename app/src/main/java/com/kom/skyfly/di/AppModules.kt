@@ -32,8 +32,10 @@ import com.kom.skyfly.data.repository.flightseat.FlightSeatRepository
 import com.kom.skyfly.data.repository.flightseat.FlightSeatRepositoryImpl
 import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
-import com.kom.skyfly.data.repository.home.AirportRepository
-import com.kom.skyfly.data.repository.home.AirportRepositoryImpl
+import com.kom.skyfly.data.repository.home.airport.AirportRepository
+import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
+import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
+import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
 import com.kom.skyfly.data.repository.notification.NotificationRepositoryImpl
 import com.kom.skyfly.data.repository.profiles.ProfileRepository
@@ -52,14 +54,18 @@ import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import com.kom.skyfly.presentation.account.AccountViewModel
 import com.kom.skyfly.presentation.account.editprofile.SharedViewModelEditProfile
 import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataViewModel
+import com.kom.skyfly.presentation.checkout.checkoutticket.CheckoutTicketViewModel
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatViewModel
+import com.kom.skyfly.presentation.checkout.flightdetail.FlightDetailViewModel
 import com.kom.skyfly.presentation.checkout.passengerbiodata.PassengerBiodataViewModel
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.history.HistoryViewModel
 import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryViewModel
 import com.kom.skyfly.presentation.history.searchflighthistory.SearchFlightHistoryViewModel
 import com.kom.skyfly.presentation.home.HomeViewModel
+import com.kom.skyfly.presentation.home.detail_home.DetailHomeViewModel
 import com.kom.skyfly.presentation.home.search.SearchViewModel
+import com.kom.skyfly.presentation.home.search_result.SearchResultViewModel
 import com.kom.skyfly.presentation.login.LoginViewModel
 import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.presentation.notification.NotificationViewModel
@@ -121,6 +127,7 @@ object AppModules {
             single<AirportRepository> { AirportRepositoryImpl(get()) }
             single<FlightSeatRepository> { FlightSeatRepositoryImpl(get()) }
             single<DestinationFavoriteRepository> { DestinationFavoriteRepositoryImpl(get()) }
+            single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
             single<TransactionRepository> { TransactionRepositoryImpl(get()) }
         }
 
@@ -133,10 +140,12 @@ object AppModules {
             viewModelOf(::HistoryViewModel)
             viewModelOf(::OnBoardingViewModel)
             viewModelOf(::HomeViewModel)
+            viewModelOf(::SearchResultViewModel)
             viewModelOf(::MainViewModel)
             viewModelOf(::AccountViewModel)
             viewModelOf(::NotificationViewModel)
             viewModelOf(::HistoryViewModel)
+            viewModelOf(::DetailHomeViewModel)
             viewModelOf(::SearchFlightHistoryViewModel)
             viewModelOf(::BaseViewModel)
             viewModelOf(::SearchViewModel)
@@ -150,6 +159,8 @@ object AppModules {
             viewModelOf(::SharedViewModelEditProfile)
             viewModelOf(::BookersBiodataViewModel)
             viewModelOf(::PassengerBiodataViewModel)
+            viewModelOf(::CheckoutTicketViewModel)
+            viewModelOf(::FlightDetailViewModel)
         }
 
     val modules =

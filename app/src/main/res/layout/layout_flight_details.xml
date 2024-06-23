@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/tv_payment_status"
@@ -10,7 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_rounded"
         android:backgroundTint="@color/md_theme_error"
-        android:paddingHorizontal="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:paddingHorizontal="16dp"
         android:paddingVertical="4dp"
         android:text="@string/text_unpaid"
         android:textColor="@color/white"
@@ -21,6 +23,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_flight_details"
         android:layout_width="match_parent"
+       android:layout_marginHorizontal="8dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="8dp"
@@ -175,43 +178,43 @@
                 android:id="@+id/tv_title_passenger"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_title_passenger"
+                tools:text="@string/text_title_passenger"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_airline"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_information" />
 
-            <TextView
-                android:id="@+id/tv_passenger_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/text_example_passenger_name"
-                android:textColor="@color/md_theme_primary"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/tv_title_passenger"
-                app:layout_constraintTop_toTopOf="@id/tv_title_passenger" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_passenger_name"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:text="@string/text_example_passenger_name"-->
+<!--                android:textColor="@color/md_theme_primary"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintStart_toEndOf="@id/tv_title_passenger"-->
+<!--                app:layout_constraintTop_toTopOf="@id/tv_title_passenger" />-->
 
             <TextView
                 android:id="@+id/tv_title_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_title_id"
+                tools:text="@string/text_title_id"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_airline"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_passenger" />
 
-            <TextView
-                android:id="@+id/tv_passenger_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/text_example_id_passenger"
-                android:textColor="@color/md_theme_primary"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/tv_title_id"
-                app:layout_constraintTop_toTopOf="@id/tv_title_id" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_passenger_id"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:text="@string/text_example_id_passenger"-->
+<!--                android:textColor="@color/md_theme_primary"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintStart_toEndOf="@id/tv_title_id"-->
+<!--                app:layout_constraintTop_toTopOf="@id/tv_title_id" />-->
 
 
             <View
@@ -276,6 +279,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -297,7 +301,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_total_by_age_group"
+                android:id="@+id/tv_total_by_age_group_adult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -307,13 +311,52 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_title_price_details" />
 
             <TextView
-                android:id="@+id/tv_total_price_by_age_group"
+                android:id="@+id/tv_total_by_age_group_child"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_2_children"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_adult" />
+
+            <TextView
+                android:id="@+id/tv_total_by_age_group_baby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_2_baby"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_child" />
+
+            <TextView
+                android:id="@+id/tv_total_price_by_age_group_baby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_total_price_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group" />
+                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_baby" />
+
+            <TextView
+                android:id="@+id/tv_total_price_by_age_group_adult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_total_price_by_age_group"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_adult" />
+
+            <TextView
+                android:id="@+id/tv_total_price_by_age_group_child"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_total_price_by_age_group"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_child" />
+
 
             <TextView
                 android:id="@+id/tv_title_tax"
@@ -323,7 +366,7 @@
                 android:text="@string/text_title_tax"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group" />
+                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_baby" />
 
             <TextView
                 android:id="@+id/tv_tax"

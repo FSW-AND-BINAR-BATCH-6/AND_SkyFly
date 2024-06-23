@@ -8,12 +8,15 @@ import com.kom.skyfly.data.source.network.model.flightseat.FlightSeatResponse
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
+import com.kom.skyfly.data.source.network.model.home.flight.FlightResponse
+import com.kom.skyfly.data.source.network.model.home.flight_detail.FlightDetailResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.notification.NotificationResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
+import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
 import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
 import com.kom.skyfly.data.source.network.model.userprofile.UserProfileResponse
@@ -69,12 +72,23 @@ interface SkyFlyApiService {
     @GET("api/v1/flights/")
     suspend fun getAllFlights(
         @Query("search") search: String? = null,
-    )
+        @Query("page") page: Int,
+        @Query("departureAirport") departureAirport: String,
+        @Query("arrivalAirport") arrivalAirport: String,
+        @Query("departureDate") departureDate: String,
+        @Query("arrivalDate") arrivalDate: String? = null,
+        @Query("seatClass") seatClass: String,
+    ): FlightResponse
+
+    @GET("api/v1/flights/{id}")
+    suspend fun getDetailFlightById(
+        @Path("id") id: String,
+        @Query("seatClass") seatClass: String,
+    ): FlightDetailResponse
 
     @GET("api/v1/airports/")
     suspend fun getAllAirports(
-        @Query("page") page: Int,
-        @Query("limit") limit: Int,
+        @Query("showall") showAll: Boolean = true,
     ): AirportResponse
 
     @GET("api/v1/flightSeats/flight/{id}")
@@ -104,6 +118,11 @@ interface SkyFlyApiService {
     suspend fun getAllNotification(
         @Query("limit") limit: Int? = 5000,
     ): NotificationResponse
+
+    @GET("api/v1/transactions/{id}")
+    suspend fun getTransactionById(
+        @Path("id") id: String,
+    ): TransactionDetailResponse
 
     companion object {
         @JvmStatic

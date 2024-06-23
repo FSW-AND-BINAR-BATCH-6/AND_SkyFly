@@ -49,6 +49,7 @@
             android:textColor="@android:color/black" />
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_item_tickets_search_result"
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:listitem="@layout/layout_item_card_search_result"
