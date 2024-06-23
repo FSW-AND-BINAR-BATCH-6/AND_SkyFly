@@ -50,6 +50,7 @@ class ChooseSeatActivity : AppCompatActivity() {
     private var children: Int = 0
     private var baby: Int = 0
     private var paymentUrl: String? = null
+    private var transactionId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +91,6 @@ class ChooseSeatActivity : AppCompatActivity() {
                         val (status, title) = payload.seatLabelling
                         seats = status
                         titles = title
-                        seatTotal = title.size
                         setSeatView()
                     } else {
                         Log.e("ChooseSeatActivity", "Error: Payload is null")
@@ -123,11 +123,11 @@ class ChooseSeatActivity : AppCompatActivity() {
             result.proceedWhen(
                 doOnSuccess = { resultWrapper ->
                     Log.d("SeatDatas", "getAllFlightSeatData: $resultWrapper")
+                    seatTotal = resultWrapper.payload?.size ?: 0
                     resultWrapper.payload.let {
                         it?.map { response ->
-                            seatTotal = titles.size
                             seatType = response.type.orEmpty()
-                            binding.tvSeatTitle.text = "$seatType - $seatTotal Kursi"
+                            binding.tvSeatTitle.text = "$seatType - $seatTotal Seat"
                         }
                     }
                 },
@@ -277,11 +277,10 @@ class ChooseSeatActivity : AppCompatActivity() {
                             .show()
                         val intent = Intent(this, BookersBiodataActivity::class.java)
                         startActivity(intent)
-                        val response =
-                            it.payload.let {
-                                it?.redirectUrl
-                            }
-                        paymentUrl = response
+                        it.payload?.let { response ->
+                            paymentUrl = response.redirectUrl
+                            transactionId = response.transactionId
+                        }
                         navigateToPayment()
                     },
                     doOnError = {
@@ -289,6 +288,7 @@ class ChooseSeatActivity : AppCompatActivity() {
                     },
                     doOnLoading = {
                         binding.pbLoading.isVisible = true
+                        binding.btnSave.isVisible = false
                     },
                 )
             }
@@ -301,6 +301,10 @@ class ChooseSeatActivity : AppCompatActivity() {
     private fun navigateToPayment() {
         val intent = Intent(this, CheckoutTicketActivity::class.java)
         intent.putExtra("EXTRAS_PAYMENT_URL", paymentUrl)
+        intent.putExtra("EXTRAS_TRANSACTION_ID", transactionId)
+        intent.putExtra("EXTRAS_ADULT", adult)
+        intent.putExtra("EXTRAS_CHILD", children)
+        intent.putExtra("EXTRAS_BABY", baby)
         startActivity(intent)
     }
 }

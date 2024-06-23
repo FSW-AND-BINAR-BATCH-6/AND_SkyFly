@@ -3,18 +3,18 @@ package com.kom.skyfly.utils
 import java.text.NumberFormat
 import java.util.Locale
 
-fun Double?.doubleToCurrency(
+fun Int?.intToCurrency(
     language: String,
     country: String,
 ): String? {
     return try {
         val localeID = Locale(language, country)
-        val numberFormat = NumberFormat.getCurrencyInstance(localeID)
+        val numberFormat = NumberFormat.getNumberInstance(localeID)
         numberFormat.maximumFractionDigits = 0
-        numberFormat.format(this).toString()
+        "IDR " + numberFormat.format(this).replace(",", ".")
     } catch (e: Exception) {
         null
     }
 }
 
-fun Double?.formatToRupiah() = this.doubleToCurrency("in", "ID")
+fun Int?.formatToRupiah() = this.intToCurrency("in", "ID")

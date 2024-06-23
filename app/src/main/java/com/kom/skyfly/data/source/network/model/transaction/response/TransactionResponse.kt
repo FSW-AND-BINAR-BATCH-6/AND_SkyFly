@@ -15,4 +15,6 @@ data class TransactionResponse(
     val status: Boolean?,
     @SerializedName("_token")
     val token: String?,
+    @SerializedName("transactionId")
+    val transactionId: String?,
 )
