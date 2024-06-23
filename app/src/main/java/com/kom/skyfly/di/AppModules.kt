@@ -33,6 +33,10 @@ import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
 import com.kom.skyfly.data.repository.home.airport.AirportRepository
 import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
+import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
+import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
+import com.kom.skyfly.data.repository.home.airport.AirportRepository
+import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
 import com.kom.skyfly.data.repository.home.airport.AirportRepository
 import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
@@ -90,7 +94,8 @@ Github : https://github.com/YudaSaputraa
 object AppModules {
     private val networkModule =
         module {
-            single<SkyFlyApiService> { SkyFlyApiService.invoke(get()) }
+            single<ChuckerInterceptor> { ChuckerInterceptor(androidContext()) }
+            single<SkyFlyApiService> { SkyFlyApiService.invoke(get(), get()) }
         }
 
     private val datasource =
@@ -133,7 +138,6 @@ object AppModules {
             single<DestinationFavoriteRepository> { DestinationFavoriteRepositoryImpl(get()) }
             single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
             single<TransactionRepository> { TransactionRepositoryImpl(get()) }
-            single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
         }
 
     private val viewModelModule =
