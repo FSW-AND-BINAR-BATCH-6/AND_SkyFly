@@ -24,6 +24,7 @@ class Items(
         }
     }
 
+
     override fun getLayout(): Int = R.layout.layout_item_airport_search
 
     override fun initializeViewBinding(view: View): LayoutItemAirportSearchBinding {
