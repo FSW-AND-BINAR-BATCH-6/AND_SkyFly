@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="16dp">
             <include
                 android:id="@+id/layout_detail_card"
                 android:layout_width="match_parent"
@@ -31,4 +31,13 @@
                 layout="@layout/layout_item_card_ticket_detail_home"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+    <Button
+        android:id="@+id/btn_select_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"
+        android:text="Select"
+        android:textSize="18sp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

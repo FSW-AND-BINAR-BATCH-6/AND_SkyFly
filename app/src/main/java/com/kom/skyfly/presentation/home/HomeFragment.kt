@@ -150,7 +150,6 @@ class HomeFragment : Fragment() {
                     putExtra("EXTRA_BABY_COUNT", babyCount.value)
                     putExtra("EXTRA_ADULT_COUNT", adultCount.value)
                     putExtra("EXTRA_CHILD_COUNT", childCount.value)
-
                 }
             startActivity(intent)
         }
