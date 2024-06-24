@@ -1,41 +1,31 @@
 package com.kom.skyfly.presentation.history.flightdetailhistory
 
-import android.content.Context
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.kom.skyfly.R
-import com.kom.skyfly.data.model.history.Data
+import com.kom.skyfly.data.model.transaction.detail.TransactionDetailResponses
 import com.kom.skyfly.databinding.ActivityFlightDetailHistoryBinding
+import com.kom.skyfly.utils.formatToRupiah
+import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class FlightDetailHistoryActivity : AppCompatActivity() {
-    // private lateinit var currentHistory: HistoryDetail
-
     private val binding: ActivityFlightDetailHistoryBinding by lazy {
         ActivityFlightDetailHistoryBinding.inflate(layoutInflater)
     }
 
-    private val detailHistoryViewModel: FlightDetailHistoryViewModel by viewModel {
-        parametersOf(intent.extras)
-    }
+    private val detailHistoryViewModel: FlightDetailHistoryViewModel by viewModel()
+    private var transactionIdFromExtras: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-//        val historyId = intent.getStringExtra(EXTRAS_MOVIE)
-//        if (historyId != null) {
-//           setupBind(historyId)
-//        } else {
-//            // Handle jika bookingCode tidak tersedia
-//        }
-        detailHistoryViewModel.history?.let { setupBind(it) }
-
+        transactionIdFromExtras = intent.getStringExtra("EXTRAS_TRANSACTION_ID")
         setOnClickListeners()
+        observeData(transactionIdFromExtras)
     }
 
     private fun setOnClickListeners() {
@@ -44,47 +34,121 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val EXTRAS_HISTORY = "EXTRAS_HISTORY"
-
-        fun startActivity(
-            context: Context,
-            data: Data,
-        ) {
-            val intent = Intent(context, FlightDetailHistoryActivity::class.java)
-            intent.putExtra(EXTRAS_HISTORY, data)
-            context.startActivity(intent)
+    private fun observeData(id: String?) {
+        if (id != null) {
+            detailHistoryViewModel.getHistoryById(id).observe(this) { result ->
+                result.proceedWhen(
+                    doOnSuccess = {
+                        it.payload?.let { historyDetail ->
+                            setupBind(historyDetail)
+                        }
+                    },
+                )
+            }
         }
     }
 
-//    private fun observeData(historyId: String) {
-//        detailHistoryViewModel.getDetailHistoryById(historyId).observe(this) { result ->
-//            result.proceedWhen(
-//                doOnSuccess = {
-//                    it.payload?.let { historyDetail ->
-//                        currentHistory = historyDetail
-//                        setupBind(historyDetail)
-//                    }
-//                },
-//            )
-//        }
-//    }
+    private fun setupBind(historyDetail: TransactionDetailResponses?) {
+        val transactionDetails = historyDetail?.data?.transactionDetails
+        val paymentStatus = historyDetail?.data?.status
 
-    private fun setupBind(historyDetail: Data) {
+        var adultCount = 0
+        var childCount = 0
+        var babyCount = 0
+        var totalPricePassengerAdult = 0
+        var totalPricePassengerChild = 0
+        var totalPricePassengerBaby = 0
+
+        transactionDetails?.forEach { detail ->
+            when (detail?.passengerCategory) {
+                "ADULT" -> {
+                    adultCount++
+                    totalPricePassengerAdult += detail.totalPrice
+                }
+                "CHILD" -> {
+                    childCount++
+                    totalPricePassengerChild += detail.totalPrice
+                }
+                "INFRANT" -> {
+                    babyCount++
+                    totalPricePassengerBaby += detail.totalPrice
+                }
+            }
+        }
+
         with(binding.layoutFlightDetails) {
-            tvPaymentStatus.text = historyDetail.status
-            tvDetailDepartureDate.text = historyDetail.departureDate
-            tvDetailDepartureTime.text = historyDetail.departureTime
-            tvDetailArrivalDate.text = historyDetail.arrivalDate
-            tvDetailArrivalTime.text = historyDetail.arrivalTime
-            tvDetailBookingCode.text = historyDetail.bookingCode
-            tvDetailClass.text = historyDetail.flightClass
-            tvTotalPrice.text = historyDetail.total
+            tvPaymentStatus.text = paymentStatus
+            tvDetailBookingCode.text = historyDetail?.data?.booking?.code
+            tvDetailDepartureDate.text =
+                historyDetail?.data?.transactionDetails?.first()?.flight?.departure?.date
+            tvDetailDepartureTime.text =
+                historyDetail?.data?.transactionDetails?.first()?.flight?.departure?.time
+            tvDetailDepartureAirport.text =
+                getString(
+                    R.string.tv_strip,
+                    historyDetail?.data?.transactionDetails?.first()?.flight?.departureAirport!!.name,
+                )
+            tvDetailTerminal.text =
+                historyDetail.data.transactionDetails.first()?.flight!!.airline.terminal
+            tvDetailAirline.text =
+                getString(
+                    R.string.tv_strip,
+                    historyDetail.data.transactionDetails.first()!!.flight.airline.name,
+                )
+            tvDetailClass.text = historyDetail.data.transactionDetails.first()?.seat?.type
+            tvDetailFlightNumber.text = historyDetail.data.transactionDetails.first()!!.flight.code
+            tvDetailArrivalDate.text =
+                historyDetail.data.transactionDetails.first()?.flight?.arrival?.date
+            tvDetailArrivalTime.text =
+                historyDetail.data.transactionDetails.first()?.flight?.arrival?.time
+            tvDetailDestinationAirport.text =
+                historyDetail.data.transactionDetails.first()!!.flight.destinationAirport.name
+            tvTotalPrice.text = historyDetail.data.totalPrice.formatToRupiah().toString()
+            tvTax.text = historyDetail.data.tax.formatToRupiah().toString()
 
-            when (historyDetail.status) {
-                "Unpaid" -> {
-                    tvPaymentStatus.background =
-                        ContextCompat.getDrawable(tvPaymentStatus.context, R.drawable.btn_rounded)
+            if (adultCount > 0) {
+                tvTotalByAgeGroupAdult.text = "$adultCount Adult"
+                tvTotalPriceByAgeGroupAdult.text = totalPricePassengerAdult.formatToRupiah().toString()
+                tvTotalByAgeGroupAdult.isVisible = true
+                tvTotalPriceByAgeGroupAdult.isVisible = true
+            } else {
+                tvTotalByAgeGroupAdult.isVisible = false
+                tvTotalPriceByAgeGroupAdult.isVisible = false
+            }
+
+            if (childCount > 0) {
+                tvTotalByAgeGroupChild.text = "$childCount Child"
+                tvTotalPriceByAgeGroupChild.text = totalPricePassengerChild.formatToRupiah().toString()
+                tvTotalByAgeGroupChild.isVisible = true
+                tvTotalPriceByAgeGroupChild.isVisible = true
+            } else {
+                tvTotalByAgeGroupChild.isVisible = false
+                tvTotalPriceByAgeGroupChild.isVisible = false
+            }
+
+            if (babyCount > 0) {
+                tvTotalByAgeGroupBaby.text = "$babyCount Baby"
+                tvTotalPriceByAgeGroupBaby.text = totalPricePassengerBaby.formatToRupiah().toString()
+                tvTotalByAgeGroupBaby.isVisible = true
+                tvTotalPriceByAgeGroupBaby.isVisible = true
+            } else {
+                tvTotalByAgeGroupBaby.isVisible = false
+                tvTotalPriceByAgeGroupBaby.isVisible = false
+            }
+
+            transactionDetails?.forEachIndexed { index, detail ->
+                val passengerName = detail?.name ?: "Unknown"
+                val citizenship = detail?.citizenship ?: "Unknown"
+
+                tvTitlePassenger.append(
+                    "Passenger ${index + 1} : $passengerName\n" +
+                        "Citizenship : $citizenship\n",
+                )
+            }
+
+            when {
+                paymentStatus.equals("pending", ignoreCase = true) -> {
+                    tvPaymentStatus.setText(R.string.text_unpaid)
                     tvPaymentStatus.backgroundTintList =
                         ColorStateList.valueOf(
                             ContextCompat.getColor(
@@ -93,22 +157,8 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                             ),
                         )
                 }
-
-                "Cancelled" -> {
-                    tvPaymentStatus.background =
-                        ContextCompat.getDrawable(tvPaymentStatus.context, R.drawable.btn_rounded)
-                    tvPaymentStatus.backgroundTintList =
-                        ColorStateList.valueOf(
-                            ContextCompat.getColor(
-                                tvPaymentStatus.context,
-                                R.color.darkGrey,
-                            ),
-                        )
-                }
-
-                "Paid" -> {
-                    tvPaymentStatus.background =
-                        ContextCompat.getDrawable(tvPaymentStatus.context, R.drawable.btn_rounded)
+                paymentStatus.equals("settlement", ignoreCase = true) -> {
+                    tvPaymentStatus.setText(R.string.text_paid)
                     tvPaymentStatus.backgroundTintList =
                         ColorStateList.valueOf(
                             ContextCompat.getColor(
@@ -117,9 +167,30 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                             ),
                         )
                 }
-
                 else -> {
-                    tvPaymentStatus.background = null
+                    tvPaymentStatus.setText(R.string.text_cancelled)
+                    tvPaymentStatus.backgroundTintList =
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                tvPaymentStatus.context,
+                                R.color.darkGrey,
+                            ),
+                        )
+                }
+            }
+
+            when {
+                paymentStatus.equals("pending", ignoreCase = true) -> {
+                    binding.btnProceedToPayment.text = getString(R.string.text_proceed_to_payment)
+                    binding.btnProceedToPayment.isEnabled = true
+                }
+                paymentStatus.equals("settlement", ignoreCase = true) -> {
+                    binding.btnProceedToPayment.text = getString(R.string.text_payment_complete)
+                    binding.btnProceedToPayment.isEnabled = false
+                }
+                paymentStatus.equals("cancelled", ignoreCase = true) -> {
+                    binding.btnProceedToPayment.text = getString(R.string.text_payment_cancelled)
+                    binding.btnProceedToPayment.isEnabled = false
                 }
             }
         }

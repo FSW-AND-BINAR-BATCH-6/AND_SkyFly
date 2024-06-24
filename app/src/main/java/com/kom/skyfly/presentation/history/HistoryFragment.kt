@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kom.skyfly.R
-import com.kom.skyfly.data.model.history.Data
 import com.kom.skyfly.databinding.FragmentHistoryBinding
 import com.kom.skyfly.presentation.history.filterflighthistory.CalendarView
 import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryActivity
@@ -65,27 +64,44 @@ class HistoryFragment : Fragment() {
                     binding.layoutState.tvError.isVisible = false
                     binding.rvPage.isVisible = true
 
-                    data.payload?.forEach { sectionedDate ->
-                        val section =
-                            Section().apply {
-                                setHeader(
-                                    HeaderItem(sectionedDate.date) { date ->
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "Header Clicked : $date",
-                                            Toast.LENGTH_SHORT,
-                                        ).show()
-                                    },
-                                )
-                                val dataItems =
-                                    sectionedDate.data.map { data ->
-                                        DataItem(data) { clickedData ->
-                                            navigateToDetail(clickedData)
+                    adapter.clear()
+
+                    data.payload?.let { sectionedDate ->
+                        sectionedDate.data.forEach { itemsHistoryDomain ->
+                            val section =
+                                Section().apply {
+                                    setHeader(
+                                        HeaderItem(itemsHistoryDomain.date) { date ->
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Header Clicked: $date",
+                                                Toast.LENGTH_SHORT,
+                                            ).show()
+                                        },
+                                    )
+
+                                    val uniqueItemsMap = LinkedHashMap<String, DataItem>()
+                                    val sortedTransactions =
+                                        itemsHistoryDomain.transactions.sortedByDescending { it.id }
+
+                                    sortedTransactions.forEach { transaction ->
+                                        val dataItem =
+                                            DataItem(transaction) { clickedData, transactionId ->
+                                                navigateToDetail(transactionId)
+                                            }
+
+                                        val key = transaction.id
+                                        if (!uniqueItemsMap.containsKey(key)) {
+                                            uniqueItemsMap[key] = dataItem
                                         }
                                     }
-                                addAll(dataItems)
-                            }
-                        adapter.add(section)
+
+                                    uniqueItemsMap.forEach {
+                                        add(it.value)
+                                    }
+                                }
+                            adapter.add(section)
+                        }
                     }
                 },
                 doOnError = { error ->
@@ -97,9 +113,11 @@ class HistoryFragment : Fragment() {
                     binding.shimmerHistory.isVisible = false
                     binding.layoutState.ivError.isVisible = true
                     binding.layoutState.tvTitleError.isVisible = true
-                    binding.layoutState.tvTitleError.text = getString(R.string.text_history_data_empty)
+                    binding.layoutState.tvTitleError.text =
+                        getString(R.string.text_history_data_empty)
                     binding.layoutState.tvError.isVisible = true
-                    binding.layoutState.tvError.text = getString(R.string.text_havent_made_a_booking)
+                    binding.layoutState.tvError.text =
+                        getString(R.string.text_havent_made_a_booking)
                     binding.rvPage.isVisible = false
                 },
             )
@@ -126,7 +144,11 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    private fun navigateToDetail(item: Data) {
-        FlightDetailHistoryActivity.startActivity(requireContext(), item)
+    private fun navigateToDetail(transactionId: String?) {
+        val intent =
+            Intent(requireContext(), FlightDetailHistoryActivity::class.java).apply {
+                putExtra("EXTRAS_TRANSACTION_ID", transactionId)
+            }
+        startActivity(intent)
     }
 }

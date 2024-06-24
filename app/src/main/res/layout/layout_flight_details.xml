@@ -10,12 +10,12 @@
         android:id="@+id/tv_payment_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
         android:background="@drawable/btn_rounded"
         android:backgroundTint="@color/md_theme_error"
+        android:layout_marginHorizontal="8dp"
         android:paddingHorizontal="16dp"
         android:paddingVertical="4dp"
-        android:text="@string/text_unpaid"
+        tools:text="@string/text_unpaid"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +24,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_flight_details"
         android:layout_width="match_parent"
+       android:layout_marginHorizontal="8dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/text_time"
+                tools:text="@string/text_time"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +86,7 @@
                 android:id="@+id/tv_detail_departure_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_date"
+                tools:text="@string/text_date"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_time" />
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/text_example_airport"
+                tools:text="@string/text_example_airport"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="@string/text_example_terminal"
+                tools:text="@string/text_example_terminal"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/tv_detail_departure_airport"
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_detail_airline"
+                tools:text="@string/text_detail_airline"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/iv_airline"
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="@string/text_example_class"
+                tools:text="@string/text_example_class"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/tv_detail_airline"
@@ -158,7 +158,7 @@
                 android:id="@+id/tv_detail_flight_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_example_flight_number"
+                tools:text="@string/text_example_flight_number"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_airline"
@@ -179,34 +179,22 @@
                 android:id="@+id/tv_title_passenger"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="@string/text_title_passenger"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_airline"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_information"
-                tools:text="@string/text_title_passenger" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title_information" />
 
 
             <TextView
-                android:id="@+id/tv_title_id"
+                android:id="@+id/tv_citizenship"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="@string/text_title_id"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_airline"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_passenger"
-                tools:text="@string/text_title_id" />
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_passenger_id"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="8dp"-->
-            <!--                android:text="@string/text_example_id_passenger"-->
-            <!--                android:textColor="@color/md_theme_primary"-->
-            <!--                android:textSize="16sp"-->
-            <!--                app:layout_constraintStart_toEndOf="@id/tv_title_id"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/tv_title_id" />-->
-
+                app:layout_constraintTop_toBottomOf="@id/tv_title_passenger" />
 
             <View
                 android:id="@+id/v_line_2"
@@ -215,14 +203,14 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/grey"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_id" />
+                app:layout_constraintTop_toBottomOf="@id/tv_citizenship" />
 
             <TextView
                 android:id="@+id/tv_detail_arrival_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_arrival_time"
+                tools:text="@string/text_arrival_time"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -232,7 +220,7 @@
                 android:id="@+id/tv_detail_arrival_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_date"
+                tools:text="@string/text_date"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_arrival_time" />
@@ -243,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/text_example_destination_airport"
+                tools:text="@string/text_example_destination_airport"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -269,12 +257,10 @@
         android:id="@+id/cv_price_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_flight_details">
 
@@ -298,7 +284,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_total_by_age_group"
+                tools:text="@string/text_total_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_price_details" />
@@ -308,7 +294,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_2_children"
+                tools:text="@string/text_2_children"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
                 app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_adult" />
@@ -318,7 +304,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_2_baby"
+                tools:text="@string/text_2_baby"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
                 app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_child" />
@@ -327,7 +313,7 @@
                 android:id="@+id/tv_total_price_by_age_group_baby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_total_price_by_age_group"
+                tools:text="@string/text_total_price_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_baby" />
@@ -336,7 +322,7 @@
                 android:id="@+id/tv_total_price_by_age_group_adult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_total_price_by_age_group"
+                tools:text="@string/text_total_price_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_adult" />
@@ -345,7 +331,7 @@
                 android:id="@+id/tv_total_price_by_age_group_child"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_total_price_by_age_group"
+                tools:text="@string/text_total_price_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_child" />
@@ -365,7 +351,7 @@
                 android:id="@+id/tv_tax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_example_tax"
+                tools:text="@string/text_example_tax"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_title_tax" />
@@ -385,7 +371,7 @@
                 android:id="@+id/tv_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_total_price"
+                tools:text="@string/text_total_price"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"

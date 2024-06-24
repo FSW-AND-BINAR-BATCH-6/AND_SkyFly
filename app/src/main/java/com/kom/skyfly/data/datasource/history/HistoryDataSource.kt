@@ -1,15 +1,23 @@
 package com.kom.skyfly.data.datasource.history
 
-import com.kom.skyfly.data.model.history.Data
-import com.kom.skyfly.data.model.history.SectionedDate
+import com.kom.skyfly.data.source.network.model.history.HistoryResponse
+import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 
 interface HistoryDataSource {
-    fun getHistoryData(): List<SectionedDate>
+    suspend fun getHistoryData(): HistoryResponse
 
 //    fun getHistoryDetailById(id: String): HistoryDetail?
 }
 
-class HistoryDataSourceImpl() : HistoryDataSource {
+class HistoryDataSourceImpl(
+    private val service: SkyFlyApiService,
+) : HistoryDataSource {
+    override suspend fun getHistoryData(): HistoryResponse {
+        return service.getAllTransactionHistory()
+    }
+}
+
+/*class HistoryDataSourceImpl() : HistoryDataSource {
     override fun getHistoryData(): List<SectionedDate> {
         return mutableListOf(
             SectionedDate(
@@ -277,4 +285,4 @@ class HistoryDataSourceImpl() : HistoryDataSource {
 //            )
 //        }
 //    }
-}
+}*/
