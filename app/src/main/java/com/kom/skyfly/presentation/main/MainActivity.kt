@@ -32,7 +32,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setBottomNavbar()
-        navigate()
+//        navigate()
     }
 
     private fun setBottomNavbar() {

@@ -66,6 +66,7 @@ import com.kom.skyfly.presentation.home.HomeViewModel
 import com.kom.skyfly.presentation.home.detail_home.DetailHomeViewModel
 import com.kom.skyfly.presentation.home.search.SearchViewModel
 import com.kom.skyfly.presentation.home.search_result.SearchResultViewModel
+import com.kom.skyfly.presentation.home.seatclass.SeatClassViewModel
 import com.kom.skyfly.presentation.login.LoginViewModel
 import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.presentation.notification.NotificationViewModel
@@ -145,6 +146,7 @@ object AppModules {
             viewModelOf(::AccountViewModel)
             viewModelOf(::NotificationViewModel)
             viewModelOf(::HistoryViewModel)
+            viewModelOf(::SeatClassViewModel)
             viewModelOf(::DetailHomeViewModel)
             viewModelOf(::SearchFlightHistoryViewModel)
             viewModelOf(::BaseViewModel)
