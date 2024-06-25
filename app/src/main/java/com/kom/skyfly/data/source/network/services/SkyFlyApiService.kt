@@ -16,6 +16,7 @@ import com.kom.skyfly.data.source.network.model.notification.NotificationRespons
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
+import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpSmsRequest
 import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
 import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
@@ -128,6 +129,12 @@ interface SkyFlyApiService {
     suspend fun getTransactionById(
         @Path("id") id: String,
     ): TransactionDetailResponse
+
+    @POST("api/v1/auth/verified/resendSMS-otp")
+    suspend fun resendOtpSms(
+        @Query("token") token: String,
+        @Body resendOtpRequest: ResendOtpSmsRequest,
+    ): ResendOtpResponse
 
     companion object {
         @JvmStatic

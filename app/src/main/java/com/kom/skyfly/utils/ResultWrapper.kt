@@ -4,9 +4,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
+import retrofit2.HttpException
 import java.io.IOException
+import java.net.HttpURLConnection
 
 class NoInternetException() : IOException()
+
+class UnAuthorizeException() : Exception()
+
+class ServerErrorException() : Exception()
 
 sealed class ResultWrapper<T>(
     val payload: T? = null,
@@ -88,10 +94,23 @@ fun <T> proceedFlow(block: suspend () -> T): Flow<ResultWrapper<T>> {
 }
 
 fun Throwable?.parseException(): Exception {
-    when (this) {
+    return when (this) {
         is IOException -> {
-            return NoInternetException()
+            NoInternetException()
         }
-        else -> return Exception(this)
+
+        is HttpException -> {
+            if (this.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                UnAuthorizeException()
+            } else if (this.code() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
+                ServerErrorException()
+            } else {
+                Exception(this)
+            }
+        }
+
+        else -> {
+            Exception(this)
+        }
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,153 +7,159 @@
     android:layout_height="match_parent"
     tools:context=".presentation.checkout.chooseseat.ChooseSeatActivity">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/sv_seat_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/fl_btn_save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sv_seat_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/fl_btn_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/layout_header"
-                layout="@layout/layout_header"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_select_seat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginVertical="16dp"
-                android:minHeight="700dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_header">
-
-                <FrameLayout
+                <include
+                    android:id="@+id/layout_header"
+                    layout="@layout/layout_header"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/md_theme_primaryFixed_mediumContrast">
-
-                    <TextView
-                        android:id="@+id/tv_seat_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="16dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/text_loading"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </FrameLayout>
-
-
-                <dev.jahidhasanco.seatbookview.SeatBookView
-                    android:id="@+id/layoutSeat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="64dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:available_seats_text_color="#59575C"
+                    android:layout_height="55dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:seat_gaping="5dp"
-                    app:seat_text_size="15sp" />
-
-                <com.kom.skyfly.presentation.common.views.ContentStateView
-                    android:id="@+id/csv_seat_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shm_progress_seat_view"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_select_seat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="64dp"
-                    android:visibility="gone"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginVertical="16dp"
+                    android:minHeight="700dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title_header"
-                    tools:visibility="visible">
+                    app:layout_constraintTop_toBottomOf="@id/layout_header">
 
-                    <ScrollView
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        android:background="@color/md_theme_primaryFixed_mediumContrast">
 
-
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/tv_seat_title"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
-
-                            <include layout="@layout/item_seat_view_shimmer" />
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="16dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/text_loading"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
 
 
-                        </LinearLayout>
+                    <dev.jahidhasanco.seatbookview.SeatBookView
+                        android:id="@+id/layoutSeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="64dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:available_seats_text_color="#59575C"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:seat_gaping="5dp"
+                        app:seat_text_size="15sp" />
 
-                    </ScrollView>
-                </com.facebook.shimmer.ShimmerFrameLayout>
+                    <com.kom.skyfly.presentation.common.views.ContentStateView
+                        android:id="@+id/csv_seat_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shm_progress_seat_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="64dp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title_header"
+                        tools:visibility="visible">
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
 
-            </androidx.cardview.widget.CardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/fl_btn_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+                                <include layout="@layout/item_seat_view_shimmer" />
 
-        <Button
-            android:id="@+id/btn_save"
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+                                <include layout="@layout/item_seat_view_shimmer" />
+
+
+                            </LinearLayout>
+
+                        </ScrollView>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <FrameLayout
+            android:id="@+id/fl_btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_rounded"
-            android:text="@string/text_save"
-            android:textSize="16sp" />
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/pb_loading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            android:visibility="gone" />
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_rounded"
+                android:text="@string/text_save"
+                android:textSize="16sp" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/pb_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:visibility="gone" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

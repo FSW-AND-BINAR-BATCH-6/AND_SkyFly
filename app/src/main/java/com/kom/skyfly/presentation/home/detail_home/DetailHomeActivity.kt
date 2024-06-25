@@ -20,36 +20,44 @@ class DetailHomeActivity : AppCompatActivity() {
     private var extraSeatClass: String? = null
 
     private val detailViewModel: DetailHomeViewModel by viewModel()
+    private var adultCount: Int? = 0
+    private var childCount: Int? = 0
+    private var babyCount: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         extraId = intent.getStringExtra("EXTRA_FLIGHT_ID")
         extraSeatClass = intent.getStringExtra("EXTRA_FLIGHT_SEATCLASS")
+        adultCount = intent.getIntExtra("EXTRA_ADULT_COUNT", 0)
+        childCount = intent.getIntExtra("EXTRA_CHILD_COUNT", 0)
+        babyCount = intent.getIntExtra("EXTRA_BABY_COUNT", 0)
         setOnClickListener()
         observeData()
     }
 
     private fun observeData() {
-        detailViewModel.getDetailTicketById(extraId!!, extraSeatClass!!).observe(this@DetailHomeActivity) { result ->
-            result.proceedWhen(
-                doOnSuccess = {
-                    it.payload?.let { flightDetail ->
-                        Log.d("detailTicket", "$flightDetail")
-                        setupBinding(flightDetail)
-                    }
-                },
-                doOnError = {
-                    Log.d("Error from Detail", "${it.message}")
-                },
-            )
-        }
+        detailViewModel.getDetailTicketById(extraId!!, extraSeatClass!!)
+            .observe(this@DetailHomeActivity) { result ->
+                result.proceedWhen(
+                    doOnSuccess = {
+                        it.payload?.let { flightDetail ->
+                            Log.d("detailTicket", "$flightDetail")
+                            setupBinding(flightDetail)
+                        }
+                    },
+                    doOnError = {
+                        Log.d("Error from Detail", "${it.message}")
+                    },
+                )
+            }
     }
 
     @SuppressLint("SetTextI18n")
     private fun setupBinding(ticket: FlightDetailTicket) {
         ticket.let {
-            binding.layoutDetailCard.tvFlightDestinationDetailTicket.text = "${it.departureCity} - > ${it.arrivalCity} (${it.duration})"
+            binding.layoutDetailCard.tvFlightDestinationDetailTicket.text =
+                "${it.departureCity} - > ${it.arrivalCity} (${it.duration})"
             binding.layoutDetailCard.tvDepartureTimeDetailTicket.text = it.departureTime
             binding.layoutDetailCard.tvDepartureDateDetailTicket.text = it.departureDate
             binding.layoutDetailCard.tvDepartureAirportDetailTicket.text = it.departureAirport
@@ -69,23 +77,26 @@ class DetailHomeActivity : AppCompatActivity() {
             finish()
         }
         binding.btnSelectTicket.setOnClickListener {
-            detailViewModel.getDetailTicketById(extraId!!, extraSeatClass!!).observe(this@DetailHomeActivity) { result ->
-                result.proceedWhen(
-                    doOnSuccess = {
-                        it.payload?.let { flightDetail ->
-                            // Create the Intent and put the FlightDetailTicket extra
-                            val intent =
-                                Intent(this, BookersBiodataActivity::class.java).apply {
-                                    putExtra("EXTRAS_FLIGHT_DETAIL", flightDetail)
-                                }
-                            startActivity(intent)
-                        }
-                    },
-                    doOnError = {
-                        Log.d("Error from Detail", "${it.message}")
-                    },
-                )
-            }
+            detailViewModel.getDetailTicketById(extraId!!, extraSeatClass!!)
+                .observe(this@DetailHomeActivity) { result ->
+                    result.proceedWhen(
+                        doOnSuccess = {
+                            it.payload?.let { flightDetail ->
+                                val intent =
+                                    Intent(this, BookersBiodataActivity::class.java).apply {
+                                        putExtra("EXTRAS_FLIGHT_DETAIL", flightDetail)
+                                        putExtra("EXTRA_ADULT_COUNT", adultCount)
+                                        putExtra("EXTRA_CHILD_COUNT", childCount)
+                                        putExtra("EXTRA_BABY_COUNT", babyCount)
+                                    }
+                                startActivity(intent)
+                            }
+                        },
+                        doOnError = {
+                            Log.d("Error from Detail", "${it.message}")
+                        },
+                    )
+                }
         }
     }
 }

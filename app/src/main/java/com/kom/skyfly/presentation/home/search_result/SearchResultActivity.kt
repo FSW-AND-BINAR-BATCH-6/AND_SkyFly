@@ -60,7 +60,8 @@ class SearchResultActivity : AppCompatActivity() {
 
     private fun getCalendarData() {
         val recyclerView = binding.rvDateSearchResult
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         val dateTime = YearMonth.parse(departureTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
@@ -108,6 +109,9 @@ class SearchResultActivity : AppCompatActivity() {
                                                             "EXTRA_FLIGHT_SEATCLASS",
                                                             item?.seatClass,
                                                         )
+                                                        putExtra("EXTRA_ADULT_COUNT", adultCount)
+                                                        putExtra("EXTRA_CHILD_COUNT", childrenCount)
+                                                        putExtra("EXTRA_BABY_COUNT", babyCount)
                                                     }
                                                 startActivity(intent)
                                             }

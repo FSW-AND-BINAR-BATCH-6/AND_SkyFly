@@ -1,8 +1,13 @@
 package com.kom.skyfly.core
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.kom.skyfly.R
 import com.kom.skyfly.presentation.login.LoginActivity
+import com.kom.skyfly.utils.ServerErrorException
+import com.kom.skyfly.utils.UnAuthorizeException
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -12,7 +17,21 @@ Github : https://github.com/YudaSaputraa
 open class BaseActivity : AppCompatActivity() {
     private val baseViewModel: BaseViewModel by viewModel()
 
-    fun handleUnAuthorize() {
+    fun errorHandler(e: Exception) {
+        if (e is UnAuthorizeException) {
+            baseViewModel.clearSession()
+            navigateToLogin()
+            Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+        } else if (e is ServerErrorException) {
+            Toasty.error(
+                this,
+                getString(R.string.text_server_error_please_try_again_later),
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+    }
+
+    fun doLogoutHandler() {
         baseViewModel.clearSession()
         navigateToLogin()
     }

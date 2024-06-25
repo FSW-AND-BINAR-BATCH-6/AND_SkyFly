@@ -201,12 +201,12 @@ class HomeFragment : Fragment() {
         binding.btnSwitchRoundtrip.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.tvReturn.isEnabled = true
-                binding.tvReturn.text = "Select Dates"
-                binding.tvReturn.setTextColor(getResources().getColor(R.color.md_theme_primary))
+                binding.tvReturn.text = getString(R.string.text_select_dates)
+                binding.tvReturn.setTextColor(resources.getColor(R.color.md_theme_primary))
             } else {
                 binding.tvReturn.isEnabled = false
-                binding.tvReturn.text = "-"
-                binding.tvReturn.setTextColor(getResources().getColor(R.color.darkGrey))
+                binding.tvReturn.text = getString(R.string.text_strips)
+                binding.tvReturn.setTextColor(resources.getColor(R.color.darkGrey))
             }
         }
     }

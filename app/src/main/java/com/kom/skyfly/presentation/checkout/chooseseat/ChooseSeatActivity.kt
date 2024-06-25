@@ -1,28 +1,32 @@
 package com.kom.skyfly.presentation.checkout.chooseseat
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
+import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
 import com.kom.skyfly.data.model.passenger.PassengerData
 import com.kom.skyfly.data.source.network.model.transaction.request.Bookers
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
 import com.kom.skyfly.databinding.ActivityChooseSeatBinding
-import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataActivity
 import com.kom.skyfly.presentation.checkout.checkoutticket.CheckoutTicketActivity
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.utils.NoInternetException
+import com.kom.skyfly.utils.ServerErrorException
+import com.kom.skyfly.utils.UnAuthorizeException
 import com.kom.skyfly.utils.proceedWhen
 import dev.jahidhasanco.seatbookview.SeatBookView
 import dev.jahidhasanco.seatbookview.SeatClickListener
 import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.Locale
 
-class ChooseSeatActivity : AppCompatActivity() {
+class ChooseSeatActivity : BaseActivity() {
     private val binding: ActivityChooseSeatBinding by lazy {
         ActivityChooseSeatBinding.inflate(layoutInflater)
     }
@@ -51,27 +55,29 @@ class ChooseSeatActivity : AppCompatActivity() {
     private var baby: Int = 0
     private var paymentUrl: String? = null
     private var transactionId: String? = null
+    private var flightDetailTicket: FlightDetailTicket? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        flightDetailTicket = intent.getParcelableExtra("EXTRAS_FLIGHT_DETAIL")
         fullNames = intent.getStringExtra("EXTRAS_FULL_NAME")
         familyName = intent.getStringExtra("EXTRAS_FAMILY_NAME")
         email = intent.getStringExtra("EXTRAS_EMAIL")
         phoneNumber = intent.getStringExtra("EXTRAS_PHONE_NUMBER")
         passengerDataList = intent.getParcelableArrayListExtra("EXTRAS_PASSENGERS")!!
+
         adult = intent.getIntExtra("EXTRAS_ADULT", 0)
         children = intent.getIntExtra("EXTRAS_CHILD", 0)
         baby = intent.getIntExtra("EXTRAS_BABY", 0)
-        passengerDataList.forEachIndexed { index, passenger ->
-            Log.d("PassengerData", "Passenger $index: $passenger")
-        }
+
         setTitleHeader()
-        flightId = "clxrh0w6m000zokfpvb5sobt8"
-        getAllFlightSeatData(flightId!!)
-        getFlightSeatData(flightId!!)
-        getFlightPrice(flightId!!)
+        flightId = flightDetailTicket?.id
+        flightId?.let {
+            getAllFlightSeatData(it)
+            getFlightSeatData(it)
+            getFlightPrice(it)
+        }
         setOnClickListener()
     }
 
@@ -79,12 +85,24 @@ class ChooseSeatActivity : AppCompatActivity() {
         binding.btnSave.setOnClickListener {
             flightId?.let { createTransaction(it, passengerDataList) }
         }
+        binding.layoutHeader.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+        binding.main.setOnRefreshListener {
+            flightId?.let {
+                getAllFlightSeatData(it)
+                getFlightSeatData(it)
+                getFlightPrice(it)
+            }
+        }
     }
 
     private fun getFlightSeatData(flightId: String) {
         chooseSeatViewModel.getFlightSeat(flightId).observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = { resultWrapper ->
+                    binding.btnSave.isEnabled = false
+                    binding.main.isRefreshing = false
                     val payload = resultWrapper.payload
                     chooseSeatViewModel.setSeatList(payload?.flightSeat.orEmpty())
                     if (payload != null) {
@@ -99,46 +117,78 @@ class ChooseSeatActivity : AppCompatActivity() {
                     binding.csvSeatView.setState(ContentState.SUCCESS)
                 },
                 doOnEmpty = {
+                    binding.btnSave.isEnabled = false
+                    binding.main.isRefreshing = false
                     binding.shmProgressSeatView.isVisible = false
                     binding.csvSeatView.setState(ContentState.EMPTY, "Empty seat!")
                 },
                 doOnError = { error ->
+                    binding.btnSave.isEnabled = false
+                    binding.main.isRefreshing = false
                     binding.shmProgressSeatView.isVisible = false
                     if (error.exception is NoInternetException) {
-                        binding.csvSeatView.setState(ContentState.ERROR_NETWORK)
+                        binding.csvSeatView.setState(
+                            ContentState.ERROR_NETWORK,
+                            getString(R.string.no_internet_connection),
+                        )
+                    } else if (error.exception is UnAuthorizeException) {
+                        errorHandler(error.exception)
+                        binding.csvSeatView.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_session_expired_please_login_again),
+                        )
+                    } else if (error.exception is ServerErrorException) {
+                        errorHandler(error.exception)
+                        binding.csvSeatView.setState(
+                            ContentState.ERROR_NETWORK,
+                            getString(R.string.text_server_error_please_try_again_later),
+                            R.drawable.img_empty_data,
+                        )
                     } else {
                         binding.csvSeatView.setState(ContentState.ERROR_GENERAL)
                     }
                     Log.e("ChooseSeatActivity", "Error: ${error.exception?.message}")
                 },
                 doOnLoading = {
+                    binding.btnSave.isEnabled = false
+                    binding.main.isRefreshing = true
                     binding.shmProgressSeatView.isVisible = true
                 },
             )
         }
     }
 
+    @SuppressLint("StringFormatMatches")
     private fun getAllFlightSeatData(flightId: String) {
         chooseSeatViewModel.getAllFlightSeat(flightId).observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = { resultWrapper ->
+                    binding.btnSave.isEnabled = false
+                    binding.main.isRefreshing = false
                     Log.d("SeatDatas", "getAllFlightSeatData: $resultWrapper")
                     seatTotal = resultWrapper.payload?.size ?: 0
                     resultWrapper.payload.let {
                         it?.map { response ->
                             seatType = response.type.orEmpty()
-                            binding.tvSeatTitle.text = "$seatType - $seatTotal Seat"
+                            binding.tvSeatTitle.text =
+                                getString(R.string.text_seat_data_title, seatType, seatTotal)
                         }
                     }
                 },
                 doOnLoading = {
-                    binding.tvSeatTitle.text = "Loading..."
+                    binding.btnSave.isEnabled = false
+                    binding.main.isRefreshing = false
+                    binding.tvSeatTitle.text = getString(R.string.text_loading)
                 },
                 doOnEmpty = {
-                    binding.tvSeatTitle.text = "SeatView Kosong"
+                    binding.btnSave.isEnabled = false
+                    binding.main.isRefreshing = false
+                    binding.tvSeatTitle.text = getString(R.string.text_empty_seat)
                 },
                 doOnError = {
-                    binding.tvSeatTitle.text = "Error"
+                    binding.btnSave.isEnabled = false
+                    binding.main.isRefreshing = true
+                    binding.tvSeatTitle.text = getString(R.string.text_empty_seat)
                 },
             )
         }
@@ -148,6 +198,8 @@ class ChooseSeatActivity : AppCompatActivity() {
         chooseSeatViewModel.getFlightPrice(flightId).observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = {
+                    binding.btnSave.isEnabled = false
+                    binding.main.isRefreshing = false
                     val payload = it.payload
                     payload?.let { response ->
                         seatId = response.first
@@ -177,21 +229,12 @@ class ChooseSeatActivity : AppCompatActivity() {
                     val actualSelectedIdx = selectedIdList.map { it - 1 }
                     chooseSeatViewModel.setSelectedSeatList(actualSelectedIdx)
 
-                    if (currentPassengerIndex >= passengerDataList.size) {
-                        Toasty.info(
-                            this@ChooseSeatActivity,
-                            "All passengers have been assigned seats.",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                        return
-                    }
-
                     val selectedSeatIndex =
                         selectedIdList.firstOrNull()
                     if (selectedSeatIndex == null) {
                         Toasty.error(
                             this@ChooseSeatActivity,
-                            "No seat selected.",
+                            getString(R.string.text_no_seat_selected),
                             Toast.LENGTH_SHORT,
                         ).show()
                         return
@@ -201,29 +244,17 @@ class ChooseSeatActivity : AppCompatActivity() {
                     if (correctedSeatIndex < 0 || correctedSeatIndex >= seatId.size) {
                         Toasty.error(
                             this@ChooseSeatActivity,
-                            "Invalid seat selected.",
+                            getString(R.string.text_invalid_seat_selected),
                             Toast.LENGTH_SHORT,
                         ).show()
                         return
                     }
 
-                    val selectedSeatId = seatId[correctedSeatIndex]
-                    val currentPassenger = passengerDataList[currentPassengerIndex]
-
-                    Toasty.success(
-                        this@ChooseSeatActivity,
-                        "Assigned seat $selectedSeatId to ${currentPassenger.fullName}",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-
                     currentPassengerIndex++
                     if (currentPassengerIndex < passengerDataList.size) {
-                        Toasty.warning(
-                            this@ChooseSeatActivity,
-                            "Select seat for ${passengerDataList[currentPassengerIndex].fullName}",
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                        binding.btnSave.isEnabled = false
                     } else {
+                        binding.btnSave.isEnabled = true
                         Toasty.info(
                             this@ChooseSeatActivity,
                             "All passengers have been assigned seats.",
@@ -235,7 +266,7 @@ class ChooseSeatActivity : AppCompatActivity() {
                 override fun onBookedSeatClick(view: View) {
                     Toasty.info(
                         this@ChooseSeatActivity,
-                        "Seat is Booked!",
+                        getString(R.string.text_seat_is_booked),
                         Toast.LENGTH_SHORT,
                     ).show()
                 }
@@ -243,7 +274,7 @@ class ChooseSeatActivity : AppCompatActivity() {
                 override fun onReservedSeatClick(view: View) {
                     Toasty.info(
                         this@ChooseSeatActivity,
-                        "Seat is Reserved!",
+                        getString(R.string.text_seat_is_reserved),
                         Toast.LENGTH_SHORT,
                     ).show()
                 }
@@ -273,10 +304,9 @@ class ChooseSeatActivity : AppCompatActivity() {
             .observe(this) { result ->
                 result.proceedWhen(
                     doOnSuccess = {
+                        binding.main.isRefreshing = false
                         Toasty.success(this, "Success Create Transaction!!!!!", Toast.LENGTH_SHORT)
                             .show()
-                        val intent = Intent(this, BookersBiodataActivity::class.java)
-                        startActivity(intent)
                         it.payload?.let { response ->
                             paymentUrl = response.redirectUrl
                             transactionId = response.transactionId
@@ -284,18 +314,28 @@ class ChooseSeatActivity : AppCompatActivity() {
                         navigateToPayment()
                     },
                     doOnError = {
+                        binding.main.isRefreshing = false
                         Log.e("ChooseSeatActivity", "Error: ${it.exception?.message}")
                     },
                     doOnLoading = {
+                        binding.main.isRefreshing = true
                         binding.pbLoading.isVisible = true
-                        binding.btnSave.isVisible = false
+                        binding.btnSave.isEnabled = false
                     },
                 )
             }
     }
 
     private fun setTitleHeader() {
-        binding.layoutHeader.tvTitleHeader.text = getString(R.string.text_header_choose_seat)
+        binding.layoutHeader.tvTitleHeader.text =
+            getString(
+                R.string.choose_seat,
+                flightDetailTicket?.departureCountryCode,
+                flightDetailTicket?.arrivalCountryCode,
+                flightDetailTicket?.seatClass?.lowercase(
+                    Locale.ROOT,
+                ),
+            )
     }
 
     private fun navigateToPayment() {

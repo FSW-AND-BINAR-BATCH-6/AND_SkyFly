@@ -49,6 +49,9 @@ class NotificationDetailActivity : AppCompatActivity() {
             "Promotion" -> {
                 binding.ivNotificationType.setImageResource(R.drawable.ic_promotion)
             }
+            "Promotions" -> {
+                binding.ivNotificationType.setImageResource(R.drawable.ic_promotion)
+            }
             "Warning" -> {
                 binding.ivNotificationType.setImageResource(R.drawable.ic_warning)
             }

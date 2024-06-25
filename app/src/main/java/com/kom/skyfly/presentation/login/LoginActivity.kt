@@ -84,7 +84,10 @@ class LoginActivity : AppCompatActivity() {
                 doOnError = {
                     binding.pbLoading.isVisible = false
                     if (it.exception is NoInternetException) {
-                        binding.csvLogin.setState(ContentState.ERROR_NETWORK_GENERAL, "Tidak ada internet!")
+                        binding.csvLogin.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            "Tidak ada internet!",
+                        )
                     } else {
                         Toasty.error(
                             this@LoginActivity,
@@ -97,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
                 },
                 doOnLoading = {
                     binding.pbLoading.isVisible = true
-                    binding.btnLogin.isVisible = false
+                    binding.btnLogin.isEnabled = false
                 },
             )
         }
