@@ -38,6 +38,9 @@ class SearchResultActivity : AppCompatActivity() {
     private var departureAirport: String? = null
     private var arrivalAirport: String? = null
     private var departureTime: String? = null
+    private var adultCount: Int? = null
+    private var childrenCount: Int? = null
+    private var babyCount: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,9 @@ class SearchResultActivity : AppCompatActivity() {
         departureAirport = intent.getStringExtra("EXTRA_DEPARTURE_AIRPORT")
         arrivalAirport = intent.getStringExtra("EXTRA_ARRIVAL_AIRPORT")
         departureTime = intent.getStringExtra("EXTRA_DEPARTURE_TIME")
+        adultCount = intent.getIntExtra("EXTRA_ADULT_COUNT", 0)
+        childrenCount = intent.getIntExtra("EXTRA_CHILD_COUNT", 0)
+        babyCount = intent.getIntExtra("EXTRA_BABY_COUNT", 0)
         setOnClickListener()
         setupBinding()
         getCalendarData()
@@ -78,6 +84,9 @@ class SearchResultActivity : AppCompatActivity() {
             departureAirport = departureAirport!!,
             departureDate = date,
             seatClass = "ECONOMY",
+            adult = adultCount,
+            children = childrenCount,
+            baby = babyCount,
         ).observe(this) { response ->
             response.proceedWhen(
                 doOnSuccess = {

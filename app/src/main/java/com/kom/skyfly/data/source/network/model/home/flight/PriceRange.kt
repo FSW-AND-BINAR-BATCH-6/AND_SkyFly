@@ -10,4 +10,5 @@ data class PriceRange(
     val economyClass: Price,
     @SerializedName("BUSINESS")
     val businessClass: Price,
+    val name: String? = "Business",
 )

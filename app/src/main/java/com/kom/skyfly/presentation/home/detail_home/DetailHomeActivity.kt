@@ -1,11 +1,13 @@
 package com.kom.skyfly.presentation.home.detail_home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
 import com.kom.skyfly.databinding.ActivityDetailHomeBinding
+import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataActivity
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -65,6 +67,25 @@ class DetailHomeActivity : AppCompatActivity() {
     private fun setOnClickListener() {
         binding.headerDetailTicketHome.ivBackBtnDetailTicketHome.setOnClickListener {
             finish()
+        }
+        binding.btnSelectTicket.setOnClickListener {
+            detailViewModel.getDetailTicketById(extraId!!, extraSeatClass!!).observe(this@DetailHomeActivity) { result ->
+                result.proceedWhen(
+                    doOnSuccess = {
+                        it.payload?.let { flightDetail ->
+                            // Create the Intent and put the FlightDetailTicket extra
+                            val intent =
+                                Intent(this, BookersBiodataActivity::class.java).apply {
+                                    putExtra("EXTRAS_FLIGHT_DETAIL", flightDetail)
+                                }
+                            startActivity(intent)
+                        }
+                    },
+                    doOnError = {
+                        Log.d("Error from Detail", "${it.message}")
+                    },
+                )
+            }
         }
     }
 }

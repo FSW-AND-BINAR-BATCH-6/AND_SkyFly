@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.kom.skyfly.presentation.home.calendar.HomeCalendarFragment
 import com.kom.skyfly.presentation.home.passenger.PassengerFragment
 import com.kom.skyfly.presentation.home.search.SearchFragment
 import com.kom.skyfly.presentation.home.search_result.SearchResultActivity
+import com.kom.skyfly.presentation.home.seatclass.SeatClassFragment
 import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.proceedWhen
@@ -57,6 +59,7 @@ class HomeFragment : Fragment() {
         getDestinationFavoriteData()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun observeDataDestination() {
         sharedViewModel.sourceDestination.observe(viewLifecycleOwner) { destination ->
             destination?.let {
@@ -81,7 +84,7 @@ class HomeFragment : Fragment() {
         }
         sharedViewModel.passengerCountLiveData.observe(viewLifecycleOwner) { totalPassenger ->
             totalPassenger?.let {
-                binding.tvPassengers.text = it.toString()
+                binding.tvPassengers.text = "$it Passengers"
             }
         }
     }
@@ -134,6 +137,9 @@ class HomeFragment : Fragment() {
         binding.btnSearchFlight.setOnClickListener {
             val departureAirport = binding.layoutSelectDestination.tvStartFrom.text
             val arrivalAirport = binding.layoutSelectDestination.tvEndDestination.text
+            val babyCount = sharedViewModel.passengerBabyCountLiveData
+            val adultCount = sharedViewModel.passengerAdultCountLiveData
+            val childCount = sharedViewModel.passengerChildCountLiveData
             val departureTime = convertDateFormat(binding.tvDeparture.text.toString())
 
             val intent =
@@ -141,6 +147,9 @@ class HomeFragment : Fragment() {
                     putExtra("EXTRA_DEPARTURE_AIRPORT", departureAirport)
                     putExtra("EXTRA_ARRIVAL_AIRPORT", arrivalAirport)
                     putExtra("EXTRA_DEPARTURE_TIME", departureTime)
+                    putExtra("EXTRA_BABY_COUNT", babyCount.value)
+                    putExtra("EXTRA_ADULT_COUNT", adultCount.value)
+                    putExtra("EXTRA_CHILD_COUNT", childCount.value)
                 }
             startActivity(intent)
         }
@@ -150,6 +159,10 @@ class HomeFragment : Fragment() {
             val temp = source
             source = dest
             dest = temp
+        }
+        binding.tvSeats.setOnClickListener {
+            val seatClassBottomSheet = SeatClassFragment()
+            seatClassBottomSheet.show(parentFragmentManager, seatClassBottomSheet.tag)
         }
     }
 

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.core.view.isVisible
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
+import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
 import com.kom.skyfly.databinding.ActivityOrdererBiodataBinding
 import com.kom.skyfly.presentation.checkout.passengerbiodata.PassengerBiodataActivity
 import com.kom.skyfly.presentation.common.views.ContentState
@@ -23,14 +24,17 @@ class BookersBiodataActivity : BaseActivity() {
     private var familyName: String? = null
     private var phoneNumber: String? = null
     private var id: String? = null
+    private var flightDetailTicket: FlightDetailTicket? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        flightDetailTicket = intent.getParcelableExtra("EXTRAS_FLIGHT_DETAIL")
         setHaveFamilyName()
         setTitleHeader()
         getProfileData()
         setActionListeners()
+        Log.d("Flight detail", "$flightDetailTicket")
     }
 
     private fun navigateToPassengerBiodata() {
