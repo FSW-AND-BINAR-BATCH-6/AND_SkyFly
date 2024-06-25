@@ -68,11 +68,24 @@ class DetailHomeActivity : AppCompatActivity() {
         binding.headerDetailTicketHome.ivBackBtnDetailTicketHome.setOnClickListener {
             finish()
         }
-        binding.btnSelectTicket.setOnClickListener{
-            val intent = Intent(this,BookersBiodataActivity::class.java).apply {
-
+        binding.btnSelectTicket.setOnClickListener {
+            detailViewModel.getDetailTicketById(extraId!!, extraSeatClass!!).observe(this@DetailHomeActivity) { result ->
+                result.proceedWhen(
+                    doOnSuccess = {
+                        it.payload?.let { flightDetail ->
+                            // Create the Intent and put the FlightDetailTicket extra
+                            val intent =
+                                Intent(this, BookersBiodataActivity::class.java).apply {
+                                    putExtra("EXTRAS_FLIGHT_DETAIL", flightDetail)
+                                }
+                            startActivity(intent)
+                        }
+                    },
+                    doOnError = {
+                        Log.d("Error from Detail", "${it.message}")
+                    },
+                )
             }
-
         }
     }
 }
