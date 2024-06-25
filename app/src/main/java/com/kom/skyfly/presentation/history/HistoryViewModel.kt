@@ -8,5 +8,11 @@ import kotlinx.coroutines.Dispatchers
 class HistoryViewModel(
     private val historyRepository: HistoryRepository,
 ) : ViewModel() {
-    fun getHistoryData() = historyRepository.getHistoryData().asLiveData(Dispatchers.IO)
+    fun getHistoryData(
+        limit: Int?,
+        startDate: String?,
+        endDate: String?,
+        flightCode: String?,
+    ) = historyRepository.getHistoryData(limit, startDate, endDate, flightCode)
+        .asLiveData(Dispatchers.IO)
 }

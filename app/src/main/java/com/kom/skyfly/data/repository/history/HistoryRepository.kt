@@ -8,27 +8,24 @@ import com.kom.skyfly.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
 interface HistoryRepository {
-    fun getHistoryData(): Flow<ResultWrapper<HistoryDomain>>
-
-//    fun getDetailHistoryById(id: Int): Flow<ResultWrapper<HistoryDetail>>
+    fun getHistoryData(
+        limit: Int?,
+        startDate: String?,
+        endDate: String?,
+        flightCode: String?,
+    ): Flow<ResultWrapper<HistoryDomain>>
 }
 
 class HistoryRepositoryImpl(private val historyDataSource: HistoryDataSource) : HistoryRepository {
-    override fun getHistoryData(): Flow<ResultWrapper<HistoryDomain>> {
+    override fun getHistoryData(
+        limit: Int?,
+        startDate: String?,
+        endDate: String?,
+        flightCode: String?,
+    ): Flow<ResultWrapper<HistoryDomain>> {
         return proceedFlow {
-            historyDataSource.getHistoryData().toHistoryDomain()
+            historyDataSource.getHistoryData(limit, startDate, endDate, flightCode)
+                .toHistoryDomain()
         }
     }
 }
-
-//    override fun getDetailHistoryById(id: Int): Flow<ResultWrapper<HistoryDetail>> {
-//        return flow {
-//            emit(ResultWrapper.Loading())
-//            val historyDetail = historyDataSource.getHistoryDetailById(id.toString())
-//            if (historyDetail != null) {
-//                emit(ResultWrapper.Success(historyDetail))
-//            } else {
-//                emit(ResultWrapper.Error(Exception("History detail not found")))
-//            }
-//        }
-//    }

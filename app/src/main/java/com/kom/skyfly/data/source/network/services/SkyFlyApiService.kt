@@ -17,6 +17,7 @@ import com.kom.skyfly.data.source.network.model.notification.NotificationRespons
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
+import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpSmsRequest
 import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
 import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
@@ -138,7 +139,10 @@ interface SkyFlyApiService {
 
     @GET("api/v1/transactions")
     suspend fun getAllTransactionHistory(
-        @Query("limit") limit: Int? = 5000,
+        @Query("limit") limit: Int?,
+        @Query("startDate") startDate: String?,
+        @Query("endDate") endDate: String?,
+        @Query("flightCode") flightCode: String?,
     ): HistoryResponse
 
     companion object {

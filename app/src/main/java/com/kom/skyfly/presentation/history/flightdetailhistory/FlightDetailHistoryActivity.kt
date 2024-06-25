@@ -2,6 +2,9 @@ package com.kom.skyfly.presentation.history.flightdetailhistory
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -39,9 +42,24 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
             detailHistoryViewModel.getHistoryById(id).observe(this) { result ->
                 result.proceedWhen(
                     doOnSuccess = {
-                        it.payload?.let { historyDetail ->
-                            setupBind(historyDetail)
-                        }
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            binding.shimmerDetailHistory.isVisible = false
+                            binding.svFlightDetails.isVisible = true
+                            setupBind(it.payload)
+                        }, 2000)
+                    },
+                    doOnLoading = {
+                        binding.shimmerDetailHistory.isVisible = true
+                        binding.svFlightDetails.isVisible = false
+                    },
+                    doOnError = { error ->
+                        Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT)
+                            .show()
+                    },
+                    doOnEmpty = {
+                        binding.shimmerDetailHistory.isVisible = false
+                        getString(R.string.text_havent_made_a_booking)
+                        binding.svFlightDetails.isVisible = false
                     },
                 )
             }

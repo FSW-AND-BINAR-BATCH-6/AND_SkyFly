@@ -164,7 +164,7 @@
     <string name="text_departure_date_value">Select date</string>
     <string name="text_return_date_value">Select date</string>
     <string name="text_return_title">Return</string>
-    <string name="text_passenger_title">Passenger</string>
+    <string name="text_passenger_title">Passengers</string>
     <string name="text_seat_class_title">Seat Class</string>
     <string name="text_dibawah_2_tahun">(Under 2 years)</string>
     <string name="text_bayi">Baby</string>
@@ -174,7 +174,7 @@
     <string name="text_dewasa">Adult</string>
     <string name="text_simpan">Save</string>
     <string name="text_hai_mau_ke_mana">Hi, Where are you going?</string>
-    <string name="text_cari_penerbangan">Search Flights</string>
+    <string name="text_search_flights">Search Flights</string>
     <string name="text_passenger_type">Passenger 1 - Adult</string>
     <string name="text_empty_data">Data is still empty!</string>
     <string name="no_internet_connection">No internet connection!</string>
@@ -252,4 +252,12 @@
     <string name="text_select_dates">Select Dates</string>
     <string name="text_strips">-</string>
     <string name="choose_seat"><![CDATA[Choose Seat (%1$s > %2$s - %3$s)]]></string>
+    <string name="text_day">Rabu</string>
+    <string name="text_hour">07:00</string>
+    <string name="text_jkt">JKT</string>
+    <string name="text_direct">Direct</string>
+    <string name="text_mlb">MLB</string>
+    <string name="text_select">Select</string>
+    <string name="text_jkt_mlg"><![CDATA[JKT -> MLG]]></string>
+    <string name="text_2_penumpang_economy"> - 2 Penumpang - Economy</string>
 </resources>

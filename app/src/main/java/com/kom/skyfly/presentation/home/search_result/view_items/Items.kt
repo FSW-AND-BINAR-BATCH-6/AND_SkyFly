@@ -5,6 +5,7 @@ import android.view.View
 import com.kom.skyfly.R
 import com.kom.skyfly.data.model.home.flight.FlightTicket
 import com.kom.skyfly.databinding.LayoutItemCardSearchResultBinding
+import com.kom.skyfly.utils.formatToRupiah
 import com.xwray.groupie.viewbinding.BindableItem
 
 class Items(
@@ -23,7 +24,7 @@ class Items(
             tvTargetArrivalSearchResult.text = data?.arrivalCountryCode
             tvFlightDurationSearchResult.text = data?.duration
             tvTransitOptionSearchResult.text = "Direct"
-            tvPriceSearchResult.text = data?.price.toString()
+            tvPriceSearchResult.text = data?.price.formatToRupiah().toString()
             tvAirlineSearchResult.text = "${data?.airplaneName} - ${data?.seatClass}"
             viewBinding.root.setOnClickListener {
                 onItemClick(data)
