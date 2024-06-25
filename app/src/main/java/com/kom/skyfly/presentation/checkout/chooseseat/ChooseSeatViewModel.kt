@@ -46,7 +46,7 @@ class ChooseSeatViewModel(
                 fullName = passenger.fullName,
                 dob = "${passenger.dob} 10:00:00",
                 validityPeriod = "${passenger.validityPeriod} 10:00:00",
-                familyName = passenger.familyName,
+                familyName = passenger.familyName.orEmpty(),
                 citizenship = passenger.citizenship,
                 passport = passenger.passport,
                 issuingCountry = "Indonesia",

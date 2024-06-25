@@ -24,7 +24,8 @@ class BottomSheetsChangePassword : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentBottomSheetsChangePasswordBinding.inflate(layoutInflater, container, false)
+        binding =
+            FragmentBottomSheetsChangePasswordBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -79,7 +80,7 @@ class BottomSheetsChangePassword : BottomSheetDialogFragment() {
                         ).show()
                     },
                     doOnLoading = {
-                        binding.btnSubmit.isVisible = false
+                        binding.btnSubmit.isEnabled = false
                         binding.pbLoading.isVisible = true
                     },
                 )

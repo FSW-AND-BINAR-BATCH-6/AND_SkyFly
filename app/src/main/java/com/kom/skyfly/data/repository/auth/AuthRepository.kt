@@ -44,6 +44,12 @@ interface AuthRepository {
     @Throws(exceptionClasses = [Exception::class])
     fun resendOtpRequest(token: String): Flow<ResultWrapper<ResendOtpResponse>>
 
+    @Throws(exceptionClasses = [Exception::class])
+    fun resendOtpSmsRequest(
+        token: String,
+        phoneNumber: String,
+    ): Flow<ResultWrapper<ResendOtpResponse>>
+
     fun isUserLoggedIn(): Flow<ResultWrapper<Auth>>
 }
 
@@ -79,6 +85,13 @@ class AuthRepositoryImpl(private val dataSource: AuthDataSource) : AuthRepositor
 
     override fun resendOtpRequest(token: String): Flow<ResultWrapper<ResendOtpResponse>> {
         return proceedFlow { dataSource.resendOtpRequest(token) }
+    }
+
+    override fun resendOtpSmsRequest(
+        token: String,
+        phoneNumber: String,
+    ): Flow<ResultWrapper<ResendOtpResponse>> {
+        return proceedFlow { dataSource.resendOtpSmsRequest(token, phoneNumber) }
     }
 
     override fun isUserLoggedIn(): Flow<ResultWrapper<Auth>> {

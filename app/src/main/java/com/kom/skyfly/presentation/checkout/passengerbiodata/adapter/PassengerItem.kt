@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.checkout.passengerbiodata.adapter
 
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -44,6 +45,14 @@ class PassengerItem(
                 tvFamilyName.isVisible = isChecked
                 tilFamilyName.isVisible = isChecked
             }
+            if (passengerTypeLabel == "CHILD" || passengerTypeLabel == "INFRANT") {
+                tilPassport.isVisible = false
+                tvPassport.isVisible = false
+                tvValidUntil.isVisible = false
+                ivCalendarValidUntil.isVisible = false
+                tilValidUntil.isVisible = false
+            }
+            Log.d("passengerType", "bind: $passengerTypeLabel")
 
             etDate.setOnClickListener { onDateClick(etDate) }
             etValidUntil.setOnClickListener { onValidUntilClick(etValidUntil) }

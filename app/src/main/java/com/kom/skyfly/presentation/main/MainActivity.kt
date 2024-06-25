@@ -2,7 +2,6 @@ package com.kom.skyfly.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.kom.skyfly.R
@@ -17,16 +16,6 @@ class MainActivity : BaseActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val mainViewModel: MainViewModel by viewModel()
-
-    private val userToken = MutableLiveData<String?>()
-
-    fun setUserToken(token: String?) {
-        userToken.value = token
-    }
-
-    fun getUserToken(): String? {
-        return userToken.value
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

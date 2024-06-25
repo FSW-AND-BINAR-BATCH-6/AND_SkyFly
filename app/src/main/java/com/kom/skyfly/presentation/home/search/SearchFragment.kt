@@ -52,7 +52,6 @@ class SearchFragment : BottomSheetDialogFragment() {
         setupBinding()
         getAirportData()
         setBottomSheetMaxHeight(maxPeekHeight)
-        // Extract names from the mockList
     }
 
     private fun getAirportData() {

@@ -105,7 +105,7 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
                         ).show()
                     },
                     doOnLoading = {
-                        binding.btnSubmit.isVisible = false
+                        binding.btnSubmit.isEnabled = false
                         binding.pbLoading.isVisible = true
                     },
                 )

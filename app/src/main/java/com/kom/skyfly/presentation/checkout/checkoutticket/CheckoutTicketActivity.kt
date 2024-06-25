@@ -4,17 +4,21 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.transaction.detail.TransactionDetailResponses
 import com.kom.skyfly.databinding.ActivityCheckoutTicketBinding
 import com.kom.skyfly.presentation.checkout.payment.PaymentActivity
+import com.kom.skyfly.presentation.common.views.ContentState
+import com.kom.skyfly.utils.NoInternetException
+import com.kom.skyfly.utils.ServerErrorException
+import com.kom.skyfly.utils.UnAuthorizeException
 import com.kom.skyfly.utils.formatToRupiah
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CheckoutTicketActivity : AppCompatActivity() {
+class CheckoutTicketActivity : BaseActivity() {
     private val binding: ActivityCheckoutTicketBinding by lazy {
         ActivityCheckoutTicketBinding.inflate(layoutInflater)
     }
@@ -45,15 +49,50 @@ class CheckoutTicketActivity : AppCompatActivity() {
             checkoutTicketViewModel.getTransactionById(id).observe(this) { result ->
                 result.proceedWhen(
                     doOnSuccess = {
+                        binding.btnProceedToPayment.isEnabled = true
+                        binding.main.isRefreshing = false
+                        binding.shmProgressFlightTicket.isVisible = false
+                        binding.layoutFlightDetails.cvFlightDetails.isVisible = true
+                        binding.layoutFlightDetails.cvPriceDetails.isVisible = true
+                        binding.layoutFlightDetails.tvTrip.isVisible = true
                         val response = result.payload
                         setTransactionDetailData(response)
-                        Log.d("GetTransactionById", "getTransactionDataById: $response")
                     },
                     doOnError = {
+                        binding.btnProceedToPayment.isEnabled = false
+                        binding.shmProgressFlightTicket.isVisible = false
+                        binding.main.isRefreshing = false
+                        if (it.exception is NoInternetException) {
+                            binding.csvCheckoutTicket.setState(
+                                ContentState.ERROR_NETWORK_GENERAL,
+                                "No internet connection!!",
+                            )
+                        } else if (it.exception is UnAuthorizeException) {
+                            errorHandler(it.exception)
+                            binding.csvCheckoutTicket.setState(
+                                ContentState.ERROR_NETWORK_GENERAL,
+                                getString(R.string.text_session_expired_please_login_again),
+                            )
+                        } else if (it.exception is ServerErrorException) {
+                            errorHandler(it.exception)
+                            binding.csvCheckoutTicket.setState(
+                                ContentState.ERROR_NETWORK,
+                                getString(R.string.text_something_went_wrong),
+                                R.drawable.img_empty_data,
+                            )
+                        }
                         Log.d(
                             "GetTransactionByIdError",
                             "getTransactionDataById: ${it.exception?.message}",
                         )
+                    },
+                    doOnLoading = {
+                        binding.layoutFlightDetails.cvFlightDetails.isVisible = false
+                        binding.layoutFlightDetails.cvPriceDetails.isVisible = false
+                        binding.layoutFlightDetails.tvTrip.isVisible = false
+                        binding.main.isRefreshing = true
+                        binding.btnProceedToPayment.isEnabled = false
+                        binding.shmProgressFlightTicket.isVisible = true
                     },
                 )
             }
@@ -165,6 +204,12 @@ class CheckoutTicketActivity : AppCompatActivity() {
             intent.putExtra("EXTRAS_CHILD", children)
             intent.putExtra("EXTRAS_BABY", baby)
             startActivity(intent)
+        }
+        binding.layoutHeader.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+        binding.main.setOnRefreshListener {
+            getTransactionDataById(transactionId)
         }
     }
 

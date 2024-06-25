@@ -7,7 +7,9 @@ import com.kom.skyfly.data.source.network.model.transaction.request.TransactionR
 import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
 import com.kom.skyfly.utils.ResultWrapper
 import com.kom.skyfly.utils.proceedFlow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 /**
 Written by Komang Yuda Saputra
@@ -46,8 +48,11 @@ class TransactionRepositoryImpl(private val datasource: TransactionDataSource) :
     }
 
     override fun getTransactionById(id: String): Flow<ResultWrapper<TransactionDetailResponses>> {
-        return proceedFlow {
-            datasource.getTransactionById(id).toTransactionDetailResponse()
+        return flow {
+            emit(ResultWrapper.Loading())
+            delay(1000)
+            val result = datasource.getTransactionById(id).toTransactionDetailResponse()
+            emit(ResultWrapper.Success(result))
         }
     }
 }
