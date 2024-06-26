@@ -64,10 +64,11 @@ class HomeFragment : Fragment() {
         sharedViewModel.sourceDestination.observe(viewLifecycleOwner) { destination ->
             destination?.let {
                 if (sharedViewModel.isStartDestination!!) {
-                    binding.layoutSelectDestination.tvStartFrom.text = it.city
+                    binding.layoutSelectDestination.tvStartFrom.text = "${it.city} (${it.code})"
                     source = binding.layoutSelectDestination.tvStartFrom.text.toString()
                 } else {
-                    binding.layoutSelectDestination.tvEndDestination.text = it.city
+                    binding.layoutSelectDestination.tvEndDestination.text =
+                        "${it.city} (${it.code})"
                     dest = binding.layoutSelectDestination.tvEndDestination.text.toString()
                 }
             }
@@ -90,20 +91,14 @@ class HomeFragment : Fragment() {
     }
 
     fun convertDateFormat(inputDate: String): String? {
-        // Define the formatter for the input date format
         val inputFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale("id", "ID"))
 
-        // Define the formatter for the output date format
         val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
         return try {
-            // Parse the input date string to a LocalDate object
             val date = LocalDate.parse(inputDate, inputFormatter)
-
-            // Format the LocalDate object to the output format
             date.format(outputFormatter)
         } catch (e: DateTimeParseException) {
-            // Handle the exception if the input date string is not in the expected format
             e.printStackTrace()
             null
         }

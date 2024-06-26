@@ -3,7 +3,6 @@ package com.kom.skyfly.presentation.home.search_result
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kom.skyfly.data.model.home.Calendar
@@ -29,8 +28,8 @@ class SearchResultActivity : AppCompatActivity() {
     }
     private val calendarAdapter: CalendarAdapter by lazy {
         CalendarAdapter {
+            calendarAdapter.setSelectedDate(it.date)
             getAllTicketData(it.date)
-            Toast.makeText(this, "${it.date}", Toast.LENGTH_SHORT).show()
         }
     }
 

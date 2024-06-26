@@ -115,6 +115,7 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.perf)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
@@ -131,6 +132,8 @@ dependencies {
 
     //  Local storage
     implementation(libs.room.ktx)
+    androidTestImplementation(project(":app"))
+    androidTestImplementation(project(":app"))
     ksp(libs.room.compiler)
 
     // Coroutine

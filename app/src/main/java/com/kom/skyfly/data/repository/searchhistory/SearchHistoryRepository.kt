@@ -58,14 +58,17 @@ class SearchHistoryRepositoryImpl(private val searchHistoryDataSource: SearchHis
     override fun getUserSearchHistory(): Flow<ResultWrapper<List<SearchHistory>>> {
         return searchHistoryDataSource.getAllSearchHistory()
             .map { searchHistoryEntities ->
-                val searchHistoryList = searchHistoryEntities.toSearchHistoryList() // Handle nullable case
+                val searchHistoryList =
+                    searchHistoryEntities.toSearchHistoryList()
                 if (searchHistoryList != null) {
                     ResultWrapper.Success(searchHistoryList)
                 } else {
                     ResultWrapper.Empty()
                 }
-            }.onStart {
             }.catch { e ->
+                emit(ResultWrapper.Error(Exception(e)))
+            }.onStart {
+                emit(ResultWrapper.Loading())
             }
     }
 }
