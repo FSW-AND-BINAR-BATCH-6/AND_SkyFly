@@ -239,16 +239,18 @@
             app:layout_constraintEnd_toStartOf="@id/tv_counter_child"
             app:layout_constraintTop_toTopOf="@id/iv_baby_icon" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_total_passenger"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/text_simpan"
+            android:textAllCaps="false"
             app:layout_constraintTop_toBottomOf="@id/tv_age_desc_baby"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/Widget.MaterialComponents.Button"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -175,7 +175,7 @@ class FlightDetailActivity : BaseActivity() {
             }
         }
         binding.layoutFlightDetails.tvTitlePassenger.text = getString(R.string.text_empty)
-        binding.layoutFlightDetails.tvTitleId.text = getString(R.string.text_empty)
+        binding.layoutFlightDetails.tvCitizenship.text = getString(R.string.text_empty)
         with(binding.layoutFlightDetails) {
             tvDetailDepartureDate.text = departureDate
             tvDetailDepartureTime.text = departureTime

@@ -7,6 +7,7 @@ import com.kom.skyfly.data.source.local.pref.UserPreference
 import com.kom.skyfly.data.source.network.model.flightseat.FlightSeatResponse
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
+import com.kom.skyfly.data.source.network.model.history.HistoryResponse
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
 import com.kom.skyfly.data.source.network.model.home.flight.FlightResponse
 import com.kom.skyfly.data.source.network.model.home.flight_detail.FlightDetailResponse
@@ -135,6 +136,14 @@ interface SkyFlyApiService {
         @Query("token") token: String,
         @Body resendOtpRequest: ResendOtpSmsRequest,
     ): ResendOtpResponse
+
+    @GET("api/v1/transactions")
+    suspend fun getAllTransactionHistory(
+        @Query("limit") limit: Int?,
+        @Query("startDate") startDate: String?,
+        @Query("endDate") endDate: String?,
+        @Query("flightCode") flightCode: String?,
+    ): HistoryResponse
 
     companion object {
         @JvmStatic

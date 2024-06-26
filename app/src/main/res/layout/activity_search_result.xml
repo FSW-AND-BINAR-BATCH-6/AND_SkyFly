@@ -23,6 +23,18 @@
         tools:listitem="@layout/layout_date"
         android:layout_margin="8dp"
         app:layout_constraintTop_toBottomOf="@id/header_flight_search_result"/>
+
+    <View
+        android:id="@+id/v_calender"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginVertical="8dp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_date_search_result"/>
+
+
     <LinearLayout
         android:id="@+id/filter_button"
         android:layout_width="wrap_content"
@@ -33,11 +45,11 @@
         android:orientation="horizontal"
         android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_date_search_result">
+        app:layout_constraintTop_toBottomOf="@id/v_calender">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/ic_filter" />
 
         <TextView
@@ -45,13 +57,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
-            android:text="Filter"
+            android:text="@string/text_filter"
+            android:textSize="16sp"
             android:textColor="@android:color/black" />
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_item_tickets_search_result"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="8dp"
         tools:listitem="@layout/layout_item_card_search_result"
         app:layout_constraintTop_toBottomOf="@id/filter_button"
         app:layout_constraintStart_toStartOf="@id/filter_button"

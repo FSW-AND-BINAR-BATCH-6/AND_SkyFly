@@ -36,6 +36,7 @@
                 android:text="@string/text_hai_mau_ke_mana"
                 android:textSize="22sp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,10 +100,11 @@
                         android:id="@+id/tv_departure_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/text_departure"
                         android:textSize="16sp"
+                        android:textColor="@color/darkGrey"
                         app:layout_constraintStart_toEndOf="@id/iv_departure"
                         app:layout_constraintTop_toBottomOf="@id/tv_text_pulang_pergi" />
 
@@ -110,6 +112,7 @@
                         android:id="@+id/tv_departure"
                         android:layout_width="130dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="@string/text_departure_date_value"
                         android:ellipsize="end"
                         android:textColor="@color/md_theme_primary"
@@ -126,6 +129,7 @@
                         app:layout_constraintEnd_toEndOf="@id/tv_departure"
                         app:layout_constraintStart_toStartOf="@id/tv_departure"
                         app:layout_constraintTop_toBottomOf="@id/tv_departure" />
+
                     <ImageView
                         android:id="@+id/iv_return"
                         android:layout_width="25dp"
@@ -142,9 +146,10 @@
                         android:id="@+id/tv_return_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/text_return_title"
                         android:textSize="16sp"
+                        android:textColor="@color/darkGrey"
                         app:layout_constraintStart_toEndOf="@id/iv_return"
                         app:layout_constraintTop_toTopOf="@id/tv_departure_title" />
 
@@ -152,6 +157,7 @@
                         android:id="@+id/tv_return"
                         android:layout_width="130dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="@string/text_strip"
                         android:textColor="@color/md_theme_primary"
                         android:ellipsize="end"
@@ -160,14 +166,16 @@
                         android:enabled="false"
                         app:layout_constraintStart_toStartOf="@id/tv_return_title"
                         app:layout_constraintTop_toBottomOf="@id/tv_return_title" />
+
                     <View
                         android:id="@+id/v_select_return_time"
                         android:layout_width="0dp"
                         android:layout_height="2dp"
+                        android:layout_marginVertical="8dp"
                         android:background="@color/grey"
                         app:layout_constraintEnd_toEndOf="@id/tv_return"
                         app:layout_constraintStart_toStartOf="@id/tv_return"
-                        app:layout_constraintTop_toTopOf="@id/v_select_departure_time" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_return" />
 
                     <ImageView
                         android:id="@+id/iv_passenger"
@@ -183,9 +191,10 @@
                         android:id="@+id/tv_passenger_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="32dp"
                         android:text="@string/text_passenger_title"
                         android:textSize="16sp"
+                        android:textColor="@color/darkGrey"
                         app:layout_constraintStart_toStartOf="@id/tv_departure_title"
                         app:layout_constraintTop_toBottomOf="@id/tv_departure" />
 
@@ -193,6 +202,7 @@
                         android:id="@+id/tv_passengers"
                         android:layout_width="130dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         tools:text="@string/text_add_passenger"
                         android:textColor="@color/md_theme_primary"
                         android:ellipsize="end"
@@ -221,8 +231,10 @@
                         android:id="@+id/tv_seat_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
                         android:text="@string/text_seat_class_title"
                         android:textSize="16sp"
+                        android:textColor="@color/darkGrey"
                         app:layout_constraintTop_toTopOf="@id/tv_passenger_title"
                         app:layout_constraintStart_toEndOf="@id/iv_seat" />
 
@@ -253,9 +265,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="32dp"
                         android:background="@drawable/btn_rounded"
-                        android:text="@string/text_cari_penerbangan"
+                        android:text="@string/text_search_flight"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/v_select_seats" />
@@ -264,8 +277,8 @@
                         android:id="@+id/tv_destination_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Destinasi Favorit"
+                        android:layout_marginTop="32dp"
+                        android:text="@string/text_favorite_destination"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@id/rv_category"
@@ -277,6 +290,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:layout_constraintTop_toBottomOf="@id/tv_destination_title"

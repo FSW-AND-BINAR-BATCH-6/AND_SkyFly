@@ -1,7 +1,6 @@
 package com.kom.skyfly.di
 
 import android.content.SharedPreferences
-import android.os.Bundle
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kom.skyfly.core.BaseViewModel
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
@@ -75,7 +74,6 @@ import com.kom.skyfly.presentation.register.RegisterViewModel
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
 import com.kom.skyfly.utils.SharedPreferenceUtils
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -94,7 +92,7 @@ object AppModules {
         module {
             single<AuthDataSource> { AuthDataSourceImpl(get()) }
             single<UserPrefDataSource> { UserPrefDataSourceImpl(get()) }
-            single<HistoryDataSource> { HistoryDataSourceImpl() }
+            single<HistoryDataSource> { HistoryDataSourceImpl(get()) }
             single<NotificationDataSource> { NotificationDataSourceImpl(get()) }
             single<ProfileDataSource> { ProfileDataSourceImpl(get()) }
             single<SearchHistoryDataSource> { SearchHistoryDataSourceImpl(get()) }
@@ -152,12 +150,7 @@ object AppModules {
             viewModelOf(::BaseViewModel)
             viewModelOf(::SearchViewModel)
             viewModelOf(::ChooseSeatViewModel)
-            viewModel { (extras: Bundle?) ->
-                FlightDetailHistoryViewModel(
-                    extras = extras,
-                    historyRepository = get(),
-                )
-            }
+            viewModelOf(::FlightDetailHistoryViewModel)
             viewModelOf(::SharedViewModelEditProfile)
             viewModelOf(::BookersBiodataViewModel)
             viewModelOf(::PassengerBiodataViewModel)

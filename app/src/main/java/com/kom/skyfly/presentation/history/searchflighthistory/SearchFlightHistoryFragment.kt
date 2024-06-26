@@ -13,6 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.R
+import com.kom.skyfly.data.datasource.history.FlightCodeListener
 import com.kom.skyfly.data.model.searchhistory.SearchHistory
 import com.kom.skyfly.databinding.FragmentSearchFlightHistoryBinding
 import com.kom.skyfly.presentation.common.views.ContentState
@@ -26,7 +27,8 @@ class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentSearchFlightHistoryBinding
 
     private val searchFlightHistoryViewModel: SearchFlightHistoryViewModel by viewModel()
-
+    private var flightCode: String? = null
+    private var flightCodeListener: FlightCodeListener? = null
     private val adapter: SearchHistoryListAdapter by lazy {
         SearchHistoryListAdapter(
             itemClick = { searchHistory ->
@@ -121,6 +123,8 @@ class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
                 observeData("39483943tfeff", searchHistory)
                 binding.layoutSearchBar.etSearch.clearFocus()
                 hideKeyboard()
+                flightCodeListener?.onFlightCodeEntered(flightCode!!)
+                dismiss()
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false

@@ -1,30 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linear_calendar"
-    android:layout_width="110dp"
-    android:layout_height="70dp"
-    android:layout_marginEnd="8dp"
-    android:background="@drawable/rounded_borderline"
-    android:backgroundTint="@color/md_theme_primaryContainer_mediumContrast"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_calendar_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Rabu"
-        android:textSize="14sp"
-        android:textColor="@color/white"/>
+    <LinearLayout
+        android:id="@+id/linear_calendar"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_borderline"
+        android:backgroundTint="@color/md_theme_primaryContainer_mediumContrast"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/tv_calendar_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="02/03/2003"
-        android:textSize="14sp"
-        android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/tv_calendar_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            tools:text="@string/text_day" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_calendar_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            tools:text="02/03/2003" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="50dp"
+        android:background="@color/grey"
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintStart_toEndOf="@id/linear_calendar"
+        app:layout_constraintTop_toTopOf="@id/linear_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/linear_calendar"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
