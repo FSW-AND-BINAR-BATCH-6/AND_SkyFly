@@ -56,7 +56,6 @@ import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataViewMod
 import com.kom.skyfly.presentation.checkout.checkoutticket.CheckoutTicketViewModel
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatViewModel
 import com.kom.skyfly.presentation.checkout.flightdetail.FlightDetailViewModel
-import com.kom.skyfly.presentation.checkout.passengerbiodata.PassengerBiodataViewModel
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.history.HistoryViewModel
 import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryViewModel
@@ -153,7 +152,6 @@ object AppModules {
             viewModelOf(::FlightDetailHistoryViewModel)
             viewModelOf(::SharedViewModelEditProfile)
             viewModelOf(::BookersBiodataViewModel)
-            viewModelOf(::PassengerBiodataViewModel)
             viewModelOf(::CheckoutTicketViewModel)
             viewModelOf(::FlightDetailViewModel)
         }

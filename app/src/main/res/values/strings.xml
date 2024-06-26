@@ -260,4 +260,6 @@
     <string name="text_select">Select</string>
     <string name="text_jkt_mlg"><![CDATA[JKT -> MLG]]></string>
     <string name="text_2_penumpang_economy"> - 2 Penumpang - Economy</string>
+    <string name="text_select_origin">Select origin</string>
+    <string name="text_select_destination">Select destination</string>
 </resources>
