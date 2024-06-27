@@ -2,11 +2,12 @@ package com.kom.skyfly.data.datasource.home
 
 import com.kom.skyfly.data.model.home.seat_class.SeatClassHome
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
+import com.kom.skyfly.data.source.network.model.home.favourite_destination.FavouriteDestinationResponse
 import com.kom.skyfly.data.source.network.model.home.flight.FlightResponse
 import com.kom.skyfly.data.source.network.model.home.flight_detail.FlightDetailResponse
 
 interface HomeDataSource {
-    suspend fun getAllAirports(): AirportResponse
+    suspend fun getAllAirports(city: String? = null): AirportResponse
 
     suspend fun getAllFlight(
         search: String? = null,
@@ -29,4 +30,6 @@ interface HomeDataSource {
     ): FlightDetailResponse
 
     fun getSeatClassData(): List<SeatClassHome>
+
+    suspend fun getDestinationFavourites(): FavouriteDestinationResponse
 }

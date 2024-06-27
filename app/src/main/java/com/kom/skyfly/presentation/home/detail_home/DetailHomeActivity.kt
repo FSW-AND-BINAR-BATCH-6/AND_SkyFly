@@ -8,6 +8,8 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
@@ -105,6 +107,10 @@ class DetailHomeActivity : BaseActivity() {
     private fun setupBinding(ticket: FlightDetailTicket) {
         binding.headerDetailTicketHome.tvTitleHeader.text = getString(R.string.text_flight_detail)
         ticket.let {
+            binding.layoutDetailCard.ivAirlineDetailTicket.load(it.airplaneImg) {
+                crossfade(true)
+                error(R.mipmap.ic_launcher)
+            }
             binding.layoutDetailCard.tvFlightDestinationDetailTicket.text =
                 "${it.departureCity} - > ${it.arrivalCity} (${it.duration})"
             binding.layoutDetailCard.tvDepartureTimeDetailTicket.text = it.departureTime

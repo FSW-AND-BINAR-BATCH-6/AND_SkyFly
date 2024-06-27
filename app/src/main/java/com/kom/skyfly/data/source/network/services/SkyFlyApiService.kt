@@ -9,6 +9,7 @@ import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordReq
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
 import com.kom.skyfly.data.source.network.model.history.HistoryResponse
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
+import com.kom.skyfly.data.source.network.model.home.favourite_destination.FavouriteDestinationResponse
 import com.kom.skyfly.data.source.network.model.home.flight.FlightResponse
 import com.kom.skyfly.data.source.network.model.home.flight_detail.FlightDetailResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
@@ -74,27 +75,29 @@ interface SkyFlyApiService {
     @GET("api/v1/flights/")
     suspend fun getAllFlights(
         @Query("search") search: String? = null,
-        @Query("page") page: Int,
-        @Query("limit") limit: Int? = 20,
-        @Query("departureAirport") departureAirport: String,
-        @Query("arrivalAirport") arrivalAirport: String,
-        @Query("departureDate") departureDate: String,
+        @Query("page") page: Int?,
+        @Query("limit") limit: Int? = 10000,
+        @Query("departureAirport") departureAirport: String?,
+        @Query("arrivalAirport") arrivalAirport: String?,
+        @Query("departureDate") departureDate: String?,
         @Query("returnDate") returnDate: String?,
         @Query("arrivalDate") arrivalDate: String? = null,
         @Query("seatClass") seatClass: String?,
-        @Query("adult") adult: Int? = 1,
+        @Query("adult") adult: Int? = 0,
         @Query("children") children: Int? = 0,
         @Query("baby") baby: Int? = 0,
+        @Query("sort") sort: String? = null,
     ): FlightResponse
 
     @GET("api/v1/flights/{id}")
     suspend fun getDetailFlightById(
         @Path("id") id: String,
-        @Query("seatClass") seatClass: String,
+        @Query("seatClass") seatClass: String?,
     ): FlightDetailResponse
 
     @GET("api/v1/airports/")
     suspend fun getAllAirports(
+        @Query("city") city: String?,
         @Query("showall") showAll: Boolean = true,
     ): AirportResponse
 
@@ -103,6 +106,9 @@ interface SkyFlyApiService {
         @Path("id") id: String,
         @Query("limit") limit: Int? = 5000,
     ): FlightSeatResponse
+
+    @GET("api/v1/flights/favorite-destination")
+    suspend fun getDestinationFavourite(): FavouriteDestinationResponse
 
     @GET("api/v1/auth/me")
     suspend fun getUserProfile(): UserProfileResponse

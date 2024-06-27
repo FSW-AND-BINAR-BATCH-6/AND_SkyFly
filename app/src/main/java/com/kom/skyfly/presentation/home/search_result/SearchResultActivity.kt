@@ -48,11 +48,12 @@ class SearchResultActivity : BaseActivity() {
     private var adultCount: Int? = null
     private var childrenCount: Int? = null
     private var babyCount: Int? = null
+    private var seatClass: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        seatClass = intent.getStringExtra("EXTRA_SEAT_CLASS")
         departureAirport = intent.getStringExtra("EXTRA_DEPARTURE_AIRPORT")
         arrivalAirport = intent.getStringExtra("EXTRA_ARRIVAL_AIRPORT")
         departureTime = intent.getStringExtra("EXTRA_DEPARTURE_TIME")
@@ -91,7 +92,7 @@ class SearchResultActivity : BaseActivity() {
             arrivalAirport = arrivalAirport!!,
             departureAirport = departureAirport!!,
             departureDate = date,
-            seatClass = "ECONOMY",
+            seatClass = seatClass,
             adult = adultCount,
             children = childrenCount,
             baby = babyCount,

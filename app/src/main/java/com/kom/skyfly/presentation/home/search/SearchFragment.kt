@@ -4,15 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.R
+import com.kom.skyfly.data.model.home.search_history.SearchDestinationHistory
 import com.kom.skyfly.databinding.FragmentSearchBinding
+import com.kom.skyfly.presentation.home.search.adapter.SearchDestinationHistoryAdapter
+import com.kom.skyfly.presentation.home.search.adapter.SearchDestinationHistoryListener
 import com.kom.skyfly.presentation.home.search.viewitems.Items
 import com.kom.skyfly.presentation.main.MainViewModel
+import com.kom.skyfly.utils.afterTextChanged
 import com.kom.skyfly.utils.proceedWhen
 import com.xwray.groupie.GroupieAdapter
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -24,6 +30,19 @@ class SearchFragment : BottomSheetDialogFragment() {
     private val mainViewModel: MainViewModel by activityViewModel()
     private val adapter: GroupieAdapter by lazy {
         GroupieAdapter()
+    }
+    private val searchHistoryAdapter: SearchDestinationHistoryAdapter by lazy {
+        SearchDestinationHistoryAdapter(
+            itemClick = { searchDestinationHistory ->
+                // Handle item click here if needed
+            },
+            searchDestinationHistoryListener =
+                object : SearchDestinationHistoryListener {
+                    override fun onDeleteItemClicked(searchDestinationHistory: SearchDestinationHistory) {
+                        searchViewModel.deleteSearchHistory(searchDestinationHistory)
+                    }
+                },
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,12 +69,12 @@ class SearchFragment : BottomSheetDialogFragment() {
                 R.dimen.max_bottom_sheet_height,
             )
         setupBinding()
-        getAirportData()
+        getRecentSearchAirport()
         setBottomSheetMaxHeight(maxPeekHeight)
     }
 
-    private fun getAirportData() {
-        searchViewModel.getAllAirports().observe(viewLifecycleOwner) { response ->
+    private fun getAirportData(city: String?) {
+        searchViewModel.getAllAirports(city = city).observe(viewLifecycleOwner) { response ->
             response.proceedWhen(
                 doOnSuccess = { result ->
                     result.payload?.let { sectionedSearch ->
@@ -65,6 +84,7 @@ class SearchFragment : BottomSheetDialogFragment() {
                             sectionedSearch.map { data ->
                                 Items(data) { item ->
                                     mainViewModel.setDestination(item)
+                                    observeData(item.city)
                                     dismiss()
                                 }
                             }
@@ -76,10 +96,44 @@ class SearchFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private fun observeData(searchHistory: String) {
+        searchViewModel.insertSearchHistory(searchHistory)
+            .observe(viewLifecycleOwner) { result ->
+                result.proceedWhen(
+                    doOnSuccess = {
+                        Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
+                    },
+                    doOnError = {
+                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                    },
+                )
+            }
+    }
+
+    private fun getRecentSearchAirport() {
+        searchViewModel.getAllSearchHistory().observe(viewLifecycleOwner) { result ->
+            result.proceedWhen(
+                doOnSuccess = {
+                    binding.tvHomeDeleteRecentSearches.isVisible = true
+                    binding.tvTitleHomeRecentSearches.isVisible = true
+                    binding.rvRecentDestinationSearch.isVisible = true
+                    binding.rvHomeSearchPage.isVisible = false
+                    result.payload?.let {
+                        searchHistoryAdapter.submitData(it)
+                    }
+                },
+            )
+        }
+    }
+
     private fun setupBinding() {
         binding.rvHomeSearchPage.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@SearchFragment.adapter
+        }
+        binding.rvRecentDestinationSearch.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@SearchFragment.searchHistoryAdapter
         }
     }
 
@@ -98,6 +152,19 @@ class SearchFragment : BottomSheetDialogFragment() {
     private fun setOnClickListener() {
         binding.layoutHomeSearchBar.ivCloseSearch.setOnClickListener {
             dismiss()
+        }
+        binding.layoutHomeSearchBar.etHomeSearch.afterTextChanged {
+            if (it.isNotEmpty()) {
+                binding.rvHomeSearchPage.isVisible = true
+                binding.rvRecentDestinationSearch.isVisible = false
+                binding.tvHomeDeleteRecentSearches.isVisible = false
+                getAirportData(it)
+            } else {
+                binding.tvTitleHomeRecentSearches.isVisible = true
+                binding.rvHomeSearchPage.isVisible = false
+                binding.rvRecentDestinationSearch.isVisible = true
+                getRecentSearchAirport()
+            }
         }
     }
 }
