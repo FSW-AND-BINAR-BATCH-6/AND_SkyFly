@@ -4,8 +4,9 @@ import com.kom.skyfly.data.datasource.history.HistoryDataSource
 import com.kom.skyfly.data.mapper.toHistoryDomain
 import com.kom.skyfly.data.model.history.new.HistoryDomain
 import com.kom.skyfly.utils.ResultWrapper
-import com.kom.skyfly.utils.proceedFlow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 interface HistoryRepository {
     fun getHistoryData(
@@ -23,9 +24,13 @@ class HistoryRepositoryImpl(private val historyDataSource: HistoryDataSource) : 
         endDate: String?,
         flightCode: String?,
     ): Flow<ResultWrapper<HistoryDomain>> {
-        return proceedFlow {
-            historyDataSource.getHistoryData(limit, startDate, endDate, flightCode)
-                .toHistoryDomain()
+        return flow {
+            emit(ResultWrapper.Loading())
+            delay(1000)
+            val result =
+                historyDataSource.getHistoryData(limit, startDate, endDate, flightCode)
+                    .toHistoryDomain()
+            emit(ResultWrapper.Success(result))
         }
     }
 }

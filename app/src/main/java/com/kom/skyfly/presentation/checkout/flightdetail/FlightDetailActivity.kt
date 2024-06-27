@@ -181,7 +181,6 @@ class FlightDetailActivity : BaseActivity() {
             tvDetailDepartureTime.text = departureTime
             tvDetailDepartureAirport.text =
                 getString(R.string.text_departure_airport, departureAirport)
-            tvDetailTerminal.text = departureTerminal
             tvDetailAirline.text = getString(R.string.text_detail_airlines, airlines)
             tvDetailClass.text = seatClass
             tvDetailFlightNumber.text = flightNumber

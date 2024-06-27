@@ -15,14 +15,3 @@ class FlightDetailHistoryViewModel(
             .getTransactionById(id)
             .asLiveData(Dispatchers.IO)
 }
-
-class SharedSearchViewModel : ViewModel() {
-    private val _flightCode = MutableLiveData<String>()
-
-    val flightCode: LiveData<String>
-        get() = _flightCode
-
-    fun setFlightCode(code: String) {
-        _flightCode.value = code
-    }
-}

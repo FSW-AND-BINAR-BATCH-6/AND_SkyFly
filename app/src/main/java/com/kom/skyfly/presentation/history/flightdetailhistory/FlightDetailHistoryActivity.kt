@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.history.flightdetailhistory
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
@@ -51,6 +52,7 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                     doOnLoading = {
                         binding.shimmerDetailHistory.isVisible = true
                         binding.svFlightDetails.isVisible = false
+                        binding.btnProceedToPayment.isEnabled = false
                     },
                     doOnError = { error ->
                         Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT)
@@ -66,6 +68,7 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("StringFormatMatches")
     private fun setupBind(historyDetail: TransactionDetailResponses?) {
         val transactionDetails = historyDetail?.data?.transactionDetails
         val paymentStatus = historyDetail?.data?.status
@@ -83,10 +86,12 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                     adultCount++
                     totalPricePassengerAdult += detail.totalPrice
                 }
+
                 "CHILD" -> {
                     childCount++
                     totalPricePassengerChild += detail.totalPrice
                 }
+
                 "INFRANT" -> {
                     babyCount++
                     totalPricePassengerBaby += detail.totalPrice
@@ -101,17 +106,11 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                 historyDetail?.data?.transactionDetails?.first()?.flight?.departure?.date
             tvDetailDepartureTime.text =
                 historyDetail?.data?.transactionDetails?.first()?.flight?.departure?.time
-            tvDetailDepartureAirport.text =
-                getString(
-                    R.string.tv_strip,
-                    historyDetail?.data?.transactionDetails?.first()?.flight?.departureAirport!!.name,
-                )
-            tvDetailTerminal.text =
-                historyDetail.data.transactionDetails.first()?.flight!!.airline.terminal
+            tvDetailDepartureAirport.text = "${historyDetail?.data?.transactionDetails?.first()?.flight?.departureAirport?.name} - ${historyDetail?.data?.transactionDetails?.first()?.flight?.airline?.terminal}"
             tvDetailAirline.text =
                 getString(
                     R.string.tv_strip,
-                    historyDetail.data.transactionDetails.first()!!.flight.airline.name,
+                    historyDetail?.data?.transactionDetails?.first()!!.flight.airline.name,
                 )
             tvDetailClass.text = historyDetail.data.transactionDetails.first()?.seat?.type
             tvDetailFlightNumber.text = historyDetail.data.transactionDetails.first()!!.flight.code
@@ -125,8 +124,9 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
             tvTax.text = historyDetail.data.tax.formatToRupiah().toString()
 
             if (adultCount > 0) {
-                tvTotalByAgeGroupAdult.text = "$adultCount Adult"
-                tvTotalPriceByAgeGroupAdult.text = totalPricePassengerAdult.formatToRupiah().toString()
+                tvTotalByAgeGroupAdult.text = getString(R.string.text_adult, adultCount)
+                tvTotalPriceByAgeGroupAdult.text =
+                    totalPricePassengerAdult.formatToRupiah().toString()
                 tvTotalByAgeGroupAdult.isVisible = true
                 tvTotalPriceByAgeGroupAdult.isVisible = true
             } else {
@@ -135,8 +135,9 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
             }
 
             if (childCount > 0) {
-                tvTotalByAgeGroupChild.text = "$childCount Child"
-                tvTotalPriceByAgeGroupChild.text = totalPricePassengerChild.formatToRupiah().toString()
+                tvTotalByAgeGroupChild.text = getString(R.string.text_child, childCount)
+                tvTotalPriceByAgeGroupChild.text =
+                    totalPricePassengerChild.formatToRupiah().toString()
                 tvTotalByAgeGroupChild.isVisible = true
                 tvTotalPriceByAgeGroupChild.isVisible = true
             } else {
@@ -145,8 +146,9 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
             }
 
             if (babyCount > 0) {
-                tvTotalByAgeGroupBaby.text = "$babyCount Baby"
-                tvTotalPriceByAgeGroupBaby.text = totalPricePassengerBaby.formatToRupiah().toString()
+                tvTotalByAgeGroupBaby.text = getString(R.string.text_baby, babyCount)
+                tvTotalPriceByAgeGroupBaby.text =
+                    totalPricePassengerBaby.formatToRupiah().toString()
                 tvTotalByAgeGroupBaby.isVisible = true
                 tvTotalPriceByAgeGroupBaby.isVisible = true
             } else {
@@ -175,6 +177,7 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                             ),
                         )
                 }
+
                 paymentStatus.equals("settlement", ignoreCase = true) -> {
                     tvPaymentStatus.setText(R.string.text_paid)
                     tvPaymentStatus.backgroundTintList =
@@ -185,6 +188,7 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                             ),
                         )
                 }
+
                 else -> {
                     tvPaymentStatus.setText(R.string.text_cancelled)
                     tvPaymentStatus.backgroundTintList =
@@ -202,10 +206,12 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                     binding.btnProceedToPayment.text = getString(R.string.text_proceed_to_payment)
                     binding.btnProceedToPayment.isEnabled = true
                 }
+
                 paymentStatus.equals("settlement", ignoreCase = true) -> {
                     binding.btnProceedToPayment.text = getString(R.string.text_payment_complete)
                     binding.btnProceedToPayment.isEnabled = false
                 }
+
                 paymentStatus.equals("cancelled", ignoreCase = true) -> {
                     binding.btnProceedToPayment.text = getString(R.string.text_payment_cancelled)
                     binding.btnProceedToPayment.isEnabled = false
