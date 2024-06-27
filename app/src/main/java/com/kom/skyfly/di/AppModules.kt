@@ -5,8 +5,6 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kom.skyfly.core.BaseViewModel
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
-import com.kom.skyfly.data.datasource.destinationfavorite.DestinationFavoriteDataSource
-import com.kom.skyfly.data.datasource.destinationfavorite.DestinationFavoriteDataSourceImpl
 import com.kom.skyfly.data.datasource.flightseat.FlightSeatDataSource
 import com.kom.skyfly.data.datasource.flightseat.FlightSeatDataSourceImpl
 import com.kom.skyfly.data.datasource.history.HistoryDataSource
@@ -25,14 +23,14 @@ import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSource
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSourceImpl
 import com.kom.skyfly.data.repository.auth.AuthRepository
 import com.kom.skyfly.data.repository.auth.AuthRepositoryImpl
-import com.kom.skyfly.data.repository.destinationfavorite.DestinationFavoriteRepository
-import com.kom.skyfly.data.repository.destinationfavorite.DestinationFavoriteRepositoryImpl
 import com.kom.skyfly.data.repository.flightseat.FlightSeatRepository
 import com.kom.skyfly.data.repository.flightseat.FlightSeatRepositoryImpl
 import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
 import com.kom.skyfly.data.repository.home.airport.AirportRepository
 import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
+import com.kom.skyfly.data.repository.home.destination_favourite.DestinationFavouriteRepository
+import com.kom.skyfly.data.repository.home.destination_favourite.DestinationFavouriteRepositoryImpl
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
@@ -97,7 +95,6 @@ object AppModules {
             single<SearchHistoryDataSource> { SearchHistoryDataSourceImpl(get()) }
             single<HomeDataSource> { HomeDataSourceImpl(get()) }
             single<FlightSeatDataSource> { FlightSeatDataSourceImpl(get()) }
-            single<DestinationFavoriteDataSource> { DestinationFavoriteDataSourceImpl() }
             single<TransactionDataSource> { TransactionDataSourceImpl(get()) }
         }
 
@@ -122,9 +119,9 @@ object AppModules {
             single<HistoryRepository> { HistoryRepositoryImpl(get()) }
             single<ProfileRepository> { ProfileRepositoryImpl(get()) }
             single<SearchHistoryRepository> { SearchHistoryRepositoryImpl(get()) }
-            single<AirportRepository> { AirportRepositoryImpl(get()) }
+            single<AirportRepository> { AirportRepositoryImpl(get(), get()) }
             single<FlightSeatRepository> { FlightSeatRepositoryImpl(get()) }
-            single<DestinationFavoriteRepository> { DestinationFavoriteRepositoryImpl(get()) }
+            single<DestinationFavouriteRepository> { DestinationFavouriteRepositoryImpl(get()) }
             single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
             single<TransactionRepository> { TransactionRepositoryImpl(get()) }
         }

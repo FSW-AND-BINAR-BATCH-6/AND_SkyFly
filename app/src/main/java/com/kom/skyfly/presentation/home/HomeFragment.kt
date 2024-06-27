@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.kom.skyfly.R
-import com.kom.skyfly.data.model.destinationfavorite.DestinationFavorite
+import com.kom.skyfly.data.model.home.destination_favourite.DestinationFavourite
 import com.kom.skyfly.databinding.FragmentHomeBinding
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.home.adapter.DestinationFavoriteAdapter
@@ -22,7 +22,6 @@ import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -33,9 +32,18 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModel()
     private val sharedViewModel: MainViewModel by activityViewModel()
-    private val destinationAdapter: DestinationFavoriteAdapter by lazy { DestinationFavoriteAdapter {} }
+    private val destinationAdapter: DestinationFavoriteAdapter by lazy {
+        DestinationFavoriteAdapter { item ->
+            item.let {
+                binding.layoutSelectDestination.tvStartFrom.text = it.departureCity
+                binding.layoutSelectDestination.tvEndDestination.text = it.arrivalCity
+            }
+        }
+    }
     private var source: String = ""
     private var dest: String = ""
+    private var departureAirport: String? = null
+    private var arrivalAirport: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,9 +74,11 @@ class HomeFragment : Fragment() {
                 if (sharedViewModel.isStartDestination!!) {
                     binding.layoutSelectDestination.tvStartFrom.text = it.city
                     source = binding.layoutSelectDestination.tvStartFrom.text.toString()
+                    departureAirport = it.city
                 } else {
                     binding.layoutSelectDestination.tvEndDestination.text = it.city
                     dest = binding.layoutSelectDestination.tvEndDestination.text.toString()
+                    arrivalAirport = it.city
                 }
             }
         }
@@ -89,7 +99,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun convertDateFormat(inputDate: String): String? {
+    private fun convertDateFormat(inputDate: String): String? {
         val inputFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale("id", "ID"))
 
         val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
@@ -129,11 +139,10 @@ class HomeFragment : Fragment() {
             passengerBottomSheet.show(parentFragmentManager, passengerBottomSheet.tag)
         }
         binding.btnSearchFlight.setOnClickListener {
-            val departureAirport = binding.layoutSelectDestination.tvStartFrom.text
-            val arrivalAirport = binding.layoutSelectDestination.tvEndDestination.text
             val babyCount = sharedViewModel.passengerBabyCountLiveData
             val adultCount = sharedViewModel.passengerAdultCountLiveData
             val childCount = sharedViewModel.passengerChildCountLiveData
+            val seatClass = sharedViewModel.seatClass
             val departureTime = convertDateFormat(binding.tvDeparture.text.toString())
 
             val intent =
@@ -144,6 +153,7 @@ class HomeFragment : Fragment() {
                     putExtra("EXTRA_BABY_COUNT", babyCount.value)
                     putExtra("EXTRA_ADULT_COUNT", adultCount.value)
                     putExtra("EXTRA_CHILD_COUNT", childCount.value)
+                    putExtra("EXTRA_SEAT_CLASS", seatClass.value)
                 }
             startActivity(intent)
         }
@@ -194,10 +204,12 @@ class HomeFragment : Fragment() {
     private fun setRoundTrip() {
         binding.btnSwitchRoundtrip.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                sharedViewModel.setRoundTrip(true)
                 binding.tvReturn.isEnabled = true
                 binding.tvReturn.text = getString(R.string.text_select_dates)
                 binding.tvReturn.setTextColor(resources.getColor(R.color.md_theme_primary))
             } else {
+                sharedViewModel.setRoundTrip(false)
                 binding.tvReturn.isEnabled = false
                 binding.tvReturn.text = getString(R.string.text_strips)
                 binding.tvReturn.setTextColor(resources.getColor(R.color.darkGrey))
@@ -205,7 +217,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun bindDestinationFavoriteList(data: List<DestinationFavorite>) {
+    private fun bindDestinationFavoriteList(data: List<DestinationFavourite>) {
         destinationAdapter.submitData(data)
     }
 

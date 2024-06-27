@@ -9,14 +9,20 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.data.model.home.seat_class.SeatClassHome
 import com.kom.skyfly.databinding.FragmentSeatClassBinding
 import com.kom.skyfly.presentation.home.seatclass.adapter.SeatClassAdapter
+import com.kom.skyfly.presentation.main.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SeatClassFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentSeatClassBinding
     private val seatClassViewModel: SeatClassViewModel by viewModel()
+    private val mainViewModel: MainViewModel by activityViewModel()
 
     private val adapter: SeatClassAdapter by lazy {
-        SeatClassAdapter {
+        SeatClassAdapter { item ->
+            item.let {
+                mainViewModel.setSeatClass(it.seatClassName)
+            }
         }
     }
 
@@ -52,5 +58,8 @@ class SeatClassFragment : BottomSheetDialogFragment() {
     }
 
     private fun setOnClickListener() {
+        binding.ivHomeCloseSeatclass.setOnClickListener {
+            dismiss()
+        }
     }
 }

@@ -25,12 +25,24 @@ interface SearchHistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSearchHistory(searchHistory: SearchHistoryEntity): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchDestinationHistory(searchDestinationHistory: SearchDestinationHistoryEntity): Long
+
     @Update
     suspend fun updateSearchHistory(searchHistory: SearchHistoryEntity): Int
+
+    @Update
+    suspend fun updateSearchDestinationHistory(searchDestinationHistory: SearchDestinationHistoryEntity): Int
 
     @Delete
     suspend fun deleteSearchHistory(searchHistory: SearchHistoryEntity): Int
 
+    @Delete
+    suspend fun deleteSearchDestinationHistory(searchDestinationHistory: SearchDestinationHistoryEntity): Int
+
     @Query("DELETE FROM search_history")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM search_destination_history")
+    suspend fun deleteAllRecentSearchDestination()
 }

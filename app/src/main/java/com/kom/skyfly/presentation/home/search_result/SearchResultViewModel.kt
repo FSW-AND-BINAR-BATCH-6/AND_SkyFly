@@ -15,7 +15,7 @@ class SearchResultViewModel(
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
-        seatClass: String,
+        seatClass: String?,
         limit: Int? = 20,
         arrivalDate: String? = null,
         adult: Int? = 1,

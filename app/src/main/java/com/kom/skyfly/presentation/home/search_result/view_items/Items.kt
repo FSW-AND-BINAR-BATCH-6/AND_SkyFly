@@ -18,12 +18,20 @@ class Items(
         position: Int,
     ) {
         with(viewBinding) {
+//            ivIcAirlineSearchResult.load(data?.airplaneImg) {
+//                crossfade(true)
+//                error(R.mipmap.ic_launcher)
+//            }
             tvTimeDepartureSearchResult.text = data?.departureTime
             tvTimeArrivalSearchResult.text = data?.arrivalTime
             tvTargetDepartureSearchResult.text = data?.departureCountryCode
             tvTargetArrivalSearchResult.text = data?.arrivalCountryCode
             tvFlightDurationSearchResult.text = data?.duration
-            tvTransitOptionSearchResult.text = "Direct"
+            if(data?.directNotes == false){
+                tvTransitOptionSearchResult.text = "Direct"
+            }else{
+                tvTransitOptionSearchResult.text = "Transit"
+            }
             tvPriceSearchResult.text = data?.price.formatToRupiah().toString()
             tvAirlineSearchResult.text = "${data?.airplaneName} - ${data?.seatClass}"
             viewBinding.root.setOnClickListener {

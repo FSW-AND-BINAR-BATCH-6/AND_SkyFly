@@ -271,4 +271,6 @@
     <string name="text_select_date">Select Date</string>
     <string name="text_example_header_search_result"><![CDATA[JKT > MLB - 2 Passengers - Economy]]></string>
     <string name="text_flight_detail">Flight Detail</string>
+    <string name="text_start_from">Start From</string>
+    <string name="text_dash">-</string>
 </resources>

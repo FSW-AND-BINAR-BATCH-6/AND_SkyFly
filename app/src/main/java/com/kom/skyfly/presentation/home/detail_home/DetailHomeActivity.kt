@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import com.kom.skyfly.R
 import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
 import com.kom.skyfly.databinding.ActivityDetailHomeBinding
@@ -58,6 +59,10 @@ class DetailHomeActivity : AppCompatActivity() {
     private fun setupBinding(ticket: FlightDetailTicket) {
         binding.headerDetailTicketHome.tvTitleHeader.text = getString(R.string.text_flight_detail)
         ticket.let {
+            binding.layoutDetailCard.ivAirlineDetailTicket.load(it.airplaneImg) {
+                crossfade(true)
+                error(R.mipmap.ic_launcher)
+            }
             binding.layoutDetailCard.tvFlightDestinationDetailTicket.text =
                 "${it.departureCity} - > ${it.arrivalCity} (${it.duration})"
             binding.layoutDetailCard.tvDepartureTimeDetailTicket.text = it.departureTime
