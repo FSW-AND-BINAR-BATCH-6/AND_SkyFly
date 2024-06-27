@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.kom.skyfly.R
 import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
 import com.kom.skyfly.databinding.ActivityDetailHomeBinding
 import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataActivity
@@ -55,13 +56,13 @@ class DetailHomeActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setupBinding(ticket: FlightDetailTicket) {
+        binding.headerDetailTicketHome.tvTitleHeader.text = getString(R.string.text_flight_detail)
         ticket.let {
             binding.layoutDetailCard.tvFlightDestinationDetailTicket.text =
                 "${it.departureCity} - > ${it.arrivalCity} (${it.duration})"
             binding.layoutDetailCard.tvDepartureTimeDetailTicket.text = it.departureTime
             binding.layoutDetailCard.tvDepartureDateDetailTicket.text = it.departureDate
-            binding.layoutDetailCard.tvDepartureAirportDetailTicket.text = it.departureAirport
-            binding.layoutDetailCard.tvTerminalDetailTicket.text = it.departureTerminal
+            binding.layoutDetailCard.tvDepartureAirportDetailTicket.text = "${it.departureAirport} - ${it.departureTerminal}"
             binding.layoutDetailCard.tvAirplaneNameDetailTicket.text = it.airplaneName
             binding.layoutDetailCard.tvSeatClassDetailTicket.text = it.seatClass
             binding.layoutDetailCard.tvAirplaneCodeDetailTicket.text = it.code
@@ -73,7 +74,7 @@ class DetailHomeActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListener() {
-        binding.headerDetailTicketHome.ivBackBtnDetailTicketHome.setOnClickListener {
+        binding.headerDetailTicketHome.ivBack.setOnClickListener {
             finish()
         }
         binding.btnSelectTicket.setOnClickListener {

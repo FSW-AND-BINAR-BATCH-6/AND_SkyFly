@@ -76,7 +76,7 @@
     </string-array>
     <string name="text_title_order_history">Booking History</string>
     <string name="text_filter">Filter</string>
-    <string name="text_unpaid">Unpaid</string>
+    <string name="text_unpaid">UNPAID</string>
     <string name="text_city">Yogyakarta</string>
     <string name="text_date">Enter date or birth</string>
     <string name="text_time">19:10</string>
@@ -88,7 +88,7 @@
     <string name="text_example_class">Business</string>
     <string name="text_flight_details">Flight Details</string>
     <string name="text_departure">Departure</string>
-    <string name="text_example_airport">Soekarno Hatta - </string>
+    <string name="text_example_airport">Soekarno Hatta - Terminal 3</string>
     <string name="text_example_terminal">Terminal 1A Domestic</string>
     <string name="text_detail_airline">Jet Air - </string>
     <string name="text_example_flight_number">JT - 203</string>
@@ -206,7 +206,7 @@
     <string name="text_change_password_successfully">Change password successfully!</string>
     <string name="text_confirm_change_password">Are you sure you want to change password?</string>
     <string name="text_add_passenger">Add passenger</string>
-    <string name="text_seat_class">Select Seat class</string>
+    <string name="text_seat_class">Seat Class</string>
     <string name="text_no_tlp_must_start_with_62">Phone number must start with \"62\"</string>
     <string name="text_request_change_password_has_been_sent_to_your_email">Reset password link has been sent, please check your email.</string>
     <string name="text_passport_expiry_date">Passport expiry date</string>
@@ -262,4 +262,13 @@
     <string name="text_2_penumpang_economy"> - 2 Penumpang - Economy</string>
     <string name="text_select_origin">Select origin</string>
     <string name="text_select_destination">Select destination</string>
+    <string name="text_detail_ticket_airport">"%1$s - "</string>
+    <string name="text_start_date">Start Date</string>
+    <string name="text_end_date">End Date</string>
+    <string name="text_adult">%1$s Adult</string>
+    <string name="text_child">%1$s Child</string>
+    <string name="text_baby">%1$s Baby</string>
+    <string name="text_select_date">Select Date</string>
+    <string name="text_example_header_search_result"><![CDATA[JKT > MLB - 2 Passengers - Economy]]></string>
+    <string name="text_flight_detail">Flight Detail</string>
 </resources>

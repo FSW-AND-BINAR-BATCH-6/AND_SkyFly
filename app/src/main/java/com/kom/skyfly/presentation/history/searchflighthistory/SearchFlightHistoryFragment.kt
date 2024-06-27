@@ -19,20 +19,17 @@ import com.kom.skyfly.databinding.FragmentSearchFlightHistoryBinding
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.history.searchflighthistory.adapter.SearchHistoryListAdapter
 import com.kom.skyfly.presentation.history.searchflighthistory.adapter.SearchHistoryListener
-import com.kom.skyfly.utils.hideKeyboard
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentSearchFlightHistoryBinding
-
     private val searchFlightHistoryViewModel: SearchFlightHistoryViewModel by viewModel()
-    private var flightCode: String? = null
     private var flightCodeListener: FlightCodeListener? = null
     private val adapter: SearchHistoryListAdapter by lazy {
         SearchHistoryListAdapter(
             itemClick = { searchHistory ->
-                // Handle item click here if needed
+                binding.layoutSearchBar.etSearch.setText(searchHistory.searchHistory)
             },
             searchHistoryListener =
                 object : SearchHistoryListener {
@@ -43,12 +40,16 @@ class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
         )
     }
 
+    fun setFlightCodeListener(listener: FlightCodeListener) {
+        flightCodeListener = listener
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentSearchFlightHistoryBinding.inflate(layoutInflater, container, false)
+        binding = FragmentSearchFlightHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -61,10 +62,7 @@ class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
         getSearchHistoryData()
         setList()
 
-        val maxPeekHeight =
-            resources.getDimensionPixelSize(
-                R.dimen.max_bottom_sheet_height,
-            )
+        val maxPeekHeight = resources.getDimensionPixelSize(R.dimen.max_bottom_sheet_height)
         setBottomSheetMaxHeight(maxPeekHeight)
     }
 
@@ -74,10 +72,8 @@ class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
                 doOnSuccess = {
                     binding.rvPage.isVisible = true
                     binding.csvSearchHistory.setState(ContentState.SUCCESS)
-                    result.payload.let {
-                        if (it != null) {
-                            adapter.submitData(it)
-                        }
+                    result.payload?.let {
+                        adapter.submitData(it)
                     }
                 },
                 doOnError = {
@@ -115,30 +111,22 @@ class SearchFlightHistoryFragment : BottomSheetDialogFragment() {
         binding.layoutSearchBar.etSearch.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                 actionId == EditorInfo.IME_ACTION_DONE ||
-                event != null &&
-                event.action == KeyEvent.ACTION_DOWN &&
-                event.keyCode == KeyEvent.KEYCODE_ENTER
+                event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER
             ) {
                 val searchHistory = binding.layoutSearchBar.etSearch.text.toString()
-                observeData("39483943tfeff", searchHistory)
-                binding.layoutSearchBar.etSearch.clearFocus()
-                hideKeyboard()
-                flightCodeListener?.onFlightCodeEntered(flightCode!!)
+
+                flightCodeListener?.onFlightCodeEntered(searchHistory)
+                observeData("gejefg", searchHistory)
                 dismiss()
                 return@setOnEditorActionListener true
             }
-            return@setOnEditorActionListener false
-        }
-        binding.tvDeleteRecentSearches.setOnClickListener {
-            searchFlightHistoryViewModel.deleteAllSearchHistory()
-            Toast.makeText(requireContext(), "deleteall", Toast.LENGTH_SHORT).show()
+            false
         }
     }
 
     private fun setList() {
-        val layoutManager = LinearLayoutManager(requireContext())
-        binding.rvPage.layoutManager = layoutManager
-        binding.rvPage.adapter = this@SearchFlightHistoryFragment.adapter
+        binding.rvPage.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPage.adapter = adapter
     }
 
     private fun observeData(

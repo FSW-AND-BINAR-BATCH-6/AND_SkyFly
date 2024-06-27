@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kom.skyfly.R
 import com.kom.skyfly.data.model.home.Calendar
 import com.kom.skyfly.databinding.ActivitySearchResultBinding
 import com.kom.skyfly.presentation.home.detail_home.DetailHomeActivity
@@ -136,6 +137,8 @@ class SearchResultActivity : AppCompatActivity() {
     }
 
     private fun setupBinding() {
+        binding.headerFlightSearchResult.tvTitleHeader.text =
+            getString(R.string.text_example_header_search_result)
         binding.rvItemTicketsSearchResult.apply {
             layoutManager = LinearLayoutManager(this@SearchResultActivity)
             adapter = this@SearchResultActivity.adapter
@@ -143,7 +146,7 @@ class SearchResultActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListener() {
-        binding.headerFlightSearchResult.ivBackBtnSearchResult.setOnClickListener {
+        binding.headerFlightSearchResult.ivBack.setOnClickListener {
             finish()
         }
     }

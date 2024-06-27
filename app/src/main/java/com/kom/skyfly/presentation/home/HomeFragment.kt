@@ -64,11 +64,10 @@ class HomeFragment : Fragment() {
         sharedViewModel.sourceDestination.observe(viewLifecycleOwner) { destination ->
             destination?.let {
                 if (sharedViewModel.isStartDestination!!) {
-                    binding.layoutSelectDestination.tvStartFrom.text = "${it.city} (${it.code})"
+                    binding.layoutSelectDestination.tvStartFrom.text = it.city
                     source = binding.layoutSelectDestination.tvStartFrom.text.toString()
                 } else {
-                    binding.layoutSelectDestination.tvEndDestination.text =
-                        "${it.city} (${it.code})"
+                    binding.layoutSelectDestination.tvEndDestination.text = it.city
                     dest = binding.layoutSelectDestination.tvEndDestination.text.toString()
                 }
             }

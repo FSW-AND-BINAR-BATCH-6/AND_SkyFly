@@ -81,10 +81,11 @@
             android:layout_width="45dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
+            android:textAlignment="center"
             app:layout_constraintEnd_toStartOf="@id/iv_btn_plus_adult"
             app:layout_constraintTop_toTopOf="@id/iv_adult_icon"
-            tools:text="0"
-            android:textAlignment="center"/>
+            tools:text="0" />
+
         <View
             android:id="@+id/v_tv_counter_adult"
             android:layout_width="0dp"
@@ -145,10 +146,11 @@
             android:layout_width="45dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
+            android:textAlignment="center"
             app:layout_constraintEnd_toStartOf="@id/iv_btn_plus_child"
             app:layout_constraintTop_toTopOf="@id/iv_child_icon"
-            android:textAlignment="center"
-            tools:text="0"/>
+            tools:text="0" />
+
         <View
             android:id="@+id/v_tv_counter_child"
             android:layout_width="0dp"
@@ -157,6 +159,7 @@
             app:layout_constraintEnd_toEndOf="@id/tv_counter_child"
             app:layout_constraintStart_toStartOf="@id/tv_counter_child"
             app:layout_constraintTop_toBottomOf="@id/tv_counter_child" />
+
         <ImageView
             android:id="@+id/iv_minus_btn_child"
             android:layout_width="25dp"
@@ -217,10 +220,11 @@
             android:layout_width="45dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
+            android:textAlignment="center"
             app:layout_constraintEnd_toStartOf="@id/iv_btn_plus_child"
             app:layout_constraintTop_toTopOf="@id/iv_baby_icon"
-            android:textAlignment="center"
-            tools:text="0"/>
+            tools:text="0" />
+
         <View
             android:id="@+id/v_tv_counter_baby"
             android:layout_width="0dp"
@@ -241,16 +245,18 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_total_passenger"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="@drawable/btn_rounded"
             android:text="@string/text_simpan"
             android:textAllCaps="false"
-            app:layout_constraintTop_toBottomOf="@id/tv_age_desc_baby"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            style="@style/Widget.MaterialComponents.Button"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_age_desc_baby" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
