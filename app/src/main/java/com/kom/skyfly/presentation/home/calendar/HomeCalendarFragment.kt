@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.home.calendar
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -73,6 +74,7 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
             object : MonthDayBinder<DayViewContainer> {
                 override fun create(view: View) = DayViewContainer(view)
 
+                @SuppressLint("SetTextI18n")
                 override fun bind(
                     container: DayViewContainer,
                     data: CalendarDay,
@@ -85,32 +87,39 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
                         DayPosition.MonthDate -> {
                             textView.visibility = View.VISIBLE
                             when {
+                                startDate == data.date && (mainViewModel.roundTrip.value == false || endDate == data.date) -> {
+                                    textView.setTextColor(Color.WHITE)
+                                    textView.setBackgroundResource(R.drawable.selection_background)
+                                    binding.tvDepartureDate.text = data.date.format(dateFormatter)
+                                    mainViewModel.setStartTime(data.date.format(dateFormatter))
+                                    if(mainViewModel.roundTrip.value == true){
+                                        binding.tvBackDate.text = data.date.format(dateFormatter)
+                                    } else {
+                                        binding.tvBackDate.text = getString(R.string.text_dash)
+                                    }
+                                }
                                 startDate == data.date -> {
                                     textView.setTextColor(Color.WHITE)
                                     textView.setBackgroundResource(R.drawable.selection_background)
                                     binding.tvDepartureDate.text = data.date.format(dateFormatter)
                                     mainViewModel.setStartTime(data.date.format(dateFormatter))
                                 }
-
                                 endDate == data.date -> {
                                     textView.setTextColor(Color.WHITE)
                                     textView.setBackgroundResource(R.drawable.selection_background)
                                     binding.tvBackDate.text = data.date.format(dateFormatter)
                                     mainViewModel.setReturnTime(data.date.format(dateFormatter))
                                 }
-
                                 startDate != null && endDate != null && (data.date > startDate && data.date < endDate) -> {
                                     textView.setTextColor(Color.WHITE)
                                     textView.setBackgroundResource(R.drawable.range_background)
                                 }
-
                                 else -> {
                                     textView.setTextColor(Color.BLACK)
                                     textView.background = null
                                 }
                             }
                         }
-
                         else -> {
                             textView.visibility = View.INVISIBLE
                         }
@@ -204,19 +213,27 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
         init {
             view.setOnClickListener {
                 if (day.position == DayPosition.MonthDate) {
-                    if (startDate == null || endDate != null) {
+                    if (mainViewModel.roundTrip.value == false) {
+                        // Single date selection logic
                         startDate = day.date
-                        endDate = null
-                    } else if (day.date < startDate) {
-                        startDate = day.date
-                    } else {
                         endDate = day.date
+                    } else {
+                        // Range selection logic
+                        if (startDate == null || endDate != null) {
+                            startDate = day.date
+                            endDate = null
+                        } else if (day.date < startDate) {
+                            startDate = day.date
+                        } else {
+                            endDate = day.date
+                        }
                     }
                     binding.calendarView.notifyCalendarChanged()
                 }
             }
         }
     }
+
 
     inner class MonthViewContainer(view: View) : ViewContainer(view) {
         val titlesContainer = view as ViewGroup

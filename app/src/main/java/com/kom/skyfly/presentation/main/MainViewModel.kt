@@ -101,4 +101,20 @@ class MainViewModel(
             passengerBabyCountLiveData.postValue(count)
         }
     }
+
+    // Set seatClassData
+    private val _seatClass = MutableLiveData<String?>()
+    val seatClass: LiveData<String?> get() = _seatClass
+
+    fun setSeatClass(value: String?) {
+        _seatClass.value = value
+    }
+
+    // Set roundTrip
+    private val _roundTrip = MutableLiveData<Boolean?>()
+    val roundTrip: LiveData<Boolean?> get() = _roundTrip
+
+    fun setRoundTrip(value: Boolean?) {
+        _roundTrip.value = value
+    }
 }

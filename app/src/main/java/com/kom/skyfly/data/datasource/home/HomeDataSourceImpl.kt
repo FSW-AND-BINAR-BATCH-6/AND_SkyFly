@@ -2,6 +2,7 @@ package com.kom.skyfly.data.datasource.home
 
 import com.kom.skyfly.data.model.home.seat_class.SeatClassHome
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
+import com.kom.skyfly.data.source.network.model.home.favourite_destination.FavouriteDestinationResponse
 import com.kom.skyfly.data.source.network.model.home.flight.FlightResponse
 import com.kom.skyfly.data.source.network.model.home.flight_detail.FlightDetailResponse
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
@@ -9,8 +10,8 @@ import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 class HomeDataSourceImpl(
     private val service: SkyFlyApiService,
 ) : HomeDataSource {
-    override suspend fun getAllAirports(): AirportResponse {
-        return service.getAllAirports()
+    override suspend fun getAllAirports(city: String?): AirportResponse {
+        return service.getAllAirports(city = city)
     }
 
     override fun getSeatClassData(): List<SeatClassHome> {
@@ -25,6 +26,10 @@ class HomeDataSourceImpl(
                 seatClassName = "FIRST CLASS",
             ),
         )
+    }
+
+    override suspend fun getDestinationFavourites(): FavouriteDestinationResponse {
+        return service.getDestinationFavourite()
     }
 
     override suspend fun getAllFlight(

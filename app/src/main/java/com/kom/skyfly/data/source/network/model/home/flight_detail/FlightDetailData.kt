@@ -40,5 +40,5 @@ data class FlightDetailData(
     @SerializedName("duration")
     val duration: String,
     @SerializedName("classInfo")
-    val seatClass: List<SeatClassData>,
+    val seatClass: SeatClassData,
 )
