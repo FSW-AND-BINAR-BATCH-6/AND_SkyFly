@@ -19,7 +19,7 @@ class FlightTicketRepositoryImpl(
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
-        seatClass: String,
+        seatClass: String?,
         limit: Int?,
         returnDate: String?,
         arrivalDate: String?,
@@ -47,7 +47,7 @@ class FlightTicketRepositoryImpl(
 
     override fun getDetailTicket(
         id: String,
-        seatClass: String,
+        seatClass: String?,
     ): Flow<ResultWrapper<FlightDetailTicket>> {
         return proceedFlow {
             dataSource.getDetailFlight(

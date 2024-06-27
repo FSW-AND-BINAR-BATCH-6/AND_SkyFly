@@ -92,7 +92,7 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
                                     textView.setBackgroundResource(R.drawable.selection_background)
                                     binding.tvDepartureDate.text = data.date.format(dateFormatter)
                                     mainViewModel.setStartTime(data.date.format(dateFormatter))
-                                    if(mainViewModel.roundTrip.value == true){
+                                    if (mainViewModel.roundTrip.value == true) {
                                         binding.tvBackDate.text = data.date.format(dateFormatter)
                                     } else {
                                         binding.tvBackDate.text = getString(R.string.text_dash)
@@ -233,7 +233,6 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
             }
         }
     }
-
 
     inner class MonthViewContainer(view: View) : ViewContainer(view) {
         val titlesContainer = view as ViewGroup

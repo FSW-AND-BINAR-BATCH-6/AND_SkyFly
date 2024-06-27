@@ -32,18 +32,20 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModel()
     private val sharedViewModel: MainViewModel by activityViewModel()
+    private var source: String = ""
+    private var dest: String = ""
+    private var departureAirport: String? = null
+    private var arrivalAirport: String? = null
     private val destinationAdapter: DestinationFavoriteAdapter by lazy {
         DestinationFavoriteAdapter { item ->
             item.let {
                 binding.layoutSelectDestination.tvStartFrom.text = it.departureCity
                 binding.layoutSelectDestination.tvEndDestination.text = it.arrivalCity
+                departureAirport = it.departureCity
+                arrivalAirport = it.arrivalCity
             }
         }
     }
-    private var source: String = ""
-    private var dest: String = ""
-    private var departureAirport: String? = null
-    private var arrivalAirport: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,6 +97,11 @@ class HomeFragment : Fragment() {
         sharedViewModel.passengerCountLiveData.observe(viewLifecycleOwner) { totalPassenger ->
             totalPassenger?.let {
                 binding.tvPassengers.text = "$it Passengers"
+            }
+        }
+        sharedViewModel.seatClass.observe(viewLifecycleOwner) { seatClass ->
+            seatClass?.let {
+                binding.tvSeats.text = it
             }
         }
     }
