@@ -14,31 +14,13 @@ class HomeDataSourceImpl(
         return service.getAllAirports(city = city)
     }
 
-    override fun getSeatClassData(): List<SeatClassHome> {
-        return mutableListOf(
-            SeatClassHome(
-                seatClassName = "ECONOMY",
-            ),
-            SeatClassHome(
-                seatClassName = "BUSINESS",
-            ),
-            SeatClassHome(
-                seatClassName = "FIRST CLASS",
-            ),
-        )
-    }
-
-    override suspend fun getDestinationFavourites(): FavouriteDestinationResponse {
-        return service.getDestinationFavourite()
-    }
-
     override suspend fun getAllFlight(
         search: String?,
         page: Int,
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
-        seatClass: String,
+        seatClass: String?,
         limit: Int?,
         returnDate: String?,
         arrivalDate: String?,
@@ -62,8 +44,26 @@ class HomeDataSourceImpl(
 
     override suspend fun getDetailFlight(
         id: String,
-        seatClass: String,
+        seatClass: String?,
     ): FlightDetailResponse {
         return service.getDetailFlightById(id = id, seatClass = seatClass)
+    }
+
+    override fun getSeatClassData(): List<SeatClassHome> {
+        return mutableListOf(
+            SeatClassHome(
+                seatClassName = "ECONOMY",
+            ),
+            SeatClassHome(
+                seatClassName = "BUSINESS",
+            ),
+            SeatClassHome(
+                seatClassName = "FIRST CLASS",
+            ),
+        )
+    }
+
+    override suspend fun getDestinationFavourites(): FavouriteDestinationResponse {
+        return service.getDestinationFavourite()
     }
 }

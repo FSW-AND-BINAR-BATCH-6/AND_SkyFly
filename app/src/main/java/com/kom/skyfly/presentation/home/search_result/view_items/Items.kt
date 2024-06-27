@@ -27,9 +27,9 @@ class Items(
             tvTargetDepartureSearchResult.text = data?.departureCountryCode
             tvTargetArrivalSearchResult.text = data?.arrivalCountryCode
             tvFlightDurationSearchResult.text = data?.duration
-            if(data?.directNotes == false){
+            if (data?.directNotes == false) {
                 tvTransitOptionSearchResult.text = "Direct"
-            }else{
+            } else {
                 tvTransitOptionSearchResult.text = "Transit"
             }
             tvPriceSearchResult.text = data?.price.formatToRupiah().toString()

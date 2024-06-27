@@ -17,11 +17,11 @@ class SeatClassFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentSeatClassBinding
     private val seatClassViewModel: SeatClassViewModel by viewModel()
     private val mainViewModel: MainViewModel by activityViewModel()
-
+    private var seatClassName: String? = null
     private val adapter: SeatClassAdapter by lazy {
         SeatClassAdapter { item ->
             item.let {
-                mainViewModel.setSeatClass(it.seatClassName)
+                seatClassName = it.seatClassName
             }
         }
     }
@@ -59,6 +59,10 @@ class SeatClassFragment : BottomSheetDialogFragment() {
 
     private fun setOnClickListener() {
         binding.ivHomeCloseSeatclass.setOnClickListener {
+            dismiss()
+        }
+        binding.btnSeatclassSave.setOnClickListener {
+            mainViewModel.setSeatClass(seatClassName)
             dismiss()
         }
     }

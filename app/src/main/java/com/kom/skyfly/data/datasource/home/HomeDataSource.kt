@@ -15,7 +15,7 @@ interface HomeDataSource {
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
-        seatClass: String,
+        seatClass: String?,
         limit: Int? = 20,
         returnDate: String?,
         arrivalDate: String? = null,
@@ -26,7 +26,7 @@ interface HomeDataSource {
 
     suspend fun getDetailFlight(
         id: String,
-        seatClass: String,
+        seatClass: String?,
     ): FlightDetailResponse
 
     fun getSeatClassData(): List<SeatClassHome>
