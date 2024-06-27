@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
+import coil.load
 import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
 import com.kom.skyfly.databinding.ActivityDetailHomeBinding
 import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataActivity
