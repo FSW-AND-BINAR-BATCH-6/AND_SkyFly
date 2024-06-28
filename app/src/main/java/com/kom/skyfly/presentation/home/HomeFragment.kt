@@ -83,26 +83,31 @@ class HomeFragment : Fragment() {
                     arrivalAirport = it.city
                 }
             }
+            validateFields()
         }
         sharedViewModel.startTime.observe(viewLifecycleOwner) { startTIme ->
             startTIme?.let {
                 binding.tvDeparture.text = it
             }
+            validateFields()
         }
         sharedViewModel.returnTime.observe(viewLifecycleOwner) { returnTime ->
             returnTime?.let {
                 binding.tvReturn.text = it
             }
+            validateFields()
         }
         sharedViewModel.passengerCountLiveData.observe(viewLifecycleOwner) { totalPassenger ->
             totalPassenger?.let {
                 binding.tvPassengers.text = "$it Passengers"
             }
+            validateFields()
         }
         sharedViewModel.seatClass.observe(viewLifecycleOwner) { seatClass ->
             seatClass?.let {
                 binding.tvSeats.text = it
             }
+            validateFields()
         }
     }
 
@@ -164,6 +169,7 @@ class HomeFragment : Fragment() {
                     putExtra("EXTRA_ADULT_COUNT", adultCount.value)
                     putExtra("EXTRA_CHILD_COUNT", childCount.value)
                     putExtra("EXTRA_SEAT_CLASS", seatClass.value)
+                    putExtra("EXTRA_TOTAL_PASSENGER", sharedViewModel.passengerCountLiveData.value)
                     putExtra("EXTRA_ROUND_TRIP", roundTrip.value)
                 }
             startActivity(intent)
@@ -179,6 +185,17 @@ class HomeFragment : Fragment() {
             val seatClassBottomSheet = SeatClassFragment()
             seatClassBottomSheet.show(parentFragmentManager, seatClassBottomSheet.tag)
         }
+    }
+
+    private fun validateFields() {
+        val isSourceValid = binding.layoutSelectDestination.tvStartFrom.text.toString().isNotEmpty()
+        val isDestinationValid = binding.layoutSelectDestination.tvEndDestination.text.toString().isNotEmpty()
+        val isDepartureTimeValid = binding.tvDeparture.text.toString().isNotEmpty()
+        val isReturnTimeValid = !binding.tvReturn.isEnabled || binding.tvReturn.text.toString().isNotEmpty()
+        val isPassengerCountValid = sharedViewModel.passengerCountLiveData.value != null
+        val isSeatClassValid = sharedViewModel.seatClass.value != null
+
+        binding.btnSearchFlight.isEnabled = isSourceValid && isDestinationValid && isDepartureTimeValid && isReturnTimeValid && isPassengerCountValid && isSeatClassValid
     }
 
     private fun getDestinationFavoriteData() {
@@ -236,9 +253,5 @@ class HomeFragment : Fragment() {
         binding.rvCategory.apply {
             adapter = destinationAdapter
         }
-    }
-
-    companion object {
-        const val EXTRAS_DESTINATION = "EXTRAS_DESTINATION"
     }
 }

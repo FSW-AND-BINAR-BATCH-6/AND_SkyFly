@@ -277,4 +277,6 @@
     <string name="text_no_tickets_for_selected_date">No Tickets Available For the Selected Date</string>
     <string name="text_bookers_biodata">Booker\'s Biodata</string>
     <string name="text_total">Total</string>
+    <string name="text_header_search_result"><![CDATA[%1$s > %2$s - %3$s Passengers - %4$s]]></string>
+    <string name="text_detail_return_flight_title"><![CDATA[%1$s - > %2$s (%3$s)]]></string>
 </resources>
