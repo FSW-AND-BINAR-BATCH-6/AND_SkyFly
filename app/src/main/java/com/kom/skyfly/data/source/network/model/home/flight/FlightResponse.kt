@@ -19,4 +19,6 @@ data class FlightResponse(
     val priceRange: PriceRange,
     @SerializedName("data")
     val data: List<FlightData?>,
+    @SerializedName("returnFlights")
+    val returnFlight: List<FlightData?>,
 )

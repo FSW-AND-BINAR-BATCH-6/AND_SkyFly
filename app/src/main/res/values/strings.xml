@@ -262,6 +262,8 @@
     <string name="text_2_penumpang_economy"> - 2 Penumpang - Economy</string>
     <string name="text_select_origin">Select origin</string>
     <string name="text_select_destination">Select destination</string>
+    <string name="text_start_from">Start From</string>
+    <string name="text_dash">-</string>
     <string name="text_detail_ticket_airport">"%1$s - "</string>
     <string name="text_start_date">Start Date</string>
     <string name="text_end_date">End Date</string>
@@ -271,9 +273,8 @@
     <string name="text_select_date">Select Date</string>
     <string name="text_example_header_search_result"><![CDATA[JKT > MLB - 2 Passengers - Economy]]></string>
     <string name="text_flight_detail">Flight Detail</string>
-    <string name="text_start_from">Start From</string>
-    <string name="text_dash">-</string>
     <string name="text_detail_departure_airport_and_terminal">%1$s - %2$s</string>
     <string name="text_no_tickets_for_selected_date">No Tickets Available For the Selected Date</string>
     <string name="text_bookers_biodata">Booker\'s Biodata</string>
+    <string name="text_total">Total</string>
 </resources>

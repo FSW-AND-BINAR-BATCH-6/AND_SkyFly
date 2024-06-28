@@ -15,6 +15,7 @@ class SearchResultViewModel(
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
+        returnDate: String? = null,
         seatClass: String?,
         limit: Int? = 20,
         arrivalDate: String? = null,
@@ -33,5 +34,34 @@ class SearchResultViewModel(
         adult = adult,
         children = children,
         baby = baby,
+        returnDate = returnDate,
+    ).asLiveData(Dispatchers.IO)
+
+    fun getReturnFlightTicket(
+        search: String? = null,
+        page: Int,
+        departureAirport: String,
+        arrivalAirport: String,
+        departureDate: String,
+        returnDate: String? = null,
+        seatClass: String?,
+        limit: Int? = 20,
+        arrivalDate: String? = null,
+        adult: Int? = 1,
+        children: Int? = 0,
+        baby: Int? = 0,
+    ) = flightRepository.getReturnTicket(
+        search = search,
+        page = page,
+        departureAirport = departureAirport,
+        arrivalAirport = arrivalAirport,
+        departureDate = departureDate,
+        seatClass = seatClass,
+        limit = limit,
+        arrivalDate = arrivalDate,
+        adult = adult,
+        children = children,
+        baby = baby,
+        returnDate = returnDate,
     ).asLiveData(Dispatchers.IO)
 }

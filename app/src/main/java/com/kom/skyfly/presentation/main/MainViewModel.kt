@@ -111,7 +111,7 @@ class MainViewModel(
     }
 
     // Set roundTrip
-    private val _roundTrip = MutableLiveData<Boolean?>()
+    private val _roundTrip = MutableLiveData<Boolean?>(false)
     val roundTrip: LiveData<Boolean?> get() = _roundTrip
 
     fun setRoundTrip(value: Boolean?) {

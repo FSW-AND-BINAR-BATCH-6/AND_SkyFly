@@ -150,17 +150,21 @@ class HomeFragment : Fragment() {
             val adultCount = sharedViewModel.passengerAdultCountLiveData
             val childCount = sharedViewModel.passengerChildCountLiveData
             val seatClass = sharedViewModel.seatClass
+            val roundTrip = sharedViewModel.roundTrip
+            val returnDate = convertDateFormat(binding.tvReturn.text.toString())
             val departureTime = convertDateFormat(binding.tvDeparture.text.toString())
 
             val intent =
                 Intent(requireContext(), SearchResultActivity::class.java).apply {
                     putExtra("EXTRA_DEPARTURE_AIRPORT", departureAirport)
                     putExtra("EXTRA_ARRIVAL_AIRPORT", arrivalAirport)
+                    putExtra("EXTRA_RETURN_TIME", returnDate)
                     putExtra("EXTRA_DEPARTURE_TIME", departureTime)
                     putExtra("EXTRA_BABY_COUNT", babyCount.value)
                     putExtra("EXTRA_ADULT_COUNT", adultCount.value)
                     putExtra("EXTRA_CHILD_COUNT", childCount.value)
                     putExtra("EXTRA_SEAT_CLASS", seatClass.value)
+                    putExtra("EXTRA_ROUND_TRIP", roundTrip.value)
                 }
             startActivity(intent)
         }
