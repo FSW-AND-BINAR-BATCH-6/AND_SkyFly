@@ -13,8 +13,23 @@ interface FlightTicketRepository {
         departureAirport: String,
         arrivalAirport: String,
         departureDate: String,
-        seatClass: String,
+        seatClass: String?,
         limit: Int? = 20,
+        returnDate: String? = null,
+        arrivalDate: String? = null,
+        adult: Int? = 1,
+        children: Int? = 0,
+        baby: Int? = 0,
+    ): Flow<ResultWrapper<List<FlightTicket?>>>
+
+    fun getReturnTicket(
+        search: String? = null,
+        page: Int? = null,
+        departureAirport: String? = null,
+        arrivalAirport: String? = null,
+        departureDate: String? = null,
+        seatClass: String? = null,
+        limit: Int? = 10000,
         returnDate: String? = null,
         arrivalDate: String? = null,
         adult: Int? = 1,
@@ -24,7 +39,7 @@ interface FlightTicketRepository {
 
     fun getDetailTicket(
         id: String,
-        seatClass: String,
+        seatClass: String?,
     ): Flow<ResultWrapper<FlightDetailTicket>>
 
     fun getSeatClassTicket(): List<SeatClassHome>

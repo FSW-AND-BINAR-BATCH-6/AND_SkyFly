@@ -29,6 +29,7 @@
             android:layout_marginTop="32dp"
             android:layout_margin="16dp"
             android:text="@string/text_recent_search"
+            android:visibility="gone"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/layout_home_search_bar"
@@ -40,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            tools:text="@string/text_delete"
+            android:text="@string/text_delete"
+            android:visibility="gone"
             android:textSize="16sp"
             android:textColor="@color/red"
             app:layout_constraintTop_toTopOf="@id/tv_title_home_recent_searches"
@@ -52,11 +54,25 @@
             android:layout_height="0dp"
             android:layout_margin="16dp"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_home_recent_searches"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_delete_recent_searches"
             tools:listitem="@layout/layout_item_airport_search" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recent_destination_search"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_delete_recent_searches"
+            tools:listitem="@layout/layout_item_airport_recent_search"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

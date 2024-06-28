@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.home.Calendar
+import com.kom.skyfly.data.model.home.intent.SearchResultIntent
 import com.kom.skyfly.databinding.ActivitySearchResultBinding
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.home.detail_home.DetailHomeActivity
@@ -48,17 +49,25 @@ class SearchResultActivity : BaseActivity() {
     private var adultCount: Int? = null
     private var childrenCount: Int? = null
     private var babyCount: Int? = null
+    private var totalPassenger: Int? = null
+    private var seatClass: String? = null
+    private var extraRoundTrip: Boolean? = null
+    private var returnDate: String? = null
+    private var flightId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        seatClass = intent.getStringExtra("EXTRA_SEAT_CLASS")
         departureAirport = intent.getStringExtra("EXTRA_DEPARTURE_AIRPORT")
         arrivalAirport = intent.getStringExtra("EXTRA_ARRIVAL_AIRPORT")
         departureTime = intent.getStringExtra("EXTRA_DEPARTURE_TIME")
+        returnDate = intent.getStringExtra("EXTRA_RETURN_TIME")
         adultCount = intent.getIntExtra("EXTRA_ADULT_COUNT", 0)
+        totalPassenger = intent.getIntExtra("EXTRA_TOTAL_PASSENGER", 0)
         childrenCount = intent.getIntExtra("EXTRA_CHILD_COUNT", 0)
         babyCount = intent.getIntExtra("EXTRA_BABY_COUNT", 0)
+        extraRoundTrip = intent.getBooleanExtra("EXTRA_ROUND_TRIP", false)
         setOnClickListener()
         setupBinding()
         getCalendarData()
@@ -85,16 +94,80 @@ class SearchResultActivity : BaseActivity() {
         calendarAdapter.submitData(days)
     }
 
+    private fun getAllReturnTicketData(date: String) {
+        searchResultViewModel.getReturnFlightTicket(
+            page = 1,
+            arrivalAirport = arrivalAirport!!,
+            departureAirport = departureAirport!!,
+            departureDate = date,
+            seatClass = seatClass,
+            adult = adultCount,
+            children = childrenCount,
+            baby = babyCount,
+            returnDate = returnDate,
+        ).observe(this) { response ->
+            response.proceedWhen(
+                doOnSuccess = {
+                    Log.d("SearchResultActivity", "Data fetched successfully")
+                    it.payload?.let { sectionedSearch ->
+                        val sections =
+                            sectionedSearch.map {
+                                Section().apply {
+                                    val data =
+                                        sectionedSearch.map { data ->
+                                            Items(data) { item ->
+                                                Log.d("dari return ticket data", "$item")
+                                                val searchResultIntent =
+                                                    SearchResultIntent(
+                                                        returnId = item?.id,
+                                                        departureId = flightId,
+                                                        seatClass = item?.seatClass,
+                                                        adultCount = adultCount,
+                                                        childCount = childrenCount,
+                                                        babyCount = babyCount,
+                                                        roundTrip = extraRoundTrip,
+                                                    )
+                                                val intent =
+                                                    Intent(
+                                                        this@SearchResultActivity,
+                                                        DetailHomeActivity::class.java,
+                                                    ).apply {
+                                                        putExtra("EXTRA_SEARCH_RESULT", searchResultIntent)
+                                                    }
+                                                startActivity(intent)
+                                            }
+                                        }
+                                    addAll(data)
+                                }
+                            }
+                        adapter.clear()
+                        adapter.update(sections)
+                    }
+                },
+                doOnEmpty = {
+                    adapter.clear()
+                },
+                doOnError = {
+                    Log.e("SearchResultActivityReturn", "Error fetching data: ${it.exception?.message}")
+                },
+                doOnLoading = {
+                    Log.d("SearchResultActivity", "Loading data")
+                },
+            )
+        }
+    }
+
     private fun getAllTicketData(date: String) {
         searchResultViewModel.getAllFlightTicket(
             page = 1,
             arrivalAirport = arrivalAirport!!,
             departureAirport = departureAirport!!,
             departureDate = date,
-            seatClass = "ECONOMY",
+            seatClass = seatClass,
             adult = adultCount,
             children = childrenCount,
             baby = babyCount,
+            returnDate = returnDate,
         ).observe(this) { response ->
             response.proceedWhen(
                 doOnSuccess = {
@@ -102,8 +175,6 @@ class SearchResultActivity : BaseActivity() {
                         binding.shimmerTicket.isVisible = false
                         binding.rvDateSearchResult.isVisible = true
                         binding.rvItemTicketsSearchResult.isVisible = true
-
-                        Log.d("SearchResultActivity", "Data fetched successfully")
                         it.payload?.let { sectionedSearch ->
                             val sections =
                                 sectionedSearch.map {
@@ -111,27 +182,29 @@ class SearchResultActivity : BaseActivity() {
                                         val data =
                                             sectionedSearch.map { data ->
                                                 Items(data) { item ->
-                                                    val intent =
-                                                        Intent(
-                                                            this@SearchResultActivity,
-                                                            DetailHomeActivity::class.java,
-                                                        ).apply {
-                                                            putExtra("EXTRA_FLIGHT_ID", item?.id)
-                                                            putExtra(
-                                                                "EXTRA_FLIGHT_SEATCLASS",
-                                                                item?.seatClass,
+                                                    if (extraRoundTrip == true) {
+                                                        flightId = item?.id
+                                                        getAllReturnTicketData(departureTime!!)
+                                                    } else {
+                                                        val searchResultIntent =
+                                                            SearchResultIntent(
+                                                                departureId = item?.id,
+                                                                seatClass = item?.seatClass,
+                                                                adultCount = adultCount,
+                                                                childCount = childrenCount,
+                                                                babyCount = babyCount,
+                                                                roundTrip = extraRoundTrip,
+                                                                returnId = "",
                                                             )
-                                                            putExtra(
-                                                                "EXTRA_ADULT_COUNT",
-                                                                adultCount,
-                                                            )
-                                                            putExtra(
-                                                                "EXTRA_CHILD_COUNT",
-                                                                childrenCount,
-                                                            )
-                                                            putExtra("EXTRA_BABY_COUNT", babyCount)
-                                                        }
-                                                    startActivity(intent)
+                                                        val intent =
+                                                            Intent(
+                                                                this@SearchResultActivity,
+                                                                DetailHomeActivity::class.java,
+                                                            ).apply {
+                                                                putExtra("EXTRA_SEARCH_RESULT", searchResultIntent)
+                                                            }
+                                                        startActivity(intent)
+                                                    }
                                                 }
                                             }
                                         addAll(data)
@@ -141,6 +214,7 @@ class SearchResultActivity : BaseActivity() {
                             adapter.update(sections)
                         }
                     }, 1000)
+                    Log.d("SearchResultActivity", "Data fetched successfully")
                 },
                 doOnEmpty = {
                     adapter.clear()
@@ -187,7 +261,13 @@ class SearchResultActivity : BaseActivity() {
 
     private fun setupBinding() {
         binding.headerFlightSearchResult.tvTitleHeader.text =
-            getString(R.string.text_example_header_search_result)
+            getString(
+                R.string.text_header_search_result,
+                departureAirport,
+                arrivalAirport,
+                totalPassenger.toString(),
+                seatClass,
+            )
         binding.rvItemTicketsSearchResult.apply {
             layoutManager = LinearLayoutManager(this@SearchResultActivity)
             adapter = this@SearchResultActivity.adapter

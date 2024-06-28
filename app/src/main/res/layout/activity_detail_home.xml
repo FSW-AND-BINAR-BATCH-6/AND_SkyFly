@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_detail_ticket_home">
+        app:layout_constraintTop_toBottomOf="@id/header_detail_ticket_home"
+        app:layout_constraintBottom_toTopOf="@id/btn_select_ticket">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,8 +35,18 @@
                 layout="@layout/layout_item_card_ticket_detail_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <include
+                android:id="@+id/layout_detail_return_card"
+                layout="@layout/layout_item_card_ticket_detail_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_detail_card" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

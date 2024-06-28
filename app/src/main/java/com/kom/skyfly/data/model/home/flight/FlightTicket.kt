@@ -7,6 +7,8 @@ import kotlinx.parcelize.Parcelize
 data class FlightTicket(
     val id: String,
     val departureCity: String,
+    val departureDate: String,
+    val arrivalDate: String,
     val arrivalCity: String,
     val departureAirport: String,
     val arrivalAirport: String,
@@ -17,6 +19,7 @@ data class FlightTicket(
     val directNotes: Boolean,
     val duration: String,
     val price: Int,
+    val code: String,
     val seatClass: String,
     val airplaneName: String,
     val airplaneImg: String,
