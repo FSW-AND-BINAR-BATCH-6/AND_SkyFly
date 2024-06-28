@@ -68,7 +68,7 @@
 
             <TextView
                 android:id="@+id/tv_departure_airport_detail_ticket"
-                android:layout_width="0dp  "
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/text_example_airport"

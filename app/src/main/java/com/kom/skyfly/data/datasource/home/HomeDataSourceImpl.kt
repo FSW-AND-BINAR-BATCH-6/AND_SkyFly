@@ -58,7 +58,7 @@ class HomeDataSourceImpl(
                 seatClassName = "BUSINESS",
             ),
             SeatClassHome(
-                seatClassName = "FIRST CLASS",
+                seatClassName = "FIRST",
             ),
         )
     }

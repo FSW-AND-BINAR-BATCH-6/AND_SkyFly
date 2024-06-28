@@ -9,7 +9,7 @@ class DetailHomeViewModel(
     private val repo: FlightTicketRepository,
 ) : ViewModel() {
     fun getDetailTicketById(
-        id: String,
-        seatClass: String,
-    ) = repo.getDetailTicket(id = id, seatClass = seatClass).asLiveData(Dispatchers.IO)
+        id: String?,
+        seatClass: String?,
+    ) = repo.getDetailTicket(id = id.orEmpty(), seatClass = seatClass).asLiveData(Dispatchers.IO)
 }

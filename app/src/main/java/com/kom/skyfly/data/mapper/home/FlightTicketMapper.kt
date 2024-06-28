@@ -26,6 +26,9 @@ fun FlightData?.toFlightTicket() =
         airplaneImg = this?.plane?.image.orEmpty(),
         facilities = this?.facilities.orEmpty(),
         departureTerminal = this?.plane?.terminal.orEmpty(),
+        code = this?.plane?.code.orEmpty(),
+        departureDate = this?.departureDate.orEmpty(),
+        arrivalDate = this?.arrivalDate.orEmpty(),
     )
 
 fun FlightDetailData?.toFlightDetailTicket() =
@@ -41,8 +44,8 @@ fun FlightDetailData?.toFlightDetailTicket() =
         arrivalTime = this?.arrivalTime.orEmpty(),
         transitNotes = this?.transit?.status ?: false,
         duration = this?.duration.orEmpty(),
-        price = this?.seatClass?.seatPrice ?: 0,
-        seatClass = this?.seatClass?.seatClassName.orEmpty(),
+        price = this?.seatClass?.first()?.seatPrice ?: 0,
+        seatClass = this?.seatClass?.first()?.seatClassName.orEmpty(),
         airplaneName = this?.plane?.name.orEmpty(),
         airplaneImg = this?.plane?.image.orEmpty(),
         facilities =
