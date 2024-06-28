@@ -240,6 +240,35 @@ class SearchResultActivity : BaseActivity() {
                                                         }
                                                     startActivity(intent)
                                                 }
+                    Log.d("SearchResultActivity", "Data fetched successfully")
+                    it.payload?.let { sectionedSearch ->
+                        val sections =
+                            sectionedSearch.map {
+                                Section().apply {
+                                    val data =
+                                        sectionedSearch.map { data ->
+                                            Items(data) { item ->
+                                                if (extraRoundTrip == true) {
+                                                    listTicket.add(item!!)
+                                                    getAllReturnTicketData(departureTime!!)
+                                                } else {
+                                                    val intent =
+                                                        Intent(
+                                                            this@SearchResultActivity,
+                                                            DetailHomeActivity::class.java,
+                                                        ).apply {
+                                                            putExtra("EXTRA_FLIGHT_ID", item?.id)
+                                                            putExtra(
+                                                                "EXTRA_FLIGHT_SEATCLASS",
+                                                                item?.seatClass,
+                                                            )
+                                                            putExtra("EXTRA_ADULT_COUNT", adultCount)
+                                                            putExtra("EXTRA_CHILD_COUNT", childrenCount)
+                                                            putExtra("EXTRA_BABY_COUNT", babyCount)
+                                                            putExtra("EXTRA_ROUND_TRIP", extraRoundTrip)
+                                                        }
+                                                    startActivity(intent)
+                                                }
                                             }
                                         }
                                     addAll(data)
