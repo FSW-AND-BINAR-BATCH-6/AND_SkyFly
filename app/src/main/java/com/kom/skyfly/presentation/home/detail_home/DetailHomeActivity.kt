@@ -3,16 +3,24 @@ package com.kom.skyfly.presentation.home.detail_home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
+import androidx.core.view.isVisible
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
 import com.kom.skyfly.databinding.ActivityDetailHomeBinding
 import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataActivity
+import com.kom.skyfly.presentation.common.views.ContentState
+import com.kom.skyfly.utils.NoInternetException
+import com.kom.skyfly.utils.ServerErrorException
+import com.kom.skyfly.utils.UnAuthorizeException
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailHomeActivity : AppCompatActivity() {
+class DetailHomeActivity : BaseActivity() {
     private val binding: ActivityDetailHomeBinding by lazy {
         ActivityDetailHomeBinding.inflate(layoutInflater)
     }
@@ -41,14 +49,53 @@ class DetailHomeActivity : AppCompatActivity() {
         detailViewModel.getDetailTicketById(extraId!!, extraSeatClass!!)
             .observe(this@DetailHomeActivity) { result ->
                 result.proceedWhen(
-                    doOnSuccess = {
-                        it.payload?.let { flightDetail ->
-                            Log.d("detailTicket", "$flightDetail")
-                            setupBinding(flightDetail)
-                        }
+                    doOnLoading = {
+                        binding.shimmerDetailTicket.isVisible = true
+                        binding.svDetailTicket.isVisible = false
+                        binding.btnSelectTicket.isEnabled = false
+                        binding.headerDetailTicketHome.tvTitleHeader.isVisible = true
                     },
-                    doOnError = {
-                        Log.d("Error from Detail", "${it.message}")
+                    doOnSuccess = {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            binding.shimmerDetailTicket.isVisible = false
+                            binding.svDetailTicket.isVisible = true
+                            binding.btnSelectTicket.isEnabled = true
+                            it.payload?.let { flightDetail ->
+                                Log.d("detailTicket", "$flightDetail")
+                                setupBinding(flightDetail)
+                            }
+                        }, 1000)
+                    },
+                    doOnError = { error ->
+                        binding.btnSelectTicket.isEnabled = false
+                        binding.shimmerDetailTicket.isVisible = false
+                        if (error.exception is NoInternetException) {
+                            binding.csvDetailTicket.setState(
+                                ContentState.ERROR_NETWORK,
+                                getString(R.string.no_internet_connection),
+                            )
+                        } else if (error.exception is UnAuthorizeException) {
+                            errorHandler(error.exception)
+                            binding.csvDetailTicket.setState(
+                                ContentState.ERROR_NETWORK_GENERAL,
+                                getString(R.string.text_session_expired_please_login_again),
+                            )
+                        } else if (error.exception is ServerErrorException) {
+                            errorHandler(error.exception)
+                            binding.csvDetailTicket.setState(
+                                ContentState.ERROR_NETWORK,
+                                getString(R.string.text_server_error_please_try_again_later),
+                                R.drawable.img_empty_data,
+                            )
+                        } else {
+                            binding.csvDetailTicket.setState(ContentState.ERROR_GENERAL)
+                        }
+                        Log.e("ChooseSeatActivity", "Error: ${error.exception?.message}")
+                    },
+                    doOnEmpty = {
+                        binding.shimmerDetailTicket.isVisible = false
+                        binding.svDetailTicket.isVisible = false
+                        binding.btnSelectTicket.isVisible = false
                     },
                 )
             }
@@ -62,7 +109,8 @@ class DetailHomeActivity : AppCompatActivity() {
                 "${it.departureCity} - > ${it.arrivalCity} (${it.duration})"
             binding.layoutDetailCard.tvDepartureTimeDetailTicket.text = it.departureTime
             binding.layoutDetailCard.tvDepartureDateDetailTicket.text = it.departureDate
-            binding.layoutDetailCard.tvDepartureAirportDetailTicket.text = "${it.departureAirport} - ${it.departureTerminal}"
+            binding.layoutDetailCard.tvDepartureAirportDetailTicket.text =
+                "${it.departureAirport} - ${it.departureTerminal}"
             binding.layoutDetailCard.tvAirplaneNameDetailTicket.text = it.airplaneName
             binding.layoutDetailCard.tvSeatClassDetailTicket.text = it.seatClass
             binding.layoutDetailCard.tvAirplaneCodeDetailTicket.text = it.code
@@ -93,8 +141,9 @@ class DetailHomeActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                         },
-                        doOnError = {
-                            Log.d("Error from Detail", "${it.message}")
+                        doOnError = { error ->
+                            Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT)
+                                .show()
                         },
                     )
                 }
