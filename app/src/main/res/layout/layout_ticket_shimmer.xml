@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     app:cardCornerRadius="10dp"
-    app:cardElevation="2dp">
+    app:cardElevation="2dp"
+    android:backgroundTint="@color/grey">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,92 +16,66 @@
 
         <TextView
             android:id="@+id/tv_time_departure_search_result"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/text_hour" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_target_departure_search_result"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintEnd_toEndOf="@id/tv_time_departure_search_result"
             app:layout_constraintStart_toStartOf="@id/tv_time_departure_search_result"
-            app:layout_constraintTop_toBottomOf="@id/tv_time_departure_search_result"
-            tools:text="@string/text_jkt" />
+            app:layout_constraintTop_toBottomOf="@id/tv_time_departure_search_result" />
 
-        <ImageView
+        <TextView
             android:id="@+id/iv_arrow_search_result"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_arrow"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintBottom_toBottomOf="@id/tv_target_departure_search_result"
             app:layout_constraintStart_toEndOf="@id/tv_time_departure_search_result"
             app:layout_constraintTop_toTopOf="@id/tv_time_departure_search_result" />
 
         <TextView
-            android:id="@+id/tv_flight_duration_search_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/darkGrey"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@id/iv_arrow_search_result"
-            app:layout_constraintStart_toStartOf="@id/iv_arrow_search_result"
-            app:layout_constraintTop_toTopOf="@id/tv_time_departure_search_result"
-            tools:text="@string/text_flight_duration" />
-
-        <TextView
-            android:id="@+id/tv_transit_option_search_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/darkGrey"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@id/iv_arrow_search_result"
-            app:layout_constraintStart_toStartOf="@id/iv_arrow_search_result"
-            app:layout_constraintTop_toBottomOf="@id/iv_arrow_search_result"
-            app:layout_constraintTop_toTopOf="@id/tv_target_departure_search_result"
-            tools:text="@string/text_direct" />
-
-        <TextView
             android:id="@+id/tv_time_arrival_search_result"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintStart_toEndOf="@id/iv_arrow_search_result"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/text_hour" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_target_arrival_search_result"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintEnd_toEndOf="@id/tv_time_arrival_search_result"
             app:layout_constraintStart_toStartOf="@id/tv_time_arrival_search_result"
-            app:layout_constraintTop_toBottomOf="@id/tv_time_arrival_search_result"
-            tools:text="@string/text_mlb" />
+            app:layout_constraintTop_toBottomOf="@id/tv_time_arrival_search_result" />
 
         <TextView
             android:id="@+id/tv_price_search_result"
-            android:layout_width="0dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/md_theme_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_time_arrival_search_result"
-            tools:text="IDR 4.950.000" />
+            app:layout_constraintTop_toTopOf="@id/tv_time_arrival_search_result" />
 
         <View
             android:id="@+id/v_ticket_airline"
@@ -116,20 +91,22 @@
             android:id="@+id/iv_ic_airline_search_result"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/img_airline"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintBottom_toBottomOf="@id/iv_ic_departure_bag"
             app:layout_constraintStart_toStartOf="@id/tv_time_departure_search_result"
             app:layout_constraintTop_toTopOf="@id/tv_airline_search_result" />
 
         <TextView
             android:id="@+id/tv_airline_search_result"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintStart_toEndOf="@id/iv_ic_airline_search_result"
-            app:layout_constraintTop_toBottomOf="@id/v_ticket_airline"
-            tools:text="Jet Air - Economy" />
+            app:layout_constraintTop_toBottomOf="@id/v_ticket_airline" />
 
         <ImageView
             android:id="@+id/iv_ic_departure_bag"
@@ -137,7 +114,8 @@
             android:layout_height="25dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
-            android:src="@drawable/ic_departure_bag"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_airline_search_result"
             app:layout_constraintTop_toBottomOf="@id/tv_airline_search_result" />
@@ -146,8 +124,8 @@
             android:id="@+id/iv_ic_expand_search_result"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:rotation="270"
-            android:src="@drawable/ic_expand"
+            android:background="@drawable/bg_rounded_shimmer"
+            android:backgroundTint="@color/darkGrey"
             app:layout_constraintBottom_toBottomOf="@id/iv_ic_departure_bag"
             app:layout_constraintEnd_toEndOf="@id/tv_price_search_result"
             app:layout_constraintTop_toBottomOf="@id/v_ticket_airline"

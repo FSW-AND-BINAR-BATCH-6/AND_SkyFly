@@ -5,18 +5,22 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.transaction.detail.TransactionDetailResponses
 import com.kom.skyfly.databinding.ActivityFlightDetailHistoryBinding
+import com.kom.skyfly.presentation.common.views.ContentState
+import com.kom.skyfly.utils.NoInternetException
+import com.kom.skyfly.utils.ServerErrorException
+import com.kom.skyfly.utils.UnAuthorizeException
 import com.kom.skyfly.utils.formatToRupiah
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FlightDetailHistoryActivity : AppCompatActivity() {
+class FlightDetailHistoryActivity : BaseActivity() {
     private val binding: ActivityFlightDetailHistoryBinding by lazy {
         ActivityFlightDetailHistoryBinding.inflate(layoutInflater)
     }
@@ -46,8 +50,9 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                         Handler(Looper.getMainLooper()).postDelayed({
                             binding.shimmerDetailHistory.isVisible = false
                             binding.svFlightDetails.isVisible = true
+                            binding.btnProceedToPayment.isEnabled = true
                             setupBind(it.payload)
-                        }, 2000)
+                        }, 1000)
                     },
                     doOnLoading = {
                         binding.shimmerDetailHistory.isVisible = true
@@ -55,13 +60,36 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                         binding.btnProceedToPayment.isEnabled = false
                     },
                     doOnError = { error ->
-                        Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT)
-                            .show()
+                        binding.shimmerDetailHistory.isVisible = false
+
+                        if (error.exception is NoInternetException) {
+                            binding.csvDetailHistory.setState(
+                                ContentState.ERROR_NETWORK,
+                                getString(R.string.no_internet_connection),
+                            )
+                        } else if (error.exception is UnAuthorizeException) {
+                            errorHandler(error.exception)
+                            binding.csvDetailHistory.setState(
+                                ContentState.ERROR_NETWORK_GENERAL,
+                                getString(R.string.text_session_expired_please_login_again),
+                            )
+                        } else if (error.exception is ServerErrorException) {
+                            errorHandler(error.exception)
+                            binding.csvDetailHistory.setState(
+                                ContentState.ERROR_NETWORK,
+                                getString(R.string.text_server_error_please_try_again_later),
+                                R.drawable.img_empty_data,
+                            )
+                        } else {
+                            binding.csvDetailHistory.setState(ContentState.ERROR_GENERAL)
+                        }
+                        Log.e("DetailTicketActivity", "Error: ${error.exception?.message}")
                     },
                     doOnEmpty = {
                         binding.shimmerDetailHistory.isVisible = false
                         getString(R.string.text_havent_made_a_booking)
                         binding.svFlightDetails.isVisible = false
+                        binding.btnProceedToPayment.isVisible = false
                     },
                 )
             }
@@ -106,7 +134,12 @@ class FlightDetailHistoryActivity : AppCompatActivity() {
                 historyDetail?.data?.transactionDetails?.first()?.flight?.departure?.date
             tvDetailDepartureTime.text =
                 historyDetail?.data?.transactionDetails?.first()?.flight?.departure?.time
-            tvDetailDepartureAirport.text = "${historyDetail?.data?.transactionDetails?.first()?.flight?.departureAirport?.name} - ${historyDetail?.data?.transactionDetails?.first()?.flight?.airline?.terminal}"
+            tvDetailDepartureAirport.text =
+                getString(
+                    R.string.text_detail_departure_airport_and_terminal,
+                    historyDetail?.data?.transactionDetails?.first()?.flight?.departureAirport?.name,
+                    historyDetail?.data?.transactionDetails?.first()?.flight?.airline?.terminal,
+                )
             tvDetailAirline.text =
                 getString(
                     R.string.tv_strip,

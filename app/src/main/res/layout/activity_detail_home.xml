@@ -17,15 +17,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
+        android:id="@+id/sv_detail_ticket"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_detail_ticket_home">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="16dp">
 
             <include
@@ -37,7 +38,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_detail_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_detail_ticket_home"
+        tools:visibility="visible">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_detail_ticket_shimmer" />
+
+        </ScrollView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_select_ticket"
@@ -45,10 +65,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:background="@drawable/btn_rounded"
         android:text="@string/text_select"
         android:textAllCaps="false"
         android:textSize="16sp"
-        android:background="@drawable/btn_rounded"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.kom.skyfly.presentation.common.views.ContentStateView
+        android:id="@+id/csv_detail_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

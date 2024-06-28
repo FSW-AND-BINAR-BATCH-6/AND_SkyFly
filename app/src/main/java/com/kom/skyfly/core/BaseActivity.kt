@@ -4,6 +4,7 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.kom.skyfly.R
+import com.kom.skyfly.presentation.bottomsheetsdialog.BottomSheetsDialogFragment
 import com.kom.skyfly.presentation.login.LoginActivity
 import com.kom.skyfly.utils.ServerErrorException
 import com.kom.skyfly.utils.UnAuthorizeException
@@ -20,8 +21,7 @@ open class BaseActivity : AppCompatActivity() {
     fun errorHandler(e: Exception) {
         if (e is UnAuthorizeException) {
             baseViewModel.clearSession()
-            navigateToLogin()
-            Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+            openNotLoggedInModal()
         } else if (e is ServerErrorException) {
             Toasty.error(
                 this,
@@ -40,5 +40,12 @@ open class BaseActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    private fun openNotLoggedInModal() {
+        if (!supportFragmentManager.isStateSaved) {
+            val bottomSheetFragment = BottomSheetsDialogFragment()
+            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+        }
     }
 }

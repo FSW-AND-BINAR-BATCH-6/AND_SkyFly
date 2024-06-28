@@ -2,15 +2,22 @@ package com.kom.skyfly.presentation.home.search_result
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.home.Calendar
 import com.kom.skyfly.databinding.ActivitySearchResultBinding
+import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.home.detail_home.DetailHomeActivity
 import com.kom.skyfly.presentation.home.search_result.view_items.CalendarAdapter
 import com.kom.skyfly.presentation.home.search_result.view_items.Items
+import com.kom.skyfly.utils.NoInternetException
+import com.kom.skyfly.utils.ServerErrorException
+import com.kom.skyfly.utils.UnAuthorizeException
 import com.kom.skyfly.utils.proceedWhen
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
@@ -20,7 +27,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
-class SearchResultActivity : AppCompatActivity() {
+class SearchResultActivity : BaseActivity() {
     private val binding: ActivitySearchResultBinding by lazy {
         ActivitySearchResultBinding.inflate(layoutInflater)
     }
@@ -91,46 +98,88 @@ class SearchResultActivity : AppCompatActivity() {
         ).observe(this) { response ->
             response.proceedWhen(
                 doOnSuccess = {
-                    Log.d("SearchResultActivity", "Data fetched successfully")
-                    it.payload?.let { sectionedSearch ->
-                        val sections =
-                            sectionedSearch.map {
-                                Section().apply {
-                                    val data =
-                                        sectionedSearch.map { data ->
-                                            Items(data) { item ->
-                                                val intent =
-                                                    Intent(
-                                                        this@SearchResultActivity,
-                                                        DetailHomeActivity::class.java,
-                                                    ).apply {
-                                                        putExtra("EXTRA_FLIGHT_ID", item?.id)
-                                                        putExtra(
-                                                            "EXTRA_FLIGHT_SEATCLASS",
-                                                            item?.seatClass,
-                                                        )
-                                                        putExtra("EXTRA_ADULT_COUNT", adultCount)
-                                                        putExtra("EXTRA_CHILD_COUNT", childrenCount)
-                                                        putExtra("EXTRA_BABY_COUNT", babyCount)
-                                                    }
-                                                startActivity(intent)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        binding.shimmerTicket.isVisible = false
+                        binding.rvDateSearchResult.isVisible = true
+                        binding.rvItemTicketsSearchResult.isVisible = true
+
+                        Log.d("SearchResultActivity", "Data fetched successfully")
+                        it.payload?.let { sectionedSearch ->
+                            val sections =
+                                sectionedSearch.map {
+                                    Section().apply {
+                                        val data =
+                                            sectionedSearch.map { data ->
+                                                Items(data) { item ->
+                                                    val intent =
+                                                        Intent(
+                                                            this@SearchResultActivity,
+                                                            DetailHomeActivity::class.java,
+                                                        ).apply {
+                                                            putExtra("EXTRA_FLIGHT_ID", item?.id)
+                                                            putExtra(
+                                                                "EXTRA_FLIGHT_SEATCLASS",
+                                                                item?.seatClass,
+                                                            )
+                                                            putExtra(
+                                                                "EXTRA_ADULT_COUNT",
+                                                                adultCount,
+                                                            )
+                                                            putExtra(
+                                                                "EXTRA_CHILD_COUNT",
+                                                                childrenCount,
+                                                            )
+                                                            putExtra("EXTRA_BABY_COUNT", babyCount)
+                                                        }
+                                                    startActivity(intent)
+                                                }
                                             }
-                                        }
-                                    addAll(data)
+                                        addAll(data)
+                                    }
                                 }
-                            }
-                        adapter.clear()
-                        adapter.update(sections)
-                    }
+                            adapter.clear()
+                            adapter.update(sections)
+                        }
+                    }, 1000)
                 },
                 doOnEmpty = {
                     adapter.clear()
+                    binding.shimmerTicket.isVisible = false
+                    binding.csvTicketResult.setState(
+                        ContentState.EMPTY,
+                        getString(R.string.text_no_tickets_for_selected_date),
+                    )
                 },
-                doOnError = {
-                    Log.e("SearchResultActivity", "Error fetching data: ${it.exception?.message}")
+                doOnError = { error ->
+                    binding.shimmerTicket.isVisible = false
+                    if (error.exception is NoInternetException) {
+                        binding.csvTicketResult.setState(
+                            ContentState.ERROR_NETWORK,
+                            getString(R.string.no_internet_connection),
+                        )
+                    } else if (error.exception is UnAuthorizeException) {
+                        errorHandler(error.exception)
+                        binding.csvTicketResult.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_session_expired_please_login_again),
+                        )
+                    } else if (error.exception is ServerErrorException) {
+                        errorHandler(error.exception)
+                        binding.csvTicketResult.setState(
+                            ContentState.ERROR_NETWORK,
+                            getString(R.string.text_server_error_please_try_again_later),
+                            R.drawable.img_empty_data,
+                        )
+                    } else {
+                        binding.csvTicketResult.setState(ContentState.ERROR_GENERAL)
+                    }
+                    Log.e("SearchResultActivity", "Error: ${error.exception?.message}")
                 },
                 doOnLoading = {
-                    Log.d("SearchResultActivity", "Loading data")
+                    binding.shimmerTicket.isVisible = true
+                    binding.csvTicketResult.isVisible = false
+                    binding.rvItemTicketsSearchResult.isVisible = false
+                    binding.rvDateSearchResult.isVisible = true
                 },
             )
         }

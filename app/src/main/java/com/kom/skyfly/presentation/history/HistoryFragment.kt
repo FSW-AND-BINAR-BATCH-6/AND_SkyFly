@@ -2,6 +2,8 @@ package com.kom.skyfly.presentation.history
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -94,56 +96,58 @@ class HistoryFragment : Fragment(), FlightCodeListener, CalendarView.DateSelecte
                         binding.csvHistory.isVisible = false
                     },
                     doOnSuccess = { data ->
-                        binding.shimmerHistory.isVisible = false
-                        binding.rvPage.isVisible = true
-                        binding.csvHistory.setState(ContentState.SUCCESS)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            binding.shimmerHistory.isVisible = false
+                            binding.rvPage.isVisible = true
+                            binding.csvHistory.setState(ContentState.SUCCESS)
 
-                        if (result.payload?.data == null || result.payload.data.isEmpty()) {
-                            binding.csvHistory.setState(
-                                ContentState.EMPTY,
-                                getString(R.string.text_history_data_empty),
-                            )
-                        }
+                            if (result.payload?.data == null || result.payload.data.isEmpty()) {
+                                binding.csvHistory.setState(
+                                    ContentState.EMPTY,
+                                    getString(R.string.text_history_data_empty),
+                                )
+                            }
 
-                        adapter.clear()
+                            adapter.clear()
 
-                        data.payload?.let { sectionedDate ->
-                            sectionedDate.data.forEach { itemsHistoryDomain ->
-                                val section =
-                                    Section().apply {
-                                        setHeader(
-                                            HeaderItem(itemsHistoryDomain.date) { date ->
-                                                Toast.makeText(
-                                                    requireContext(),
-                                                    "Header Clicked: $date",
-                                                    Toast.LENGTH_SHORT,
-                                                ).show()
-                                            },
-                                        )
+                            data.payload?.let { sectionedDate ->
+                                sectionedDate.data.forEach { itemsHistoryDomain ->
+                                    val section =
+                                        Section().apply {
+                                            setHeader(
+                                                HeaderItem(itemsHistoryDomain.date) { date ->
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        "Header Clicked: $date",
+                                                        Toast.LENGTH_SHORT,
+                                                    ).show()
+                                                },
+                                            )
 
-                                        val uniqueItemsMap = LinkedHashMap<String, DataItem>()
-                                        val sortedTransactions =
-                                            itemsHistoryDomain.transactions.sortedByDescending { it.id }
+                                            val uniqueItemsMap = LinkedHashMap<String, DataItem>()
+                                            val sortedTransactions =
+                                                itemsHistoryDomain.transactions.sortedByDescending { it.id }
 
-                                        sortedTransactions.forEach { transaction ->
-                                            val dataItem =
-                                                DataItem(transaction) { clickedData, transactionId ->
-                                                    navigateToDetail(transactionId)
+                                            sortedTransactions.forEach { transaction ->
+                                                val dataItem =
+                                                    DataItem(transaction) { clickedData, transactionId ->
+                                                        navigateToDetail(transactionId)
+                                                    }
+
+                                                val key = transaction.id
+                                                if (!uniqueItemsMap.containsKey(key)) {
+                                                    uniqueItemsMap[key] = dataItem
                                                 }
+                                            }
 
-                                            val key = transaction.id
-                                            if (!uniqueItemsMap.containsKey(key)) {
-                                                uniqueItemsMap[key] = dataItem
+                                            uniqueItemsMap.forEach {
+                                                add(it.value)
                                             }
                                         }
-
-                                        uniqueItemsMap.forEach {
-                                            add(it.value)
-                                        }
-                                    }
-                                adapter.add(section)
+                                    adapter.add(section)
+                                }
                             }
-                        }
+                        }, 1000)
                     },
                     doOnError = { error ->
                         binding.shimmerHistory.isVisible = false

@@ -104,6 +104,8 @@ class BookersBiodataActivity : BaseActivity() {
                         familyName = data?.familyName
                         fullName = data?.fullName
                         phoneNumber = data?.phoneNumber
+                        binding.layoutHeader.tvTitleHeader.text =
+                            getString(R.string.text_bookers_biodata)
                         binding.layoutFormCustomerBiodata.etFullName.setText(data?.fullName)
                         binding.layoutFormCustomerBiodata.etEmail.setText(data?.email)
                         binding.layoutFormCustomerBiodata.etNoTlp.setText(data?.phoneNumber)

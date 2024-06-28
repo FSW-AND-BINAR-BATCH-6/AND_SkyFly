@@ -18,14 +18,14 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_date_search_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_date_search_result"
+        android:layout_margin="8dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/layout_date"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@id/header_flight_search_result"/>
+        app:layout_constraintTop_toBottomOf="@id/header_flight_search_result"
+        tools:listitem="@layout/layout_date" />
 
     <View
         android:id="@+id/v_calender"
@@ -35,7 +35,7 @@
         android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_date_search_result"/>
+        app:layout_constraintTop_toBottomOf="@id/rv_date_search_result" />
 
 
     <LinearLayout
@@ -61,8 +61,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:text="@string/text_filter"
-            android:textSize="16sp"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -70,14 +70,51 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        tools:listitem="@layout/layout_item_card_search_result"
-        app:layout_constraintTop_toBottomOf="@id/filter_button"
-        app:layout_constraintStart_toStartOf="@id/filter_button"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/rv_date_search_result"
-        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@id/filter_button"
+        app:layout_constraintTop_toBottomOf="@id/filter_button"
         app:spanCount="1"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        />
+        tools:listitem="@layout/layout_item_card_search_result" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_ticket"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin = "16dp"
+        app:layout_constraintTop_toBottomOf="@id/filter_button"
+        app:layout_constraintStart_toStartOf="@id/filter_button"
+        app:layout_constraintEnd_toEndOf="@id/rv_date_search_result"
+        tools:visibility="visible">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_ticket_shimmer"/>
+                <include layout="@layout/layout_ticket_shimmer"/>
+                <include layout="@layout/layout_ticket_shimmer"/>
+                <include layout="@layout/layout_ticket_shimmer"/>
+                <include layout="@layout/layout_ticket_shimmer"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <com.kom.skyfly.presentation.common.views.ContentStateView
+        android:id="@+id/csv_ticket_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
