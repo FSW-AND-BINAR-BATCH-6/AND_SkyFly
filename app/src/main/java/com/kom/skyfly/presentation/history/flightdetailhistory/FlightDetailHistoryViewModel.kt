@@ -12,4 +12,12 @@ class FlightDetailHistoryViewModel(
         transactionRepository
             .getTransactionById(id)
             .asLiveData(Dispatchers.IO)
+
+    fun getPaymentStatus(id: String) =
+        transactionRepository.getPaymentStatus(id)
+            .asLiveData(Dispatchers.IO)
+
+    fun cancelTransaction(id: String) =
+        transactionRepository.cancelTransaction(id)
+            .asLiveData(Dispatchers.IO)
 }

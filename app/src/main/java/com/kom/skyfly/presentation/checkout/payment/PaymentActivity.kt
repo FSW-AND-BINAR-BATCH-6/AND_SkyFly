@@ -14,6 +14,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.kom.skyfly.R
 import com.kom.skyfly.databinding.ActivityPaymentBinding
 
 class PaymentActivity : AppCompatActivity() {
@@ -28,7 +29,8 @@ class PaymentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        btnCloseSnap = binding.btnClose
+        setHeaderTitle()
+        btnCloseSnap = binding.btnNext
         btnCloseSnap!!.setOnClickListener(
             View.OnClickListener { view: View? ->
                 transactionId?.let { openIssueTicketBottomSheets(it, adult, children, baby) }
@@ -42,6 +44,13 @@ class PaymentActivity : AppCompatActivity() {
         baby = intent.getIntExtra("EXTRAS_BABY", 0)
         if (!paymentUrl.isNullOrEmpty()) {
             openUrlFromWebView(paymentUrl)
+        }
+    }
+
+    private fun setHeaderTitle() {
+        binding.layoutHeader.tvTitleHeader.setText(R.string.text_payment)
+        binding.layoutHeader.ivBack.setOnClickListener {
+            onBackPressed()
         }
     }
 

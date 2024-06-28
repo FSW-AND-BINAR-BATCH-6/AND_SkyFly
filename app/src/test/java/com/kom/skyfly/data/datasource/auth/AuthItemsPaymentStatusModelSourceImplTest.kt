@@ -23,7 +23,7 @@ import org.junit.Test
  * Written by Komang Yuda Saputra
  * Github : https://github.com/YudaSaputraa
  */
-class AuthDataSourceImplTest {
+class AuthItemsPaymentStatusModelSourceImplTest {
     @MockK
     lateinit var service: SkyFlyApiService
     private lateinit var dataSource: AuthDataSource

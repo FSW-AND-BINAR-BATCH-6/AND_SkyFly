@@ -19,7 +19,7 @@ import org.junit.Test
  * Written by Komang Yuda Saputra
  * Github : https://github.com/YudaSaputraa
  */
-class SearchHistoryDataSourceImplTest {
+class SearchHistoryItemsPaymentStatusModelSourceImplTest {
     @MockK
     lateinit var searchHistoryDao: SearchHistoryDao
     private lateinit var searchHistoryDataSource: SearchHistoryDataSource

@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.R
 import com.kom.skyfly.databinding.FragmentBottomSheetsDialogBinding
 import com.kom.skyfly.presentation.login.LoginActivity
+import com.kom.skyfly.presentation.main.MainActivity
 
 class BottomSheetsDialogFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentBottomSheetsDialogBinding
@@ -46,9 +47,16 @@ class BottomSheetsDialogFragment : BottomSheetDialogFragment() {
             dismiss()
         }
         binding.ivClose.setOnClickListener {
+            navigateToHome()
             listener?.onClose()
             dismiss()
         }
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     private fun navigateToLogin() {

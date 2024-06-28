@@ -80,6 +80,7 @@ class BottomSheetsIssueTicket : BottomSheetDialogFragment() {
                 putExtra("EXTRAS_ADULT", adult)
                 putExtra("EXTRAS_CHILD", child)
                 putExtra("EXTRAS_BABY", baby)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         startActivity(intent)
     }

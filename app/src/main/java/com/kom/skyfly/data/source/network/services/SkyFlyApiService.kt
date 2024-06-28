@@ -15,10 +15,12 @@ import com.kom.skyfly.data.source.network.model.home.flight_detail.FlightDetailR
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.notification.NotificationResponse
+import com.kom.skyfly.data.source.network.model.paymentstatus.PaymentStatusResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpSmsRequest
+import com.kom.skyfly.data.source.network.model.transaction.cancel.CancelTransactionResponse
 import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
 import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
@@ -150,6 +152,16 @@ interface SkyFlyApiService {
         @Query("endDate") endDate: String?,
         @Query("flightCode") flightCode: String?,
     ): HistoryResponse
+
+    @GET("api/v1/transactions/status/{id}")
+    suspend fun getPaymentStatus(
+        @Path("id") id: String,
+    ): PaymentStatusResponse
+
+    @POST("api/v1/transactions/cancel/{id}")
+    suspend fun cancelTransaction(
+        @Path("id") id: String,
+    ): CancelTransactionResponse
 
     companion object {
         @JvmStatic

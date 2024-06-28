@@ -1,6 +1,7 @@
 package com.kom.skyfly.data.source.local.pref
 
 import android.content.SharedPreferences
+import com.kom.skyfly.utils.SharedPreferenceUtils.get
 import com.kom.skyfly.utils.SharedPreferenceUtils.set
 
 /**
@@ -42,5 +43,6 @@ class UserPreferenceImpl(private val pref: SharedPreferences) : UserPreference {
         const val PREF_NAME = "skyfly-pref"
         const val KEY_ON_BOARDING_SHOW = "KEY_ON_BOARDING_SHOW"
         const val KEY_TOKEN = "KEY_TOKEN"
+        const val KEY_PAYMENT_URL = "KEY_PAYMENT_URL"
     }
 }

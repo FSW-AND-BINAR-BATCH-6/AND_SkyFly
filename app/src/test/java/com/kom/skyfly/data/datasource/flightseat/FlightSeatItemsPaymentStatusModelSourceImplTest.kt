@@ -1,6 +1,6 @@
-package com.kom.skyfly.data.datasource.notification
+package com.kom.skyfly.data.datasource.flightseat
 
-import com.kom.skyfly.data.source.network.model.notification.NotificationResponse
+import com.kom.skyfly.data.source.network.model.flightseat.FlightSeatResponse
 import com.kom.skyfly.data.source.network.services.SkyFlyApiService
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -16,24 +16,24 @@ import org.junit.Test
  * Written by Komang Yuda Saputra
  * Github : https://github.com/YudaSaputraa
  */
-class NotificationDataSourceImplTest {
+class FlightSeatItemsPaymentStatusModelSourceImplTest {
     @MockK
     lateinit var service: SkyFlyApiService
-    private lateinit var dataSource: NotificationDataSource
+    private lateinit var dataSource: FlightSeatDataSource
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        dataSource = NotificationDataSourceImpl(service)
+        dataSource = FlightSeatDataSourceImpl(service)
     }
 
     @Test
-    fun getAllNotification() {
+    fun getAllFlightSeat() {
         runTest {
-            val mockResponse = mockk<NotificationResponse>(relaxed = true)
-            coEvery { service.getAllNotification(any()) } returns mockResponse
-            val actualResult = dataSource.getAllNotification()
-            coVerify { service.getAllNotification(any()) }
+            val mockResponse = mockk<FlightSeatResponse>(relaxed = true)
+            coEvery { service.getAllFlightSeat(any()) } returns mockResponse
+            val actualResult = dataSource.getAllFlightSeat("fefjehgeof")
+            coVerify { service.getAllFlightSeat(any()) }
             assertEquals(mockResponse, actualResult)
         }
     }

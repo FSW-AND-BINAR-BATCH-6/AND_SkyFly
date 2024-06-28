@@ -165,7 +165,6 @@ class ChooseSeatActivity : BaseActivity() {
                 doOnSuccess = { resultWrapper ->
                     binding.btnSave.isEnabled = false
                     binding.main.isRefreshing = false
-                    Log.d("SeatDatas", "getAllFlightSeatData: $resultWrapper")
                     seatTotal = resultWrapper.payload?.size ?: 0
                     resultWrapper.payload.let {
                         it?.map { response ->
@@ -305,8 +304,6 @@ class ChooseSeatActivity : BaseActivity() {
                 result.proceedWhen(
                     doOnSuccess = {
                         binding.main.isRefreshing = false
-                        Toasty.success(this, "Success Create Transaction!!!!!", Toast.LENGTH_SHORT)
-                            .show()
                         it.payload?.let { response ->
                             paymentUrl = response.redirectUrl
                             transactionId = response.transactionId

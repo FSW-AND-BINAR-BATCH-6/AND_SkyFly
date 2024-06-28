@@ -99,7 +99,7 @@ class DataItem(
                             R.color.green,
                         ),
                     )
-            } else if (paymentStatus.equals("cancelled", ignoreCase = true)) {
+            } else if (paymentStatus.equals("expire", ignoreCase = true) || paymentStatus.equals("cancel", ignoreCase = true)) {
                 tvStatus.setText(R.string.text_cancelled)
                 tvStatus.backgroundTintList =
                     ColorStateList.valueOf(

@@ -46,12 +46,17 @@ class FlightDetailActivity : BaseActivity() {
 
     private fun setOnClickListeners() {
         binding.layoutHeader.ivBack.setOnClickListener {
-            onBackPressed()
+            navigateToHome()
         }
         binding.btnToHome.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            navigateToHome()
         }
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     private fun setTitleHeader() {
@@ -114,6 +119,7 @@ class FlightDetailActivity : BaseActivity() {
                         )
                     },
                     doOnLoading = {
+                        binding.csvFlightDetail.isVisible = false
                         binding.btnToHome.isEnabled = false
                         binding.layoutFlightDetails.cvFlightDetails.isVisible = false
                         binding.layoutFlightDetails.cvPriceDetails.isVisible = false
@@ -180,7 +186,7 @@ class FlightDetailActivity : BaseActivity() {
             tvDetailDepartureDate.text = departureDate
             tvDetailDepartureTime.text = departureTime
             tvDetailDepartureAirport.text =
-                getString(R.string.text_departure_airport, departureAirport)
+                getString(R.string.text_departure_terminal, departureAirport, departureTerminal)
             tvDetailAirline.text = getString(R.string.text_detail_airlines, airlines)
             tvDetailClass.text = seatClass
             tvDetailFlightNumber.text = flightNumber
