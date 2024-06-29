@@ -34,9 +34,6 @@ class NotificationDetailActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }
-        binding.ivTrash.setOnClickListener {
-            notification?.let { deleteNotification(it) }
-        }
     }
 
     private fun displayNotificationDetails(notification: Notification) {
@@ -47,6 +44,9 @@ class NotificationDetailActivity : AppCompatActivity() {
 
         when (notification.type) {
             "Promotion" -> {
+                binding.ivNotificationType.setImageResource(R.drawable.ic_promotion)
+            }
+            "Promotions" -> {
                 binding.ivNotificationType.setImageResource(R.drawable.ic_promotion)
             }
             "Warning" -> {

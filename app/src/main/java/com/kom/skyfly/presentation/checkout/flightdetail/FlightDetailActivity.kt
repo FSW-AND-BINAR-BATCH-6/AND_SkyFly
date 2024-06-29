@@ -1,19 +1,27 @@
 package com.kom.skyfly.presentation.checkout.flightdetail
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import coil.load
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.transaction.detail.TransactionDetailResponses
 import com.kom.skyfly.databinding.ActivityFlightDetailBinding
+import com.kom.skyfly.presentation.common.views.ContentState
+import com.kom.skyfly.presentation.main.MainActivity
+import com.kom.skyfly.utils.NoInternetException
+import com.kom.skyfly.utils.ServerErrorException
+import com.kom.skyfly.utils.UnAuthorizeException
 import com.kom.skyfly.utils.formatToRupiah
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FlightDetailActivity : AppCompatActivity() {
+class FlightDetailActivity : BaseActivity() {
     private val binding: ActivityFlightDetailBinding by lazy {
         ActivityFlightDetailBinding.inflate(layoutInflater)
     }
@@ -27,12 +35,33 @@ class FlightDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setSwipeRefresh()
         transactionId = intent.getStringExtra("EXTRAS_TRANSACTION_ID")
         adult = intent.getIntExtra("EXTRAS_ADULT", 0)
         children = intent.getIntExtra("EXTRAS_CHILD", 0)
         baby = intent.getIntExtra("EXTRAS_BABY", 0)
+        setTitleHeader()
+        setSwipeRefresh()
+        setOnClickListeners()
         getTicketDetail(transactionId)
+    }
+
+    private fun setOnClickListeners() {
+        binding.layoutHeader.ivBack.setOnClickListener {
+            navigateToHome()
+        }
+        binding.btnToHome.setOnClickListener {
+            navigateToHome()
+        }
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
+
+    private fun setTitleHeader() {
+        binding.layoutHeader.tvTitleHeader.text = getString(R.string.text_ticket_detail)
     }
 
     private fun setSwipeRefresh() {
@@ -46,40 +75,76 @@ class FlightDetailActivity : AppCompatActivity() {
             viewModel.getTransactionById(id).observe(this) { result ->
                 result.proceedWhen(
                     doOnSuccess = {
+                        binding.btnToHome.isEnabled = true
+                        binding.layoutFlightDetails.cvFlightDetails.isVisible = true
+                        binding.layoutFlightDetails.cvPriceDetails.isVisible = true
+                        binding.layoutFlightDetails.tvPaymentStatus.isVisible = true
                         binding.main.isRefreshing = false
                         val response = result.payload
+                        binding.shmProgressFlightTicket.isVisible = false
                         setTransactionDetailData(response)
                         Log.d("GetTransactionById", "getTransactionDataById: $response")
                     },
                     doOnError = {
+                        binding.btnToHome.isEnabled = true
                         binding.main.isRefreshing = false
+                        binding.shmProgressFlightTicket.isVisible = false
+                        when (it.exception) {
+                            is NoInternetException -> {
+                                binding.csvFlightDetail.setState(
+                                    ContentState.ERROR_NETWORK_GENERAL,
+                                    getString(R.string.no_internet_connection),
+                                )
+                            }
+
+                            is UnAuthorizeException -> {
+                                errorHandler(it.exception)
+                                binding.csvFlightDetail.setState(
+                                    ContentState.ERROR_NETWORK_GENERAL,
+                                    getString(R.string.text_session_expired_please_login_again),
+                                )
+                            }
+
+                            is ServerErrorException -> {
+                                errorHandler(it.exception)
+                                binding.csvFlightDetail.setState(
+                                    ContentState.ERROR_NETWORK,
+                                    getString(R.string.text_something_went_wrong),
+                                    R.drawable.img_empty_data,
+                                )
+                            }
+                        }
                         Log.d(
                             "GetTransactionByIdError",
                             "getTransactionDataById: ${it.exception?.message}",
                         )
                     },
                     doOnLoading = {
+                        binding.csvFlightDetail.isVisible = false
+                        binding.btnToHome.isEnabled = false
+                        binding.layoutFlightDetails.cvFlightDetails.isVisible = false
+                        binding.layoutFlightDetails.cvPriceDetails.isVisible = false
+                        binding.layoutFlightDetails.tvPaymentStatus.isVisible = false
                         binding.main.isRefreshing = true
+                        binding.shmProgressFlightTicket.isVisible = true
                     },
                 )
             }
         }
     }
 
+    @SuppressLint("StringFormatMatches")
     private fun setTransactionDetailData(response: TransactionDetailResponses?) {
         var departureDate: String? = null
         var departureTime: String? = null
         var departureAirport: String? = null
         var departureTerminal: String? = null
-        var departureCity: String? = null
         var airlines: String? = null
         var seatClass: String? = null
         var flightNumber: String? = null
         var arrivalDate: String? = null
         var arrivalTime: String? = null
         var destinationAirport: String? = null
-        var destinationCity: String? = null
-        var flightDuration: String? = null
         val tax: Int? = response?.data?.tax
         val totalPrice: Int? = response?.data?.totalPrice
         var totalPricePassengerAdult: Int? = 0
@@ -89,36 +154,48 @@ class FlightDetailActivity : AppCompatActivity() {
         val paymentStatus: String? = response?.data?.status
         val bookingCode: String? = response?.data?.booking?.code
         val transactionDetails = response?.data?.transactionDetails
+        var airlinesImg: String? = null
 
         response?.data?.transactionDetails?.map {
             departureDate = it?.flight?.departure?.date
             departureTime = it?.flight?.departure?.time
-            departureCity = it?.flight?.departureAirport?.city
             arrivalDate = it?.flight?.arrival?.date
             arrivalTime = it?.flight?.arrival?.time
             departureAirport = it?.flight?.departureAirport?.name
             departureTerminal = it?.flight?.airline?.terminal
-            destinationCity = it?.flight?.destinationAirport?.city
             flightNumber = it?.flight?.airline?.code
             destinationAirport = it?.flight?.destinationAirport?.name
-            flightDuration = it?.flight?.flightDuration
             airlines = it?.flight?.airline?.name
             seatClass = it?.seat?.type
             passengerCategory = it?.passengerCategory
-            if (passengerCategory == "ADULT") {
-                totalPricePassengerAdult = it?.totalPrice?.times(adult)
-            } else if (passengerCategory == "CHILD") {
-                totalPricePassengerChild = it?.totalPrice?.times(children)
-            } else if (passengerCategory == "INFRANT") {
-                totalPricePassengerBaby = it?.totalPrice?.times(baby)
+            airlinesImg = it?.flight?.airline?.image
+            when (passengerCategory) {
+                "ADULT" -> {
+                    totalPricePassengerAdult = it?.totalPrice?.times(adult)
+                }
+
+                "CHILD" -> {
+                    totalPricePassengerChild = it?.totalPrice?.times(children)
+                }
+
+                "INFRANT" -> {
+                    totalPricePassengerBaby = it?.totalPrice?.times(baby)
+                }
             }
         }
+        binding.layoutFlightDetails.tvTitlePassenger.text = getString(R.string.text_empty)
+        binding.layoutFlightDetails.tvCitizenship.text = getString(R.string.text_empty)
         with(binding.layoutFlightDetails) {
+            ivAirline.load(
+                airlinesImg,
+            ) {
+                error(R.drawable.img_airline)
+            }
             tvDetailDepartureDate.text = departureDate
             tvDetailDepartureTime.text = departureTime
-            tvDetailDepartureAirport.text = "$departureAirport -"
-            tvDetailTerminal.text = departureTerminal
-            tvDetailAirline.text = "$airlines - "
+            tvDetailDepartureAirport.text =
+                getString(R.string.text_departure_terminal, departureAirport, departureTerminal)
+            tvDetailAirline.text = getString(R.string.text_detail_airlines, airlines)
             tvDetailClass.text = seatClass
             tvDetailFlightNumber.text = flightNumber
             tvDetailArrivalDate.text = arrivalDate
@@ -130,11 +207,11 @@ class FlightDetailActivity : AppCompatActivity() {
 
             transactionDetails?.forEachIndexed { index, detail ->
                 val passengerName = detail?.name ?: "Unknown"
-                val citizenship = detail?.citizenship ?: "Unknown"
+                val userPassportId = detail?.passport ?: "Unknown"
 
                 tvTitlePassenger.append(
                     "Passenger ${index + 1} : $passengerName\n" +
-                        "Citizenship : $citizenship\n",
+                        "ID : $userPassportId\n",
                 )
             }
 
@@ -168,7 +245,7 @@ class FlightDetailActivity : AppCompatActivity() {
             }
 
             if (adult > 0) {
-                tvTotalByAgeGroupAdult.text = "$adult Adult"
+                tvTotalByAgeGroupAdult.text = getString(R.string.text_adult_total, adult)
                 tvTotalPriceByAgeGroupAdult.text =
                     totalPricePassengerAdult.formatToRupiah().toString()
                 tvTotalByAgeGroupAdult.isVisible = true
@@ -179,7 +256,7 @@ class FlightDetailActivity : AppCompatActivity() {
             }
 
             if (children > 0) {
-                tvTotalByAgeGroupChild.text = "$children Child"
+                tvTotalByAgeGroupChild.text = getString(R.string.text_child_total, children)
                 tvTotalPriceByAgeGroupChild.text =
                     totalPricePassengerChild.formatToRupiah().toString()
                 tvTotalByAgeGroupChild.isVisible = true
@@ -190,7 +267,7 @@ class FlightDetailActivity : AppCompatActivity() {
             }
 
             if (baby > 0) {
-                tvTotalByAgeGroupBaby.text = "$baby Baby"
+                tvTotalByAgeGroupBaby.text = getString(R.string.text_baby_total, baby)
                 tvTotalPriceByAgeGroupBaby.text =
                     totalPricePassengerBaby.formatToRupiah().toString()
                 tvTotalByAgeGroupBaby.isVisible = true

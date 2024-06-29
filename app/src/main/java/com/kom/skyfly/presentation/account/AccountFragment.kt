@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.databinding.FragmentAccountBinding
@@ -16,6 +16,8 @@ import com.kom.skyfly.presentation.account.editprofile.BottomSheetsChangePasswor
 import com.kom.skyfly.presentation.account.editprofile.BottomSheetsEditProfile
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.utils.NoInternetException
+import com.kom.skyfly.utils.ServerErrorException
+import com.kom.skyfly.utils.UnAuthorizeException
 import com.kom.skyfly.utils.proceedWhen
 import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,6 +30,8 @@ class AccountFragment : Fragment() {
     private var email: String? = null
     private var fullName: String? = null
     private var phoneNumber: String? = null
+    private var familyName: String? = null
+
     private var id: String? = null
 
     override fun onCreateView(
@@ -76,7 +80,27 @@ class AccountFragment : Fragment() {
                     ).show()
                 },
                 doOnError = {
-                    Log.d("req-changePassword", "reqChangePassword: ${it.exception?.message}")
+                    if (it.exception is NoInternetException) {
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.no_internet_connection),
+                        )
+                    } else if (it.exception is UnAuthorizeException) {
+                        binding.csvProfile.isVisible = true
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_session_expired_please_login_again),
+                        )
+                        (activity as BaseActivity).errorHandler(it.exception)
+                    } else if (it.exception is ServerErrorException) {
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_server_error_please_try_again_later),
+                        )
+                        (activity as BaseActivity).errorHandler(it.exception)
+                    } else {
+                        Log.d("req-changePassword", "reqChangePassword: ${it.exception?.message}")
+                    }
                 },
             )
         }
@@ -84,19 +108,21 @@ class AccountFragment : Fragment() {
 
     private fun setClickListeners() {
         binding.layoutBtnProfile.tvEditProfile.setOnClickListener {
-            fullName?.let { fullName ->
-                phoneNumber?.let { phoneNumber ->
-                    id?.let { id ->
-                        doEditProfile(id, fullName, phoneNumber)
+            familyName?.let { familyNames ->
+                fullName?.let { fullName ->
+                    phoneNumber?.let { phoneNumber ->
+                        id?.let { id ->
+                            doEditProfile(id, fullName, phoneNumber, familyNames)
+                            Toast.makeText(requireContext(), "tes", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
         }
         binding.layoutBtnProfile.tvLogoutProfile.setOnClickListener {
             accountViewModel.doLogout(null)
-            (activity as BaseActivity).handleUnAuthorize()
+            (activity as BaseActivity).doLogoutHandler()
             Toasty.normal(requireContext(), "Success!", Toast.LENGTH_SHORT).show()
-            navigateToHome()
         }
         binding.layoutBtnProfile.tvChangePassword.setOnClickListener {
             doChangePassword()
@@ -110,17 +136,33 @@ class AccountFragment : Fragment() {
     private fun observeLoginStatus() {
         accountViewModel.isUserLoggedIn().observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
-                doOnSuccess = { isLoggedIn ->
+                doOnSuccess = {
                     getProfileData()
                 },
                 doOnError = {
-                    val isUserLoggedIn = it.payload?.status.toBoolean()
-                    if (!isUserLoggedIn) {
-                        (activity as BaseActivity).handleUnAuthorize()
-                        Toasty.error(requireContext(), "Session expired. Please log in again.", Toast.LENGTH_SHORT, true).show()
+                    if (it.exception is NoInternetException) {
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.no_internet_connection),
+                        )
+                    } else if (it.exception is UnAuthorizeException) {
+                        (activity as BaseActivity).errorHandler(it.exception)
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_session_expired_please_login_again),
+                        )
+                    } else if (it.exception is ServerErrorException) {
+                        (activity as BaseActivity).errorHandler(it.exception)
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_server_error_please_try_again_later),
+                        )
                     } else {
+                        Log.d(
+                            "login-status",
+                            "Error checking login status: ${it.exception?.message}",
+                        )
                     }
-                    Log.d("login-status", "Error checking login status: ${it.exception?.message}")
                 },
             )
         }
@@ -134,10 +176,12 @@ class AccountFragment : Fragment() {
                         id = data?.userId
                         email = data?.email
                         fullName = data?.fullName
+                        familyName = data?.familyName
                         phoneNumber = data?.phoneNumber
                         binding.layoutProfileUser.etEmail.setText(data?.email)
                         binding.layoutProfileUser.etFullName.setText(data?.fullName)
                         binding.layoutProfileUser.etPhoneNumber.setText(data?.phoneNumber)
+                        binding.layoutProfileUser.etFamilyName.setText(data?.familyName)
                         binding.srfProfile.isRefreshing = false
                     }
                 },
@@ -146,30 +190,36 @@ class AccountFragment : Fragment() {
                     if (it.exception is NoInternetException) {
                         binding.csvProfile.setState(
                             ContentState.ERROR_NETWORK_GENERAL,
-                            "Tidak ada internet!",
+                            getString(R.string.no_internet_connection),
                         )
-                    }
-                    val errorMessage = it.exception?.message
-                    if (errorMessage != null && errorMessage.contains("jwt expired")) {
-                        (activity as BaseActivity).handleUnAuthorize()
+                    } else if (it.exception is UnAuthorizeException) {
+                        (activity as BaseActivity).errorHandler(it.exception)
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_session_expired_please_login_again),
+                        )
+                    } else if (it.exception is ServerErrorException) {
+                        (activity as BaseActivity).errorHandler(it.exception)
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_server_error_please_try_again_later),
+                        )
                     } else {
-                        Log.d("get-profile", "getProfileData: ${it.exception?.message}")
+                        Log.d("get-profile", "getProfileData: ${it.exception}")
                     }
                 },
             )
         }
     }
 
-    private fun navigateToHome() {
-        findNavController().navigate(R.id.menu_home_tab)
-    }
-
     private fun doEditProfile(
         id: String,
         fullName: String,
         phoneNumber: String,
+        familyName: String,
     ) {
-        val bottomSheetFragment = BottomSheetsEditProfile.newInstance(id, fullName, phoneNumber)
+        val bottomSheetFragment =
+            BottomSheetsEditProfile.newInstance(id, fullName, phoneNumber, familyName)
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 

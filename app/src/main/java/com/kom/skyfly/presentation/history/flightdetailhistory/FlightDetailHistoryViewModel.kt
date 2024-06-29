@@ -1,15 +1,23 @@
 package com.kom.skyfly.presentation.history.flightdetailhistory
 
-import android.os.Bundle
 import androidx.lifecycle.ViewModel
-import com.kom.skyfly.data.model.history.Data
-import com.kom.skyfly.data.repository.history.HistoryRepository
+import androidx.lifecycle.asLiveData
+import com.kom.skyfly.data.repository.transaction.TransactionRepository
+import kotlinx.coroutines.Dispatchers
 
 class FlightDetailHistoryViewModel(
-    private val extras: Bundle?,
-    private val historyRepository: HistoryRepository,
+    private val transactionRepository: TransactionRepository,
 ) : ViewModel() {
-    val history = extras?.getParcelable<Data>(FlightDetailHistoryActivity.EXTRAS_HISTORY)
+    fun getHistoryById(id: String) =
+        transactionRepository
+            .getTransactionById(id)
+            .asLiveData(Dispatchers.IO)
 
-//    fun getDetailHistoryById(id: String) = historyRepository.getDetailHistoryById(id.toInt()).asLiveData(Dispatchers.IO)
+    fun getPaymentStatus(id: String) =
+        transactionRepository.getPaymentStatus(id)
+            .asLiveData(Dispatchers.IO)
+
+    fun cancelTransaction(id: String) =
+        transactionRepository.cancelTransaction(id)
+            .asLiveData(Dispatchers.IO)
 }

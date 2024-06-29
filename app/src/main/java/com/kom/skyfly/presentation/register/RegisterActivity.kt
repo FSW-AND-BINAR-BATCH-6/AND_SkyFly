@@ -50,8 +50,9 @@ class RegisterActivity : AppCompatActivity() {
     private fun openOtpModal(
         token: String?,
         email: String?,
+        phoneNumber: String?,
     ) {
-        val verifyOtpFragment = VerifyOtpFragment.newInstance(token, email)
+        val verifyOtpFragment = VerifyOtpFragment.newInstance(token, email, phoneNumber)
         verifyOtpFragment.show(supportFragmentManager, verifyOtpFragment.tag)
     }
 
@@ -77,26 +78,25 @@ class RegisterActivity : AppCompatActivity() {
                 result.proceedWhen(
                     doOnSuccess = {
                         binding.pbLoading.isVisible = false
-                        binding.btnRegister.isVisible = true
+                        binding.btnRegister.isEnabled = true
                         result.payload?.let {
                             val token = it.token
-                            openOtpModal(token, email)
+                            openOtpModal(token, email, phoneNumber)
                         }
                     },
                     doOnError = {
                         binding.pbLoading.isVisible = false
-                        binding.btnRegister.isVisible = true
+                        binding.btnRegister.isEnabled = true
                         if (it.exception is NoInternetException) {
                             binding.csvRegister.setState(
                                 ContentState.ERROR_NETWORK_GENERAL,
-                                "Tidak ada internet!",
+                                "No Internet Connection!",
                             )
                         } else {
                             Toasty.error(
                                 this,
                                 getString(
                                     R.string.text_register_failed,
-                                    it.exception?.message.orEmpty(),
                                 ),
                                 Toast.LENGTH_SHORT,
                                 true,
@@ -105,7 +105,7 @@ class RegisterActivity : AppCompatActivity() {
                     },
                     doOnLoading = {
                         binding.pbLoading.isVisible = true
-                        binding.btnRegister.isVisible = false
+                        binding.btnRegister.isEnabled = false
                     },
                 )
             }
@@ -118,7 +118,7 @@ class RegisterActivity : AppCompatActivity() {
             tilNoTlp.isVisible = true
             tilPassword.isVisible = true
             tilConfirmPassword.isVisible = true
-            etNoTlp.setText("62")
+            etNoTlp.setText(getString(R.string.default_phone_number_value))
         }
     }
 

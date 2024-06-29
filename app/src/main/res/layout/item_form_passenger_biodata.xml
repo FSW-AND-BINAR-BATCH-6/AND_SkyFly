@@ -33,9 +33,9 @@
                     android:text="@string/text_passenger_type"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
@@ -119,7 +119,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:thumbTint="@color/white"
                     app:track="@drawable/switch_track"
-                    app:trackTint="@color/md_theme_primaryFixed_mediumContrast"
+                    app:trackTint="@color/grey"
 
                     />
 
@@ -266,8 +266,8 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="6dp"
-                    android:enabled="false"
                     android:background="@drawable/layout_outline_border"
+                    android:enabled="false"
                     android:hint="@string/text_passport_expiry_date"
                     app:layout_constraintEnd_toStartOf="@id/iv_calendar_valid_until"
                     app:layout_constraintStart_toStartOf="parent"

@@ -14,7 +14,7 @@ Github : https://github.com/YudaSaputraa
  **/
 @Database(
     entities = [SearchHistoryEntity::class, SearchDestinationHistoryEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {

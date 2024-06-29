@@ -11,10 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-/**
-Written by Komang Yuda Saputra
-Github : https://github.com/YudaSaputraa
- **/
 class SearchFlightHistoryViewModel(private val searchHistoryRepository: SearchHistoryRepository) :
     ViewModel() {
     fun getAllSearchHistory() = searchHistoryRepository.getUserSearchHistory().asLiveData(Dispatchers.IO)

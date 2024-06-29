@@ -1,5 +1,9 @@
 package com.kom.skyfly.data.model.home.flight_detail
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class FlightDetailTicket(
     val id: String,
     val departureCity: String,
@@ -21,4 +25,4 @@ data class FlightDetailTicket(
     val code: String,
     val facilities: String,
     val departureTerminal: String,
-)
+) : Parcelable

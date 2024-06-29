@@ -4,31 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/tv_time_departure_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="07:00" />
+            tools:text="@string/text_hour" />
 
         <TextView
             android:id="@+id/tv_target_departure_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/tv_time_departure_search_result"
             app:layout_constraintStart_toStartOf="@id/tv_time_departure_search_result"
             app:layout_constraintTop_toBottomOf="@id/tv_time_departure_search_result"
-            tools:text="JKT" />
+            tools:text="@string/text_jkt" />
 
         <ImageView
             android:id="@+id/iv_arrow_search_result"
@@ -44,50 +49,54 @@
             android:id="@+id/tv_flight_duration_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/grey"
+            android:textColor="@color/darkGrey"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/iv_arrow_search_result"
             app:layout_constraintStart_toStartOf="@id/iv_arrow_search_result"
             app:layout_constraintTop_toTopOf="@id/tv_time_departure_search_result"
-            tools:text="4h 0m" />
+            tools:text="@string/text_flight_duration" />
 
         <TextView
             android:id="@+id/tv_transit_option_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/grey"
+            android:textColor="@color/darkGrey"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/iv_arrow_search_result"
             app:layout_constraintStart_toStartOf="@id/iv_arrow_search_result"
             app:layout_constraintTop_toBottomOf="@id/iv_arrow_search_result"
             app:layout_constraintTop_toTopOf="@id/tv_target_departure_search_result"
-            tools:text="Direct" />
+            tools:text="@string/text_direct" />
 
         <TextView
             android:id="@+id/tv_time_arrival_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/iv_arrow_search_result"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="11:00" />
+            tools:text="@string/text_hour" />
 
         <TextView
             android:id="@+id/tv_target_arrival_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/tv_time_arrival_search_result"
             app:layout_constraintStart_toStartOf="@id/tv_time_arrival_search_result"
             app:layout_constraintTop_toBottomOf="@id/tv_time_arrival_search_result"
-            tools:text="MLB" />
+            tools:text="@string/text_mlb" />
 
         <TextView
             android:id="@+id/tv_price_search_result"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:textColor="@color/md_theme_primary"
-            android:textSize="22sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_time_arrival_search_result"
@@ -124,17 +133,20 @@
 
         <ImageView
             android:id="@+id/iv_ic_departure_bag"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             android:src="@drawable/ic_departure_bag"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_airline_search_result"
             app:layout_constraintTop_toBottomOf="@id/tv_airline_search_result" />
 
         <ImageView
             android:id="@+id/iv_ic_expand_search_result"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:rotation="270"
             android:src="@drawable/ic_expand"
             app:layout_constraintBottom_toBottomOf="@id/iv_ic_departure_bag"
             app:layout_constraintEnd_toEndOf="@id/tv_price_search_result"

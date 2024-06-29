@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_marginBottom="8dp">
 
     <TextView
         android:id="@+id/tv_payment_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:background="@drawable/btn_rounded"
         android:backgroundTint="@color/md_theme_error"
-        android:layout_marginHorizontal="8dp"
         android:paddingHorizontal="16dp"
         android:paddingVertical="4dp"
-        android:text="@string/text_unpaid"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/text_unpaid" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_flight_details"
         android:layout_width="match_parent"
-       android:layout_marginHorizontal="8dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
@@ -44,7 +45,20 @@
                 android:text="@string/text_title_booking_code"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_payment_code_title" />
+
+            <TextView
+                android:id="@+id/tv_payment_code_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily=""
+                android:text="@string/text_va_number"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_detail_booking_code"
@@ -59,15 +73,29 @@
                 app:layout_constraintTop_toTopOf="@id/tv_detail_title_booking_code" />
 
             <TextView
+                android:id="@+id/tv_va_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/text_example_booking_code"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@id/tv_payment_code_title"
+                app:layout_constraintTop_toTopOf="@id/tv_payment_code_title"
+                tools:visibility="visible" />
+
+            <TextView
                 android:id="@+id/tv_detail_departure_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/text_time"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_title_booking_code" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_title_booking_code"
+                tools:text="@string/text_time" />
 
             <TextView
                 android:id="@+id/tv_detail_title_departure"
@@ -85,32 +113,32 @@
                 android:id="@+id/tv_detail_departure_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_date"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_time" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_time"
+                tools:text="@string/text_date" />
 
             <TextView
                 android:id="@+id/tv_detail_departure_airport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/text_example_airport"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_date" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_date"
+                tools:text="@string/text_example_airport" />
 
             <TextView
                 android:id="@+id/tv_detail_terminal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="@string/text_example_terminal"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/tv_detail_departure_airport"
-                app:layout_constraintTop_toTopOf="@id/tv_detail_departure_airport" />
+                app:layout_constraintTop_toTopOf="@id/tv_detail_departure_airport"
+                tools:text="@string/text_example_terminal" />
 
             <View
                 android:id="@+id/v_line_1"
@@ -136,32 +164,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_detail_airline"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/iv_airline"
-                app:layout_constraintTop_toBottomOf="@id/v_line_1" />
+                app:layout_constraintTop_toBottomOf="@id/v_line_1"
+                tools:text="@string/text_detail_airline" />
 
             <TextView
                 android:id="@+id/tv_detail_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="@string/text_example_class"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/tv_detail_airline"
-                app:layout_constraintTop_toTopOf="@id/tv_detail_airline" />
+                app:layout_constraintTop_toTopOf="@id/tv_detail_airline"
+                tools:text="@string/text_example_class" />
 
             <TextView
                 android:id="@+id/tv_detail_flight_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_example_flight_number"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_airline"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_airline" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_airline"
+                tools:text="@string/text_example_flight_number" />
 
             <TextView
                 android:id="@+id/tv_title_information"
@@ -178,44 +206,22 @@
                 android:id="@+id/tv_title_passenger"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/text_title_passenger"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_airline"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_information" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title_information"
+                tools:text="@string/text_title_passenger" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv_passenger_name"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="8dp"-->
-<!--                android:text="@string/text_example_passenger_name"-->
-<!--                android:textColor="@color/md_theme_primary"-->
-<!--                android:textSize="16sp"-->
-<!--                app:layout_constraintStart_toEndOf="@id/tv_title_passenger"-->
-<!--                app:layout_constraintTop_toTopOf="@id/tv_title_passenger" />-->
 
             <TextView
-                android:id="@+id/tv_title_id"
+                android:id="@+id/tv_citizenship"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/text_title_id"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_airline"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_passenger" />
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv_passenger_id"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="8dp"-->
-<!--                android:text="@string/text_example_id_passenger"-->
-<!--                android:textColor="@color/md_theme_primary"-->
-<!--                android:textSize="16sp"-->
-<!--                app:layout_constraintStart_toEndOf="@id/tv_title_id"-->
-<!--                app:layout_constraintTop_toTopOf="@id/tv_title_id" />-->
-
+                app:layout_constraintTop_toBottomOf="@id/tv_title_passenger"
+                tools:text="@string/text_title_id" />
 
             <View
                 android:id="@+id/v_line_2"
@@ -224,27 +230,27 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/grey"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_id" />
+                app:layout_constraintTop_toBottomOf="@id/tv_citizenship" />
 
             <TextView
                 android:id="@+id/tv_detail_arrival_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_arrival_time"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/v_line_2" />
+                app:layout_constraintTop_toBottomOf="@id/v_line_2"
+                tools:text="@string/text_arrival_time" />
 
             <TextView
                 android:id="@+id/tv_detail_arrival_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_date"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_arrival_time" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_arrival_time"
+                tools:text="@string/text_date" />
 
             <TextView
                 android:id="@+id/tv_detail_destination_airport"
@@ -252,12 +258,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/text_example_destination_airport"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_arrival_date" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_arrival_date"
+                tools:text="@string/text_example_destination_airport" />
 
             <TextView
                 android:id="@+id/tv_detail_title_arrival"
@@ -279,11 +285,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginHorizontal="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cv_flight_details">
+        app:layout_constraintTop_toBottomOf="@id/cv_flight_details"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -305,57 +313,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_total_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_price_details" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title_price_details"
+                tools:text="@string/text_total_by_age_group" />
 
             <TextView
                 android:id="@+id/tv_total_by_age_group_child"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_2_children"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
-                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_adult" />
+                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_adult"
+                tools:text="@string/text_2_children" />
 
             <TextView
                 android:id="@+id/tv_total_by_age_group_baby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_2_baby"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_title_price_details"
-                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_child" />
+                app:layout_constraintTop_toBottomOf="@id/tv_total_by_age_group_child"
+                tools:text="@string/text_2_baby" />
 
             <TextView
                 android:id="@+id/tv_total_price_by_age_group_baby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_total_price_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_baby" />
+                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_baby"
+                tools:text="@string/text_total_price_by_age_group" />
 
             <TextView
                 android:id="@+id/tv_total_price_by_age_group_adult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_total_price_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_adult" />
+                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_adult"
+                tools:text="@string/text_total_price_by_age_group" />
 
             <TextView
                 android:id="@+id/tv_total_price_by_age_group_child"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_total_price_by_age_group"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_child" />
+                app:layout_constraintTop_toTopOf="@id/tv_total_by_age_group_child"
+                tools:text="@string/text_total_price_by_age_group" />
 
 
             <TextView
@@ -372,10 +380,10 @@
                 android:id="@+id/tv_tax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_example_tax"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_title_tax" />
+                app:layout_constraintTop_toTopOf="@id/tv_title_tax"
+                tools:text="@string/text_example_tax" />
 
             <TextView
                 android:id="@+id/tv_title_total"
@@ -392,11 +400,11 @@
                 android:id="@+id/tv_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_total_price"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_title_total" />
+                app:layout_constraintTop_toTopOf="@id/tv_title_total"
+                tools:text="@string/text_total_price" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

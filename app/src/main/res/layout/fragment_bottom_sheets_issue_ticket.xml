@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:cardCornerRadius="16dp"
     app:cardElevation="0dp"
-    tools:context=".presentation.bottomsheetsdialog.BottomSheetsDialogFragment">
+    tools:context=".presentation.bottomsheetsdialog.NotLoginBottomSheets">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -55,6 +55,7 @@
             android:textSize="18sp"
             android:fontFamily="@font/font_open_sans_semi_bold"
             app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btn_issue_ticket"
             app:layout_constraintTop_toBottomOf="@id/iv_main_img" />
@@ -68,7 +69,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="32dp"
             android:background="@drawable/btn_rounded"
-            android:text="@string/text_issue_ticket"
+            android:text="@string/text_ticket_details"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

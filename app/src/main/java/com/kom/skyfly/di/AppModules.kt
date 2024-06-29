@@ -1,13 +1,10 @@
 package com.kom.skyfly.di
 
 import android.content.SharedPreferences
-import android.os.Bundle
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kom.skyfly.core.BaseViewModel
 import com.kom.skyfly.data.datasource.auth.AuthDataSource
 import com.kom.skyfly.data.datasource.auth.AuthDataSourceImpl
-import com.kom.skyfly.data.datasource.destinationfavorite.DestinationFavoriteDataSource
-import com.kom.skyfly.data.datasource.destinationfavorite.DestinationFavoriteDataSourceImpl
 import com.kom.skyfly.data.datasource.flightseat.FlightSeatDataSource
 import com.kom.skyfly.data.datasource.flightseat.FlightSeatDataSourceImpl
 import com.kom.skyfly.data.datasource.history.HistoryDataSource
@@ -26,14 +23,14 @@ import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSource
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSourceImpl
 import com.kom.skyfly.data.repository.auth.AuthRepository
 import com.kom.skyfly.data.repository.auth.AuthRepositoryImpl
-import com.kom.skyfly.data.repository.destinationfavorite.DestinationFavoriteRepository
-import com.kom.skyfly.data.repository.destinationfavorite.DestinationFavoriteRepositoryImpl
 import com.kom.skyfly.data.repository.flightseat.FlightSeatRepository
 import com.kom.skyfly.data.repository.flightseat.FlightSeatRepositoryImpl
 import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.data.repository.history.HistoryRepositoryImpl
 import com.kom.skyfly.data.repository.home.airport.AirportRepository
 import com.kom.skyfly.data.repository.home.airport.AirportRepositoryImpl
+import com.kom.skyfly.data.repository.home.destination_favourite.DestinationFavouriteRepository
+import com.kom.skyfly.data.repository.home.destination_favourite.DestinationFavouriteRepositoryImpl
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepositoryImpl
 import com.kom.skyfly.data.repository.notification.NotificationRepository
@@ -57,7 +54,6 @@ import com.kom.skyfly.presentation.checkout.bookersbiodata.BookersBiodataViewMod
 import com.kom.skyfly.presentation.checkout.checkoutticket.CheckoutTicketViewModel
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatViewModel
 import com.kom.skyfly.presentation.checkout.flightdetail.FlightDetailViewModel
-import com.kom.skyfly.presentation.checkout.passengerbiodata.PassengerBiodataViewModel
 import com.kom.skyfly.presentation.forgetpassword.ForgetPasswordViewModel
 import com.kom.skyfly.presentation.history.HistoryViewModel
 import com.kom.skyfly.presentation.history.flightdetailhistory.FlightDetailHistoryViewModel
@@ -66,6 +62,7 @@ import com.kom.skyfly.presentation.home.HomeViewModel
 import com.kom.skyfly.presentation.home.detail_home.DetailHomeViewModel
 import com.kom.skyfly.presentation.home.search.SearchViewModel
 import com.kom.skyfly.presentation.home.search_result.SearchResultViewModel
+import com.kom.skyfly.presentation.home.seatclass.SeatClassViewModel
 import com.kom.skyfly.presentation.login.LoginViewModel
 import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.presentation.notification.NotificationViewModel
@@ -74,7 +71,6 @@ import com.kom.skyfly.presentation.register.RegisterViewModel
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
 import com.kom.skyfly.utils.SharedPreferenceUtils
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -93,13 +89,12 @@ object AppModules {
         module {
             single<AuthDataSource> { AuthDataSourceImpl(get()) }
             single<UserPrefDataSource> { UserPrefDataSourceImpl(get()) }
-            single<HistoryDataSource> { HistoryDataSourceImpl() }
+            single<HistoryDataSource> { HistoryDataSourceImpl(get()) }
             single<NotificationDataSource> { NotificationDataSourceImpl(get()) }
             single<ProfileDataSource> { ProfileDataSourceImpl(get()) }
             single<SearchHistoryDataSource> { SearchHistoryDataSourceImpl(get()) }
             single<HomeDataSource> { HomeDataSourceImpl(get()) }
             single<FlightSeatDataSource> { FlightSeatDataSourceImpl(get()) }
-            single<DestinationFavoriteDataSource> { DestinationFavoriteDataSourceImpl() }
             single<TransactionDataSource> { TransactionDataSourceImpl(get()) }
         }
 
@@ -124,9 +119,9 @@ object AppModules {
             single<HistoryRepository> { HistoryRepositoryImpl(get()) }
             single<ProfileRepository> { ProfileRepositoryImpl(get()) }
             single<SearchHistoryRepository> { SearchHistoryRepositoryImpl(get()) }
-            single<AirportRepository> { AirportRepositoryImpl(get()) }
+            single<AirportRepository> { AirportRepositoryImpl(get(), get()) }
             single<FlightSeatRepository> { FlightSeatRepositoryImpl(get()) }
-            single<DestinationFavoriteRepository> { DestinationFavoriteRepositoryImpl(get()) }
+            single<DestinationFavouriteRepository> { DestinationFavouriteRepositoryImpl(get()) }
             single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
             single<TransactionRepository> { TransactionRepositoryImpl(get()) }
         }
@@ -145,20 +140,15 @@ object AppModules {
             viewModelOf(::AccountViewModel)
             viewModelOf(::NotificationViewModel)
             viewModelOf(::HistoryViewModel)
+            viewModelOf(::SeatClassViewModel)
             viewModelOf(::DetailHomeViewModel)
             viewModelOf(::SearchFlightHistoryViewModel)
             viewModelOf(::BaseViewModel)
             viewModelOf(::SearchViewModel)
             viewModelOf(::ChooseSeatViewModel)
-            viewModel { (extras: Bundle?) ->
-                FlightDetailHistoryViewModel(
-                    extras = extras,
-                    historyRepository = get(),
-                )
-            }
+            viewModelOf(::FlightDetailHistoryViewModel)
             viewModelOf(::SharedViewModelEditProfile)
             viewModelOf(::BookersBiodataViewModel)
-            viewModelOf(::PassengerBiodataViewModel)
             viewModelOf(::CheckoutTicketViewModel)
             viewModelOf(::FlightDetailViewModel)
         }

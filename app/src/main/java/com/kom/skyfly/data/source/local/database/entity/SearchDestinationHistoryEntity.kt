@@ -9,5 +9,5 @@ data class SearchDestinationHistoryEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,
     @ColumnInfo(name = "search_history")
-    var searchHistory: String,
+    var searchDestinationHistory: String,
 )

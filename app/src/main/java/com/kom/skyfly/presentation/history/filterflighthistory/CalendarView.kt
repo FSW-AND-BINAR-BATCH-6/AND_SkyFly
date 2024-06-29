@@ -34,6 +34,19 @@ class CalendarView : BottomSheetDialogFragment() {
 
     private val dateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale("id", "ID"))
 
+    fun setDateSelectedListener(listener: DateSelectedListener) {
+        dateSelectedListener = listener
+    }
+
+    private var dateSelectedListener: DateSelectedListener? = null
+
+    interface DateSelectedListener {
+        fun onDateSelected(
+            startDate: LocalDate?,
+            endDate: LocalDate?,
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,10 +63,7 @@ class CalendarView : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         setOnClickListener()
 
-        val maxPeekHeight =
-            resources.getDimensionPixelSize(
-                R.dimen.max_bottom_sheet_height,
-            )
+        val maxPeekHeight = resources.getDimensionPixelSize(R.dimen.max_bottom_sheet_height)
         setBottomSheetMaxHeight(maxPeekHeight)
 
         val daysOfWeek = DayOfWeek.values()
@@ -110,7 +120,6 @@ class CalendarView : BottomSheetDialogFragment() {
                             textView.visibility = View.INVISIBLE
                         }
                     }
-
                     textView.alpha = if (data.position == DayPosition.MonthDate) 1f else 0.3f
                 }
             }
@@ -151,14 +160,21 @@ class CalendarView : BottomSheetDialogFragment() {
 
         binding.ivPreviousMonth.setOnClickListener {
             binding.calendarView.smoothScrollToMonth(
-                binding.calendarView.findFirstVisibleMonth()?.yearMonth?.minusMonths(1) ?: YearMonth.now().minusMonths(1),
+                binding.calendarView.findFirstVisibleMonth()?.yearMonth?.minusMonths(1)
+                    ?: YearMonth.now().minusMonths(1),
             )
         }
 
         binding.ivNextMonth.setOnClickListener {
             binding.calendarView.smoothScrollToMonth(
-                binding.calendarView.findFirstVisibleMonth()?.yearMonth?.plusMonths(1) ?: YearMonth.now().plusMonths(1),
+                binding.calendarView.findFirstVisibleMonth()?.yearMonth?.plusMonths(1)
+                    ?: YearMonth.now().plusMonths(1),
             )
+        }
+
+        binding.btnSave.setOnClickListener {
+            dateSelectedListener?.onDateSelected(startDate, endDate)
+            dismiss()
         }
     }
 
@@ -191,7 +207,7 @@ class CalendarView : BottomSheetDialogFragment() {
     }
 
     inner class DayViewContainer(view: View) : ViewContainer(view) {
-        val textView = view.findViewById<TextView>(R.id.calendarDayText)
+        val textView: TextView = view.findViewById(R.id.calendarDayText)
         lateinit var day: CalendarDay
 
         init {
@@ -212,6 +228,6 @@ class CalendarView : BottomSheetDialogFragment() {
     }
 
     inner class MonthViewContainer(view: View) : ViewContainer(view) {
-        val titlesContainer = view as ViewGroup
+        val titlesContainer: ViewGroup = view as ViewGroup
     }
 }

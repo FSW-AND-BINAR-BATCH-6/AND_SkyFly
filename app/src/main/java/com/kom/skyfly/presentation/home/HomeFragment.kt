@@ -1,5 +1,6 @@
 package com.kom.skyfly.presentation.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.kom.skyfly.R
-import com.kom.skyfly.data.model.destinationfavorite.DestinationFavorite
+import com.kom.skyfly.data.model.home.destination_favourite.DestinationFavourite
 import com.kom.skyfly.databinding.FragmentHomeBinding
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.home.adapter.DestinationFavoriteAdapter
@@ -16,11 +17,11 @@ import com.kom.skyfly.presentation.home.calendar.HomeCalendarFragment
 import com.kom.skyfly.presentation.home.passenger.PassengerFragment
 import com.kom.skyfly.presentation.home.search.SearchFragment
 import com.kom.skyfly.presentation.home.search_result.SearchResultActivity
+import com.kom.skyfly.presentation.home.seatclass.SeatClassFragment
 import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -31,9 +32,20 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModel()
     private val sharedViewModel: MainViewModel by activityViewModel()
-    private val destinationAdapter: DestinationFavoriteAdapter by lazy { DestinationFavoriteAdapter {} }
     private var source: String = ""
     private var dest: String = ""
+    private var departureAirport: String? = null
+    private var arrivalAirport: String? = null
+    private val destinationAdapter: DestinationFavoriteAdapter by lazy {
+        DestinationFavoriteAdapter { item ->
+            item.let {
+                binding.layoutSelectDestination.tvStartFrom.text = it.departureCity
+                binding.layoutSelectDestination.tvEndDestination.text = it.arrivalCity
+                departureAirport = it.departureCity
+                arrivalAirport = it.arrivalCity
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,50 +69,57 @@ class HomeFragment : Fragment() {
         getDestinationFavoriteData()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun observeDataDestination() {
         sharedViewModel.sourceDestination.observe(viewLifecycleOwner) { destination ->
             destination?.let {
                 if (sharedViewModel.isStartDestination!!) {
                     binding.layoutSelectDestination.tvStartFrom.text = it.city
                     source = binding.layoutSelectDestination.tvStartFrom.text.toString()
+                    departureAirport = it.city
                 } else {
                     binding.layoutSelectDestination.tvEndDestination.text = it.city
                     dest = binding.layoutSelectDestination.tvEndDestination.text.toString()
+                    arrivalAirport = it.city
                 }
             }
+            validateFields()
         }
         sharedViewModel.startTime.observe(viewLifecycleOwner) { startTIme ->
             startTIme?.let {
                 binding.tvDeparture.text = it
             }
+            validateFields()
         }
         sharedViewModel.returnTime.observe(viewLifecycleOwner) { returnTime ->
             returnTime?.let {
                 binding.tvReturn.text = it
             }
+            validateFields()
         }
         sharedViewModel.passengerCountLiveData.observe(viewLifecycleOwner) { totalPassenger ->
             totalPassenger?.let {
-                binding.tvPassengers.text = it.toString()
+                binding.tvPassengers.text = "$it Passengers"
             }
+            validateFields()
+        }
+        sharedViewModel.seatClass.observe(viewLifecycleOwner) { seatClass ->
+            seatClass?.let {
+                binding.tvSeats.text = it
+            }
+            validateFields()
         }
     }
 
-    fun convertDateFormat(inputDate: String): String? {
-        // Define the formatter for the input date format
+    private fun convertDateFormat(inputDate: String): String? {
         val inputFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale("id", "ID"))
 
-        // Define the formatter for the output date format
         val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
         return try {
-            // Parse the input date string to a LocalDate object
             val date = LocalDate.parse(inputDate, inputFormatter)
-
-            // Format the LocalDate object to the output format
             date.format(outputFormatter)
         } catch (e: DateTimeParseException) {
-            // Handle the exception if the input date string is not in the expected format
             e.printStackTrace()
             null
         }
@@ -132,15 +151,26 @@ class HomeFragment : Fragment() {
             passengerBottomSheet.show(parentFragmentManager, passengerBottomSheet.tag)
         }
         binding.btnSearchFlight.setOnClickListener {
-            val departureAirport = binding.layoutSelectDestination.tvStartFrom.text
-            val arrivalAirport = binding.layoutSelectDestination.tvEndDestination.text
+            val babyCount = sharedViewModel.passengerBabyCountLiveData
+            val adultCount = sharedViewModel.passengerAdultCountLiveData
+            val childCount = sharedViewModel.passengerChildCountLiveData
+            val seatClass = sharedViewModel.seatClass
+            val roundTrip = sharedViewModel.roundTrip
+            val returnDate = convertDateFormat(binding.tvReturn.text.toString())
             val departureTime = convertDateFormat(binding.tvDeparture.text.toString())
 
             val intent =
                 Intent(requireContext(), SearchResultActivity::class.java).apply {
                     putExtra("EXTRA_DEPARTURE_AIRPORT", departureAirport)
                     putExtra("EXTRA_ARRIVAL_AIRPORT", arrivalAirport)
+                    putExtra("EXTRA_RETURN_TIME", returnDate)
                     putExtra("EXTRA_DEPARTURE_TIME", departureTime)
+                    putExtra("EXTRA_BABY_COUNT", babyCount.value)
+                    putExtra("EXTRA_ADULT_COUNT", adultCount.value)
+                    putExtra("EXTRA_CHILD_COUNT", childCount.value)
+                    putExtra("EXTRA_SEAT_CLASS", seatClass.value)
+                    putExtra("EXTRA_TOTAL_PASSENGER", sharedViewModel.passengerCountLiveData.value)
+                    putExtra("EXTRA_ROUND_TRIP", roundTrip.value)
                 }
             startActivity(intent)
         }
@@ -151,6 +181,24 @@ class HomeFragment : Fragment() {
             source = dest
             dest = temp
         }
+        binding.tvSeats.setOnClickListener {
+            val seatClassBottomSheet = SeatClassFragment()
+            seatClassBottomSheet.show(parentFragmentManager, seatClassBottomSheet.tag)
+        }
+    }
+
+    private fun validateFields() {
+        val isSourceValid = binding.layoutSelectDestination.tvStartFrom.text.toString().isNotEmpty()
+        val isDestinationValid =
+            binding.layoutSelectDestination.tvEndDestination.text.toString().isNotEmpty()
+        val isDepartureTimeValid = binding.tvDeparture.text.toString().isNotEmpty()
+        val isReturnTimeValid =
+            !binding.tvReturn.isEnabled || binding.tvReturn.text.toString().isNotEmpty()
+        val isPassengerCountValid = sharedViewModel.passengerCountLiveData.value != null
+        val isSeatClassValid = sharedViewModel.seatClass.value != null
+
+        binding.btnSearchFlight.isEnabled =
+            isSourceValid && isDestinationValid && isDepartureTimeValid && isReturnTimeValid && isPassengerCountValid && isSeatClassValid
     }
 
     private fun getDestinationFavoriteData() {
@@ -187,18 +235,24 @@ class HomeFragment : Fragment() {
     private fun setRoundTrip() {
         binding.btnSwitchRoundtrip.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                sharedViewModel.setRoundTrip(true)
                 binding.tvReturn.isEnabled = true
-                binding.tvReturn.text = "Select Dates"
-                binding.tvReturn.setTextColor(getResources().getColor(R.color.md_theme_primary))
+                binding.tvReturn.text = getString(R.string.text_select_dates)
+                val trackDrawable = binding.btnSwitchRoundtrip.trackDrawable
+                trackDrawable?.setTint(resources.getColor(R.color.md_theme_primaryFixed_mediumContrast))
+                binding.tvReturn.setTextColor(resources.getColor(R.color.md_theme_primary))
             } else {
+                sharedViewModel.setRoundTrip(false)
                 binding.tvReturn.isEnabled = false
-                binding.tvReturn.text = "-"
-                binding.tvReturn.setTextColor(getResources().getColor(R.color.darkGrey))
+                binding.tvReturn.text = getString(R.string.text_strips)
+                binding.tvReturn.setTextColor(resources.getColor(R.color.darkGrey))
+                val trackDrawable = binding.btnSwitchRoundtrip.trackDrawable
+                trackDrawable?.setTint(resources.getColor(R.color.grey))
             }
         }
     }
 
-    private fun bindDestinationFavoriteList(data: List<DestinationFavorite>) {
+    private fun bindDestinationFavoriteList(data: List<DestinationFavourite>) {
         destinationAdapter.submitData(data)
     }
 
@@ -206,9 +260,5 @@ class HomeFragment : Fragment() {
         binding.rvCategory.apply {
             adapter = destinationAdapter
         }
-    }
-
-    companion object {
-        const val EXTRAS_DESTINATION = "EXTRAS_DESTINATION"
     }
 }

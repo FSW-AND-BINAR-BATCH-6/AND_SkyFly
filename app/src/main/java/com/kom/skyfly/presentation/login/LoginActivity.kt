@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
             result.proceedWhen(
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
-                    binding.btnLogin.isVisible = true
+                    binding.btnLogin.isEnabled = true
                     it.payload?.let { payload ->
                         val token = payload.token
                         loginViewModel.saveUserToken(token)
@@ -84,7 +84,10 @@ class LoginActivity : AppCompatActivity() {
                 doOnError = {
                     binding.pbLoading.isVisible = false
                     if (it.exception is NoInternetException) {
-                        binding.csvLogin.setState(ContentState.ERROR_NETWORK_GENERAL, "Tidak ada internet!")
+                        binding.csvLogin.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            "Tidak ada internet!",
+                        )
                     } else {
                         Toasty.error(
                             this@LoginActivity,
@@ -93,11 +96,11 @@ class LoginActivity : AppCompatActivity() {
                             true,
                         ).show()
                     }
-                    binding.btnLogin.isVisible = true
+                    binding.btnLogin.isEnabled = true
                 },
                 doOnLoading = {
                     binding.pbLoading.isVisible = true
-                    binding.btnLogin.isVisible = false
+                    binding.btnLogin.isEnabled = false
                 },
             )
         }

@@ -104,6 +104,39 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/tv_family_name_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/font_open_sans_semi_bold"
+                android:text="@string/text_family_name"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_phone_number" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_family_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconCheckable="true"
+                app:endIconDrawable="@drawable/ic_checklist"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/green"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_family_name_title"
+                tools:visibility="visible">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_family_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/text_hint_enter_family_name"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <FrameLayout
                 android:id="@+id/fl_btn_reset"
                 android:layout_width="match_parent"
@@ -111,7 +144,7 @@
                 android:paddingVertical="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_phone_number">
+                app:layout_constraintTop_toBottomOf="@id/til_family_name">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_submit"

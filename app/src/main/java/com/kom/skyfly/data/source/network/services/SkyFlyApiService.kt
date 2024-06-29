@@ -7,15 +7,20 @@ import com.kom.skyfly.data.source.local.pref.UserPreference
 import com.kom.skyfly.data.source.network.model.flightseat.FlightSeatResponse
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordRequest
 import com.kom.skyfly.data.source.network.model.forgetpassword.ForgetPasswordResponse
+import com.kom.skyfly.data.source.network.model.history.HistoryResponse
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
+import com.kom.skyfly.data.source.network.model.home.favourite_destination.FavouriteDestinationResponse
 import com.kom.skyfly.data.source.network.model.home.flight.FlightResponse
 import com.kom.skyfly.data.source.network.model.home.flight_detail.FlightDetailResponse
 import com.kom.skyfly.data.source.network.model.login.LoginRequest
 import com.kom.skyfly.data.source.network.model.login.LoginResponse
 import com.kom.skyfly.data.source.network.model.notification.NotificationResponse
+import com.kom.skyfly.data.source.network.model.paymentstatus.PaymentStatusResponse
 import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
+import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpSmsRequest
+import com.kom.skyfly.data.source.network.model.transaction.cancel.CancelTransactionResponse
 import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
 import com.kom.skyfly.data.source.network.model.transaction.response.TransactionResponse
@@ -72,22 +77,29 @@ interface SkyFlyApiService {
     @GET("api/v1/flights/")
     suspend fun getAllFlights(
         @Query("search") search: String? = null,
-        @Query("page") page: Int,
-        @Query("departureAirport") departureAirport: String,
-        @Query("arrivalAirport") arrivalAirport: String,
-        @Query("departureDate") departureDate: String,
+        @Query("page") page: Int?,
+        @Query("limit") limit: Int? = 10000,
+        @Query("departureAirport") departureAirport: String?,
+        @Query("arrivalAirport") arrivalAirport: String?,
+        @Query("departureDate") departureDate: String?,
+        @Query("returnDate") returnDate: String?,
         @Query("arrivalDate") arrivalDate: String? = null,
-        @Query("seatClass") seatClass: String,
+        @Query("seatClass") seatClass: String?,
+        @Query("adult") adult: Int? = 0,
+        @Query("children") children: Int? = 0,
+        @Query("baby") baby: Int? = 0,
+        @Query("sort") sort: String? = null,
     ): FlightResponse
 
     @GET("api/v1/flights/{id}")
     suspend fun getDetailFlightById(
         @Path("id") id: String,
-        @Query("seatClass") seatClass: String,
+        @Query("seatClass") seatClass: String?,
     ): FlightDetailResponse
 
     @GET("api/v1/airports/")
     suspend fun getAllAirports(
+        @Query("city") city: String?,
         @Query("showall") showAll: Boolean = true,
     ): AirportResponse
 
@@ -96,6 +108,9 @@ interface SkyFlyApiService {
         @Path("id") id: String,
         @Query("limit") limit: Int? = 5000,
     ): FlightSeatResponse
+
+    @GET("api/v1/flights/favorite-destination")
+    suspend fun getDestinationFavourite(): FavouriteDestinationResponse
 
     @GET("api/v1/auth/me")
     suspend fun getUserProfile(): UserProfileResponse
@@ -124,6 +139,30 @@ interface SkyFlyApiService {
         @Path("id") id: String,
     ): TransactionDetailResponse
 
+    @POST("api/v1/auth/verified/resendSMS-otp")
+    suspend fun resendOtpSms(
+        @Query("token") token: String,
+        @Body resendOtpRequest: ResendOtpSmsRequest,
+    ): ResendOtpResponse
+
+    @GET("api/v1/transactions")
+    suspend fun getAllTransactionHistory(
+        @Query("limit") limit: Int?,
+        @Query("startDate") startDate: String?,
+        @Query("endDate") endDate: String?,
+        @Query("flightCode") flightCode: String?,
+    ): HistoryResponse
+
+    @GET("api/v1/transactions/status/{id}")
+    suspend fun getPaymentStatus(
+        @Path("id") id: String,
+    ): PaymentStatusResponse
+
+    @POST("api/v1/transactions/cancel/{id}")
+    suspend fun cancelTransaction(
+        @Path("id") id: String,
+    ): CancelTransactionResponse
+
     companion object {
         @JvmStatic
         operator fun invoke(
@@ -141,7 +180,7 @@ interface SkyFlyApiService {
                     .addInterceptor { chain ->
                         val original: Request = chain.request()
                         val token = userPreference.getUserToken()
-//                        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUxOTM5OGQ4LTI3YTUtNDRkMi1iMzYxLTVjNDI2NjU0YjBiOCIsIm5hbWUiOiJrb21hbmd5dWRhIiwiZW1haWwiOiJ5dWRhc2FwdXRyYTA4MkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjYyODc0Njc0NjQ3ODciLCJpYXQiOjE3MTgwMzQzMzksImV4cCI6MTcxODEyMDczOX0.r_vTbQwhr3NMZdGzfGyveF6rE-E1LOCC0BGv45dhNAw"
+                        // val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUxOTM5OGQ4LTI3YTUtNDRkMi1iMzYxLTVjNDI2NjU0YjBiOCIsIm5hbWUiOiJrb21hbmd5dWRhIiwiZW1haWwiOiJ5dWRhc2FwdXRyYTA4MkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjYyODc0Njc0NjQ3ODciLCJpYXQiOjE3MTgwMzQzMzksImV4cCI6MTcxODEyMDczOX0.r_vTbQwhr3NMZdGzfGyveF6rE-E1LOCC0BGv45dhNAw"
                         val requestBuilder: Request.Builder =
                             original.newBuilder()
                                 .addHeader("accept", "application/json")

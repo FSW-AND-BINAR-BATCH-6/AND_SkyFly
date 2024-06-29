@@ -8,13 +8,13 @@ import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
+import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
 import com.kom.skyfly.data.model.passenger.PassengerData
 import com.kom.skyfly.databinding.ActivityPassengerBiodataBinding
 import com.kom.skyfly.presentation.checkout.chooseseat.ChooseSeatActivity
 import com.kom.skyfly.presentation.checkout.passengerbiodata.adapter.PassengerItem
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Calendar
 
 class PassengerBiodataActivity : BaseActivity() {
@@ -22,7 +22,6 @@ class PassengerBiodataActivity : BaseActivity() {
     private var passengerDataList: List<PassengerData> = emptyList()
 
     private val groupAdapter = GroupAdapter<GroupieViewHolder>()
-    private val passengerBiodataViewModel: PassengerBiodataViewModel by viewModel()
 
     private var email: String? = null
     private var fullNames: String? = null
@@ -31,18 +30,20 @@ class PassengerBiodataActivity : BaseActivity() {
     private var adult = 0
     private var children = 0
     private var baby = 0
+    private var flightDetailTicket: FlightDetailTicket? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPassengerBiodataBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        flightDetailTicket = intent.getParcelableExtra("EXTRAS_FLIGHT_DATA")
         fullNames = intent.getStringExtra("EXTRAS_FULL_NAME")
         familyName = intent.getStringExtra("EXTRAS_FAMILY_NAME")
         email = intent.getStringExtra("EXTRAS_EMAIL")
         phoneNumber = intent.getStringExtra("EXTRAS_PHONE_NUMBER")
-        adult = intent.getIntExtra("EXTRAS_ADULT", 0)
-        children = intent.getIntExtra("EXTRAS_CHILD", 0)
-        baby = intent.getIntExtra("EXTRAS_BABY", 0)
+        adult = intent.getIntExtra("EXTRA_ADULT_COUNT", 0)
+        children = intent.getIntExtra("EXTRA_CHILD_COUNT", 0)
+        baby = intent.getIntExtra("EXTRA_BABY_COUNT", 0)
         setUpRecyclerView()
         setTitleHeader()
         handleNextButtonClick()
@@ -56,10 +57,6 @@ class PassengerBiodataActivity : BaseActivity() {
     }
 
     private fun setUpRecyclerView() {
-        adult = 1
-        children = 0
-        baby = 0
-
         binding.rvPassengerForm.layoutManager = LinearLayoutManager(this)
         binding.rvPassengerForm.adapter = groupAdapter
 
@@ -76,6 +73,7 @@ class PassengerBiodataActivity : BaseActivity() {
                     i < adult + children -> "CHILD"
                     else -> "INFRANT"
                 }
+
             groupAdapter.add(
                 PassengerItem(
                     passengerType,
@@ -125,6 +123,7 @@ class PassengerBiodataActivity : BaseActivity() {
             }
 
             val intent = Intent(this, ChooseSeatActivity::class.java)
+            intent.putExtra("EXTRAS_FLIGHT_DETAIL", flightDetailTicket)
             intent.putParcelableArrayListExtra("EXTRAS_PASSENGERS", ArrayList(passengerDataList))
             intent.putExtra("EXTRAS_FULL_NAME", fullNames)
             intent.putExtra("EXTRAS_FAMILY_NAME", familyName)

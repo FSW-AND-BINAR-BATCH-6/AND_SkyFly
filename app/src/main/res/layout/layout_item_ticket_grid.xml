@@ -46,7 +46,7 @@
                     android:fontFamily="@font/font_open_sans_semi_bold"
                     android:paddingVertical="4dp"
                     android:paddingHorizontal="16dp"
-                    android:text="Limited!"
+                    tools:text="Limited!"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
                     android:visibility="gone"
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Jakarta -> Bangkok"
+            tools:text="Jakarta -> Bangkok"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fl_image_container" />
@@ -73,41 +73,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="AirAsia"
+            tools:text="AirAsia"
             android:textColor="@color/md_theme_primary"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_card_destination" />
 
-        <TextView
-            android:id="@+id/tv_card_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="20 - 30 Maret 2023"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_card_airplane" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_card_date"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="4dp"-->
+<!--            android:text="20 - 30 Maret 2023"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_card_airplane" />-->
 
         <TextView
             android:id="@+id/tv_card_start_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Mulai Dari"
+            android:text="@string/text_start_from"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_card_date" />
+            app:layout_constraintTop_toBottomOf="@id/tv_card_airplane" />
 
         <TextView
             android:id="@+id/tv_card_price"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:text="IDR 950.000"
+            android:layout_marginTop="2dp"
+            tools:text="IDR 950.000"
             android:textColor="@color/md_theme_error"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/tv_card_start_from"
-            app:layout_constraintTop_toBottomOf="@id/tv_card_date" />
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="@id/tv_card_start_from"
+            app:layout_constraintTop_toBottomOf="@id/tv_card_start_from"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 
 
