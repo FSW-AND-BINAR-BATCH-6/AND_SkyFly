@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_order_history"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:paddingBottom="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    android:id="@+id/item_order_history">
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_departure_location"
@@ -34,20 +34,21 @@
             android:layout_height="25dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/ic_location"
-            app:layout_constraintTop_toBottomOf="@id/tv_status"
             app:layout_constraintStart_toStartOf="@id/v_line"
-            app:tint="@color/darkGrey"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_status"
+            app:tint="@color/darkGrey" />
 
         <TextView
             android:id="@+id/tv_departure_location"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/text_city"
             android:textSize="18sp"
-            android:textStyle="bold"
+           android:fontFamily="@font/font_open_sans_semi_bold"
+            app:layout_constraintEnd_toStartOf="@id/tv_flight_duration"
             app:layout_constraintStart_toEndOf="@id/iv_departure_location"
-            app:layout_constraintTop_toTopOf="@id/iv_departure_location"/>
+            app:layout_constraintTop_toTopOf="@id/iv_departure_location" />
 
         <TextView
             android:id="@+id/tv_departure_date"
@@ -57,8 +58,7 @@
             android:text="@string/text_date"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/tv_departure_location"
-            app:layout_constraintTop_toBottomOf="@id/tv_departure_location"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tv_departure_location" />
 
         <TextView
             android:id="@+id/tv_departure_time"
@@ -68,8 +68,7 @@
             android:text="@string/text_time"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/tv_departure_location"
-            app:layout_constraintTop_toBottomOf="@id/tv_departure_date"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tv_departure_date" />
 
         <TextView
             android:id="@+id/tv_flight_duration"
@@ -78,42 +77,42 @@
             android:layout_marginVertical="8dp"
             android:text="@string/text_flight_duration"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_departure_location"
             app:layout_constraintBottom_toBottomOf="@id/tv_departure_time"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_departure_location" />
 
         <ImageView
             android:id="@+id/tv_right_arrow"
             android:layout_width="80dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_right_arrow"
-            app:layout_constraintStart_toStartOf="@id/tv_flight_duration"
             app:layout_constraintEnd_toEndOf="@id/tv_flight_duration"
-            app:layout_constraintTop_toBottomOf="@id/tv_flight_duration"/>
+            app:layout_constraintStart_toStartOf="@id/tv_flight_duration"
+            app:layout_constraintTop_toBottomOf="@id/tv_flight_duration" />
 
         <ImageView
             android:id="@+id/iv_destination"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:src="@drawable/ic_location"
-            app:layout_constraintTop_toTopOf="@id/iv_departure_location"
             app:layout_constraintStart_toEndOf="@+id/tv_flight_duration"
-            app:tint="@color/darkGrey"/>
+            app:layout_constraintTop_toTopOf="@id/iv_departure_location"
+            app:tint="@color/darkGrey" />
 
         <TextView
             android:id="@+id/tv_destination"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:maxLines="2"
             android:text="@string/text_city"
             android:textSize="18sp"
-            android:textStyle="bold"
+         android:fontFamily="@font/font_open_sans_semi_bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_destination"
-            app:layout_constraintTop_toTopOf="@id/iv_destination"
-            />
+            app:layout_constraintTop_toTopOf="@id/iv_destination" />
 
         <TextView
             android:id="@+id/tv_arrival_date"
@@ -123,8 +122,7 @@
             android:text="@string/text_date"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/tv_destination"
-            app:layout_constraintTop_toBottomOf="@id/tv_destination"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tv_destination" />
 
         <TextView
             android:id="@+id/tv_arrival_time"
@@ -134,8 +132,7 @@
             android:text="@string/text_time"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/tv_destination"
-            app:layout_constraintTop_toBottomOf="@id/tv_arrival_date"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tv_arrival_date" />
 
         <View
             android:id="@+id/v_line"
@@ -143,8 +140,8 @@
             android:layout_height="3dp"
             android:layout_marginTop="8dp"
             android:background="@color/grey"
-            app:layout_constraintTop_toBottomOf="@id/tv_departure_time"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_departure_time" />
 
         <TextView
             android:id="@+id/tv_title_booking_code"
@@ -155,7 +152,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/v_line"
-            app:layout_constraintTop_toBottomOf="@id/v_line"/>
+            app:layout_constraintTop_toBottomOf="@id/v_line" />
 
         <TextView
             android:id="@+id/tv_title_class"
@@ -166,19 +163,19 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/tv_title_booking_code"
-            app:layout_constraintTop_toTopOf="@id/tv_title_booking_code"/>
+            app:layout_constraintTop_toTopOf="@id/tv_title_booking_code" />
 
         <TextView
             android:id="@+id/tv_history_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_example_total"
+            android:textColor="@color/md_theme_primary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/md_theme_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/v_line"
-            app:layout_constraintTop_toBottomOf="@id/v_line"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/v_line" />
 
         <TextView
             android:id="@+id/tv_booking_code"
@@ -187,9 +184,9 @@
             android:layout_marginBottom="16dp"
             android:text="@string/text_example_booking_code"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title_booking_code"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_booking_code"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_title_booking_code" />
 
         <TextView
             android:id="@+id/tv_class"
@@ -198,9 +195,9 @@
             android:layout_marginBottom="16dp"
             android:text="@string/text_example_class"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title_class"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_class"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_title_class" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

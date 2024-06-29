@@ -1,3 +1,5 @@
+package com.kom.skyfly.presentation.bottomsheetsdialog
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,39 +10,20 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kom.skyfly.R
-import com.kom.skyfly.databinding.FragmentBottomSheetsIssueTicketBinding
-import com.kom.skyfly.presentation.checkout.flightdetail.FlightDetailActivity
+import com.kom.skyfly.databinding.FragmentBottomSheetsDialogBinding
+import com.kom.skyfly.presentation.login.LoginActivity
+import com.kom.skyfly.presentation.main.MainActivity
 
-class BottomSheetsIssueTicket : BottomSheetDialogFragment() {
-    private lateinit var binding: FragmentBottomSheetsIssueTicketBinding
+class NotLoginBottomSheets : BottomSheetDialogFragment() {
+    private lateinit var binding: FragmentBottomSheetsDialogBinding
     private var listener: SearchView.OnCloseListener? = null
-
-    companion object {
-        fun newInstance(
-            transactionId: String,
-            adult: Int,
-            child: Int,
-            baby: Int,
-        ): BottomSheetsIssueTicket {
-            val fragment = BottomSheetsIssueTicket()
-            val args =
-                Bundle().apply {
-                    putString("transactionId", transactionId)
-                    putInt("adult", adult)
-                    putInt("child", child)
-                    putInt("baby", baby)
-                }
-            fragment.arguments = args
-            return fragment
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentBottomSheetsIssueTicketBinding.inflate(layoutInflater, container, false)
+        binding = FragmentBottomSheetsDialogBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -58,30 +41,26 @@ class BottomSheetsIssueTicket : BottomSheetDialogFragment() {
     }
 
     private fun setClickListeners() {
-        binding.btnIssueTicket.setOnClickListener {
-            navigateToFlightDetail()
+        binding.btnLogin.setOnClickListener {
+            navigateToLogin()
             listener?.onClose()
             dismiss()
         }
         binding.ivClose.setOnClickListener {
+            navigateToHome()
             listener?.onClose()
             dismiss()
         }
     }
 
-    private fun navigateToFlightDetail() {
-        val transactionId = arguments?.getString("transactionId")
-        val adult = arguments?.getInt("adult")
-        val child = arguments?.getInt("child")
-        val baby = arguments?.getInt("baby")
-        val intent =
-            Intent(requireContext(), FlightDetailActivity::class.java).apply {
-                putExtra("EXTRAS_TRANSACTION_ID", transactionId)
-                putExtra("EXTRAS_ADULT", adult)
-                putExtra("EXTRAS_CHILD", child)
-                putExtra("EXTRAS_BABY", baby)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
+    private fun navigateToHome() {
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)
     }
 

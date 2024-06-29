@@ -101,7 +101,8 @@ class ChooseSeatActivity : BaseActivity() {
         chooseSeatViewModel.getFlightSeat(flightId).observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = { resultWrapper ->
-                    binding.btnSave.isEnabled = false
+                    binding.btnSave.isEnabled = true
+                    binding.pbLoading.isVisible = false
                     binding.main.isRefreshing = false
                     val payload = resultWrapper.payload
                     chooseSeatViewModel.setSeatList(payload?.flightSeat.orEmpty())
@@ -117,8 +118,8 @@ class ChooseSeatActivity : BaseActivity() {
                     binding.csvSeatView.setState(ContentState.SUCCESS)
                 },
                 doOnEmpty = {
-                    binding.btnSave.isEnabled = false
-                    binding.main.isRefreshing = false
+                    binding.btnSave.isEnabled = true
+                    binding.pbLoading.isVisible = false
                     binding.shmProgressSeatView.isVisible = false
                     binding.csvSeatView.setState(ContentState.EMPTY, "Empty seat!")
                 },
@@ -163,8 +164,9 @@ class ChooseSeatActivity : BaseActivity() {
         chooseSeatViewModel.getAllFlightSeat(flightId).observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = { resultWrapper ->
-                    binding.btnSave.isEnabled = false
                     binding.main.isRefreshing = false
+                    binding.btnSave.isEnabled = true
+                    binding.pbLoading.isVisible = false
                     seatTotal = resultWrapper.payload?.size ?: 0
                     resultWrapper.payload.let {
                         it?.map { response ->
@@ -180,7 +182,8 @@ class ChooseSeatActivity : BaseActivity() {
                     binding.tvSeatTitle.text = getString(R.string.text_loading)
                 },
                 doOnEmpty = {
-                    binding.btnSave.isEnabled = false
+                    binding.btnSave.isEnabled = true
+                    binding.pbLoading.isVisible = false
                     binding.main.isRefreshing = false
                     binding.tvSeatTitle.text = getString(R.string.text_empty_seat)
                 },
@@ -197,8 +200,9 @@ class ChooseSeatActivity : BaseActivity() {
         chooseSeatViewModel.getFlightPrice(flightId).observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = {
-                    binding.btnSave.isEnabled = false
                     binding.main.isRefreshing = false
+                    binding.btnSave.isEnabled = true
+                    binding.pbLoading.isVisible = false
                     val payload = it.payload
                     payload?.let { response ->
                         seatId = response.first

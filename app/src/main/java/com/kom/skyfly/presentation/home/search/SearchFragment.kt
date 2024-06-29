@@ -34,7 +34,7 @@ class SearchFragment : BottomSheetDialogFragment() {
     private val searchHistoryAdapter: SearchDestinationHistoryAdapter by lazy {
         SearchDestinationHistoryAdapter(
             itemClick = { searchDestinationHistory ->
-                // Handle item click here if needed
+                binding.layoutHomeSearchBar.etHomeSearch.setText(searchDestinationHistory.searchDestinationHistory)
             },
             searchDestinationHistoryListener =
                 object : SearchDestinationHistoryListener {
@@ -64,6 +64,7 @@ class SearchFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         setOnClickListener()
+        setList()
         val maxPeekHeight =
             resources.getDimensionPixelSize(
                 R.dimen.max_bottom_sheet_height,
@@ -131,16 +132,18 @@ class SearchFragment : BottomSheetDialogFragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@SearchFragment.adapter
         }
-        binding.rvRecentDestinationSearch.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@SearchFragment.searchHistoryAdapter
-        }
+    }
+
+    private fun setList() {
+        binding.rvRecentDestinationSearch.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvRecentDestinationSearch.adapter = searchHistoryAdapter
     }
 
     private fun setBottomSheetMaxHeight(maxPeekHeight: Int) {
         dialog?.setOnShowListener {
             val bottomSheetDialog = it as? BottomSheetDialog
-            val bottomSheet = bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            val bottomSheet =
+                bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.let { sheet ->
                 val behavior = BottomSheetBehavior.from(sheet)
                 behavior.peekHeight = maxPeekHeight

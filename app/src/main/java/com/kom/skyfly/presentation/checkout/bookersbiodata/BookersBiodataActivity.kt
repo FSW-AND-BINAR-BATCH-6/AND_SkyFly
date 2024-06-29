@@ -83,11 +83,15 @@ class BookersBiodataActivity : BaseActivity() {
                     tilFamilyName.isVisible = true
                     etFamilyName.isVisible = true
                     tvFamilyName.isVisible = true
+                    val trackDrawable = scHaveFamilyName.trackDrawable
+                    trackDrawable?.setTint(resources.getColor(R.color.md_theme_primaryFixed_mediumContrast))
                 } else {
                     tvFamilyName.isVisible = false
                     tilFamilyName.isVisible = false
                     etFamilyName.isVisible = false
                     tvFamilyName.isVisible = false
+                    val trackDrawable = scHaveFamilyName.trackDrawable
+                    trackDrawable?.setTint(resources.getColor(R.color.grey))
                 }
             }
         }

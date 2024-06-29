@@ -4,7 +4,7 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.kom.skyfly.R
-import com.kom.skyfly.presentation.bottomsheetsdialog.BottomSheetsDialogFragment
+import com.kom.skyfly.presentation.bottomsheetsdialog.NotLoginBottomSheets
 import com.kom.skyfly.presentation.login.LoginActivity
 import com.kom.skyfly.utils.ServerErrorException
 import com.kom.skyfly.utils.UnAuthorizeException
@@ -44,7 +44,7 @@ open class BaseActivity : AppCompatActivity() {
 
     private fun openNotLoggedInModal() {
         if (!supportFragmentManager.isStateSaved) {
-            val bottomSheetFragment = BottomSheetsDialogFragment()
+            val bottomSheetFragment = NotLoginBottomSheets()
             bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
         }
     }

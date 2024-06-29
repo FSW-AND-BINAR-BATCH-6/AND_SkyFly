@@ -98,7 +98,7 @@ class NotificationRepositoryImplTest {
                 delay(100)
                 it
             }.test {
-                delay(1111)
+                delay(111)
                 val data = expectMostRecentItem()
                 assertTrue(data is ResultWrapper.Loading)
                 coVerify { datasource.getAllNotification() }

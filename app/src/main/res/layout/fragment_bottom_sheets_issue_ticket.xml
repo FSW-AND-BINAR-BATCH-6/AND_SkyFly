@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:cardCornerRadius="16dp"
     app:cardElevation="0dp"
-    tools:context=".presentation.bottomsheetsdialog.BottomSheetsDialogFragment">
+    tools:context=".presentation.bottomsheetsdialog.NotLoginBottomSheets">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

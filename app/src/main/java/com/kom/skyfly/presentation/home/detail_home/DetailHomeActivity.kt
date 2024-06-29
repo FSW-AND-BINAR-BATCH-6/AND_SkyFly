@@ -53,6 +53,7 @@ class DetailHomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setHeaderTitle()
         searchResultIntent = intent.getParcelableExtra("EXTRA_SEARCH_RESULT") ?: return
         returnId = searchResultIntent.returnId
         departureId = searchResultIntent.departureId
@@ -63,6 +64,11 @@ class DetailHomeActivity : BaseActivity() {
         roundTrip = searchResultIntent.roundTrip
         setOnClickListener()
         observeData()
+    }
+
+    private fun setHeaderTitle() {
+        binding.headerDetailTicketHome.tvTitleHeader.text =
+            getString(R.string.text_flight_detail_header)
     }
 
     private fun observeData() {
@@ -81,7 +87,8 @@ class DetailHomeActivity : BaseActivity() {
                     doOnSuccess = {
                         Handler(Looper.getMainLooper()).postDelayed({
                             val scrollView = findViewById<ScrollView>(R.id.sv_detail_ticket)
-                            val layoutDetailCard = scrollView.findViewById<View>(R.id.layout_detail_card)
+                            val layoutDetailCard =
+                                scrollView.findViewById<View>(R.id.layout_detail_card)
                             binding.shimmerDetailTicket.isVisible = false
                             binding.svDetailTicket.isVisible = true
                             binding.btnSelectTicket.isEnabled = true
@@ -144,7 +151,8 @@ class DetailHomeActivity : BaseActivity() {
                     doOnSuccess = {
                         Handler(Looper.getMainLooper()).postDelayed({
                             val scrollView = findViewById<ScrollView>(R.id.sv_detail_ticket)
-                            val layoutDetailCard = scrollView.findViewById<View>(R.id.layout_detail_return_card)
+                            val layoutDetailCard =
+                                scrollView.findViewById<View>(R.id.layout_detail_return_card)
                             binding.shimmerDetailTicket.isVisible = false
                             binding.svDetailTicket.isVisible = true
                             binding.btnSelectTicket.isEnabled = true
@@ -212,7 +220,8 @@ class DetailHomeActivity : BaseActivity() {
                 "${it.departureCity} - > ${it.arrivalCity} (${it.duration})"
             binding.layoutDetailCard.tvDepartureTimeDetailTicket.text = it.departureTime
             binding.layoutDetailCard.tvDepartureDateDetailTicket.text = it.departureDate
-            binding.layoutDetailCard.tvDepartureAirportDetailTicket.text = "${it.departureAirport} - ${it.departureTerminal}"
+            binding.layoutDetailCard.tvDepartureAirportDetailTicket.text =
+                "${it.departureAirport} - ${it.departureTerminal}"
             binding.layoutDetailCard.tvAirplaneNameDetailTicket.text = it.airplaneName
             binding.layoutDetailCard.tvSeatClassDetailTicket.text = it.seatClass
             binding.layoutDetailCard.tvAirplaneCodeDetailTicket.text = it.code
@@ -238,7 +247,8 @@ class DetailHomeActivity : BaseActivity() {
                 )
             binding.layoutDetailReturnCard.tvDepartureTimeDetailTicket.text = it.departureTime
             binding.layoutDetailReturnCard.tvDepartureDateDetailTicket.text = it.departureDate
-            binding.layoutDetailReturnCard.tvDepartureAirportDetailTicket.text = "${it.departureAirport} - ${it.departureTerminal}"
+            binding.layoutDetailReturnCard.tvDepartureAirportDetailTicket.text =
+                "${it.departureAirport} - ${it.departureTerminal}"
             binding.layoutDetailReturnCard.tvAirplaneNameDetailTicket.text = it.airplaneName
             binding.layoutDetailReturnCard.tvSeatClassDetailTicket.text = it.seatClass
             binding.layoutDetailReturnCard.tvAirplaneCodeDetailTicket.text = it.code

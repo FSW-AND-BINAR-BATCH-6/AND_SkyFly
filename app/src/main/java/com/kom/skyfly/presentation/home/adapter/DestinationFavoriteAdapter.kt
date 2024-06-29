@@ -10,6 +10,7 @@ import coil.load
 import com.kom.skyfly.R
 import com.kom.skyfly.data.model.home.destination_favourite.DestinationFavourite
 import com.kom.skyfly.databinding.LayoutItemTicketGridBinding
+import com.kom.skyfly.utils.formatToRupiah
 
 /**
 Written by Komang Yuda Saputra
@@ -72,7 +73,7 @@ class DestinationFavoriteAdapter(private val itemClick: (DestinationFavourite) -
                 }
                 binding.tvCardDestination.text = "${item.departureCity} -> ${item.arrivalCity}"
                 binding.tvCardAirplane.text = item.airline
-                binding.tvCardPrice.text = "IDR ${item.price}"
+                binding.tvCardPrice.text = item.price.formatToRupiah()
                 itemView.setOnClickListener { itemClick(this) }
             }
         }

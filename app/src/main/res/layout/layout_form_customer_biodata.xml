@@ -87,7 +87,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:thumbTint="@color/white"
                     app:track="@drawable/switch_track"
-                    app:trackTint="@color/md_theme_primaryFixed_mediumContrast" />
+                    app:trackTint="@color/grey" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

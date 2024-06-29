@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import coil.load
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.transaction.detail.TransactionDetailResponses
@@ -153,6 +154,7 @@ class FlightDetailActivity : BaseActivity() {
         val paymentStatus: String? = response?.data?.status
         val bookingCode: String? = response?.data?.booking?.code
         val transactionDetails = response?.data?.transactionDetails
+        var airlinesImg: String? = null
 
         response?.data?.transactionDetails?.map {
             departureDate = it?.flight?.departure?.date
@@ -166,6 +168,7 @@ class FlightDetailActivity : BaseActivity() {
             airlines = it?.flight?.airline?.name
             seatClass = it?.seat?.type
             passengerCategory = it?.passengerCategory
+            airlinesImg = it?.flight?.airline?.image
             when (passengerCategory) {
                 "ADULT" -> {
                     totalPricePassengerAdult = it?.totalPrice?.times(adult)
@@ -183,6 +186,11 @@ class FlightDetailActivity : BaseActivity() {
         binding.layoutFlightDetails.tvTitlePassenger.text = getString(R.string.text_empty)
         binding.layoutFlightDetails.tvCitizenship.text = getString(R.string.text_empty)
         with(binding.layoutFlightDetails) {
+            ivAirline.load(
+                airlinesImg,
+            ) {
+                error(R.drawable.img_airline)
+            }
             tvDetailDepartureDate.text = departureDate
             tvDetailDepartureTime.text = departureTime
             tvDetailDepartureAirport.text =
