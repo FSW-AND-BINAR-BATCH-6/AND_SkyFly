@@ -57,7 +57,7 @@ class BottomSheetsChangePassword : BottomSheetDialogFragment() {
         newPassword: String,
         confirmNewPassword: String,
     ) {
-        sharedViewModelEditProfile.updateProfile(null, null, newPassword, confirmNewPassword)
+        sharedViewModelEditProfile.updateProfile(null, null, null, newPassword, confirmNewPassword)
             .observe(viewLifecycleOwner) { result ->
                 result.proceedWhen(
                     doOnSuccess = {

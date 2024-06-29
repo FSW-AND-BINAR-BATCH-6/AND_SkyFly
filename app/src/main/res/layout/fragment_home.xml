@@ -83,8 +83,8 @@
                         app:layout_constraintEnd_toEndOf="@id/layout_select_destination"
                         app:layout_constraintTop_toTopOf="@id/tv_text_pulang_pergi"
                         app:thumbTint="@color/white"
-                        app:track="@drawable/switch_track"
-                        app:trackTint="@color/md_theme_primaryFixed_mediumContrast" />
+                        app:trackTint="@color/grey"
+                        app:track="@drawable/switch_track"/>
 
                     <ImageView
                         android:id="@+id/iv_departure"

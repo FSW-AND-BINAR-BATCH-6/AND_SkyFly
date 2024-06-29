@@ -189,13 +189,16 @@ class HomeFragment : Fragment() {
 
     private fun validateFields() {
         val isSourceValid = binding.layoutSelectDestination.tvStartFrom.text.toString().isNotEmpty()
-        val isDestinationValid = binding.layoutSelectDestination.tvEndDestination.text.toString().isNotEmpty()
+        val isDestinationValid =
+            binding.layoutSelectDestination.tvEndDestination.text.toString().isNotEmpty()
         val isDepartureTimeValid = binding.tvDeparture.text.toString().isNotEmpty()
-        val isReturnTimeValid = !binding.tvReturn.isEnabled || binding.tvReturn.text.toString().isNotEmpty()
+        val isReturnTimeValid =
+            !binding.tvReturn.isEnabled || binding.tvReturn.text.toString().isNotEmpty()
         val isPassengerCountValid = sharedViewModel.passengerCountLiveData.value != null
         val isSeatClassValid = sharedViewModel.seatClass.value != null
 
-        binding.btnSearchFlight.isEnabled = isSourceValid && isDestinationValid && isDepartureTimeValid && isReturnTimeValid && isPassengerCountValid && isSeatClassValid
+        binding.btnSearchFlight.isEnabled =
+            isSourceValid && isDestinationValid && isDepartureTimeValid && isReturnTimeValid && isPassengerCountValid && isSeatClassValid
     }
 
     private fun getDestinationFavoriteData() {
@@ -235,12 +238,16 @@ class HomeFragment : Fragment() {
                 sharedViewModel.setRoundTrip(true)
                 binding.tvReturn.isEnabled = true
                 binding.tvReturn.text = getString(R.string.text_select_dates)
+                val trackDrawable = binding.btnSwitchRoundtrip.trackDrawable
+                trackDrawable?.setTint(resources.getColor(R.color.md_theme_primaryFixed_mediumContrast))
                 binding.tvReturn.setTextColor(resources.getColor(R.color.md_theme_primary))
             } else {
                 sharedViewModel.setRoundTrip(false)
                 binding.tvReturn.isEnabled = false
                 binding.tvReturn.text = getString(R.string.text_strips)
                 binding.tvReturn.setTextColor(resources.getColor(R.color.darkGrey))
+                val trackDrawable = binding.btnSwitchRoundtrip.trackDrawable
+                trackDrawable?.setTint(resources.getColor(R.color.grey))
             }
         }
     }

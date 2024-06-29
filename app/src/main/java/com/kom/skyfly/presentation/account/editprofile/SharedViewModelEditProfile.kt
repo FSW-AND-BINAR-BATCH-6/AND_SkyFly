@@ -14,9 +14,10 @@ class SharedViewModelEditProfile(private val profileRepository: ProfileRepositor
     fun updateProfile(
         name: String?,
         phoneNumber: String?,
+        familyName: String?,
         password: String?,
         confirmPassword: String?,
     ) = profileRepository
-        .updateProfile(name, phoneNumber, password, confirmPassword)
+        .updateProfile(name, phoneNumber, familyName, password, confirmPassword)
         .asLiveData(Dispatchers.IO)
 }

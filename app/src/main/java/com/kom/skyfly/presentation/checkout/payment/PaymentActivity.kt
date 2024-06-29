@@ -1,6 +1,6 @@
 package com.kom.skyfly.presentation.checkout.payment
 
-import BottomSheetsIssueTicket
+import IssueTicketBottomSheets
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
@@ -130,7 +130,7 @@ class PaymentActivity : AppCompatActivity() {
     ) {
         if (!supportFragmentManager.isStateSaved) {
             val bottomSheetFragment =
-                BottomSheetsIssueTicket.newInstance(transactionId, adult, child, baby)
+                IssueTicketBottomSheets.newInstance(transactionId, adult, child, baby)
             bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
         }
     }

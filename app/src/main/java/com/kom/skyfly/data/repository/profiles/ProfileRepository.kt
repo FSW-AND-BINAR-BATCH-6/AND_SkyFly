@@ -18,6 +18,7 @@ interface ProfileRepository {
     fun updateProfile(
         name: String?,
         phoneNumber: String?,
+        familyName: String?,
         password: String?,
         confirmPassword: String?,
     ): Flow<ResultWrapper<UpdateProfileResponse>>
@@ -31,9 +32,10 @@ class ProfileRepositoryImpl(private val dataSource: ProfileDataSource) : Profile
     override fun updateProfile(
         name: String?,
         phoneNumber: String?,
+        familyName: String?,
         password: String?,
         confirmPassword: String?,
     ): Flow<ResultWrapper<UpdateProfileResponse>> {
-        return proceedFlow { dataSource.updateUserProfile(name, phoneNumber, password, confirmPassword) }
+        return proceedFlow { dataSource.updateUserProfile(name, phoneNumber, familyName, password, confirmPassword) }
     }
 }

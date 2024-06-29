@@ -74,10 +74,10 @@
         <item>Dr.</item>
         <item>Prof.</item>
     </string-array>
-    <string name="text_title_order_history">Booking History</string>
+    <string name="text_title_order_history">Flight History</string>
     <string name="text_filter">Filter</string>
     <string name="text_unpaid">UNPAID</string>
-    <string name="text_city">Yogyakarta</string>
+    <string name="text_city">Los Angeles</string>
     <string name="text_date">Enter date or birth</string>
     <string name="text_time">19:10</string>
     <string name="text_flight_duration">4h 0m</string>
@@ -128,7 +128,7 @@
     <string name="text_edit_profile">Edit Profile</string>
     <string name="text_settings">Settings</string>
     <string name="text_logout">Logout</string>
-    <string name="text_version">v1.0.0</string>
+    <string name="text_version">v1.3.2</string>
     <string name="text_name">Komang Yuda Saputra</string>
     <string name="text_user_email">komangyuda@example.com</string>
     <string name="text_welcome">Welcome to SkyFly!</string>
@@ -286,4 +286,7 @@
     <string name="text_total">Total</string>
     <string name="text_header_search_result"><![CDATA[%1$s > %2$s - %3$s Passengers - %4$s]]></string>
     <string name="text_detail_return_flight_title"><![CDATA[%1$s - > %2$s (%3$s)]]></string>
+    <string name="text_flight_detail_header">Flight Detail</string>
+    <string name="text_family_name_title">Family Name</string>
+    <string name="text_hint_enter_family_name">Enter Family Name</string>
 </resources>

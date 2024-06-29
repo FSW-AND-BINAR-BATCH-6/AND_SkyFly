@@ -24,17 +24,20 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
         private const val ARG_FULL_NAME = "arg_full_name"
         private const val ARG_PHONE_NUMBER = "arg_phone_number"
         private const val ARG_USER_ID = "arg_user_id"
+        private const val ARG_FAMILY_NAME = "arg_family_name"
 
         fun newInstance(
             id: String?,
             fullName: String?,
             phoneNumber: String?,
+            familyName: String?,
         ): BottomSheetsEditProfile {
             val fragment = BottomSheetsEditProfile()
             val args = Bundle()
             args.putString(ARG_FULL_NAME, fullName)
             args.putString(ARG_PHONE_NUMBER, phoneNumber)
             args.putString(ARG_USER_ID, id)
+            args.putString(ARG_FAMILY_NAME, familyName)
             fragment.arguments = args
             return fragment
         }
@@ -61,8 +64,10 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
         id = arguments?.getString(ARG_USER_ID)
         val fullName = arguments?.getString(ARG_FULL_NAME)
         val phoneNumber = arguments?.getString(ARG_PHONE_NUMBER)
+        val familyName = arguments?.getString(ARG_FAMILY_NAME)
         binding.etFullName.setText(fullName)
         binding.etPhoneNumber.setText(phoneNumber)
+        binding.etFamilyName.setText(familyName)
     }
 
     private fun setClickListeners() {
@@ -82,7 +87,8 @@ class BottomSheetsEditProfile : BottomSheetDialogFragment() {
 
     private fun proceedEditProfile(phoneNumber: String) {
         val name = binding.etFullName.text.toString().trim()
-        sharedViewModelEditProfile.updateProfile(name, phoneNumber, null, null)
+        val familyName = binding.etFamilyName.text.toString().trim()
+        sharedViewModelEditProfile.updateProfile(name, phoneNumber, familyName, null, null)
             .observe(viewLifecycleOwner) { result ->
                 result.proceedWhen(
                     doOnSuccess = {
