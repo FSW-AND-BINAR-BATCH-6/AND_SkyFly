@@ -30,6 +30,8 @@ class AccountFragment : Fragment() {
     private var email: String? = null
     private var fullName: String? = null
     private var phoneNumber: String? = null
+    private var familyName: String? = null
+
     private var id: String? = null
 
     override fun onCreateView(
@@ -106,10 +108,13 @@ class AccountFragment : Fragment() {
 
     private fun setClickListeners() {
         binding.layoutBtnProfile.tvEditProfile.setOnClickListener {
-            fullName?.let { fullName ->
-                phoneNumber?.let { phoneNumber ->
-                    id?.let { id ->
-                        doEditProfile(id, fullName, phoneNumber)
+            familyName?.let { familyNames ->
+                fullName?.let { fullName ->
+                    phoneNumber?.let { phoneNumber ->
+                        id?.let { id ->
+                            doEditProfile(id, fullName, phoneNumber, familyNames)
+                            Toast.makeText(requireContext(), "tes", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
@@ -171,10 +176,12 @@ class AccountFragment : Fragment() {
                         id = data?.userId
                         email = data?.email
                         fullName = data?.fullName
+                        familyName = data?.familyName
                         phoneNumber = data?.phoneNumber
                         binding.layoutProfileUser.etEmail.setText(data?.email)
                         binding.layoutProfileUser.etFullName.setText(data?.fullName)
                         binding.layoutProfileUser.etPhoneNumber.setText(data?.phoneNumber)
+                        binding.layoutProfileUser.etFamilyName.setText(data?.familyName)
                         binding.srfProfile.isRefreshing = false
                     }
                 },
@@ -209,8 +216,10 @@ class AccountFragment : Fragment() {
         id: String,
         fullName: String,
         phoneNumber: String,
+        familyName: String,
     ) {
-        val bottomSheetFragment = BottomSheetsEditProfile.newInstance(id, fullName, phoneNumber)
+        val bottomSheetFragment =
+            BottomSheetsEditProfile.newInstance(id, fullName, phoneNumber, familyName)
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 

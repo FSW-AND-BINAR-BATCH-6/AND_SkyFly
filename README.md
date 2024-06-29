@@ -13,7 +13,7 @@ Skyfly API allows you to get the needed resources to make Skyfly application run
 
 ### Overview
 
-SkyFly is an online flight ticket booking application designed to provide a seamless and user-friendly experience for booking flights. This project uses ExpressJs as the backend framework and Postgres as the database, managed through Prisma ORM. The application supports various functionalities essential for an efficient flight booking system.
+SkyFly is an online flight ticket booking application designed to provide a seamless and user-friendly experience for booking flights. This Android application supports various functionalities essential for an efficient flight booking system.
 
 # Data Team C1
 
