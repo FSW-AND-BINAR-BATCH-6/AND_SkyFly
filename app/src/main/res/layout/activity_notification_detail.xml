@@ -42,15 +42,6 @@
             app:layout_constraintTop_toBottomOf="@id/iv_notification_type" />
 
         <ImageView
-            android:id="@+id/iv_trash"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_trash"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
-        <ImageView
             android:id="@+id/iv_back"
             android:layout_width="25dp"
             android:layout_height="25dp"

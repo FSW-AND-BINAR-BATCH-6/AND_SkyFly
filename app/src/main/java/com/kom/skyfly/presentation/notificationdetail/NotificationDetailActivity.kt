@@ -34,9 +34,6 @@ class NotificationDetailActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }
-        binding.ivTrash.setOnClickListener {
-            notification?.let { deleteNotification(it) }
-        }
     }
 
     private fun displayNotificationDetails(notification: Notification) {

@@ -87,8 +87,17 @@ class DetailHomeActivity : BaseActivity() {
                             binding.btnSelectTicket.isEnabled = true
                             layoutDetailCard.isVisible = true
                             it.payload?.let { flightDetail ->
-                                Log.d("detailTicket", "$flightDetail")
                                 setupBinding(flightDetail)
+                                binding.btnSelectTicket.setOnClickListener {
+                                    val intent =
+                                        Intent(this, BookersBiodataActivity::class.java).apply {
+                                            putExtra("EXTRAS_FLIGHT_DETAIL", flightDetail)
+                                            putExtra("EXTRA_ADULT_COUNT", adultCount)
+                                            putExtra("EXTRA_CHILD_COUNT", childCount)
+                                            putExtra("EXTRA_BABY_COUNT", babyCount)
+                                        }
+                                    startActivity(intent)
+                                }
                             }
                         }, 1000)
                         Log.d("Succes from Detail", "halo")
@@ -140,9 +149,19 @@ class DetailHomeActivity : BaseActivity() {
                             binding.svDetailTicket.isVisible = true
                             binding.btnSelectTicket.isEnabled = true
                             layoutDetailCard.isVisible = true
+
                             it.payload?.let { flightDetail ->
-                                Log.d("detailTicket", "$flightDetail")
                                 setupBindingReturnTicket(flightDetail)
+                                binding.btnSelectTicket.setOnClickListener {
+                                    val intent =
+                                        Intent(this, BookersBiodataActivity::class.java).apply {
+                                            putExtra("EXTRAS_FLIGHT_DETAIL", flightDetail)
+                                            putExtra("EXTRA_ADULT_COUNT", adultCount)
+                                            putExtra("EXTRA_CHILD_COUNT", childCount)
+                                            putExtra("EXTRA_BABY_COUNT", babyCount)
+                                        }
+                                    startActivity(intent)
+                                }
                             }
                         }, 1000)
                         Log.d("Succes from Detail", "halo")

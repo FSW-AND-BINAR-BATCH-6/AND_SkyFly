@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.databinding.FragmentAccountBinding
@@ -84,14 +84,18 @@ class AccountFragment : Fragment() {
                             getString(R.string.no_internet_connection),
                         )
                     } else if (it.exception is UnAuthorizeException) {
+                        binding.csvProfile.isVisible = true
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_session_expired_please_login_again),
+                        )
                         (activity as BaseActivity).errorHandler(it.exception)
-                        Log.d("tesUnAuth", "getProfileData: ${it.exception}")
                     } else if (it.exception is ServerErrorException) {
-                        (activity as BaseActivity).errorHandler(it.exception)
                         binding.csvProfile.setState(
                             ContentState.ERROR_NETWORK_GENERAL,
                             getString(R.string.text_server_error_please_try_again_later),
                         )
+                        (activity as BaseActivity).errorHandler(it.exception)
                     } else {
                         Log.d("req-changePassword", "reqChangePassword: ${it.exception?.message}")
                     }
@@ -114,7 +118,6 @@ class AccountFragment : Fragment() {
             accountViewModel.doLogout(null)
             (activity as BaseActivity).doLogoutHandler()
             Toasty.normal(requireContext(), "Success!", Toast.LENGTH_SHORT).show()
-            navigateToHome()
         }
         binding.layoutBtnProfile.tvChangePassword.setOnClickListener {
             doChangePassword()
@@ -184,7 +187,10 @@ class AccountFragment : Fragment() {
                         )
                     } else if (it.exception is UnAuthorizeException) {
                         (activity as BaseActivity).errorHandler(it.exception)
-                        Log.d("tesUnAuth", "getProfileData: ${it.exception}")
+                        binding.csvProfile.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_session_expired_please_login_again),
+                        )
                     } else if (it.exception is ServerErrorException) {
                         (activity as BaseActivity).errorHandler(it.exception)
                         binding.csvProfile.setState(
@@ -197,10 +203,6 @@ class AccountFragment : Fragment() {
                 },
             )
         }
-    }
-
-    private fun navigateToHome() {
-        findNavController().navigate(R.id.menu_home_tab)
     }
 
     private fun doEditProfile(

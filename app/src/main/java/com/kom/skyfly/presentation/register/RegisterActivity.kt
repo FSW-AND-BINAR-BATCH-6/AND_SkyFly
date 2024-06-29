@@ -78,7 +78,7 @@ class RegisterActivity : AppCompatActivity() {
                 result.proceedWhen(
                     doOnSuccess = {
                         binding.pbLoading.isVisible = false
-                        binding.btnRegister.isVisible = true
+                        binding.btnRegister.isEnabled = true
                         result.payload?.let {
                             val token = it.token
                             openOtpModal(token, email, phoneNumber)
@@ -86,7 +86,7 @@ class RegisterActivity : AppCompatActivity() {
                     },
                     doOnError = {
                         binding.pbLoading.isVisible = false
-                        binding.btnRegister.isVisible = true
+                        binding.btnRegister.isEnabled = true
                         if (it.exception is NoInternetException) {
                             binding.csvRegister.setState(
                                 ContentState.ERROR_NETWORK_GENERAL,

@@ -81,7 +81,7 @@
     <string name="text_date">Enter date or birth</string>
     <string name="text_time">19:10</string>
     <string name="text_flight_duration">4h 0m</string>
-    <string name="text_title_booking_code">Booking Code:</string>
+    <string name="text_title_booking_code">Booking Code :</string>
     <string name="text_title_class">Class:</string>
     <string name="text_example_total">IDR 4,000,000</string>
     <string name="text_example_booking_code">974974004</string>
@@ -218,7 +218,7 @@
     <string name="text_2_baby">2 Baby</string>
     <string name="text_issue_ticket">Issue Ticket</string>
     <string name="text_congratulation">Congratulation!</string>
-    <string name="text_ticket_payment_successful">Ticket Payment Successful</string>
+    <string name="text_ticket_payment_successful">Your ticket has been successfully generated. Check ticket details for more information.</string>
     <string name="unpaid">UNPAID</string>
     <string name="text_paid">PAID</string>
     <string name="text_cancelled">CANCELLED</string>
@@ -273,9 +273,16 @@
     <string name="text_select_date">Select Date</string>
     <string name="text_example_header_search_result"><![CDATA[JKT > MLB - 2 Passengers - Economy]]></string>
     <string name="text_flight_detail">Flight Detail</string>
+    <string name="text_va_number">"VA Number : "</string>
+    <string name="text_cancel_transaction">Cancel Transaction</string>
+    <string name="text_are_you_sure_you_want_to_cancel_transaction">Are you sure you want to cancel transaction?</string>
+    <string name="text_next">Next</string>
+    <string name="text_payment">Payment</string>
+    <string name="text_ticket_details">Ticket Detail</string>
     <string name="text_detail_departure_airport_and_terminal">%1$s - %2$s</string>
     <string name="text_no_tickets_for_selected_date">No Tickets Available For the Selected Date</string>
     <string name="text_bookers_biodata">Booker\'s Biodata</string>
+    <string name="text_departure_terminal">%1$s - %2$s</string>
     <string name="text_total">Total</string>
     <string name="text_header_search_result"><![CDATA[%1$s > %2$s - %3$s Passengers - %4$s]]></string>
     <string name="text_detail_return_flight_title"><![CDATA[%1$s - > %2$s (%3$s)]]></string>

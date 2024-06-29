@@ -3,14 +3,14 @@ package com.kom.skyfly.presentation.history.flightdetailhistory
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.transaction.detail.TransactionDetailResponses
+import com.kom.skyfly.data.model.transaction.paymentstatus.ItemsPaymentStatus
 import com.kom.skyfly.databinding.ActivityFlightDetailHistoryBinding
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.utils.NoInternetException
@@ -18,6 +18,7 @@ import com.kom.skyfly.utils.ServerErrorException
 import com.kom.skyfly.utils.UnAuthorizeException
 import com.kom.skyfly.utils.formatToRupiah
 import com.kom.skyfly.utils.proceedWhen
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FlightDetailHistoryActivity : BaseActivity() {
@@ -27,6 +28,9 @@ class FlightDetailHistoryActivity : BaseActivity() {
 
     private val detailHistoryViewModel: FlightDetailHistoryViewModel by viewModel()
     private var transactionIdFromExtras: String? = null
+    private var historyDetails: TransactionDetailResponses? = null
+    private var vaNumbers: ItemsPaymentStatus? = null
+    private var orderId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,70 @@ class FlightDetailHistoryActivity : BaseActivity() {
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }
+        binding.main.setOnRefreshListener {
+            observeData(transactionIdFromExtras)
+        }
+        binding.btnCancelTransaction.setOnClickListener {
+            confirmCancelTransaction()
+        }
+    }
+
+    private fun confirmCancelTransaction() {
+        val dialog =
+            AlertDialog.Builder(this)
+                .setMessage(getString(R.string.text_are_you_sure_you_want_to_cancel_transaction))
+                .setPositiveButton(
+                    getString(R.string.text_yes),
+                ) { dialog, id ->
+                    doCancelTransaction(orderId)
+                }
+                .setNegativeButton(
+                    getString(R.string.text_no),
+                ) { dialog, id ->
+                }.create()
+        dialog.show()
+    }
+
+    private fun doCancelTransaction(orderId: String) {
+        detailHistoryViewModel.cancelTransaction(orderId).observe(this) { cancelResult ->
+            cancelResult.proceedWhen(
+                doOnSuccess = {
+                    binding.pbLoading.isVisible = false
+                    Toasty.success(this, "Transaction Cancelled!", Toast.LENGTH_SHORT).show()
+                    observeData(transactionIdFromExtras)
+                },
+                doOnLoading = {
+                    binding.btnCancelTransaction.isEnabled = false
+                    binding.pbLoading.isVisible = true
+                },
+                doOnError = { error ->
+                    if (error.exception is NoInternetException) {
+                        binding.csvFlightDetailsHistory.setState(
+                            ContentState.ERROR_NETWORK,
+                            getString(R.string.no_internet_connection),
+                        )
+                    } else if (error.exception is UnAuthorizeException) {
+                        errorHandler(error.exception)
+                        binding.csvFlightDetailsHistory.setState(
+                            ContentState.ERROR_NETWORK_GENERAL,
+                            getString(R.string.text_session_expired_please_login_again),
+                        )
+                    } else if (error.exception is ServerErrorException) {
+                        errorHandler(error.exception)
+                        binding.csvFlightDetailsHistory.setState(
+                            ContentState.ERROR_NETWORK,
+                            getString(R.string.text_server_error_please_try_again_later),
+                            R.drawable.img_empty_data,
+                        )
+                    } else {
+                        binding.csvFlightDetailsHistory.setState(
+                            ContentState.ERROR_GENERAL,
+                            getString(R.string.text_something_went_wrong),
+                        )
+                    }
+                },
+            )
+        }
     }
 
     private fun observeData(id: String?) {
@@ -47,49 +115,100 @@ class FlightDetailHistoryActivity : BaseActivity() {
             detailHistoryViewModel.getHistoryById(id).observe(this) { result ->
                 result.proceedWhen(
                     doOnSuccess = {
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            binding.shimmerDetailHistory.isVisible = false
-                            binding.svFlightDetails.isVisible = true
-                            binding.btnProceedToPayment.isEnabled = true
-                            setupBind(it.payload)
-                        }, 1000)
+                        binding.main.isRefreshing = false
+                        binding.shimmerDetailHistory.isVisible = false
+                        binding.svFlightDetails.isVisible = true
+                        historyDetails = it.payload
+                        setupBind(historyDetails, vaNumbers)
+                        orderId = it.payload?.data?.orderId.toString()
+                        detailHistoryViewModel.getPaymentStatus(orderId)
+                            .observe(this) { resultStatus ->
+                                resultStatus.proceedWhen(
+                                    doOnSuccess = {
+                                        binding.shimmerDetailHistory.isVisible = false
+                                        binding.svFlightDetails.isVisible = true
+                                        binding.main.isRefreshing = false
+                                        vaNumbers = resultStatus.payload
+                                        setupBind(historyDetails, vaNumbers)
+                                    },
+                                    doOnLoading = {
+                                        binding.main.isRefreshing = true
+                                        binding.shimmerDetailHistory.isVisible = true
+                                        binding.svFlightDetails.isVisible = false
+                                    },
+                                    doOnError = { error ->
+                                        binding.main.isRefreshing = false
+                                        if (error.exception is NoInternetException) {
+                                            binding.csvFlightDetailsHistory.setState(
+                                                ContentState.ERROR_NETWORK,
+                                                getString(R.string.no_internet_connection),
+                                            )
+                                        } else if (error.exception is UnAuthorizeException) {
+                                            errorHandler(error.exception)
+                                            binding.csvFlightDetailsHistory.setState(
+                                                ContentState.ERROR_NETWORK_GENERAL,
+                                                getString(R.string.text_session_expired_please_login_again),
+                                            )
+                                        } else if (error.exception is ServerErrorException) {
+                                            errorHandler(error.exception)
+                                            binding.csvFlightDetailsHistory.setState(
+                                                ContentState.ERROR_NETWORK,
+                                                getString(R.string.text_server_error_please_try_again_later),
+                                                R.drawable.img_empty_data,
+                                            )
+                                        }
+//                                        else if (error.payload?.message == "Transaction doesn't exist") {
+//                                            binding.csvFlightDetailsHistory.setState(ContentState.ERROR_GENERAL)
+//                                        }
+                                        else {
+                                            binding.csvFlightDetailsHistory.setState(ContentState.ERROR_GENERAL)
+                                        }
+                                    },
+                                    doOnEmpty = {
+                                        binding.main.isRefreshing = false
+                                        binding.shimmerDetailHistory.isVisible = false
+                                        getString(R.string.text_havent_made_a_booking)
+                                        binding.svFlightDetails.isVisible = false
+                                    },
+                                )
+                            }
                     },
                     doOnLoading = {
                         binding.shimmerDetailHistory.isVisible = true
                         binding.svFlightDetails.isVisible = false
-                        binding.btnProceedToPayment.isEnabled = false
+                        binding.btnCancelTransaction.isEnabled = false
+                        binding.main.isRefreshing = true
                     },
                     doOnError = { error ->
-                        binding.shimmerDetailHistory.isVisible = false
-
+                        binding.main.isRefreshing = false
                         if (error.exception is NoInternetException) {
-                            binding.csvDetailHistory.setState(
+                            binding.csvFlightDetailsHistory.setState(
                                 ContentState.ERROR_NETWORK,
                                 getString(R.string.no_internet_connection),
                             )
                         } else if (error.exception is UnAuthorizeException) {
                             errorHandler(error.exception)
-                            binding.csvDetailHistory.setState(
+                            binding.csvFlightDetailsHistory.setState(
                                 ContentState.ERROR_NETWORK_GENERAL,
                                 getString(R.string.text_session_expired_please_login_again),
                             )
                         } else if (error.exception is ServerErrorException) {
                             errorHandler(error.exception)
-                            binding.csvDetailHistory.setState(
+                            binding.csvFlightDetailsHistory.setState(
                                 ContentState.ERROR_NETWORK,
                                 getString(R.string.text_server_error_please_try_again_later),
                                 R.drawable.img_empty_data,
                             )
                         } else {
-                            binding.csvDetailHistory.setState(ContentState.ERROR_GENERAL)
+                            binding.csvFlightDetailsHistory.setState(ContentState.ERROR_GENERAL)
                         }
-                        Log.e("DetailTicketActivity", "Error: ${error.exception?.message}")
                     },
                     doOnEmpty = {
+                        binding.main.isRefreshing = false
                         binding.shimmerDetailHistory.isVisible = false
                         getString(R.string.text_havent_made_a_booking)
                         binding.svFlightDetails.isVisible = false
-                        binding.btnProceedToPayment.isVisible = false
+                        binding.btnCancelTransaction.isVisible = false
                     },
                 )
             }
@@ -97,7 +216,10 @@ class FlightDetailHistoryActivity : BaseActivity() {
     }
 
     @SuppressLint("StringFormatMatches")
-    private fun setupBind(historyDetail: TransactionDetailResponses?) {
+    private fun setupBind(
+        historyDetail: TransactionDetailResponses?,
+        itemPaymentStatus: ItemsPaymentStatus?,
+    ) {
         val transactionDetails = historyDetail?.data?.transactionDetails
         val paymentStatus = historyDetail?.data?.status
 
@@ -126,35 +248,34 @@ class FlightDetailHistoryActivity : BaseActivity() {
                 }
             }
         }
+        binding.layoutFlightDetails.tvTitlePassenger.text = getString(R.string.text_empty)
+        binding.layoutFlightDetails.tvCitizenship.text = getString(R.string.text_empty)
 
         with(binding.layoutFlightDetails) {
             tvPaymentStatus.text = paymentStatus
             tvDetailBookingCode.text = historyDetail?.data?.booking?.code
             tvDetailDepartureDate.text =
-                historyDetail?.data?.transactionDetails?.first()?.flight?.departure?.date
+                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.departure?.date
             tvDetailDepartureTime.text =
-                historyDetail?.data?.transactionDetails?.first()?.flight?.departure?.time
+                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.departure?.time
             tvDetailDepartureAirport.text =
-                getString(
-                    R.string.text_detail_departure_airport_and_terminal,
-                    historyDetail?.data?.transactionDetails?.first()?.flight?.departureAirport?.name,
-                    historyDetail?.data?.transactionDetails?.first()?.flight?.airline?.terminal,
-                )
+                "${historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.departureAirport?.name} - ${historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.airline?.terminal}"
             tvDetailAirline.text =
                 getString(
                     R.string.tv_strip,
-                    historyDetail?.data?.transactionDetails?.first()!!.flight.airline.name,
+                    historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.airline?.name,
                 )
-            tvDetailClass.text = historyDetail.data.transactionDetails.first()?.seat?.type
-            tvDetailFlightNumber.text = historyDetail.data.transactionDetails.first()!!.flight.code
+            tvDetailClass.text = historyDetail?.data?.transactionDetails?.firstOrNull()?.seat?.type
+            tvDetailFlightNumber.text =
+                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.code
             tvDetailArrivalDate.text =
-                historyDetail.data.transactionDetails.first()?.flight?.arrival?.date
+                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.arrival?.date
             tvDetailArrivalTime.text =
-                historyDetail.data.transactionDetails.first()?.flight?.arrival?.time
+                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.arrival?.time
             tvDetailDestinationAirport.text =
-                historyDetail.data.transactionDetails.first()!!.flight.destinationAirport.name
-            tvTotalPrice.text = historyDetail.data.totalPrice.formatToRupiah().toString()
-            tvTax.text = historyDetail.data.tax.formatToRupiah().toString()
+                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.destinationAirport?.name
+            tvTotalPrice.text = historyDetail?.data?.totalPrice?.formatToRupiah().toString()
+            tvTax.text = historyDetail?.data?.tax?.formatToRupiah().toString()
 
             if (adultCount > 0) {
                 tvTotalByAgeGroupAdult.text = getString(R.string.text_adult, adultCount)
@@ -202,6 +323,12 @@ class FlightDetailHistoryActivity : BaseActivity() {
             when {
                 paymentStatus.equals("pending", ignoreCase = true) -> {
                     tvPaymentStatus.setText(R.string.text_unpaid)
+                    tvVaNumber.text =
+                        itemPaymentStatus?.vaNumbers?.joinToString { it.vaNumber.toString() }
+                            ?: "N/A"
+
+                    tvPaymentCodeTitle.isVisible = true
+                    tvVaNumber.isVisible = true
                     tvPaymentStatus.backgroundTintList =
                         ColorStateList.valueOf(
                             ContextCompat.getColor(
@@ -236,18 +363,18 @@ class FlightDetailHistoryActivity : BaseActivity() {
 
             when {
                 paymentStatus.equals("pending", ignoreCase = true) -> {
-                    binding.btnProceedToPayment.text = getString(R.string.text_proceed_to_payment)
-                    binding.btnProceedToPayment.isEnabled = true
+                    binding.btnCancelTransaction.text = getString(R.string.text_cancel_transaction)
+                    binding.btnCancelTransaction.isEnabled = true
                 }
 
                 paymentStatus.equals("settlement", ignoreCase = true) -> {
-                    binding.btnProceedToPayment.text = getString(R.string.text_payment_complete)
-                    binding.btnProceedToPayment.isEnabled = false
+                    binding.btnCancelTransaction.text = getString(R.string.text_payment_complete)
+                    binding.btnCancelTransaction.isEnabled = false
                 }
 
-                paymentStatus.equals("cancelled", ignoreCase = true) -> {
-                    binding.btnProceedToPayment.text = getString(R.string.text_payment_cancelled)
-                    binding.btnProceedToPayment.isEnabled = false
+                paymentStatus.equals("expired", ignoreCase = true) -> {
+                    binding.btnCancelTransaction.text = getString(R.string.text_payment_cancelled)
+                    binding.btnCancelTransaction.isEnabled = false
                 }
             }
         }
