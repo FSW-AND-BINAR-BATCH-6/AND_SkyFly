@@ -9,7 +9,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class UserPrefItemsPaymentStatusModelSourceImplTest {
+class UserModelPrefItemsPaymentStatusModelSourceImplTest {
     @MockK
     lateinit var userPreference: UserPreference
 

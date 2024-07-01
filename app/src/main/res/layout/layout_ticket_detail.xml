@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/tv_ticket_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Ticket Code: QG-CGK-QG.CGK.BDO-1B" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_flight_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_ticket_code">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <TextView
+                android:id="@+id/tv_detail_title_booking_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_flight_id"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tv_detail_booking_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/text_example_booking_code"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/tv_detail_title_booking_code"
+                app:layout_constraintTop_toTopOf="@id/tv_detail_title_booking_code" />
+
+
+            <TextView
+                android:id="@+id/tv_detail_departure_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_title_booking_code"
+                tools:text="@string/text_time" />
+
+            <TextView
+                android:id="@+id/tv_detail_title_departure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/text_departure"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_detail_departure_time" />
+
+            <TextView
+                android:id="@+id/tv_detail_departure_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_time"
+                tools:text="@string/text_date" />
+
+            <TextView
+                android:id="@+id/tv_detail_departure_airport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_date"
+                tools:text="@string/text_example_airport" />
+
+            <TextView
+                android:id="@+id/tv_detail_terminal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/tv_detail_departure_airport"
+                app:layout_constraintTop_toTopOf="@id/tv_detail_departure_airport"
+                tools:text="@string/text_example_terminal" />
+
+            <View
+                android:id="@+id/v_line_1"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_departure_airport" />
+
+            <ImageView
+                android:id="@+id/iv_airline"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_airline"
+                app:layout_constraintBottom_toTopOf="@+id/v_line_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_line_1" />
+
+
+            <TextView
+                android:id="@+id/tv_title_passenger_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_passenger_detail"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_line_1" />
+
+            <TextView
+                android:id="@+id/tv_title_passenger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_passenger_detail"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_passenger_detail"
+                tools:text="@string/text_title_passenger" />
+
+
+            <TextView
+                android:id="@+id/tv_family_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_passenger_detail"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_passenger"
+                tools:text="@string/text_family_name" />
+
+            <TextView
+                android:id="@+id/tv_citizenship"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_passenger_detail"
+                app:layout_constraintTop_toBottomOf="@id/tv_family_name"
+                tools:text="@string/text_country" />
+
+            <TextView
+                android:id="@+id/tv_passpor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_passenger_detail"
+                app:layout_constraintTop_toBottomOf="@id/tv_citizenship"
+                tools:text="@string/text_ktp_or_passport" />
+
+
+            <TextView
+                android:id="@+id/tv_title_flight_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_flight_detail"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_title_passenger_detail"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_passenger" />
+
+            <TextView
+                android:id="@+id/tv_airline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_passenger_detail"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_flight_detail"
+                tools:text="@string/text_citilink" />
+
+            <TextView
+                android:id="@+id/tv_seat_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_passenger_detail"
+                app:layout_constraintTop_toBottomOf="@id/tv_airline"
+                tools:text="@string/text_1b" />
+
+            <TextView
+                android:id="@+id/tv_seat_class"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_passenger_detail"
+                app:layout_constraintTop_toBottomOf="@id/tv_seat_number"
+                tools:text="@string/text_economy" />
+
+            <View
+                android:id="@+id/v_line_2"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_seat_class" />
+
+
+            <TextView
+                android:id="@+id/tv_detail_arrival_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_line_2"
+                tools:text="@string/text_arrival_time" />
+
+            <TextView
+                android:id="@+id/tv_detail_arrival_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_arrival_time"
+                tools:text="@string/text_date" />
+
+            <TextView
+                android:id="@+id/tv_detail_destination_airport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_arrival_date"
+                tools:text="@string/text_example_destination_airport" />
+
+            <TextView
+                android:id="@+id/tv_detail_title_arrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/text_arrival"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_detail_arrival_time" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

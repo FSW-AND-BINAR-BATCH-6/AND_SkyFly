@@ -14,6 +14,7 @@ import com.kom.skyfly.data.model.transaction.detail.TransactionDetailResponses
 import com.kom.skyfly.databinding.ActivityFlightDetailBinding
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.main.MainActivity
+import com.kom.skyfly.presentation.ticket.TicketsActivity
 import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.ServerErrorException
 import com.kom.skyfly.utils.UnAuthorizeException
@@ -31,6 +32,14 @@ class FlightDetailActivity : BaseActivity() {
     private var adult: Int = 0
     private var children: Int = 0
     private var baby: Int = 0
+    var departureDate: String? = null
+    var departureTime: String? = null
+    var departureAirport: String? = null
+    private var departureTerminal: String? = null
+    var arrivalDate: String? = null
+    var arrivalTime: String? = null
+    var destinationAirport: String? = null
+    var airlines: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +59,30 @@ class FlightDetailActivity : BaseActivity() {
             navigateToHome()
         }
         binding.btnToHome.setOnClickListener {
-            navigateToHome()
+            navigateToTickets()
         }
     }
 
     private fun navigateToHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
+
+    private fun navigateToTickets() {
+        val intent = Intent(this, TicketsActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intent.putExtra("EXTRA_TRANSACTION_ID", transactionId)
+        intent.putExtra("EXTRA_DEPARTURE_DATE", departureDate)
+        intent.putExtra("EXTRA_DEPARTURE_TIME", departureTime)
+        intent.putExtra("EXTRA_DEPARTURE_AIRPORT", departureAirport)
+        intent.putExtra("EXTRA_DEPARTURE_TERMINAL", departureTerminal)
+
+        intent.putExtra("EXTRA_ARRIVAL_DATE", arrivalDate)
+        intent.putExtra("EXTRA_ARRIVAL_TIME", arrivalTime)
+        intent.putExtra("EXTRA_DESTINATION_AIRPORT", destinationAirport)
+        intent.putExtra("EXTRA_AIRLINE", airlines)
+
         startActivity(intent)
     }
 
@@ -135,16 +161,8 @@ class FlightDetailActivity : BaseActivity() {
 
     @SuppressLint("StringFormatMatches")
     private fun setTransactionDetailData(response: TransactionDetailResponses?) {
-        var departureDate: String? = null
-        var departureTime: String? = null
-        var departureAirport: String? = null
-        var departureTerminal: String? = null
-        var airlines: String? = null
         var seatClass: String? = null
         var flightNumber: String? = null
-        var arrivalDate: String? = null
-        var arrivalTime: String? = null
-        var destinationAirport: String? = null
         val tax: Int? = response?.data?.tax
         val totalPrice: Int? = response?.data?.totalPrice
         var totalPricePassengerAdult: Int? = 0
@@ -217,6 +235,7 @@ class FlightDetailActivity : BaseActivity() {
 
             if (paymentStatus.equals("pending", ignoreCase = true)) {
                 tvPaymentStatus.text = getString(R.string.text_unpaid)
+                binding.btnToHome.isEnabled = false
                 tvPaymentStatus.backgroundTintList =
                     ColorStateList.valueOf(
                         ContextCompat.getColor(
@@ -226,6 +245,7 @@ class FlightDetailActivity : BaseActivity() {
                     )
             } else if (paymentStatus.equals("settlement", ignoreCase = true)) {
                 tvPaymentStatus.text = getString(R.string.text_paid)
+                binding.btnToHome.isEnabled = true
                 tvPaymentStatus.backgroundTintList =
                     ColorStateList.valueOf(
                         ContextCompat.getColor(

@@ -24,7 +24,7 @@ import org.junit.rules.TestRule
  * Written by Komang Yuda Saputra
  * Github : https://github.com/YudaSaputraa
  */
-class FlightDetailViewModelTest {
+class FlightModelDetailViewModelTest {
     @get:Rule
     val testRule: TestRule = InstantTaskExecutorRule()
 
