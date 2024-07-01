@@ -89,7 +89,6 @@ class SearchFragment : BottomSheetDialogFragment() {
                                     dismiss()
                                 }
                             }
-
                         adapter.addAll(items)
                     }
                 },

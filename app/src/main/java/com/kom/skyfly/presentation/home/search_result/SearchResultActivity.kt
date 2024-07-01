@@ -7,6 +7,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kom.skyfly.R
 import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.home.Calendar
@@ -24,7 +25,7 @@ import com.kom.skyfly.utils.proceedWhen
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.time.YearMonth
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
@@ -39,7 +40,7 @@ class SearchResultActivity : BaseActivity() {
     private val calendarAdapter: CalendarAdapter by lazy {
         CalendarAdapter {
             calendarAdapter.setSelectedDate(it.date)
-            getAllTicketData(it.date)
+            getAllTicketData(it.date, searchResultViewModel.filterName.value)
         }
     }
 
@@ -70,29 +71,68 @@ class SearchResultActivity : BaseActivity() {
         babyCount = intent.getIntExtra("EXTRA_BABY_COUNT", 0)
         extraRoundTrip = intent.getBooleanExtra("EXTRA_ROUND_TRIP", false)
         setOnClickListener()
-        setupBinding()
         getCalendarData()
+        setupBinding()
         getAllTicketData(departureTime!!)
+        checkFilter()
+    }
+
+    private fun checkFilter() {
+        // Observe filter name
+        searchResultViewModel.filterName.observe(this) { filter ->
+            if (filter != null) {
+                binding.tvFilterName.text = filter
+                getAllTicketData(departureTime!!, filter)
+            }
+        }
     }
 
     private fun getCalendarData() {
         val recyclerView = binding.rvDateSearchResult
-        recyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = layoutManager
 
-        val dateTime = YearMonth.parse(departureTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-
-        val daysInMonth = dateTime.lengthOfMonth()
+        val startDate = LocalDate.parse(departureTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val daysInMonth = startDate.month.length(startDate.isLeapYear)
+        val startDay = startDate.dayOfMonth
+        val remainingDaysInMonth = daysInMonth - startDay + 1
 
         val days = mutableListOf<Calendar>()
-        for (day in 1..daysInMonth) {
-            val date = dateTime.atDay(day)
-            val dayOfWeek = date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("id", "ID"))
-            val formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            days.add(Calendar(dayOfWeek, formattedDate))
+
+        if (remainingDaysInMonth in 1..5) {
+            for (day in startDay..daysInMonth) {
+                val date = startDate.withDayOfMonth(day)
+                val dayOfWeek = date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("id", "ID"))
+                val formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                days.add(Calendar(dayOfWeek, formattedDate))
+            }
+
+            val daysNeededFromNextMonth = 30 - remainingDaysInMonth
+            var nextMonthDate = startDate.plusMonths(1).withDayOfMonth(1)
+            for (day in 1..daysNeededFromNextMonth) {
+                val dayOfWeek = nextMonthDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("id", "ID"))
+                val formattedDate = nextMonthDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                days.add(Calendar(dayOfWeek, formattedDate))
+                nextMonthDate = nextMonthDate.plusDays(1)
+            }
+        } else {
+            val firstDayOfMonth = startDate.withDayOfMonth(1)
+            for (day in 1..daysInMonth) {
+                val date = firstDayOfMonth.withDayOfMonth(day)
+                val dayOfWeek = date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("id", "ID"))
+                val formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                days.add(Calendar(dayOfWeek, formattedDate))
+            }
         }
+
         recyclerView.adapter = calendarAdapter
-        calendarAdapter.submitData(days)
+        calendarAdapter.submitData(days, startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+
+        // Scroll to the initial selected date position
+        val initialPosition = calendarAdapter.findPositionOfDate(startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+        if (initialPosition != RecyclerView.NO_POSITION) {
+            layoutManager.scrollToPositionWithOffset(initialPosition, 0)
+        }
     }
 
     private fun getAllReturnTicketData(date: String) {
@@ -158,7 +198,10 @@ class SearchResultActivity : BaseActivity() {
         }
     }
 
-    private fun getAllTicketData(date: String) {
+    private fun getAllTicketData(
+        date: String,
+        sort: String? = null,
+    ) {
         searchResultViewModel.getAllFlightTicket(
             page = 1,
             arrivalAirport = arrivalAirport!!,
@@ -169,51 +212,58 @@ class SearchResultActivity : BaseActivity() {
             children = childrenCount,
             baby = babyCount,
             returnDate = returnDate,
+            sort = sort,
         ).observe(this) { response ->
             response.proceedWhen(
-                doOnSuccess = {
+                doOnSuccess = { result ->
+                    val sectionedSearch = result.payload ?: emptyList()
+
+                    // Handle visibility and delays
+                    if (searchResultViewModel.filterName.value != null) {
+                        binding.filterResult.isVisible = true
+                    }
                     Handler(Looper.getMainLooper()).postDelayed({
                         binding.shimmerTicket.isVisible = false
                         binding.rvDateSearchResult.isVisible = true
                         binding.rvItemTicketsSearchResult.isVisible = true
-                        it.payload?.let { sectionedSearch ->
-                            val sections =
-                                sectionedSearch.map {
-                                    Section().apply {
-                                        val data =
-                                            sectionedSearch.map { data ->
-                                                Items(data) { item ->
-                                                    if (extraRoundTrip == true) {
-                                                        flightId = item?.id
-                                                        getAllReturnTicketData(departureTime!!)
-                                                    } else {
-                                                        val searchResultIntent =
-                                                            SearchResultIntent(
-                                                                departureId = item?.id,
-                                                                seatClass = item?.seatClass,
-                                                                adultCount = adultCount,
-                                                                childCount = childrenCount,
-                                                                babyCount = babyCount,
-                                                                roundTrip = extraRoundTrip,
-                                                                returnId = "",
-                                                            )
-                                                        val intent =
-                                                            Intent(
-                                                                this@SearchResultActivity,
-                                                                DetailHomeActivity::class.java,
-                                                            ).apply {
-                                                                putExtra("EXTRA_SEARCH_RESULT", searchResultIntent)
-                                                            }
-                                                        startActivity(intent)
+
+                        // Map sectionedSearch data
+                        val sections =
+                            sectionedSearch.map { data ->
+                                Section().apply {
+                                    add(
+                                        Items(data) { item ->
+                                            if (extraRoundTrip == true) {
+                                                flightId = item?.id
+                                                getAllReturnTicketData(departureTime!!)
+                                            } else {
+                                                val searchResultIntent =
+                                                    SearchResultIntent(
+                                                        departureId = item?.id,
+                                                        seatClass = item?.seatClass,
+                                                        adultCount = adultCount,
+                                                        childCount = childrenCount,
+                                                        babyCount = babyCount,
+                                                        roundTrip = extraRoundTrip,
+                                                        returnId = "",
+                                                    )
+                                                val intent =
+                                                    Intent(
+                                                        this@SearchResultActivity,
+                                                        DetailHomeActivity::class.java,
+                                                    ).apply {
+                                                        putExtra("EXTRA_SEARCH_RESULT", searchResultIntent)
                                                     }
-                                                }
+                                                startActivity(intent)
                                             }
-                                        addAll(data)
-                                    }
+                                        },
+                                    )
                                 }
-                            adapter.clear()
-                            adapter.update(sections)
-                        }
+                            }
+
+                        // Clear the adapter and add new sections
+                        adapter.clear()
+                        adapter.update(sections)
                     }, 1000)
                     Log.d("SearchResultActivity", "Data fetched successfully")
                 },
@@ -226,27 +276,33 @@ class SearchResultActivity : BaseActivity() {
                     )
                 },
                 doOnError = { error ->
+                    adapter.clear()
                     binding.shimmerTicket.isVisible = false
-                    if (error.exception is NoInternetException) {
-                        binding.csvTicketResult.setState(
-                            ContentState.ERROR_NETWORK,
-                            getString(R.string.no_internet_connection),
-                        )
-                    } else if (error.exception is UnAuthorizeException) {
-                        errorHandler(error.exception)
-                        binding.csvTicketResult.setState(
-                            ContentState.ERROR_NETWORK_GENERAL,
-                            getString(R.string.text_session_expired_please_login_again),
-                        )
-                    } else if (error.exception is ServerErrorException) {
-                        errorHandler(error.exception)
-                        binding.csvTicketResult.setState(
-                            ContentState.ERROR_NETWORK,
-                            getString(R.string.text_server_error_please_try_again_later),
-                            R.drawable.img_empty_data,
-                        )
-                    } else {
-                        binding.csvTicketResult.setState(ContentState.ERROR_GENERAL)
+                    when (error.exception) {
+                        is NoInternetException -> {
+                            binding.csvTicketResult.setState(
+                                ContentState.ERROR_NETWORK,
+                                getString(R.string.no_internet_connection),
+                            )
+                        }
+                        is UnAuthorizeException -> {
+                            errorHandler(error.exception)
+                            binding.csvTicketResult.setState(
+                                ContentState.ERROR_NETWORK_GENERAL,
+                                getString(R.string.text_session_expired_please_login_again),
+                            )
+                        }
+                        is ServerErrorException -> {
+                            errorHandler(error.exception)
+                            binding.csvTicketResult.setState(
+                                ContentState.ERROR_NETWORK,
+                                getString(R.string.text_server_error_please_try_again_later),
+                                R.drawable.img_empty_data,
+                            )
+                        }
+                        else -> {
+                            binding.csvTicketResult.setState(ContentState.ERROR_GENERAL)
+                        }
                     }
                     Log.e("SearchResultActivity", "Error: ${error.exception?.message}")
                 },

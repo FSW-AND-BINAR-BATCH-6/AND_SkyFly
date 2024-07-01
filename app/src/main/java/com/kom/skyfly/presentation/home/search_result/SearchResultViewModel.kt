@@ -24,6 +24,7 @@ class SearchResultViewModel(
         adult: Int? = 1,
         children: Int? = 0,
         baby: Int? = 0,
+        sort: String? = null,
     ) = flightRepository.getAllTicket(
         search = search,
         page = page,
@@ -37,6 +38,7 @@ class SearchResultViewModel(
         children = children,
         baby = baby,
         returnDate = returnDate,
+        sort = sort,
     ).asLiveData(Dispatchers.IO)
 
     fun getReturnFlightTicket(
@@ -52,6 +54,7 @@ class SearchResultViewModel(
         adult: Int? = 1,
         children: Int? = 0,
         baby: Int? = 0,
+        sort: String? = null,
     ) = flightRepository.getReturnTicket(
         search = search,
         page = page,
@@ -65,10 +68,11 @@ class SearchResultViewModel(
         children = children,
         baby = baby,
         returnDate = returnDate,
+        sort = sort,
     ).asLiveData(Dispatchers.IO)
 
     // Set filterData
-    private val _filterName = MutableLiveData<String?>()
+    private val _filterName = MutableLiveData<String?>(null)
     val filterName: LiveData<String?> get() = _filterName
 
     fun setFilterName(value: String?) {
