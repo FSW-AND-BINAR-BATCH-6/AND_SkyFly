@@ -65,6 +65,36 @@
             android:textColor="@android:color/black"
             android:textSize="16sp" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/filter_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_borderline"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_calender">
+
+        <ImageView
+            android:id="@+id/ic_filter_search_result"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginHorizontal="16dp"
+            android:src="@drawable/ic_swap" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            tools:text="Lowest Price"
+            android:textColor="@color/md_theme_onPrimaryFixedVariant"
+            android:textSize="16sp" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_item_tickets_search_result"

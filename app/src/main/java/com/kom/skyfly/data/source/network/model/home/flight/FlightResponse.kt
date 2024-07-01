@@ -13,6 +13,8 @@ data class FlightResponse(
     val message: String,
     @SerializedName("totalItems")
     val totalItems: Int,
+    @SerializedName("sortedBy")
+    val sortedBy: String?,
     @SerializedName("pagination")
     val pagination: Pagination,
     @SerializedName("priceRanges")

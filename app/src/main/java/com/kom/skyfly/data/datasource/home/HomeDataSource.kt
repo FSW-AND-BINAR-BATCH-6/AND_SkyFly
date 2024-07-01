@@ -1,5 +1,6 @@
 package com.kom.skyfly.data.datasource.home
 
+import com.kom.skyfly.data.model.home.filter.Filter
 import com.kom.skyfly.data.model.home.seat_class.SeatClassHome
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
 import com.kom.skyfly.data.source.network.model.home.favourite_destination.FavouriteDestinationResponse
@@ -22,6 +23,7 @@ interface HomeDataSource {
         adult: Int? = 1,
         children: Int? = 0,
         baby: Int? = 0,
+        sort: String? = null,
     ): FlightResponse
 
     suspend fun getDetailFlight(
@@ -30,6 +32,8 @@ interface HomeDataSource {
     ): FlightDetailResponse
 
     fun getSeatClassData(): List<SeatClassHome>
+
+    fun getFilterData(): List<Filter>
 
     suspend fun getDestinationFavourites(): FavouriteDestinationResponse
 }
