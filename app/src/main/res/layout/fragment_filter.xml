@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardCornerRadius="16dp"
-    tools:context=".presentation.home.seatclass.SeatClassFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.home.filter.FilterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,50 +12,50 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/iv_home_close_seatclass"
+            android:id="@+id/iv_home_close_filter"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_close"
-            app:layout_constraintBottom_toTopOf="@id/v_fragment_select_seatclass"
+            app:layout_constraintBottom_toTopOf="@id/v_fragment_select_filter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/v_fragment_select_seatclass"
+            android:id="@+id/v_fragment_select_filter"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginVertical="16dp"
             android:background="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_home_close_seatclass" />
+            app:layout_constraintTop_toBottomOf="@id/iv_home_close_filter" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_seatclass_categories"
+            android:id="@+id/rv_filter_categories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/btn_seatclass_save"
+            app:layout_constraintBottom_toTopOf="@id/btn_filter_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_home_close_seatclass"
-            tools:listitem="@layout/layout_item_seatclass_card" />
+            app:layout_constraintTop_toBottomOf="@id/v_fragment_select_filter"
+            tools:listitem="@layout/layout_item_filter_card" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_seatclass_save"
+            android:id="@+id/btn_filter_save"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_rounded"
+            android:orientation="vertical"
             android:text="@string/text_save"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.cardview.widget.CardView>

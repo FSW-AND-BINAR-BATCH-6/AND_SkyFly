@@ -1,5 +1,6 @@
 package com.kom.skyfly.data.repository.home.flight_ticket
 
+import com.kom.skyfly.data.model.home.filter.Filter
 import com.kom.skyfly.data.model.home.flight.FlightTicket
 import com.kom.skyfly.data.model.home.flight_detail.FlightDetailTicket
 import com.kom.skyfly.data.model.home.seat_class.SeatClassHome
@@ -20,6 +21,7 @@ interface FlightTicketRepository {
         adult: Int? = 1,
         children: Int? = 0,
         baby: Int? = 0,
+        sort: String? = null,
     ): Flow<ResultWrapper<List<FlightTicket?>>>
 
     fun getReturnTicket(
@@ -35,6 +37,7 @@ interface FlightTicketRepository {
         adult: Int? = 1,
         children: Int? = 0,
         baby: Int? = 0,
+        sort: String? = null,
     ): Flow<ResultWrapper<List<FlightTicket?>>>
 
     fun getDetailTicket(
@@ -43,4 +46,6 @@ interface FlightTicketRepository {
     ): Flow<ResultWrapper<FlightDetailTicket>>
 
     fun getSeatClassTicket(): List<SeatClassHome>
+
+    fun getFilterData(): List<Filter>
 }
