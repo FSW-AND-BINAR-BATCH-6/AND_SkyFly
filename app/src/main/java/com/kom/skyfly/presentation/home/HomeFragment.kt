@@ -192,13 +192,13 @@ class HomeFragment : Fragment() {
         val isDestinationValid =
             binding.layoutSelectDestination.tvEndDestination.text.toString().isNotEmpty()
         val isDepartureTimeValid = binding.tvDeparture.text.toString().isNotEmpty()
-        val isReturnTimeValid =
-            !binding.tvReturn.isEnabled || binding.tvReturn.text.toString().isNotEmpty()
+//        val isReturnTimeValid =
+//            !binding.tvReturn.isEnabled || binding.tvReturn.text.toString().isNotEmpty()
         val isPassengerCountValid = sharedViewModel.passengerCountLiveData.value != null
         val isSeatClassValid = sharedViewModel.seatClass.value != null
 
         binding.btnSearchFlight.isEnabled =
-            isSourceValid && isDestinationValid && isDepartureTimeValid && isReturnTimeValid && isPassengerCountValid && isSeatClassValid
+            isSourceValid && isDestinationValid && isDepartureTimeValid && isPassengerCountValid && isSeatClassValid
     }
 
     private fun getDestinationFavoriteData() {
