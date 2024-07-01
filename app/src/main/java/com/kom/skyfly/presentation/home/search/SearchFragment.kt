@@ -156,11 +156,15 @@ class SearchFragment : BottomSheetDialogFragment() {
         binding.layoutHomeSearchBar.ivCloseSearch.setOnClickListener {
             dismiss()
         }
+        binding.tvHomeDeleteRecentSearches.setOnClickListener {
+            searchViewModel.deleteAllSearchHistory()
+        }
         binding.layoutHomeSearchBar.etHomeSearch.afterTextChanged {
             if (it.isNotEmpty()) {
                 binding.rvHomeSearchPage.isVisible = true
                 binding.rvRecentDestinationSearch.isVisible = false
                 binding.tvHomeDeleteRecentSearches.isVisible = false
+                binding.tvTitleHomeRecentSearches.isVisible = false
                 getAirportData(it)
             } else {
                 binding.tvTitleHomeRecentSearches.isVisible = true
