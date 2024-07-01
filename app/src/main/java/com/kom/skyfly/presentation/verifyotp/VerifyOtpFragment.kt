@@ -115,7 +115,7 @@ class VerifyOtpFragment : BottomSheetDialogFragment() {
                         navigateToLogin()
                     },
                     doOnError = {
-                        Toasty.error(requireContext(), "Invalid token!", Toast.LENGTH_SHORT).show()
+                        Toasty.error(requireContext(), "Invalid OTP!", Toast.LENGTH_SHORT).show()
                         binding.pbOtp.isVisible = false
                         Log.d("Verify-Error", "verifyProceed: ${it.exception?.message}")
                     },

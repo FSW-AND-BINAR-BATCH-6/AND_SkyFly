@@ -1,4 +1,3 @@
-
 # Binar Final Project - Skyfly Android
 
 <div align="center" width="100%">
@@ -6,19 +5,22 @@
 </div>
 <br>
 
-
 ### Team C-1 Skyfly!
 
-Skyfly API allows you to get the needed resources to make Skyfly application run seamlessly. Some of this service is using authentication to access each service. You need to login first to access the service.
+Skyfly API allows you to get the needed resources to make Skyfly application run seamlessly. Some of
+this service is using authentication to access each service. You need to login first to access the
+service.
 
 ### Overview
 
-SkyFly is an online flight ticket booking application designed to provide a seamless and user-friendly experience for booking flights. This Android application supports various functionalities essential for an efficient flight booking system.
+SkyFly is an online flight ticket booking application designed to provide a seamless and
+user-friendly experience for booking flights. This Android application supports various
+functionalities essential for an efficient flight booking system.
 
 # Data Team C1
 
 |                   |                                                                                                                                             | **LinkedIn**                                                                 | **Github**                                    |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------- |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|-----------------------------------------------|
 | **FSW**           | _Reinanda Faris_                                                                                                                            | [LinkedIn](https://www.linkedin.com/in/reinanda-faris/)                      | [Github](https://github.com/Reinandafaris)    |
 |                   | _Viery Nugroho_                                                                                                                             | [LinkedIn](https://www.linkedin.com/in/viery-nugroho)                        | [Github](https://github.com/vierynugroho)     |
 |                   | _Andhika Rizky Aulia_                                                                                                                       | [LinkedIn](https://www.linkedin.com/in/andhika-rizky/)                       | [Github](https://github.com/ndikrp)           |
@@ -36,14 +38,11 @@ SkyFly is an online flight ticket booking application designed to provide a seam
 | **Project Title** | _SKY-FLY_                                                                                                                                   |
 |                   |                                                                                                                                             |
 | **Note**          | _Binar KM6_                                                                                                                                 |
-|                   | [Trello Team C1 Binar KM6](https://trello.com/c/2XzOhXim/60-c1-binar-km6-fsw-x-and)                                                         |
+|                   | [ClickUp Team C1 Binar KM6](https://sharing.clickup.com/l/h/6-901802176957-1/d15d783c1111dbd)                                               |
 |                   | [Daily Stand-Up Team C1 Binar KM6](https://docs.google.com/spreadsheets/d/1aCpje7mQnG5uhmBOh9sEThQKYgatLdNpPoSoQK6VUvk/edit#gid=1785037003) |
 |                   | [Deployed API](https://backend-skyfly-c1.vercel.app/api-docs/)                                                                              |
 
 ---
-
-
-
 
 ## Tech Stack
 
@@ -63,11 +62,13 @@ SkyFly is an online flight ticket booking application designed to provide a seam
 
 ## How to Use the App
 
-### Initial Setup
+### First Install App
+
 - **Onboarding Screen**: The first time you install the app, an onboarding screen will be displayed.
 - **Home Tab**: After completing the onboarding, you'll be navigated to the Home tab.
 
 ### Home Tab
+
 - **Selecting Flight Details**:
     - Choose the origin and destination.
     - Select the departure date.
@@ -87,32 +88,35 @@ SkyFly is an online flight ticket booking application designed to provide a seam
 - **Flight Detail Review**:
     - Review the flight details you've selected.
 - **Payment**:
-    - Proceed to the payment menu, where various payment methods are available, such as transfer and QRIS.
+    - Proceed to the payment menu, where various payment methods are available, such as transfer and
+      QRIS.
 - **Ticket Confirmation**:
     - After completing the payment, you'll see the detailed ticket information.
 
 ### History Tab
+
 - **Viewing Ticket History**:
     - All your ticket booking history will be displayed here.
     - Click on any booking to view its details.
 - **Transaction Status**:
     - The tab shows the status of your transactions: "PAID", "UNPAID", or "CANCELED".
-    - If you have unpaid bookings and want to cancel them, click the "cancel transaction" button below the details.
+    - If you have unpaid bookings and want to cancel them, click the "cancel transaction" button
+      below the details.
 
 ### Notification Tab
+
 - **Viewing Notifications**:
     - View all notifications related to your account.
     - Click on a notification to see more details.
 
 ### Account Tab
+
 - **Viewing and Editing Profile**:
     - View your personal information and edit details such as your name and phone number.
 - **Changing Password**:
     - Click the button to change your password.
 - **Logging Out**:
     - Use the logout button if you wish to log out of your account.
-
-
 
 ## SkyFly Api used
 
@@ -122,11 +126,9 @@ SkyFly is an online flight ticket booking application designed to provide a seam
 POST api/v1/auth/login
 ```
 
-| Query | Type     | Description                |
-| :-------- | :------- | :------------------------- |
+| Query          | Type     | Description                                           |
+|:---------------|:---------|:------------------------------------------------------|
 | `loginRequest` | `object` | **Required**. Login request payload (email, password) |
-
-
 
 #### Register
 
@@ -134,11 +136,10 @@ POST api/v1/auth/login
 POST api/v1/auth/register
 
 ```
-| Query         | Type     | Description                      |
-| :---------------- | :------- | :------------------------------- |
+
+| Query             | Type     | Description                                                                      |
+|:------------------|:---------|:---------------------------------------------------------------------------------|
 | `registerRequest` | `object` | **Required**. Register request  payload (FullName, Email, PhoneNumber, password) |
-
-
 
 #### Verify Account
 
@@ -146,12 +147,10 @@ POST api/v1/auth/register
 PUT api/v1/auth/verified
 ```
 
-| Query               | Type     | Description                                        |
-| :---------------------- | :------- |:---------------------------------------------------|
-| `token`                 | `string` | **Required**. Verification token                   |
-| `verifyAccountRequest`  | `object` | **Required**. Verify account request payload (otp) |
-
-
+| Query                  | Type     | Description                                        |
+|:-----------------------|:---------|:---------------------------------------------------|
+| `token`                | `string` | **Required**. Verification token                   |
+| `verifyAccountRequest` | `object` | **Required**. Verify account request payload (otp) |
 
 #### Forget Password
 
@@ -159,10 +158,9 @@ PUT api/v1/auth/verified
 POST api/v1/auth/forgetPassword
 ```
 
-| Parameter                | Type     | Description                                           |
-| :----------------------- | :------- |:------------------------------------------------------|
-| `forgetPasswordRequest`  | `object` | **Required**. Forget password request payload (email) |
-
+| Parameter               | Type     | Description                                           |
+|:------------------------|:---------|:------------------------------------------------------|
+| `forgetPasswordRequest` | `object` | **Required**. Forget password request payload (email) |
 
 #### Get All Flight with Sort or Filter
 
@@ -170,22 +168,21 @@ POST api/v1/auth/forgetPassword
 GET api/v1/flights/
 ```
 
-| Query              | Type     | Description                    |
-| :----------------- | :------- | :----------------------------- |
-| `search`           | `string` | Search query                   |
-| `page`             | `int`    | Page number for pagination     |
-| `limit`            | `int`    | Number of results per page     |
-| `departureAirport` | `string` | Departure airport code         |
-| `arrivalAirport`   | `string` | Arrival airport code           |
-| `departureDate`    | `string` | Departure date (YYYY-MM-DD)    |
-| `returnDate`       | `string` | Return date (YYYY-MM-DD)       |
-| `arrivalDate`      | `string` | Arrival date (YYYY-MM-DD)      |
-| `seatClass`        | `string` | Seat class                     |
-| `adult`            | `int`    | Number of adult passengers     |
-| `children`         | `int`    | Number of child passengers     |
-| `baby`             | `int`    | Number of baby passengers      |
-| `sort`             | `string` | Sorting order                  |
-
+| Query              | Type     | Description                 |
+|:-------------------|:---------|:----------------------------|
+| `search`           | `string` | Search query                |
+| `page`             | `int`    | Page number for pagination  |
+| `limit`            | `int`    | Number of results per page  |
+| `departureAirport` | `string` | Departure airport code      |
+| `arrivalAirport`   | `string` | Arrival airport code        |
+| `departureDate`    | `string` | Departure date (YYYY-MM-DD) |
+| `returnDate`       | `string` | Return date (YYYY-MM-DD)    |
+| `arrivalDate`      | `string` | Arrival date (YYYY-MM-DD)   |
+| `seatClass`        | `string` | Seat class                  |
+| `adult`            | `int`    | Number of adult passengers  |
+| `children`         | `int`    | Number of child passengers  |
+| `baby`             | `int`    | Number of baby passengers   |
+| `sort`             | `string` | Sorting order               |
 
 #### Get Flight by Id
 
@@ -194,11 +191,10 @@ GET api/v1/flights/{id}
 
 ```
 
-| Parameter   | Type     | Description                    |
-| :---------- | :------- | :----------------------------- |
-| `id`        | `string` | **Required**. Flight ID        |
-| `seatClass` | `string` | Seat class                     |
-
+| Parameter   | Type     | Description             |
+|:------------|:---------|:------------------------|
+| `id`        | `string` | **Required**. Flight ID |
+| `seatClass` | `string` | Seat class              |
 
 #### Get All Airtport
 
@@ -206,11 +202,10 @@ GET api/v1/flights/{id}
 GET api/v1/airports/
 ```
 
-| Query   | Type      | Description                           |
-| :------ | :-------- | :------------------------------------ |
-| `city`  | `string`  | City name                             |
-| `showAll` | `boolean` | Show all airports (default: true)  |
-
+| Query     | Type      | Description                       |
+|:----------|:----------|:----------------------------------|
+| `city`    | `string`  | City name                         |
+| `showAll` | `boolean` | Show all airports (default: true) |
 
 ### Get All Flight Seat by Flight id
 
@@ -218,14 +213,10 @@ GET api/v1/airports/
 GET api/v1/flightSeats/flight/{id}
 ```
 
-| Parameter | Type     | Description                    |
-| :-------- | :------- | :----------------------------- |
-| `id`      | `string` | **Required**. Flight ID        |
-| `limit`   | `int`    | Number of results per page     |
-
-
-
-
+| Parameter | Type     | Description                |
+|:----------|:---------|:---------------------------|
+| `id`      | `string` | **Required**. Flight ID    |
+| `limit`   | `int`    | Number of results per page |
 
 ### Get User Profile
 
@@ -233,10 +224,9 @@ GET api/v1/flightSeats/flight/{id}
 GET api/v1/auth/me
 ```
 
-| Query | Type     | Description                    |
-| :-------- | :------- | :----------------------------- |
-| `token`                 | `string` | **Required**. Verification token          |
-
+| Query   | Type     | Description                      |
+|:--------|:---------|:---------------------------------|
+| `token` | `string` | **Required**. Verification token |
 
 ### Update User Profile
 
@@ -244,11 +234,10 @@ GET api/v1/auth/me
 PATCH api/v1/auth/me
 ```
 
-| Query | Type     | Description                                                        |
-| :-------- | :------- |:-------------------------------------------------------------------|
-| `token`                 | `string` | **Required**. Verification token                                   |
+| Query                  | Type     | Description                                                        |
+|:-----------------------|:---------|:-------------------------------------------------------------------|
+| `token`                | `string` | **Required**. Verification token                                   |
 | `updateProfileRequest` | `object` | **Required**. Update profile request payload (FullName/phoneNumber |
-
 
 ### Create Transaction
 
@@ -256,50 +245,61 @@ PATCH api/v1/auth/me
   POST api/v1/transactions/payment
 ```
 
-| Query              | Type     | Description                    |
-| :----------------- | :------- | :----------------------------- |
-| `token`                 | `string` | **Required**. Verification token          |
-| `flightId`         | `string` | **Required**. Flight ID        |
-| `adult`            | `int`    | **Required**. Number of adults |
-| `child`            | `int`    | **Required**. Number of children |
-| `baby`             | `int`    | **Required**. Number of babies |
+| Query                | Type     | Description                               |
+|:---------------------|:---------|:------------------------------------------|
+| `token`              | `string` | **Required**. Verification token          |
+| `flightId`           | `string` | **Required**. Flight ID                   |
+| `adult`              | `int`    | **Required**. Number of adults            |
+| `child`              | `int`    | **Required**. Number of children          |
+| `baby`               | `int`    | **Required**. Number of babies            |
 | `transactionRequest` | `object` | **Required**. Transaction request payload |
 
 ### Get All Notification
+
 ```http
 GET api/v1/notifications
 ```
-| Query  | Type     | Description                    |
-| :----- | :------- | :----------------------------- |
-| `token`                 | `string` | **Required**. Verification token          |
-| `limit` | `int`   | Number of results per page     |
 
+| Query   | Type     | Description                      |
+|:--------|:---------|:---------------------------------|
+| `token` | `string` | **Required**. Verification token |
+| `limit` | `int`    | Number of results per page       |
 
 ### Get Transaction by Id
+
 ```http
   GET api/v1/transactions/{id}
 ```
-| Parameter | Type     | Description                    |
-| :-------- | :------- | :----------------------------- |
-| `token`                 | `string` | **Required**. Verification token          |
-| `id`      | `string` | **Required**. Transaction ID   |
 
+| Parameter | Type     | Description                      |
+|:----------|:---------|:---------------------------------|
+| `token`   | `string` | **Required**. Verification token |
+| `id`      | `string` | **Required**. Transaction ID     |
 
 ### Get All Transaction History, filter and search
 
 ```http
   GET api/v1/transactions
 ```
-| Query         | Type     | Description                    |
-| :------------ | :------- | :----------------------------- |
-| `token`                 | `string` | **Required**. Verification token          |
-| `limit`       | `int`    | Number of results per page     |
-| `startDate`   | `string` | Start date for filtering (YYYY-MM-DD) |
-| `endDate`     | `string` | End date for filtering (YYYY-MM-DD)   |
-| `flightCode`  | `string` | Flight code for filtering      |
 
+| Query        | Type     | Description                           |
+|:-------------|:---------|:--------------------------------------|
+| `token`      | `string` | **Required**. Verification token      |
+| `limit`      | `int`    | Number of results per page            |
+| `startDate`  | `string` | Start date for filtering (YYYY-MM-DD) |
+| `endDate`    | `string` | End date for filtering (YYYY-MM-DD)   |
+| `flightCode` | `string` | Flight code for filtering             |
 
+### Get User Tickets
 
+```http
+GET /api/v1/tickets/{id}
+```
+
+| Parameter | Type     | Description                      |
+|:----------|:---------|:---------------------------------|
+| `token`   | `string` | **Required**. Verification token |
+| `id`      | `string` | **Required**. Ticket ID          |
 
 
 

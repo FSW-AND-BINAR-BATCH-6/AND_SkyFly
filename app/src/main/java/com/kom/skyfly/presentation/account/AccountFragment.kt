@@ -113,7 +113,6 @@ class AccountFragment : Fragment() {
                     phoneNumber?.let { phoneNumber ->
                         id?.let { id ->
                             doEditProfile(id, fullName, phoneNumber, familyNames)
-                            Toast.makeText(requireContext(), "tes", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
