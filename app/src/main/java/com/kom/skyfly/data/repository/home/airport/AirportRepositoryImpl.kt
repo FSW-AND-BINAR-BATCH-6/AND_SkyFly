@@ -12,6 +12,7 @@ import com.kom.skyfly.utils.ResultWrapper
 import com.kom.skyfly.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -24,20 +25,31 @@ class AirportRepositoryImpl(
         return flow {
             emit(ResultWrapper.Loading())
             val result = dataSource.getAllAirports(city = city).data.toAirports()
-//            delay(500)
             emit(ResultWrapper.Success(result))
         }
     }
 
     override fun createSearchDestinationHistory(searchDestinationHistory: String): Flow<ResultWrapper<Boolean>> {
         return proceedFlow {
-            val affectedRows =
-                searchHistoryDataSource.insertSearchDestinationHistory(
-                    SearchDestinationHistoryEntity(
-                        searchDestinationHistory = searchDestinationHistory,
-                    ),
-                )
-            affectedRows > 0
+            // Fetch all existing search history entries
+            val existingHistory =
+                searchHistoryDataSource.getAllSearchDestinationHistory()
+                    .first() // Get the first emission from the Flow
+
+            // Check if an entry with the same name already exists
+            val entryExists = existingHistory.any { it.searchDestinationHistory == searchDestinationHistory }
+
+            if (!entryExists) {
+                val affectedRows =
+                    searchHistoryDataSource.insertSearchDestinationHistory(
+                        SearchDestinationHistoryEntity(
+                            searchDestinationHistory = searchDestinationHistory,
+                        ),
+                    )
+                affectedRows > 0
+            } else {
+                false // No new entry created
+            }
         }
     }
 
@@ -52,14 +64,16 @@ class AirportRepositoryImpl(
     override fun getUserSearchDestinationHistory(): Flow<ResultWrapper<List<SearchDestinationHistory>>> {
         return searchHistoryDataSource.getAllSearchDestinationHistory()
             .map { searchHistoryEntities ->
-                val searchHistoryList = searchHistoryEntities.toSearchDestinationHistoryList() // Handle nullable case
+                val searchHistoryList = searchHistoryEntities.toSearchDestinationHistoryList()
                 if (searchHistoryList != null) {
                     ResultWrapper.Success(searchHistoryList)
                 } else {
                     ResultWrapper.Empty()
                 }
             }.onStart {
+                emit(ResultWrapper.Loading())
             }.catch { e ->
+                emit(ResultWrapper.Error(Exception(e)))
             }
     }
 }

@@ -46,7 +46,7 @@
                 android:id="@+id/tv_start_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/text_select_origin"
+                android:hint="@string/text_select_origin"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +114,7 @@
                 android:id="@+id/tv_end_destination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/text_select_destination"
+                android:hint="@string/text_select_destination"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>

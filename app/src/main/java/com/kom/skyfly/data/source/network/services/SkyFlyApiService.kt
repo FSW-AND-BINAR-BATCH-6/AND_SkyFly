@@ -20,6 +20,7 @@ import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpSmsRequest
+import com.kom.skyfly.data.source.network.model.tickets.TicketsResponse
 import com.kom.skyfly.data.source.network.model.transaction.cancel.CancelTransactionResponse
 import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
@@ -163,6 +164,11 @@ interface SkyFlyApiService {
         @Path("id") id: String,
     ): CancelTransactionResponse
 
+    @GET("api/v1/tickets/{id}")
+    suspend fun getTicketsById(
+        @Path("id") id: String,
+    ): TicketsResponse
+
     companion object {
         @JvmStatic
         operator fun invoke(
@@ -180,7 +186,6 @@ interface SkyFlyApiService {
                     .addInterceptor { chain ->
                         val original: Request = chain.request()
                         val token = userPreference.getUserToken()
-                        // val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUxOTM5OGQ4LTI3YTUtNDRkMi1iMzYxLTVjNDI2NjU0YjBiOCIsIm5hbWUiOiJrb21hbmd5dWRhIiwiZW1haWwiOiJ5dWRhc2FwdXRyYTA4MkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjYyODc0Njc0NjQ3ODciLCJpYXQiOjE3MTgwMzQzMzksImV4cCI6MTcxODEyMDczOX0.r_vTbQwhr3NMZdGzfGyveF6rE-E1LOCC0BGv45dhNAw"
                         val requestBuilder: Request.Builder =
                             original.newBuilder()
                                 .addHeader("accept", "application/json")

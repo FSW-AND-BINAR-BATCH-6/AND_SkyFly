@@ -71,8 +71,16 @@ class CalendarAdapter(private val itemClick: (Calendar) -> Unit) :
             },
         )
 
-    fun submitData(data: List<Calendar>) {
+    fun submitData(
+        data: List<Calendar>,
+        initialSelectedDate: String? = null,
+    ) {
+        selectedDate = initialSelectedDate
         asyncDataDiffer.submitList(data)
+    }
+
+    fun findPositionOfDate(date: String): Int {
+        return asyncDataDiffer.currentList.indexOfFirst { it.date == date }
     }
 
     override fun onCreateViewHolder(
@@ -80,7 +88,10 @@ class CalendarAdapter(private val itemClick: (Calendar) -> Unit) :
         viewType: Int,
     ): ItemCalendarViewHolder {
         val binding = LayoutDateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ItemCalendarViewHolder(binding, itemClick)
+        return ItemCalendarViewHolder(binding) { calendar ->
+            setSelectedDate(calendar.date)
+            itemClick(calendar)
+        }
     }
 
     override fun getItemCount(): Int = asyncDataDiffer.currentList.size
@@ -94,6 +105,7 @@ class CalendarAdapter(private val itemClick: (Calendar) -> Unit) :
         holder.bindView(item, isSelected)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setSelectedDate(date: String) {
         selectedDate = date
         notifyDataSetChanged()
