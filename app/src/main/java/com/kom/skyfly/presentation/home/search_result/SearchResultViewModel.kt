@@ -1,5 +1,7 @@
 package com.kom.skyfly.presentation.home.search_result
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.kom.skyfly.data.repository.home.flight_ticket.FlightTicketRepository
@@ -64,4 +66,12 @@ class SearchResultViewModel(
         baby = baby,
         returnDate = returnDate,
     ).asLiveData(Dispatchers.IO)
+
+    // Set filterData
+    private val _filterName = MutableLiveData<String?>()
+    val filterName: LiveData<String?> get() = _filterName
+
+    fun setFilterName(value: String?) {
+        _filterName.value = value
+    }
 }

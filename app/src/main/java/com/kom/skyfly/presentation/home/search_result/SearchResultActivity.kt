@@ -14,6 +14,7 @@ import com.kom.skyfly.data.model.home.intent.SearchResultIntent
 import com.kom.skyfly.databinding.ActivitySearchResultBinding
 import com.kom.skyfly.presentation.common.views.ContentState
 import com.kom.skyfly.presentation.home.detail_home.DetailHomeActivity
+import com.kom.skyfly.presentation.home.filter.FilterFragment
 import com.kom.skyfly.presentation.home.search_result.view_items.CalendarAdapter
 import com.kom.skyfly.presentation.home.search_result.view_items.Items
 import com.kom.skyfly.utils.NoInternetException
@@ -277,6 +278,10 @@ class SearchResultActivity : BaseActivity() {
     private fun setOnClickListener() {
         binding.headerFlightSearchResult.ivBack.setOnClickListener {
             finish()
+        }
+        binding.filterButton.setOnClickListener {
+            val filterData = FilterFragment()
+            filterData.show(supportFragmentManager, filterData.tag)
         }
     }
 }

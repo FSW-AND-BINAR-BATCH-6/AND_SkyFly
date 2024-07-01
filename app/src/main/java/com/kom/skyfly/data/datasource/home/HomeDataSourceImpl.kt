@@ -1,5 +1,6 @@
 package com.kom.skyfly.data.datasource.home
 
+import com.kom.skyfly.data.model.home.filter.Filter
 import com.kom.skyfly.data.model.home.seat_class.SeatClassHome
 import com.kom.skyfly.data.source.network.model.home.airport.AirportResponse
 import com.kom.skyfly.data.source.network.model.home.favourite_destination.FavouriteDestinationResponse
@@ -27,6 +28,7 @@ class HomeDataSourceImpl(
         adult: Int?,
         children: Int?,
         baby: Int?,
+        sort: String?,
     ): FlightResponse {
         return service.getAllFlights(
             search = search,
@@ -39,6 +41,30 @@ class HomeDataSourceImpl(
             adult = adult,
             children = children,
             baby = baby,
+            sort = sort,
+        )
+    }
+
+    override fun getFilterData(): List<Filter> {
+        return listOf(
+            Filter(
+                filterName = "shortest-duration",
+            ),
+            Filter(
+                filterName = "cheapest-flight",
+            ),
+            Filter(
+                filterName = "earliest-departure",
+            ),
+            Filter(
+                filterName = "latest-departure",
+            ),
+            Filter(
+                filterName = "earliest-arrival",
+            ),
+            Filter(
+                filterName = "latest-arrival",
+            ),
         )
     }
 
