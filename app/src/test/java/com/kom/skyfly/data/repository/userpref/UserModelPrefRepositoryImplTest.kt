@@ -13,7 +13,7 @@ import org.junit.Test
  * Written by Komang Yuda Saputra
  * Github : https://github.com/YudaSaputraa
  */
-class UserPrefRepositoryImplTest {
+class UserModelPrefRepositoryImplTest {
     @MockK
     lateinit var dataSource: UserPrefDataSource
     private lateinit var userPrefRepository: UserPrefRepository

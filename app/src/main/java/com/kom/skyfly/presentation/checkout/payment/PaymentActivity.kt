@@ -96,8 +96,6 @@ class PaymentActivity : AppCompatActivity() {
                     favicon: Bitmap?,
                 ) {
                     Log.d("WebView", "Page started: $url")
-                    pd.setMessage("Loading...")
-                    pd.show()
                     super.onPageStarted(view, url, favicon)
                 }
 

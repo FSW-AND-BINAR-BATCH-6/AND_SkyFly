@@ -1,6 +1,7 @@
 package com.kom.skyfly.presentation.history.flightdetailhistory
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.kom.skyfly.data.model.transaction.detail.TransactionDetailResponses
 import com.kom.skyfly.data.model.transaction.paymentstatus.ItemsPaymentStatus
 import com.kom.skyfly.databinding.ActivityFlightDetailHistoryBinding
 import com.kom.skyfly.presentation.common.views.ContentState
+import com.kom.skyfly.presentation.ticket.TicketsActivity
 import com.kom.skyfly.utils.NoInternetException
 import com.kom.skyfly.utils.ServerErrorException
 import com.kom.skyfly.utils.UnAuthorizeException
@@ -32,6 +34,15 @@ class FlightDetailHistoryActivity : BaseActivity() {
     private var historyDetails: TransactionDetailResponses? = null
     private var vaNumbers: ItemsPaymentStatus? = null
     private var orderId: String = ""
+    var departureDate: String? = null
+    var departureTime: String? = null
+    var departureAirport: String? = null
+    private var departureTerminal: String? = null
+    var arrivalDate: String? = null
+    var arrivalTime: String? = null
+    var destinationAirport: String? = null
+    var airlines: String? = null
+    var paymentStatus: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +60,31 @@ class FlightDetailHistoryActivity : BaseActivity() {
             observeData(transactionIdFromExtras)
         }
         binding.btnCancelTransaction.setOnClickListener {
-            confirmCancelTransaction()
+            when (paymentStatus) {
+                "settlement" -> {
+                    navigateToTicket()
+                }
+
+                "pending" -> {
+                    confirmCancelTransaction()
+                }
+            }
         }
+    }
+
+    private fun navigateToTicket() {
+        val intent = Intent(this, TicketsActivity::class.java)
+        intent.putExtra("EXTRA_TRANSACTION_ID", transactionIdFromExtras)
+        intent.putExtra("EXTRA_DEPARTURE_DATE", departureDate)
+        intent.putExtra("EXTRA_DEPARTURE_TIME", departureTime)
+        intent.putExtra("EXTRA_DEPARTURE_AIRPORT", departureAirport)
+        intent.putExtra("EXTRA_DEPARTURE_TERMINAL", departureTerminal)
+
+        intent.putExtra("EXTRA_ARRIVAL_DATE", arrivalDate)
+        intent.putExtra("EXTRA_ARRIVAL_TIME", arrivalTime)
+        intent.putExtra("EXTRA_DESTINATION_AIRPORT", destinationAirport)
+        intent.putExtra("EXTRA_AIRLINE", airlines)
+        startActivity(intent)
     }
 
     private fun confirmCancelTransaction() {
@@ -153,6 +187,7 @@ class FlightDetailHistoryActivity : BaseActivity() {
                         binding.main.isRefreshing = true
                     },
                     doOnError = { error ->
+                        binding.shimmerDetailHistory.isVisible = false
                         binding.main.isRefreshing = false
                         if (error.exception is NoInternetException) {
                             binding.csvFlightDetailsHistory.setState(
@@ -194,7 +229,7 @@ class FlightDetailHistoryActivity : BaseActivity() {
         itemPaymentStatus: ItemsPaymentStatus?,
     ) {
         val transactionDetails = historyDetail?.data?.transactionDetails
-        val paymentStatus = historyDetail?.data?.status
+        paymentStatus = historyDetail?.data?.status
 
         var adultCount = 0
         var childCount = 0
@@ -227,7 +262,20 @@ class FlightDetailHistoryActivity : BaseActivity() {
         }
         binding.layoutFlightDetails.tvTitlePassenger.text = getString(R.string.text_empty)
         binding.layoutFlightDetails.tvCitizenship.text = getString(R.string.text_empty)
+        departureDate =
+            historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.departure?.date
+        departureTime =
+            historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.departure?.time
+        departureAirport =
+            historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.departureAirport?.name
+        departureTerminal =
+            historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.airline?.terminal
+        airlines = historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.airline?.name
 
+        arrivalDate = historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.arrival?.date
+        arrivalTime = historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.arrival?.time
+        destinationAirport =
+            historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.destinationAirport?.name
         with(binding.layoutFlightDetails) {
             ivAirline.load(
                 airlineImage,
@@ -236,26 +284,25 @@ class FlightDetailHistoryActivity : BaseActivity() {
             }
             tvPaymentStatus.text = paymentStatus
             tvDetailBookingCode.text = historyDetail?.data?.booking?.code
-            tvDetailDepartureDate.text =
-                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.departure?.date
+            tvDetailDepartureDate.text = departureDate
             tvDetailDepartureTime.text =
-                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.departure?.time
+                departureTime
             tvDetailDepartureAirport.text =
-                "${historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.departureAirport?.name} - ${historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.airline?.terminal}"
+                "$departureAirport - $departureTerminal"
             tvDetailAirline.text =
                 getString(
                     R.string.tv_strip,
-                    historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.airline?.name,
+                    airlines,
                 )
             tvDetailClass.text = historyDetail?.data?.transactionDetails?.firstOrNull()?.seat?.type
             tvDetailFlightNumber.text =
                 historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.code
             tvDetailArrivalDate.text =
-                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.arrival?.date
-            tvDetailArrivalTime.text =
-                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.arrival?.time
-            tvDetailDestinationAirport.text =
-                historyDetail?.data?.transactionDetails?.firstOrNull()?.flight?.destinationAirport?.name
+                arrivalDate
+            tvDetailArrivalTime.text = arrivalTime
+
+            tvDetailDestinationAirport.text = destinationAirport
+
             tvTotalPrice.text = historyDetail?.data?.totalPrice?.formatToRupiah().toString()
             tvTax.text = historyDetail?.data?.tax?.formatToRupiah().toString()
 
@@ -350,8 +397,8 @@ class FlightDetailHistoryActivity : BaseActivity() {
                 }
 
                 paymentStatus.equals("settlement", ignoreCase = true) -> {
-                    binding.btnCancelTransaction.text = getString(R.string.text_payment_complete)
-                    binding.btnCancelTransaction.isEnabled = false
+                    binding.btnCancelTransaction.text = getString(R.string.text_your_ticket)
+                    binding.btnCancelTransaction.isEnabled = true
                 }
 
                 paymentStatus.equals("expired", ignoreCase = true) -> {

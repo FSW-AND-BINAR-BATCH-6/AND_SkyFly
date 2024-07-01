@@ -49,11 +49,11 @@ class SharedViewModelEditProfileTest {
     @Test
     fun updateProfile() {
         val mockkResponse = mockk<UpdateProfileResponse>(relaxed = true)
-        every { profileRepository.updateProfile(any(), any(), any(), any()) } returns
+        every { profileRepository.updateProfile(any(), any(), any(), any(), any()) } returns
             flow {
                 emit(ResultWrapper.Success(mockkResponse))
             }
-        viewModel.updateProfile("example name", "887387384", "examplepass", "examplepass")
-        verify { profileRepository.updateProfile(any(), any(), any(), any()) }
+        viewModel.updateProfile("example name", "887387384", "examplepass", "examplepass", "vewfef")
+        verify { profileRepository.updateProfile(any(), any(), any(), any(), any()) }
     }
 }

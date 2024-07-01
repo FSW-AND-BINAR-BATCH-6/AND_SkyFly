@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.checkout.flightdetail.FlightDetailActivity">
+    tools:context=".presentation.ticket.TicketsActivity">
 
     <com.kom.skyfly.presentation.common.views.ContentStateView
         android:id="@+id/csv_flight_detail"
@@ -45,7 +45,7 @@
 
                 <include
                     android:id="@+id/layout_flight_details"
-                    layout="@layout/layout_flight_details"
+                    layout="@layout/layout_ticket_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -60,8 +60,7 @@
                     android:layout_marginVertical="16dp"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_header"
-                    tools:visibility="visible">
+                    app:layout_constraintTop_toBottomOf="@id/layout_header">
 
                     <ScrollView
                         android:layout_width="match_parent"
@@ -104,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_rounded"
-                android:text="@string/text_issue_ticket"
+                android:text="@string/text_to_home"
                 android:textSize="16sp" />
 
             <com.google.android.material.progressindicator.CircularProgressIndicator

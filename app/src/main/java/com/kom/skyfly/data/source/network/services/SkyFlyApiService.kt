@@ -20,6 +20,7 @@ import com.kom.skyfly.data.source.network.model.register.RegisterRequest
 import com.kom.skyfly.data.source.network.model.register.RegisterResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpResponse
 import com.kom.skyfly.data.source.network.model.resendotp.ResendOtpSmsRequest
+import com.kom.skyfly.data.source.network.model.tickets.TicketsResponse
 import com.kom.skyfly.data.source.network.model.transaction.cancel.CancelTransactionResponse
 import com.kom.skyfly.data.source.network.model.transaction.detail.TransactionDetailResponse
 import com.kom.skyfly.data.source.network.model.transaction.request.TransactionRequest
@@ -162,6 +163,11 @@ interface SkyFlyApiService {
     suspend fun cancelTransaction(
         @Path("id") id: String,
     ): CancelTransactionResponse
+
+    @GET("api/v1/tickets/{id}")
+    suspend fun getTicketsById(
+        @Path("id") id: String,
+    ): TicketsResponse
 
     companion object {
         @JvmStatic

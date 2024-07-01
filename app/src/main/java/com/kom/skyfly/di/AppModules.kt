@@ -17,6 +17,8 @@ import com.kom.skyfly.data.datasource.profiles.ProfileDataSource
 import com.kom.skyfly.data.datasource.profiles.ProfileDataSourceImpl
 import com.kom.skyfly.data.datasource.searchhistory.SearchHistoryDataSource
 import com.kom.skyfly.data.datasource.searchhistory.SearchHistoryDataSourceImpl
+import com.kom.skyfly.data.datasource.tickets.TicketsDataSource
+import com.kom.skyfly.data.datasource.tickets.TicketsDataSourceImpl
 import com.kom.skyfly.data.datasource.transaction.TransactionDataSource
 import com.kom.skyfly.data.datasource.transaction.TransactionDataSourceImpl
 import com.kom.skyfly.data.datasource.userpreference.UserPrefDataSource
@@ -39,6 +41,8 @@ import com.kom.skyfly.data.repository.profiles.ProfileRepository
 import com.kom.skyfly.data.repository.profiles.ProfileRepositoryImpl
 import com.kom.skyfly.data.repository.searchhistory.SearchHistoryRepository
 import com.kom.skyfly.data.repository.searchhistory.SearchHistoryRepositoryImpl
+import com.kom.skyfly.data.repository.tickets.TicketsRepository
+import com.kom.skyfly.data.repository.tickets.TicketsRepositoryImpl
 import com.kom.skyfly.data.repository.transaction.TransactionRepository
 import com.kom.skyfly.data.repository.transaction.TransactionRepositoryImpl
 import com.kom.skyfly.data.repository.userpref.UserPrefRepository
@@ -69,6 +73,7 @@ import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.presentation.notification.NotificationViewModel
 import com.kom.skyfly.presentation.onboarding.OnBoardingViewModel
 import com.kom.skyfly.presentation.register.RegisterViewModel
+import com.kom.skyfly.presentation.ticket.TicketViewModel
 import com.kom.skyfly.presentation.verifyotp.VerifyOtpViewModel
 import com.kom.skyfly.utils.SharedPreferenceUtils
 import org.koin.android.ext.koin.androidContext
@@ -97,6 +102,7 @@ object AppModules {
             single<HomeDataSource> { HomeDataSourceImpl(get()) }
             single<FlightSeatDataSource> { FlightSeatDataSourceImpl(get()) }
             single<TransactionDataSource> { TransactionDataSourceImpl(get()) }
+            single<TicketsDataSource> { TicketsDataSourceImpl(get()) }
         }
 
     private val localModule =
@@ -125,6 +131,7 @@ object AppModules {
             single<DestinationFavouriteRepository> { DestinationFavouriteRepositoryImpl(get()) }
             single<FlightTicketRepository> { FlightTicketRepositoryImpl(get()) }
             single<TransactionRepository> { TransactionRepositoryImpl(get()) }
+            single<TicketsRepository> { TicketsRepositoryImpl(get()) }
         }
 
     private val viewModelModule =
@@ -153,6 +160,7 @@ object AppModules {
             viewModelOf(::BookersBiodataViewModel)
             viewModelOf(::CheckoutTicketViewModel)
             viewModelOf(::FlightDetailViewModel)
+            viewModelOf(::TicketViewModel)
         }
 
     val modules =

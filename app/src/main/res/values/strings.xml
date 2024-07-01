@@ -289,4 +289,11 @@
     <string name="text_flight_detail_header">Flight Detail</string>
     <string name="text_family_name_title">Family Name</string>
     <string name="text_hint_enter_family_name">Enter Family Name</string>
+    <string name="text_passenger_detail">Passenger Detail</string>
+    <string name="text_citilink">citilink</string>
+    <string name="text_1b">1B</string>
+    <string name="text_economy">Economy</string>
+    <string name="text_flight_id">Flight ID :</string>
+    <string name="text_your_ticket">Your Ticket</string>
+    <string name="text_ticket_code_value">Ticket Code : %1$s</string>
 </resources>

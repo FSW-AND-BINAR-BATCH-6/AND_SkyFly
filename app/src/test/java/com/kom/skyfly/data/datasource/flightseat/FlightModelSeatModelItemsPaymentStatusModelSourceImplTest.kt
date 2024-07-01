@@ -16,7 +16,7 @@ import org.junit.Test
  * Written by Komang Yuda Saputra
  * Github : https://github.com/YudaSaputraa
  */
-class FlightSeatItemsPaymentStatusModelSourceImplTest {
+class FlightModelSeatModelItemsPaymentStatusModelSourceImplTest {
     @MockK
     lateinit var service: SkyFlyApiService
     private lateinit var dataSource: FlightSeatDataSource
