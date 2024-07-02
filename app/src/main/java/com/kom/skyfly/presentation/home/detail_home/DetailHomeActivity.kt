@@ -118,6 +118,7 @@ class DetailHomeActivity : BaseActivity() {
                         Log.d("Succes from Detail", "halo")
                     },
                     doOnError = { error ->
+                        binding.rlDetailResult.isRefreshing = false
                         binding.btnSelectTicket.isEnabled = false
                         binding.shimmerDetailTicket.isVisible = false
                         if (error.exception is NoInternetException) {
@@ -144,6 +145,7 @@ class DetailHomeActivity : BaseActivity() {
                         Log.e("ChooseSeatActivity", "Error: ${error.exception?.message}")
                     },
                     doOnEmpty = {
+                        binding.rlDetailResult.isRefreshing = false
                         binding.shimmerDetailTicket.isVisible = false
                         binding.svDetailTicket.isVisible = false
                         binding.btnSelectTicket.isVisible = false

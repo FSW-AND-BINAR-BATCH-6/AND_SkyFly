@@ -55,7 +55,7 @@ class MainViewModel(
         }
     val passengerCountLiveData =
         MutableLiveData(0).apply {
-            postValue(0)
+            postValue(1)
         }
 
     fun addTotal() {

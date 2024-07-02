@@ -306,6 +306,7 @@ class SearchResultActivity : BaseActivity() {
                     Log.d("SearchResultActivity", "Data fetched successfully")
                 },
                 doOnEmpty = {
+                    binding.rlSearchResult.isRefreshing = false
                     adapter.clear()
                     binding.shimmerTicket.isVisible = false
                     binding.csvTicketResult.setState(
@@ -314,6 +315,7 @@ class SearchResultActivity : BaseActivity() {
                     )
                 },
                 doOnError = { error ->
+                    binding.rlSearchResult.isRefreshing = false
                     adapter.clear()
                     binding.shimmerTicket.isVisible = false
                     when (error.exception) {
