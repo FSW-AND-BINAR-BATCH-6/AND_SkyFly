@@ -86,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
                     if (it.exception is NoInternetException) {
                         binding.csvLogin.setState(
                             ContentState.ERROR_NETWORK_GENERAL,
-                            "Tidak ada internet!",
+                            getString(R.string.no_internet_connection),
                         )
                     } else {
                         Toasty.error(
