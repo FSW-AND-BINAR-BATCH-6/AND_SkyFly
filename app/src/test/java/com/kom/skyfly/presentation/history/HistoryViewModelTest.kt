@@ -1,7 +1,7 @@
 package com.kom.skyfly.presentation.history
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.kom.skyfly.data.model.history.new.HistoryDomain
+import com.kom.skyfly.data.model.history.HistoryDomain
 import com.kom.skyfly.data.repository.history.HistoryRepository
 import com.kom.skyfly.tools.MainCoroutineRule
 import com.kom.skyfly.tools.getOrAwaitValue
