@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:text="@string/text_from"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_departures"
             app:layout_constraintStart_toEndOf="@id/iv_departures"
             app:layout_constraintTop_toTopOf="@id/iv_departures" />
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/text_select_origin"
                 android:textColor="@color/md_theme_primary"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:text="@string/text_to"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_destination"
             app:layout_constraintStart_toEndOf="@id/iv_destination"
             app:layout_constraintTop_toTopOf="@id/iv_destination" />
@@ -103,12 +103,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="8dp"
             app:boxBackgroundMode="none"
-            app:layout_constraintBottom_toBottomOf="@id/iv_destination"
+            app:layout_constraintBottom_toBottomOf="@id/tv_to"
             app:layout_constraintEnd_toEndOf="@id/v_select_destination"
             app:layout_constraintStart_toEndOf="@id/tv_to"
-            app:layout_constraintTop_toTopOf="@id/iv_destination">
+            app:layout_constraintTop_toTopOf="@id/tv_to">
 
             <TextView
                 android:id="@+id/tv_end_destination"
@@ -116,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/text_select_destination"
                 android:textColor="@color/md_theme_primary"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

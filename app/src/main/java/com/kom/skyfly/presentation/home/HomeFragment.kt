@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.kom.skyfly.R
+import com.kom.skyfly.core.BaseActivity
 import com.kom.skyfly.data.model.home.destination_favourite.DestinationFavourite
 import com.kom.skyfly.databinding.FragmentHomeBinding
 import com.kom.skyfly.presentation.common.views.ContentState
@@ -20,6 +21,8 @@ import com.kom.skyfly.presentation.home.search_result.SearchResultActivity
 import com.kom.skyfly.presentation.home.seatclass.SeatClassFragment
 import com.kom.skyfly.presentation.main.MainViewModel
 import com.kom.skyfly.utils.NoInternetException
+import com.kom.skyfly.utils.ServerErrorException
+import com.kom.skyfly.utils.UnAuthorizeException
 import com.kom.skyfly.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,6 +44,8 @@ class HomeFragment : Fragment() {
             item.let {
                 binding.layoutSelectDestination.tvStartFrom.text = it.departureCity
                 binding.layoutSelectDestination.tvEndDestination.text = it.arrivalCity
+                source = it.departureCity!!
+                dest = it.arrivalCity!!
                 departureAirport = it.departureCity
                 arrivalAirport = it.arrivalCity
             }
@@ -175,12 +180,25 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
         binding.layoutSelectDestination.ivSwap.setOnClickListener {
-            binding.layoutSelectDestination.tvStartFrom.text = dest
-            binding.layoutSelectDestination.tvEndDestination.text = source
-            val temp = source
-            source = dest
-            dest = temp
+            // Store the current values of source and dest
+            val tempSource = source
+            val tempDest = dest
+
+            // Update source with the value of dest
+            source = tempDest
+
+            // Update dest with the value of tempSource (initial value of source)
+            dest = tempSource
+
+            // Update TextViews with the new values
+            binding.layoutSelectDestination.tvStartFrom.text = source
+            binding.layoutSelectDestination.tvEndDestination.text = dest
+
+            // Update class variables
+            departureAirport = source
+            arrivalAirport = dest
         }
+
         binding.tvSeats.setOnClickListener {
             val seatClassBottomSheet = SeatClassFragment()
             seatClassBottomSheet.show(parentFragmentManager, seatClassBottomSheet.tag)
@@ -188,13 +206,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun validateFields() {
-        val isSourceValid = binding.layoutSelectDestination.tvStartFrom.text.toString().isNotEmpty()
+        val isSourceValid = binding.layoutSelectDestination.tvStartFrom.text.isNotEmpty()
         val isDestinationValid =
-            binding.layoutSelectDestination.tvEndDestination.text.toString().isNotEmpty()
-        val isDepartureTimeValid = binding.tvDeparture.text.toString().isNotEmpty()
+            binding.layoutSelectDestination.tvEndDestination.text.isNotEmpty()
+        val isDepartureTimeValid = sharedViewModel.startTime.value != null
 //        val isReturnTimeValid =
 //            !binding.tvReturn.isEnabled || binding.tvReturn.text.toString().isNotEmpty()
-        val isPassengerCountValid = sharedViewModel.passengerCountLiveData.value != null
+        val isPassengerCountValid = sharedViewModel.passengerCountLiveData.value != 0
         val isSeatClassValid = sharedViewModel.seatClass.value != null
 
         binding.btnSearchFlight.isEnabled =
@@ -220,13 +238,33 @@ class HomeFragment : Fragment() {
                     binding.csvHome.setState(ContentState.EMPTY)
                     binding.shmProgressDestinationFav.isVisible = false
                 },
-                doOnError = {
-                    if (it.exception is NoInternetException) {
-                        binding.csvHome.setState(ContentState.ERROR_NETWORK)
-                    } else {
-                        binding.csvHome.setState(ContentState.ERROR_GENERAL)
+                doOnError = { error ->
+                    when (error.exception) {
+                        is NoInternetException -> {
+                            binding.csvHome.setState(
+                                ContentState.ERROR_NETWORK,
+                                getString(R.string.no_internet_connection),
+                            )
+                        }
+                        is UnAuthorizeException -> {
+                            (activity as BaseActivity).errorHandler(error.exception)
+                            binding.csvHome.setState(
+                                ContentState.ERROR_NETWORK_GENERAL,
+                                getString(R.string.text_session_expired_please_login_again),
+                            )
+                        }
+                        is ServerErrorException -> {
+                            (activity as BaseActivity).errorHandler(error.exception)
+                            binding.csvHome.setState(
+                                ContentState.ERROR_NETWORK,
+                                getString(R.string.text_server_error_please_try_again_later),
+                                R.drawable.img_empty_data,
+                            )
+                        }
+                        else -> {
+                            binding.csvHome.setState(ContentState.ERROR_GENERAL)
+                        }
                     }
-                    binding.shmProgressDestinationFav.isVisible = false
                 },
             )
         }

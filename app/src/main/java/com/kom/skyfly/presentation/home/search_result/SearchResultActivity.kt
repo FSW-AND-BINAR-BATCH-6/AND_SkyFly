@@ -40,6 +40,7 @@ class SearchResultActivity : BaseActivity() {
     private val calendarAdapter: CalendarAdapter by lazy {
         CalendarAdapter {
             calendarAdapter.setSelectedDate(it.date)
+            filterTime = it.date
             getAllTicketData(it.date, searchResultViewModel.filterName.value)
         }
     }
@@ -48,6 +49,7 @@ class SearchResultActivity : BaseActivity() {
     private var departureAirport: String? = null
     private var arrivalAirport: String? = null
     private var departureTime: String? = null
+    private var filterTime: String? = null
     private var adultCount: Int? = null
     private var childrenCount: Int? = null
     private var babyCount: Int? = null
@@ -73,16 +75,37 @@ class SearchResultActivity : BaseActivity() {
         setOnClickListener()
         getCalendarData()
         setupBinding()
+        setSwipeRefresh()
         getAllTicketData(departureTime!!)
         checkFilter()
+    }
+
+    private fun setSwipeRefresh() {
+        binding.rlSearchResult.setOnRefreshListener {
+            if (filterTime != null) {
+                getAllTicketData(filterTime!!, searchResultViewModel.filterName.value)
+            } else {
+                getAllTicketData(departureTime!!, searchResultViewModel.filterName.value)
+            }
+        }
     }
 
     private fun checkFilter() {
         // Observe filter name
         searchResultViewModel.filterName.observe(this) { filter ->
-            if (filter != null) {
-                binding.tvFilterName.text = filter
-                getAllTicketData(departureTime!!, filter)
+            when {
+                filter != null -> {
+                    binding.tvFilterName.text = filter
+                    filterTime?.let {
+                        getAllTicketData(it, filter)
+                    } ?: getAllTicketData(departureTime!!)
+                }
+                filterTime != null -> {
+                    getAllTicketData(filterTime!!)
+                }
+                else -> {
+                    getAllTicketData(departureTime!!)
+                }
             }
         }
     }
@@ -110,7 +133,8 @@ class SearchResultActivity : BaseActivity() {
             val daysNeededFromNextMonth = 30 - remainingDaysInMonth
             var nextMonthDate = startDate.plusMonths(1).withDayOfMonth(1)
             for (day in 1..daysNeededFromNextMonth) {
-                val dayOfWeek = nextMonthDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("id", "ID"))
+                val dayOfWeek =
+                    nextMonthDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("id", "ID"))
                 val formattedDate = nextMonthDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
                 days.add(Calendar(dayOfWeek, formattedDate))
                 nextMonthDate = nextMonthDate.plusDays(1)
@@ -126,10 +150,14 @@ class SearchResultActivity : BaseActivity() {
         }
 
         recyclerView.adapter = calendarAdapter
-        calendarAdapter.submitData(days, startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+        calendarAdapter.submitData(
+            days,
+            startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+        )
 
         // Scroll to the initial selected date position
-        val initialPosition = calendarAdapter.findPositionOfDate(startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+        val initialPosition =
+            calendarAdapter.findPositionOfDate(startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
         if (initialPosition != RecyclerView.NO_POSITION) {
             layoutManager.scrollToPositionWithOffset(initialPosition, 0)
         }
@@ -173,7 +201,10 @@ class SearchResultActivity : BaseActivity() {
                                                         this@SearchResultActivity,
                                                         DetailHomeActivity::class.java,
                                                     ).apply {
-                                                        putExtra("EXTRA_SEARCH_RESULT", searchResultIntent)
+                                                        putExtra(
+                                                            "EXTRA_SEARCH_RESULT",
+                                                            searchResultIntent,
+                                                        )
                                                     }
                                                 startActivity(intent)
                                             }
@@ -189,7 +220,10 @@ class SearchResultActivity : BaseActivity() {
                     adapter.clear()
                 },
                 doOnError = {
-                    Log.e("SearchResultActivityReturn", "Error fetching data: ${it.exception?.message}")
+                    Log.e(
+                        "SearchResultActivityReturn",
+                        "Error fetching data: ${it.exception?.message}",
+                    )
                 },
                 doOnLoading = {
                     Log.d("SearchResultActivity", "Loading data")
@@ -216,6 +250,7 @@ class SearchResultActivity : BaseActivity() {
         ).observe(this) { response ->
             response.proceedWhen(
                 doOnSuccess = { result ->
+                    binding.rlSearchResult.isRefreshing = false
                     val sectionedSearch = result.payload ?: emptyList()
 
                     // Handle visibility and delays
@@ -252,7 +287,10 @@ class SearchResultActivity : BaseActivity() {
                                                         this@SearchResultActivity,
                                                         DetailHomeActivity::class.java,
                                                     ).apply {
-                                                        putExtra("EXTRA_SEARCH_RESULT", searchResultIntent)
+                                                        putExtra(
+                                                            "EXTRA_SEARCH_RESULT",
+                                                            searchResultIntent,
+                                                        )
                                                     }
                                                 startActivity(intent)
                                             }
@@ -285,6 +323,7 @@ class SearchResultActivity : BaseActivity() {
                                 getString(R.string.no_internet_connection),
                             )
                         }
+
                         is UnAuthorizeException -> {
                             errorHandler(error.exception)
                             binding.csvTicketResult.setState(
@@ -292,6 +331,7 @@ class SearchResultActivity : BaseActivity() {
                                 getString(R.string.text_session_expired_please_login_again),
                             )
                         }
+
                         is ServerErrorException -> {
                             errorHandler(error.exception)
                             binding.csvTicketResult.setState(
@@ -300,6 +340,7 @@ class SearchResultActivity : BaseActivity() {
                                 R.drawable.img_empty_data,
                             )
                         }
+
                         else -> {
                             binding.csvTicketResult.setState(ContentState.ERROR_GENERAL)
                         }
@@ -338,6 +379,11 @@ class SearchResultActivity : BaseActivity() {
         binding.filterButton.setOnClickListener {
             val filterData = FilterFragment()
             filterData.show(supportFragmentManager, filterData.tag)
+        }
+        binding.ivCloseFilter.setOnClickListener {
+            binding.filterResult.isVisible = false
+            searchResultViewModel.setFilterName(null)
+            getAllTicketData(filterTime!!)
         }
     }
 }
