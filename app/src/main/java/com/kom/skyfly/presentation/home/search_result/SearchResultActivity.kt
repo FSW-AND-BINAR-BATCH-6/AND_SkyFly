@@ -76,7 +76,7 @@ class SearchResultActivity : BaseActivity() {
         getCalendarData()
         setupBinding()
         setSwipeRefresh()
-        getAllTicketData(departureTime!!)
+        getAllTicketData(departureTime!!, searchResultViewModel.filterName.value)
         checkFilter()
     }
 
@@ -98,13 +98,13 @@ class SearchResultActivity : BaseActivity() {
                     binding.tvFilterName.text = filter
                     filterTime?.let {
                         getAllTicketData(it, filter)
-                    } ?: getAllTicketData(departureTime!!)
+                    } ?: getAllTicketData(departureTime!!, searchResultViewModel.filterName.value)
                 }
                 filterTime != null -> {
-                    getAllTicketData(filterTime!!)
+                    getAllTicketData(filterTime!!, searchResultViewModel.filterName.value)
                 }
                 else -> {
-                    getAllTicketData(departureTime!!)
+                    getAllTicketData(departureTime!!, searchResultViewModel.filterName.value)
                 }
             }
         }
