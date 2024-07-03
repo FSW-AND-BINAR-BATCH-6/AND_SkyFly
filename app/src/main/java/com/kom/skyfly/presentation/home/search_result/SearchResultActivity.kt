@@ -385,7 +385,11 @@ class SearchResultActivity : BaseActivity() {
         binding.ivCloseFilter.setOnClickListener {
             binding.filterResult.isVisible = false
             searchResultViewModel.setFilterName(null)
-            getAllTicketData(filterTime!!)
+            if (filterTime != null) {
+                getAllTicketData(filterTime!!)
+            } else {
+                getAllTicketData(departureTime!!)
+            }
         }
     }
 }
