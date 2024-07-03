@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kom.skyfly.R
 import com.kom.skyfly.data.model.home.Calendar
 import com.kom.skyfly.databinding.LayoutDateBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class CalendarAdapter(private val itemClick: (Calendar) -> Unit) :
     RecyclerView.Adapter<CalendarAdapter.ItemCalendarViewHolder>() {
@@ -29,6 +31,9 @@ class CalendarAdapter(private val itemClick: (Calendar) -> Unit) :
                 binding.tvCalendarDay.text = day
                 binding.tvCalendarDate.text = date
                 val context = binding.root.context
+                val currentDate = LocalDate.now()
+                val itemDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
                 if (isSelected) {
                     binding.cvCalendar.setCardBackgroundColor(
                         ContextCompat.getColor(
@@ -44,8 +49,14 @@ class CalendarAdapter(private val itemClick: (Calendar) -> Unit) :
                     binding.tvCalendarDate.setTextColor(Color.BLACK)
                 }
 
-                itemView.setOnClickListener {
-                    itemClick(this)
+                if (itemDate.isBefore(currentDate)) {
+                    binding.cvCalendar.alpha = 0.5f
+                    itemView.setOnClickListener(null)
+                } else {
+                    binding.cvCalendar.alpha = 1.0f
+                    itemView.setOnClickListener {
+                        itemClick(this)
+                    }
                 }
             }
         }
