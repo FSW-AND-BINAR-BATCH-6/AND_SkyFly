@@ -205,7 +205,7 @@
     <string name="text_confirm_password_hint">Confirm password</string>
     <string name="text_change_password_successfully">Change password successfully!</string>
     <string name="text_confirm_change_password">Are you sure you want to change password?</string>
-    <string name="text_add_passenger">Add passenger</string>
+    <string name="text_add_passenger">Add Passenger</string>
     <string name="text_seat_class">Seat Class</string>
     <string name="text_no_tlp_must_start_with_62">Phone number must start with \"62\"</string>
     <string name="text_request_change_password_has_been_sent_to_your_email">Reset password link has been sent, please check your email.</string>
