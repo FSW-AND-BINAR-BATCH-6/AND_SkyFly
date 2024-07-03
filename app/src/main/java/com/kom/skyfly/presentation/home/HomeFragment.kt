@@ -88,7 +88,8 @@ class HomeFragment : Fragment() {
 
     fun showMessageBox() {
         // Inflate the dialog as custom view
-        val messageBoxView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog, null)
+        val messageBoxView =
+            LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog, null)
 
         // AlertDialogBuilder
         val messageBoxBuilder = AlertDialog.Builder(requireContext()).setView(messageBoxView)
@@ -139,7 +140,11 @@ class HomeFragment : Fragment() {
         }
         sharedViewModel.passengerCountLiveData.observe(viewLifecycleOwner) { totalPassenger ->
             totalPassenger?.let {
-                binding.tvPassengers.text = "$it Passengers"
+                if (it > 0) {
+                    binding.tvPassengers.text = "$it Passengers"
+                } else {
+                    "Add Passenger"
+                }
             }
             validateFields()
         }

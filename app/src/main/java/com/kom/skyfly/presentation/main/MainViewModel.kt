@@ -42,8 +42,8 @@ class MainViewModel(
 
     // Set passenger total
     val passengerAdultCountLiveData =
-        MutableLiveData(1).apply {
-            postValue(1)
+        MutableLiveData(0).apply {
+            postValue(0)
         }
     val passengerBabyCountLiveData =
         MutableLiveData(0).apply {
@@ -54,20 +54,20 @@ class MainViewModel(
             postValue(0)
         }
     val passengerCountLiveData =
-        MutableLiveData(1).apply {
-            postValue(1)
+        MutableLiveData(0).apply {
+            postValue(0)
         }
 
     fun addTotal() {
         val totalCount =
-            (passengerAdultCountLiveData.value ?: 1) +
+            (passengerAdultCountLiveData.value ?: 0) +
                 (passengerChildCountLiveData.value ?: 0) +
                 (passengerBabyCountLiveData.value ?: 0)
         passengerCountLiveData.postValue(totalCount)
     }
 
     fun addAdult() {
-        val adultCount = (passengerAdultCountLiveData.value ?: 1) + 1
+        val adultCount = (passengerAdultCountLiveData.value ?: 0) + 1
         passengerAdultCountLiveData.postValue(adultCount)
     }
 
@@ -82,8 +82,8 @@ class MainViewModel(
     }
 
     fun minusAdult() {
-        if ((passengerAdultCountLiveData.value ?: 1) > 1) {
-            val count = (passengerAdultCountLiveData.value ?: 1) - 1
+        if ((passengerAdultCountLiveData.value ?: 0) > 0) {
+            val count = (passengerAdultCountLiveData.value ?: 0) - 1
             passengerAdultCountLiveData.postValue(count)
         }
     }

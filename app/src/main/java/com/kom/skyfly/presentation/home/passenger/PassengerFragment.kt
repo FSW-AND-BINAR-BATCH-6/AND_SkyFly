@@ -34,7 +34,7 @@ class PassengerFragment : BottomSheetDialogFragment() {
     private fun observeData() {
         mainViewModel.passengerAdultCountLiveData.observe(viewLifecycleOwner) {
             binding.tvCounterAdult.text = it.toString()
-            binding.ivMinusBtnAdult.isEnabled = it > 1
+            binding.ivMinusBtnAdult.isEnabled = it > 0
         }
         mainViewModel.passengerChildCountLiveData.observe(viewLifecycleOwner) {
             binding.tvCounterChild.text = it.toString()
