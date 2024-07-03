@@ -298,4 +298,5 @@
     <string name="text_ticket_code_value">Ticket Code : %1$s</string>
     <string name="text_success">Success</string>
     <string name="text_destination_successfully_added">Destination Successfully added</string>
+    <string name="text_ticket_is_being_processed">Ticket is being processed.</string>
 </resources>
