@@ -180,12 +180,12 @@ class HomeFragment : Fragment() {
             val calendarDeparture = HomeCalendarFragment()
             calendarDeparture.show(parentFragmentManager, calendarDeparture.tag)
         }
-        binding.tvReturn.setOnClickListener {
-            if (binding.tvReturn.isEnabled) {
-                val calendarDeparture = HomeCalendarFragment()
-                calendarDeparture.show(parentFragmentManager, calendarDeparture.tag)
-            }
-        }
+//        binding.tvReturn.setOnClickListener {
+//            if (binding.tvReturn.isEnabled) {
+//                val calendarDeparture = HomeCalendarFragment()
+//                calendarDeparture.show(parentFragmentManager, calendarDeparture.tag)
+//            }
+//        }
         binding.tvPassengers.setOnClickListener {
             val passengerBottomSheet = PassengerFragment()
             passengerBottomSheet.show(parentFragmentManager, passengerBottomSheet.tag)
