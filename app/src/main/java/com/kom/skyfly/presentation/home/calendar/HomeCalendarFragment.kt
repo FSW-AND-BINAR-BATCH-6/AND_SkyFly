@@ -34,6 +34,7 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
     private var startDate: LocalDate? = null
     private var endDate: LocalDate? = null
 
+    private var departureDate: String? = null
     private val dateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale("id", "ID"))
     private val mainViewModel: MainViewModel by activityViewModel()
 
@@ -96,12 +97,12 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
                                         textView.setTextColor(Color.WHITE)
                                         textView.setBackgroundResource(R.drawable.selection_background)
                                         binding.tvDepartureDate.text = data.date.format(dateFormatter)
-                                        mainViewModel.setStartTime(data.date.format(dateFormatter))
-                                        if (mainViewModel.roundTrip.value == true) {
-                                            binding.tvBackDate.text = data.date.format(dateFormatter)
-                                        } else {
-                                            binding.tvBackDate.text = getString(R.string.text_dash)
-                                        }
+                                        departureDate = data.date.format(dateFormatter)
+//                                        if (mainViewModel.roundTrip.value == true) {
+//                                            binding.tvBackDate.text = data.date.format(dateFormatter)
+//                                        } else {
+//                                            binding.tvBackDate.text = getString(R.string.text_dash)
+//                                        }
                                     }
                                     startDate == data.date -> {
                                         textView.setTextColor(Color.WHITE)
@@ -112,7 +113,7 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
                                     endDate == data.date -> {
                                         textView.setTextColor(Color.WHITE)
                                         textView.setBackgroundResource(R.drawable.selection_background)
-                                        binding.tvBackDate.text = data.date.format(dateFormatter)
+//                                        binding.tvBackDate.text = data.date.format(dateFormatter)
                                         mainViewModel.setReturnTime(data.date.format(dateFormatter))
                                     }
                                     startDate != null && endDate != null && (data.date > startDate && data.date < endDate) -> {
@@ -207,6 +208,7 @@ class HomeCalendarFragment : BottomSheetDialogFragment() {
             dismiss()
         }
         binding.btnSave.setOnClickListener {
+            mainViewModel.setStartTime(departureDate)
             dismiss()
         }
     }

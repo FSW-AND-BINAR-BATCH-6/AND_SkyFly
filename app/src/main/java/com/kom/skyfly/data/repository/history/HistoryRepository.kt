@@ -2,7 +2,7 @@ package com.kom.skyfly.data.repository.history
 
 import com.kom.skyfly.data.datasource.history.HistoryDataSource
 import com.kom.skyfly.data.mapper.toHistoryDomain
-import com.kom.skyfly.data.model.history.new.HistoryDomain
+import com.kom.skyfly.data.model.history.HistoryDomain
 import com.kom.skyfly.utils.ResultWrapper
 import com.kom.skyfly.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow

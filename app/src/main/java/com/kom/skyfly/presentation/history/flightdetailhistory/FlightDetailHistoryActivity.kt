@@ -354,7 +354,7 @@ class FlightDetailHistoryActivity : BaseActivity() {
                     tvPaymentStatus.setText(R.string.text_unpaid)
                     tvVaNumber.text =
                         itemPaymentStatus?.vaNumbers?.joinToString { it.vaNumber.toString() }
-                            ?: "N/A"
+                            ?: "Payment method not selected."
 
                     tvPaymentCodeTitle.isVisible = true
                     tvVaNumber.isVisible = true
@@ -393,7 +393,7 @@ class FlightDetailHistoryActivity : BaseActivity() {
             when {
                 paymentStatus.equals("pending", ignoreCase = true) -> {
                     binding.btnCancelTransaction.text = getString(R.string.text_cancel_transaction)
-                    binding.btnCancelTransaction.isEnabled = true
+                    binding.btnCancelTransaction.isEnabled = tvVaNumber.text != "Payment method not selected."
                 }
 
                 paymentStatus.equals("settlement", ignoreCase = true) -> {

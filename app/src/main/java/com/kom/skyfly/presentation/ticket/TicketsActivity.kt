@@ -81,6 +81,18 @@ class TicketsActivity : BaseActivity() {
                         val response = result.payload
                         binding.shmProgressFlightTicket.isVisible = false
                         setTransactionDetailData(response)
+                        if (response?.data?.isEmpty() == true) {
+                            binding.btnToHome.isEnabled = true
+                            binding.main.isRefreshing = false
+                            binding.layoutFlightDetails.cvFlightDetails.isVisible = false
+                            binding.layoutFlightDetails.tvTicketCode.isVisible = false
+                            binding.shmProgressFlightTicket.isVisible = false
+                            binding.csvFlightDetail.setState(
+                                ContentState.EMPTY,
+                                getString(R.string.text_ticket_is_being_processed),
+                                R.drawable.img_loading,
+                            )
+                        }
                         Log.d("GetTransactionById", "getTransactionDataById: $response")
                     },
                     doOnError = {
@@ -125,33 +137,40 @@ class TicketsActivity : BaseActivity() {
                         binding.main.isRefreshing = true
                         binding.shmProgressFlightTicket.isVisible = true
                     },
+                    doOnEmpty = {
+                        it.payload.let {
+                            if (it?.data?.isEmpty() == true) {
+                                binding.btnToHome.isEnabled = true
+                                binding.main.isRefreshing = false
+                                binding.shmProgressFlightTicket.isVisible = false
+                                binding.csvFlightDetail.setState(
+                                    ContentState.EMPTY,
+                                    getString(R.string.text_ticket_is_being_processed),
+                                    R.drawable.img_loading,
+                                )
+                            }
+                        }
+                        binding.btnToHome.isEnabled = true
+                        binding.main.isRefreshing = false
+                        binding.shmProgressFlightTicket.isVisible = false
+                        binding.csvFlightDetail.setState(
+                            ContentState.EMPTY,
+                            getString(R.string.text_ticket_is_being_processed),
+                            R.drawable.img_loading,
+                        )
+                    },
                 )
             }
         }
     }
 
     private fun setTransactionDetailData(response: TicketsModel?) {
-        var bookingDate: String? = null
-        var bookingCode: String? = null
         var ticketCode: String? = null
-        var seatClass: String? = null
-        var flightNumber: String? = null
-        var seatNumber: String? = null
-        var flightId: String? = null
-        var passengerCategory: String?
         var ticketTransaction: List<TransactionDetailModel?>? = listOf()
         val airlinesImg: String? = null
         response?.data?.map {
             ticketCode = it?.code
-            bookingDate = it?.ticketTransaction?.bookingDate
-            bookingCode = it?.ticketTransaction?.bookingCode
-            flightId = it?.flightId
             ticketTransaction = it?.ticketTransaction?.transactionDetail
-
-            it?.ticketTransaction?.transactionDetail?.map {
-                seatClass = it?.seat?.type
-                seatNumber = it?.seat?.seatNumber
-            }
         }
 
         binding.layoutFlightDetails.tvTitlePassenger.text = getString(R.string.text_empty)

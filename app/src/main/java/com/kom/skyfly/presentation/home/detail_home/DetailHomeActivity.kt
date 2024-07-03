@@ -63,7 +63,14 @@ class DetailHomeActivity : BaseActivity() {
         babyCount = searchResultIntent.babyCount
         roundTrip = searchResultIntent.roundTrip
         setOnClickListener()
+        setSwipeRefresh()
         observeData()
+    }
+
+    private fun setSwipeRefresh() {
+        binding.rlDetailResult.setOnRefreshListener {
+            getDepartureDetail()
+        }
     }
 
     private fun setHeaderTitle() {
@@ -89,6 +96,7 @@ class DetailHomeActivity : BaseActivity() {
                             val scrollView = findViewById<ScrollView>(R.id.sv_detail_ticket)
                             val layoutDetailCard =
                                 scrollView.findViewById<View>(R.id.layout_detail_card)
+                            binding.rlDetailResult.isRefreshing = false
                             binding.shimmerDetailTicket.isVisible = false
                             binding.svDetailTicket.isVisible = true
                             binding.btnSelectTicket.isEnabled = true
@@ -110,6 +118,7 @@ class DetailHomeActivity : BaseActivity() {
                         Log.d("Succes from Detail", "halo")
                     },
                     doOnError = { error ->
+                        binding.rlDetailResult.isRefreshing = false
                         binding.btnSelectTicket.isEnabled = false
                         binding.shimmerDetailTicket.isVisible = false
                         if (error.exception is NoInternetException) {
@@ -136,9 +145,18 @@ class DetailHomeActivity : BaseActivity() {
                         Log.e("ChooseSeatActivity", "Error: ${error.exception?.message}")
                     },
                     doOnEmpty = {
+                        binding.rlDetailResult.isRefreshing = false
                         binding.shimmerDetailTicket.isVisible = false
                         binding.svDetailTicket.isVisible = false
                         binding.btnSelectTicket.isVisible = false
+                    },
+                    doOnLoading = {
+                        val scrollView = findViewById<ScrollView>(R.id.sv_detail_ticket)
+                        val layoutDetailCard =
+                            scrollView.findViewById<View>(R.id.layout_detail_card)
+                        binding.shimmerDetailTicket.isVisible = true
+                        binding.csvDetailTicket.isVisible = false
+                        layoutDetailCard.isVisible = false
                     },
                 )
             }

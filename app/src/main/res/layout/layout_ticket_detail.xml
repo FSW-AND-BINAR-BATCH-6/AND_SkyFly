@@ -6,17 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp">
 
-    <TextView
-        android:id="@+id/tv_ticket_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:paddingVertical="4dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Ticket Code: QG-CGK-QG.CGK.BDO-1B" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_flight_details"
@@ -26,8 +15,7 @@
         android:layout_marginTop="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_ticket_code">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,27 +23,15 @@
             android:layout_margin="16dp">
 
             <TextView
-                android:id="@+id/tv_detail_title_booking_code"
+                android:id="@+id/tv_ticket_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/text_flight_id"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/tv_detail_booking_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/text_example_booking_code"
-                android:textColor="@color/md_theme_primary"
+                android:paddingVertical="4dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/tv_detail_title_booking_code"
-                app:layout_constraintTop_toTopOf="@id/tv_detail_title_booking_code" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Ticket Code: QG-CGK-QG.CGK.BDO-1B" />
 
 
             <TextView
@@ -66,7 +42,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_title_booking_code"
+                app:layout_constraintTop_toBottomOf="@id/tv_ticket_code"
                 tools:text="@string/text_time" />
 
             <TextView

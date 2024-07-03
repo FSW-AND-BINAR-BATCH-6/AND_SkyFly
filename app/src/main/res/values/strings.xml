@@ -205,7 +205,7 @@
     <string name="text_confirm_password_hint">Confirm password</string>
     <string name="text_change_password_successfully">Change password successfully!</string>
     <string name="text_confirm_change_password">Are you sure you want to change password?</string>
-    <string name="text_add_passenger">Add passenger</string>
+    <string name="text_add_passenger">Add Passenger</string>
     <string name="text_seat_class">Seat Class</string>
     <string name="text_no_tlp_must_start_with_62">Phone number must start with \"62\"</string>
     <string name="text_request_change_password_has_been_sent_to_your_email">Reset password link has been sent, please check your email.</string>
@@ -296,4 +296,7 @@
     <string name="text_flight_id">Flight ID :</string>
     <string name="text_your_ticket">Your Ticket</string>
     <string name="text_ticket_code_value">Ticket Code : %1$s</string>
+    <string name="text_success">Success</string>
+    <string name="text_destination_successfully_added">Destination Successfully added</string>
+    <string name="text_ticket_is_being_processed">Ticket is being processed.</string>
 </resources>

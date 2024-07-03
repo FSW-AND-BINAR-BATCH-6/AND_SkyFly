@@ -4,7 +4,7 @@ import android.content.res.ColorStateList
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.kom.skyfly.R
-import com.kom.skyfly.data.model.history.new.TransactionDomain
+import com.kom.skyfly.data.model.history.TransactionDomain
 import com.kom.skyfly.databinding.ItemOrderHistoryBinding
 import com.kom.skyfly.databinding.ItemSectionHeaderHistoryBinding
 import com.kom.skyfly.utils.formatToRupiah
